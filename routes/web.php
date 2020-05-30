@@ -27,3 +27,4 @@ Route::get('/fetch', 'PostsController@fetch');
 Route::get('/upload', 'PostsController@viewUpload');
 Route::post('/upload', 'PostsController@upload');
 Route::get('/p/{id}', 'PostsController@showPost');
+Route::post('/p/{id}/thread/add', 'PostsController@addThread');

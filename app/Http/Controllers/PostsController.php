@@ -17,6 +17,7 @@ namespace App\Http\Controllers;
 use App\AppModel;
 use App\PostModel;
 use App\TagsModel;
+use App\ThreadModel;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,10 +79,17 @@ class PostsController extends Controller
             $post = PostModel::getPost($id);
             $user = User::where('id', '=', $post->userId)->first();
 
+            $threads = ThreadModel::getFromPost($post->id);
+            foreach ($threads as &$thread) {
+                $thread->user = User::get($thread->userId);
+            }
+
             return view('member.showpost', [
                 'user' => User::getByAuthId(),
                 'post' => $post,
-                'poster' => $user
+                'thread_count' => ThreadModel::where('postId', '=', $post->id)->where('locked', '=', false)->count(),
+                'poster' => $user,
+                'threads' => $threads
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -148,6 +156,27 @@ class PostsController extends Controller
             return response()->json(array('code' => 200, 'data' => $posts));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Add new thread post
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addThread($id)
+    {
+        try {
+            $attr = request()->validate([
+                'text' => 'required|max:4096'
+            ]);
+
+            $threadId = ThreadModel::add(auth()->id(), $id, $attr['text']);
+
+            return redirect('/p/' . $id . '#' . $threadId);
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 }

@@ -79,7 +79,11 @@
         <div class="tagcloud">
             <div class="tagcloud-title">{{ __('app.popular_tags') }}</div>
 
-            <div class="tagcloud-content is-wordbreak"><a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;<a href="#login">#loremipsum</a>&nbsp;</div>
+            <div class="tagcloud-content is-wordbreak">
+                @foreach ($taglist as $tag)
+                    <a href="#login">#{{ $tag->tag }}</a>
+                @endforeach
+            </div>
         </div>
     </div>
     <div class="column is-2 is-sidespacing"></div>

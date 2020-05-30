@@ -16,7 +16,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagsModelsTable extends Migration
+class CreateThreadModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -25,10 +25,13 @@ class CreateTagsModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags_models', function (Blueprint $table) {
+        Schema::create('thread_models', function (Blueprint $table) {
             $table->id();
-            $table->string('tag', 35);
+            $table->integer('userId');
+            $table->integer('postId');
+            $table->string('text', 4096);
             $table->integer('hearts')->default(0);
+            $table->integer('reports')->default(0);
             $table->boolean('locked')->default(false);
             $table->timestamps();
         });
@@ -41,6 +44,6 @@ class CreateTagsModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags_models');
+        Schema::dropIfExists('thread_models');
     }
 }

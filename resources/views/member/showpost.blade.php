@@ -13,9 +13,9 @@
 @extends('layouts.layout_member')
 
 @section('body')
-    <div class="column is-2 is-sidespacing"></div>
+    <div class="column is-4 is-sidespacing"></div>
 
-    <div class="column is-8">
+    <div class="column is-4">
         <div class="member-form">
             <div class="show-post-header">
                 <div class="show-post-avatar">
@@ -33,8 +33,8 @@
             </div>
 
             <div class="show-post-attributes">
-                <div class="is-inline-block"><i class="fas fa-heart"></i> 1024</div>
-                <div class="is-inline-block is-right" style="float:right;">234 comments</div>
+                <div class="is-inline-block"><i class="fas fa-heart"></i>&nbsp;{{ $post->hearts }}</div>
+                <div class="is-inline-block is-right" style="float:right;">{{ __('app.comment_count', ['count' => $post->thread_count]) }}</div>
             </div>
 
             <div class="show-post-description">
@@ -45,7 +45,11 @@
                 {{ $post->hashtags }}
             </div>
         </div>
+
+        <div class="member-form">
+            @include('member.thread', ['threads' => $threads, 'user' => $user])
+        </div>
     </div>
 
-    <div class="column is-2 is-sidespacing"></div>
+    <div class="column is-4 is-sidespacing"></div>
 @endsection

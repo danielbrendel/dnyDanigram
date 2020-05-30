@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
+use App\TagsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -53,6 +54,7 @@ class MainController extends Controller
                 'captcha' => CaptchaModel::createSum(session()->getId()),
                 'cookie_consent' => $this->cookie_consent,
                 'index_content' => AppModel::getIndexContent(),
+                'taglist' => TagsModel::getPopularTags()
             ]);
         } else {
             return redirect('/feed');

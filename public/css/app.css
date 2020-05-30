@@ -40,6 +40,10 @@ body {
   }
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .is-pointer {
   cursor: pointer;
 }
@@ -280,5 +284,76 @@ body {
   .fixed-frame-parent {
     display: none;
   }
+}
+
+.thread-input-header {
+  height: 150px;
+  width: 100%;
+}
+
+.thread-input-header-avatar {
+  margin-right: 15px;
+  width: 28px;
+  top: -110px;
+}
+
+.thread-input-header-avatar img {
+  border-radius: 50%;
+}
+
+.thread-input-header-text {
+  width: 87%;
+  height: 90%;
+}
+
+.thread-input-header-text textarea {
+  width: 100%;
+  height: 100%;
+}
+
+.thread-input-submit {
+  width: 100%;
+  margin-bottom: 55px;
+  margin-left: 46px;
+}
+
+.thread {
+  margin-bottom: 45px;
+}
+
+.thread-header {
+  margin-bottom: 25px;
+  color: #787878;
+  font-size: 0.8em;
+}
+
+.thread-header-avatar img {
+  border-radius: 50%;
+}
+
+.thread-header-info {
+  margin-left: 15px;
+  position: relative;
+  top: 10px;
+}
+
+.thread-text {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.thread-footer {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ccc;
+}
+
+.thread-footer-hearts {
+  display: inline-block;
+}
+
+.thread-footer-options {
+  font-size: 0.8em;
+  float: right;
+  display: inline-block;
 }
 
