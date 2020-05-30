@@ -1,0 +1,244 @@
+/*
+    Danigram (dnyDanigram) developed by Daniel Brendel
+
+        (C) 2019 - 2020 by Daniel Brendel
+
+    Version: 1.0
+    Contact: dbrendel1988<at>gmail<dot>com
+    GitHub: https://github.com/danielbrendel/
+
+    Released under the MIT license
+*/
+
+//General layout
+html, body {
+    width: 100%;
+    margin: 0 auto;
+}
+body {
+    background-size: cover;
+    padding: 0;
+    overflow-y: hidden;
+}
+.container {
+    margin-top: 25px;
+
+    @media screen and (max-width: 480px) {
+        margin: 0;
+        padding: 0;
+    }
+}
+.column {
+    @media screen and (max-width: 480px) {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+//General useful classes
+.is-pointer {
+    cursor: pointer;
+}
+.is-sidespacing {
+    @media screen and (max-width: 380px) {
+        display: none;
+    }
+}
+.is-wordbreak {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+.is-breakall {
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+.is-last-column {
+    margin-top: 25px;
+    margin-bottom: 75px;
+    @media screen and (max-width: 380px) {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}
+.mobile-margin-padding {
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 14px;
+}
+.info-headline {
+    color: rgb(100, 100, 100);
+}
+.is-member-background {
+    background-color: rgb(250, 250, 250);
+}
+.has-border-bottom {
+    border-bottom: 1px solid #ccc;
+}
+.is-app-title {
+    font-family: 'Segoe Script', 'Nunito', sans-serif;
+}
+.avatar {
+    border-radius: 50%;
+}
+.navbar-search {
+    position: relative;
+    top: 8px;
+    height: 25px;
+    width: 302px !important;
+}
+.navbar-search input[type=text] {
+    border-radius: 25px;
+}
+
+//Home styles
+.home-userarea {
+    position: relative;
+    @media screen and (min-width: 380px) {
+        background-color: rgb(250, 250, 250);
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    margin-top: 21px;
+}
+.home-userarea div h1 {
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-family: 'Segoe Script', 'Nunito', sans-serif;
+    margin-bottom: 25px;
+}
+.home-userarea-divisor {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.home-userarea-divisor hr {
+    background-color: rgb(150, 150, 148);
+}
+.home-userarea-recover {
+    position: relative;
+    display: inline-block;
+    float: right;
+    font-size: 0.8em;
+    top: 10px;
+}
+.home-userarea-register {
+    margin-bottom: 10px;
+}
+.home-userarea-register button {
+    width: 100%;
+}
+.home-bottombar {
+    width: 100%;
+    color: rgb(127, 138, 157);
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+.home-bottombar a {
+    color: rgb(32, 80, 125);
+}
+
+//Tag cloud infos
+.tagcloud {
+    position: relative;
+    margin-bottom: 55px;
+}
+.tagcloud-title {
+    margin-bottom: 25px;
+    color: rgb(150, 150, 150);
+}
+.tagcloud-content {
+    font-weight: bold;
+}
+
+//Cookie consent
+.cookie-consent {
+    position: relative;
+    display: none;
+    width: 100%;
+    background-color: rgb(60, 60, 58);
+    color: rgb(180, 180, 180);
+    font-size: 0.8em;
+}
+.cookie-consent-inner {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    padding: 24px;
+}
+.cookie-consent-button {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    float: right;
+    padding: 24px;
+}
+
+//Member area
+.member-form {
+    position: relative;
+    @media screen and (min-width: 380px) {
+        background-color: rgb(250, 250, 250);
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    margin-top: 21px;
+    margin-bottom: 25px;
+    padding: 21px;
+}
+.member-form div h1 {
+    margin-bottom: 70px;
+}
+
+//Posts
+.show-post-header {
+    position: relative;
+    color: rgb(120, 120, 120);
+}
+.show-post-avatar {
+    display: inline-block;
+}
+.show-post-avatar img {
+    border-radius: 50%;
+}
+.show-post-userinfo {
+    position: relative;
+    display: inline-block;
+    top: 15px;
+}
+.show-post-image {
+    margin-top: 35px;
+}
+.show-post-description {
+    margin-top: 45px;
+    margin-bottom: 15px;
+}
+
+//Feed
+.feed-nav {
+    margin-bottom: 45px;
+}
+
+//Fixed frame
+.fixed-frame {
+    position: fixed;
+    z-index: 2;
+    top: 125px;
+    margin-left: 50px;
+    width: 367px;
+    @media screen and (max-width: 1454px) {
+        display: none;
+    }
+}
+.fixed-frame-parent {
+    @media screen and (max-width: 1454px) {
+        display: none;
+    }
+}
