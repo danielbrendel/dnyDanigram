@@ -183,7 +183,38 @@ window.renderPost = function(elem)
                                    </div>
                         `;
     return html;
-}
+};
+
+window.renderThread = function(elem) {
+    let html = `
+        <a name="` + elem.id + `"></a>
+
+        <div class="thread-header">
+            <div class="thread-header-avatar is-inline-block">
+                <img width="24" height="24" src="` + window.location.origin + `/gfx/avatars/` + elem.user.avatar + `" class="is-pointer" onclick="location.href = '';" title="">
+            </div>
+
+            <div class="thread-header-info is-inline-block">
+                <div>` + elem.user.username + `</div>
+                <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
+            </div>
+        </div>
+
+        <div class="thread-text">
+            ` + elem.text + `
+        </div>
+
+        <div class="thread-footer">
+            <div class="thread-footer-hearts"><i class="far fa-heart"></i>&nbsp;` + elem.hearts + `</div>
+            <div class="thread-footer-options">
+                ` + ((elem.ownerOrAdmin) ? '<a href="">Edit</a> | <a href="">Delete</a> |' : '') + `
+                <a href="">Report</a>
+            </div>
+        </div>
+    `;
+
+    return html;
+};
 
 //Make vue instance available globally
 window.vue = vue;

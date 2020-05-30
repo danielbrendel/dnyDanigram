@@ -120,6 +120,21 @@
                 <br/>
             @endif
 
+            @if (Session::has('notice'))
+                <div id="notice-message" class="is-z-index-3">
+                    <article class="message is-info">
+                        <div class="message-header">
+                            <p>{{ __('app.notice') }}</p>
+                            <button class="delete" aria-label="delete" onclick="document.getElementById('notice-message').style.display = 'none';"></button>
+                        </div>
+                        <div class="message-body">
+                            {{ Session::get('notice') }}
+                        </div>
+                    </article>
+                </div>
+                <br/>
+            @endif
+
             @if (Session::has('success'))
                 <div id="success-message" class="is-z-index-3">
                     <article class="message is-success">

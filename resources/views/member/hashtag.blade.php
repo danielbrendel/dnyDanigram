@@ -18,12 +18,12 @@
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-4" id="feed-left">
-        <div class="feed-nav">
+        <div class="feed-nav member-form">
             <span><a id="linkFetchTop" href="javascript:void(0)" onclick="window.vue.setPostFetchType(1); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();">{{ __('app.top') }}</a></span> | <span><a id="linkFetchLatest" href="javascript:void(0)" onclick="window.vue.setPostFetchType(2); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();">{{ __('app.latest') }}</a></span>
         </div>
 
         <div id="feed"></div>
-        <div id="loading" style="display: none;"><i class="fas fa-spinner fa-spin"></i></div>
+        <div id="loading" style="display: none;"><center><i class="fas fa-spinner fa-spin"></i></center></div>
     </div>
 
     <div class="column is-4 fixed-frame-parent">
@@ -74,7 +74,7 @@
                 document.getElementById('linkFetchLatest').style.textDecoration = 'underline';
             }
 
-            window.vue.ajaxRequest('GET', '{{ url('/fetch') }}?type=' + window.vue.getPostFetchType() + '&hashtag=' + window.hashtag + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
+            window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + '&hashtag=' + window.hashtag + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
                 if (response.code == 200) {
                     response.data.forEach(function(elem, index) {
                         let insertHtml = renderPost(elem);

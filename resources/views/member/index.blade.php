@@ -23,7 +23,7 @@
         </div>
 
         <div id="feed"></div>
-        <div id="loading" style="display: none;"><i class="fas fa-spinner fa-spin"></i></div>
+        <div id="loading" style="display: none;"><center><i class="fas fa-spinner fa-spin"></i></center></div>
     </div>
 
     <div class="column is-4 fixed-frame-parent">
@@ -71,7 +71,7 @@
                 document.getElementById('linkFetchLatest').style.textDecoration = 'underline';
             }
 
-            window.vue.ajaxRequest('GET', '{{ url('/fetch') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
+            window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
                 if (response.code == 200) {
                     response.data.forEach(function(elem, index) {
                        let insertHtml = renderPost(elem);

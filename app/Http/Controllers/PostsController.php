@@ -82,6 +82,7 @@ class PostsController extends Controller
             $user = User::where('id', '=', $post->userId)->first();
 
             $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
+            $post->hashtags = explode(' ', trim($post->hashtags));
 
             $threads = ThreadModel::getFromPost($post->id);
             foreach ($threads as &$thread) {
@@ -135,11 +136,18 @@ class PostsController extends Controller
         try {
             $tag = TagsModel::where('tag', '=', $hashtag)->first();
             if (!$tag) {
-                return back()->with('error', __('app.hashtag_not_yet_used'));
+                return back()->with('notice', __('app.hashtag_not_yet_used'));
+            }
+
+            $user = User::getByAuthId();
+            if ($user) {
+                $user->stats = new stdClass();
+                $user->stats->posts = PostModel::where('userId', '=', $user->id)->count();
+                $user->stats->comments = ThreadModel::where('userId', '=', $user->id)->count();
             }
 
             return view('member.hashtag', [
-                'user' => User::getByAuthId(),
+                'user' => $user,
                 'taglist' => TagsModel::getPopularTags(),
                 'hashtag' => $hashtag,
                 'tagdata' => $tag
@@ -154,7 +162,7 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function fetch()
+    public function fetchPosts()
     {
         try {
             $type = request('type', PostModel::FETCH_TOP);
@@ -171,6 +179,30 @@ class PostsController extends Controller
             }
 
             return response()->json(array('code' => 200, 'data' => $posts));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Fetch thread comment pack
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchThread()
+    {
+        try {
+            $post = request('post');
+            $paginate = request('paginate', null);
+
+            $threads = ThreadModel::getFromPost($post, $paginate);
+            foreach ($threads as &$thread) {
+                $thread->user = User::get($thread->userId);
+                $thread->hearts = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread->id)->count();
+                $thread->adminOrOwner = User::isAdmin(auth()->id()) || ($thread->userId === auth()->id());
+            }
+
+            return response()->json(array('code' => 200, 'data' => $threads, 'last' => $threads[count($threads)-1]->id === 1));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

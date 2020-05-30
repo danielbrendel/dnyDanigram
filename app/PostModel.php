@@ -273,6 +273,7 @@ class PostModel extends Model
      *
      * @param $type
      * @param $limit
+     * @param $hashtag
      * @param null $paginateFrom
      * @return mixed
      * @throws \Exception

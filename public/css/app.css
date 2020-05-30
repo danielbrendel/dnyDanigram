@@ -122,6 +122,10 @@ a:hover {
   color: #787878;
 }
 
+.is-color-grey {
+  color: #787878;
+}
+
 .is-hearted {
   color: #d20000 !important;
 }

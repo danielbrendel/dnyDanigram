@@ -72,6 +72,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Return admin flag value
+     * @param $id
+     * @return bool
+     */
+    public static function isAdmin($id)
+    {
+        $user = static::get($id);
+
+        if (($user) && ($user->admin)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get user object by email
      *
      * @param string $email The E-Mail address

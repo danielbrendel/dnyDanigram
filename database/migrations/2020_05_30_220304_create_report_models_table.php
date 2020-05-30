@@ -29,7 +29,7 @@ class CreateReportModelsTable extends Migration
             $table->id();
             $table->integer('userId');
             $table->integer('entityId');
-            $table->string('type'); //ENT_POST, ENT_TAG, ENT_COMMENT
+            $table->string('type'); //ENT_POST, ENT_TAG, ENT_COMMENT, ENT_USER
             $table->timestamps();
         });
     }

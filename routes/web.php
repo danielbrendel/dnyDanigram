@@ -23,7 +23,8 @@ Route::get('/imprint', 'MainController@imprint');
 
 Route::get('/feed', 'PostsController@feed');
 Route::get('/t/{hashtag}', 'PostsController@hashtag');
-Route::get('/fetch', 'PostsController@fetch');
+Route::get('/fetch/posts', 'PostsController@fetchPosts');
+Route::get('/fetch/thread', 'PostsController@fetchThread');
 Route::get('/upload', 'PostsController@viewUpload');
 Route::post('/upload', 'PostsController@upload');
 Route::get('/p/{id}', 'PostsController@showPost');
