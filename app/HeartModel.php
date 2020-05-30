@@ -32,7 +32,7 @@ class HeartModel extends Model
     private static function validateEntityType($type)
     {
         try {
-            $types = array('ENT_POST', 'ENT_HASHTAG');
+            $types = array('ENT_POST', 'ENT_HASHTAG', 'ENT_COMMENT');
 
             if (!in_array($type, $types)) {
                 throw new \Exception('Unknown type: ' . $type, 404);
@@ -104,6 +104,8 @@ class HeartModel extends Model
     public static function hasUserHearted($userId, $entityId, $entType)
     {
         try {
+            static::validateEntityType($entType);
+
             $heart = HeartModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->first();
 
             return $heart !== null;

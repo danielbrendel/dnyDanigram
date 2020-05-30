@@ -21,12 +21,14 @@ body {
     overflow-y: hidden;
 }
 .container {
-    margin-top: 25px;
+    margin-top: 74px;
 
     @media screen and (max-width: 480px) {
         margin: 0;
         padding: 0;
     }
+
+    z-index: 1;
 }
 .column {
     @media screen and (max-width: 480px) {
@@ -76,6 +78,9 @@ a:hover {
     margin-right: 15px;
     padding: 14px;
 }
+.is-z-index-3 {
+    z-index: 3;
+}
 .info-headline {
     color: rgb(100, 100, 100);
 }
@@ -87,6 +92,21 @@ a:hover {
 }
 .is-app-title {
     font-family: 'Segoe Script', 'Nunito', sans-serif;
+}
+.is-about-nav {
+    color: rgb(120, 120, 120);
+}
+.is-about-nav a {
+    color: rgb(80, 80, 80);
+}
+.is-default-headline-color {
+    color: rgb(120, 120, 120);
+}
+.is-hearted {
+    color: rgb(210, 0, 0) !important;
+}
+.is-no-border {
+    border: none !important;
 }
 .avatar {
     border-radius: 50%;
@@ -233,7 +253,7 @@ a:hover {
 .fixed-frame {
     position: fixed;
     z-index: 2;
-    top: 125px;
+    top: 74px;
     margin-left: 50px;
     width: 367px;
     @media screen and (max-width: 1454px) {
@@ -303,4 +323,50 @@ a:hover {
     font-size: 0.8em;
     float: right;
     display: inline-block;
+}
+
+//Tag list
+.taglist-item {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.taglist-item-left {
+}
+.taglist-item-right {
+    float: right;
+}
+
+//User info
+.userinfo-header {
+    margin-bottom: 15px;
+    display: inline-block;
+    color: rgb(120, 120, 120);
+}
+.userinfo-image {
+    margin-right: 15px;
+}
+.userinfo-image img {
+    border-radius: 50%;
+}
+.userinfo-bio {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+.userinfo-stats {
+    margin-top: 15px;
+}
+
+//Admin badge
+.badge-admin {
+    background-color: indianred;
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 4px;
+    color: rgb(255, 255, 255);
+    font-size: 0.6em;
+    text-align: center;
+}
+.badge-admin p {
+    padding: 4px;
+    font-weight: bold;
 }

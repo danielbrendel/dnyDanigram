@@ -23,7 +23,8 @@ body {
 }
 
 .container {
-  margin-top: 25px;
+  margin-top: 74px;
+  z-index: 1;
 }
 
 @media screen and (max-width: 480px) {
@@ -89,6 +90,10 @@ a:hover {
   padding: 14px;
 }
 
+.is-z-index-3 {
+  z-index: 3;
+}
+
 .info-headline {
   color: #646464;
 }
@@ -103,6 +108,26 @@ a:hover {
 
 .is-app-title {
   font-family: "Segoe Script", "Nunito", sans-serif;
+}
+
+.is-about-nav {
+  color: #787878;
+}
+
+.is-about-nav a {
+  color: #505050;
+}
+
+.is-default-headline-color {
+  color: #787878;
+}
+
+.is-hearted {
+  color: #d20000 !important;
+}
+
+.is-no-border {
+  border: none !important;
 }
 
 .avatar {
@@ -269,7 +294,7 @@ a:hover {
 .fixed-frame {
   position: fixed;
   z-index: 2;
-  top: 125px;
+  top: 74px;
   margin-left: 50px;
   width: 367px;
 }
@@ -355,5 +380,52 @@ a:hover {
   font-size: 0.8em;
   float: right;
   display: inline-block;
+}
+
+.taglist-item {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.taglist-item-right {
+  float: right;
+}
+
+.userinfo-header {
+  margin-bottom: 15px;
+  display: inline-block;
+  color: #787878;
+}
+
+.userinfo-image {
+  margin-right: 15px;
+}
+
+.userinfo-image img {
+  border-radius: 50%;
+}
+
+.userinfo-bio {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+.userinfo-stats {
+  margin-top: 15px;
+}
+
+.badge-admin {
+  background-color: indianred;
+  border: 1px solid red;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.6em;
+  text-align: center;
+}
+
+.badge-admin p {
+  padding: 4px;
+  font-weight: bold;
 }
 

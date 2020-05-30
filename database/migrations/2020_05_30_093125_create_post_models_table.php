@@ -19,8 +19,6 @@ class CreatePostModelsTable extends Migration
             $table->string('image_thumb');
             $table->text('description');
             $table->string('hashtags', 512);
-            $table->integer('hearts')->default(0);
-            $table->integer('reports')->default(0);
             $table->integer('userId');
             $table->boolean('locked')->default(false);
             $table->timestamps();

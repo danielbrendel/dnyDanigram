@@ -12,6 +12,8 @@
 
 @extends('layouts.layout_member')
 
+@section('title', env('APP_NAME'))
+
 @section('body')
     <div class="column is-2 is-sidespacing"></div>
 

@@ -12,11 +12,13 @@
 
 @extends('layouts.layout_member')
 
+@section('title', env('APP_NAME'))
+
 @section('body')
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-4" id="feed-left">
-        <div class="feed-nav">
+        <div class="feed-nav member-form">
             <span><a id="linkFetchTop" href="javascript:void(0)" onclick="window.vue.setPostFetchType(1); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();">{{ __('app.top') }}</a></span> | <span><a id="linkFetchLatest" href="javascript:void(0)" onclick="window.vue.setPostFetchType(2); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();">{{ __('app.latest') }}</a></span>
         </div>
 

@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
+use App\HeartModel;
 use App\PostModel;
 use App\TagsModel;
 use App\ThreadModel;
@@ -22,6 +23,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use stdClass;
 
 class PostsController extends Controller
 {
@@ -79,6 +81,8 @@ class PostsController extends Controller
             $post = PostModel::getPost($id);
             $user = User::where('id', '=', $post->userId)->first();
 
+            $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
+
             $threads = ThreadModel::getFromPost($post->id);
             foreach ($threads as &$thread) {
                 $thread->user = User::get($thread->userId);
@@ -104,8 +108,15 @@ class PostsController extends Controller
     public function feed()
     {
         try {
+            $user = User::getByAuthId();
+            if ($user) {
+                $user->stats = new stdClass();
+                $user->stats->posts = PostModel::where('userId', '=', $user->id)->count();
+                $user->stats->comments = ThreadModel::where('userId', '=', $user->id)->count();
+            }
+
             return view('member.index', [
-                'user' => User::getByAuthId(),
+                'user' => $user,
                 'taglist' => TagsModel::getPopularTags()
             ]);
         } catch (Exception $e) {
@@ -117,12 +128,15 @@ class PostsController extends Controller
      * Show hashtag feed
      *
      * @param $hashtag
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return mixed
      */
     public function hashtag($hashtag)
     {
         try {
             $tag = TagsModel::where('tag', '=', $hashtag)->first();
+            if (!$tag) {
+                return back()->with('error', __('app.hashtag_not_yet_used'));
+            }
 
             return view('member.hashtag', [
                 'user' => User::getByAuthId(),
@@ -151,6 +165,9 @@ class PostsController extends Controller
             foreach ($posts as &$post) {
                 $post->diffForHumans = $post->created_at->diffForHumans();
                 $post->user = User::get($post->userId);
+                $post->comment_count = ThreadModel::where('postId', '=', $post->id)->count();
+                $post->userHearted = HeartModel::hasUserHearted(auth()->id(), $post->id, 'ENT_POST');
+                $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
             }
 
             return response()->json(array('code' => 200, 'data' => $posts));
@@ -177,6 +194,29 @@ class PostsController extends Controller
             return redirect('/p/' . $id . '#' . $threadId);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Set heart value to post
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function heartPost()
+    {
+        try {
+            $attr['post'] = request('post');
+            $attr['value'] = request('value');
+
+            if ($attr['value']) {
+                HeartModel::addHeart(auth()->id(), $attr['post'], 'ENT_POST');
+            } else {
+                HeartModel::removeHeart(auth()->id(), $attr['post'], 'ENT_POST');
+            }
+
+            return response()->json(array('code' => 200, 'value' => $attr['value'], 'count' => HeartModel::where('entityId', '=', $attr['post'])->where('type', '=', 'ENT_POST')->count()));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 }

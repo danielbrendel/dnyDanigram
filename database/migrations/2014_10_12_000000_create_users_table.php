@@ -35,7 +35,9 @@ class CreateUsersTable extends Migration
             $table->string('account_confirm')->nullable()->default('');
             $table->string('password_reset')->nullable();
             $table->string('avatar');
+            $table->string('bio', 1024)->default('');
             $table->boolean('deactivated')->default(false);
+            $table->boolean('admin')->default(false);
             $table->timestamps();
         });
     }

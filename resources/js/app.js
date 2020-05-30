@@ -119,12 +119,38 @@ let vue = new Vue({
                         finalfunc();
                 }
             );
+        },
+
+        toggleHeart: function(elemId) {
+            let obj = document.getElementById('heart-' + elemId);
+
+            this.ajaxRequest('post', window.location.origin + '/p/heart', { post: elemId, value: !parseInt(obj.getAttribute('data-value'))}, function(response) {
+               if (response.code === 200) {
+                   if (response.value) {
+                       obj.classList.remove('far', 'fa-heart');
+                       obj.classList.add('fas', 'fa-heart', 'is-hearted');
+                   } else {
+                       obj.classList.remove('fas', 'fa-heart', 'is-hearted');
+                       obj.classList.add('far', 'fa-heart');
+                   }
+
+                   obj.setAttribute('data-value', ((response.value) ? '1' : '0'));
+
+                   document.getElementById('count-' + elemId).innerHTML = response.count;
+               }
+            });
         }
     }
 });
 
 window.renderPost = function(elem)
 {
+    let hashTags = '';
+    let hashArr = elem.hashtags.trim().split(' ');
+    hashArr.forEach(function (elem, index) {
+        hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
+    });
+
     let html = `
                             <div class="member-form">
                             <div class="show-post-header">
@@ -143,8 +169,8 @@ window.renderPost = function(elem)
                             </div>
 
                             <div class="show-post-attributes">
-                                <div class="is-inline-block"><i class="fas fa-heart"></i> ` + elem.hearts + `</div>
-                                <div class="is-inline-block is-right" style="float:right;">234 comments</div>
+                                <div class="is-inline-block"><i id="heart-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `)" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i> <span id="count-` + elem.id + `">` + elem.hearts + `</span></div>
+                                <div class="is-inline-block is-right" style="float:right;"><a href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 
                             <div class="show-post-description">
@@ -152,7 +178,7 @@ window.renderPost = function(elem)
                                        </div>
 
                                        <div class="show-post-hashtags">
-                                        ` + elem.hashtags + `
+                                        ` + hashTags + `
                                        </div>
                                    </div>
                         `;

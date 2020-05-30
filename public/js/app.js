@@ -199,12 +199,37 @@ var vue = new Vue({
       })["finally"](function () {
         finalfunc();
       });
+    },
+    toggleHeart: function toggleHeart(elemId) {
+      var obj = document.getElementById('heart-' + elemId);
+      this.ajaxRequest('post', window.location.origin + '/p/heart', {
+        post: elemId,
+        value: !parseInt(obj.getAttribute('data-value'))
+      }, function (response) {
+        if (response.code === 200) {
+          if (response.value) {
+            obj.classList.remove('far', 'fa-heart');
+            obj.classList.add('fas', 'fa-heart', 'is-hearted');
+          } else {
+            obj.classList.remove('fas', 'fa-heart', 'is-hearted');
+            obj.classList.add('far', 'fa-heart');
+          }
+
+          obj.setAttribute('data-value', response.value ? '1' : '0');
+          document.getElementById('count-' + elemId).innerHTML = response.count;
+        }
+      });
     }
   }
 });
 
 window.renderPost = function (elem) {
-  var html = "\n                            <div class=\"member-form\">\n                            <div class=\"show-post-header\">\n                                <div class=\"show-post-avatar\">\n                                    <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href='" + window.location.origin + "/u/" + elem.user.id + "'\">\n                                </div>\n\n                                <div class=\"show-post-userinfo\">\n                                    <div>" + elem.user.username + "</div>\n                                    <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                                </div>\n                            </div>\n\n                            <div class=\"show-post-image\">\n                                <img class=\"is-pointer\" src=\"" + window.location.origin + "/gfx/posts/" + elem.image_thumb + "\" onclick=\"location.href='" + window.location.origin + '/p/' + elem.id + "'\">\n                            </div>\n\n                            <div class=\"show-post-attributes\">\n                                <div class=\"is-inline-block\"><i class=\"fas fa-heart\"></i> " + elem.hearts + "</div>\n                                <div class=\"is-inline-block is-right\" style=\"float:right;\">234 comments</div>\n                            </div>\n\n                            <div class=\"show-post-description\">\n                                " + elem.description + "\n                                       </div>\n\n                                       <div class=\"show-post-hashtags\">\n                                        " + elem.hashtags + "\n                                       </div>\n                                   </div>\n                        ";
+  var hashTags = '';
+  var hashArr = elem.hashtags.trim().split(' ');
+  hashArr.forEach(function (elem, index) {
+    hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
+  });
+  var html = "\n                            <div class=\"member-form\">\n                            <div class=\"show-post-header\">\n                                <div class=\"show-post-avatar\">\n                                    <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href='" + window.location.origin + "/u/" + elem.user.id + "'\">\n                                </div>\n\n                                <div class=\"show-post-userinfo\">\n                                    <div>" + elem.user.username + "</div>\n                                    <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                                </div>\n                            </div>\n\n                            <div class=\"show-post-image\">\n                                <img class=\"is-pointer\" src=\"" + window.location.origin + "/gfx/posts/" + elem.image_thumb + "\" onclick=\"location.href='" + window.location.origin + '/p/' + elem.id + "'\">\n                            </div>\n\n                            <div class=\"show-post-attributes\">\n                                <div class=\"is-inline-block\"><i id=\"heart-" + elem.id + "\" class=\"" + (elem.userHearted ? 'fas fa-heart is-hearted' : 'far fa-heart') + " is-pointer\" onclick=\"window.vue.toggleHeart(" + elem.id + ")\" data-value=\"" + (elem.userHearted ? '1' : '0') + "\"></i> <span id=\"count-" + elem.id + "\">" + elem.hearts + "</span></div>\n                                <div class=\"is-inline-block is-right\" style=\"float:right;\"><a href=\"" + window.location.origin + "/p/" + elem.id + "#thread\">" + elem.comment_count + " comments</a></div>\n                            </div>\n\n                            <div class=\"show-post-description\">\n                                " + elem.description + "\n                                       </div>\n\n                                       <div class=\"show-post-hashtags\">\n                                        " + hashTags + "\n                                       </div>\n                                   </div>\n                        ";
   return html;
 }; //Make vue instance available globally
 

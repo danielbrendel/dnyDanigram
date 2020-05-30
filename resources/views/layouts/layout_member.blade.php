@@ -36,7 +36,7 @@
     </head>
 
     <body class="is-member-background">
-        <nav class="navbar has-border-bottom" role="navigation" aria-label="main navigation">
+        <nav class="navbar has-border-bottom is-fixed-top" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item is-app-title" href="{{ url('/') }}">
                     <strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}
@@ -55,18 +55,14 @@
                 </div>
 
                 <center>
-                    <form method="POST" action="">
-                        @csrf
-
-                        <div class="field navbar-search">
-                            <p class="control has-icons-right">
-                                <input type="text" name="hashtag" placeholder="{{ __('app.search_jump_to_hashtag') }}">
-                                <span class="icon is-small is-right is-top-navbar">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                            </p>
-                        </div>
-                    </form>
+                    <div class="field navbar-search">
+                        <p class="control has-icons-right">
+                            <input type="text" name="hashtag" placeholder="{{ __('app.search_jump_to_hashtag') }}" onkeypress="if (event.which === 13) location.href='{{ url('/t') }}/' + this.value;">
+                            <span class="icon is-small is-right is-top-navbar">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </p>
+                    </div>
                 </center>
 
                 <div class="navbar-end">
@@ -93,7 +89,7 @@
 
         <div id="main" class="container">
             @if ($errors->any())
-                <div id="error-message-1">
+                <div id="error-message-1" class="is-z-index-3">
                     <article class="message is-danger">
                         <div class="message-header">
                             <p>{{ __('app.error') }}</p>
@@ -110,7 +106,7 @@
             @endif
 
             @if (Session::has('error'))
-                <div id="error-message-2">
+                <div id="error-message-2" class="is-z-index-3">
                     <article class="message is-danger">
                         <div class="message-header">
                             <p>{{ __('app.error') }}</p>
@@ -125,7 +121,7 @@
             @endif
 
             @if (Session::has('success'))
-                <div id="success-message">
+                <div id="success-message" class="is-z-index-3">
                     <article class="message is-success">
                         <div class="message-header">
                             <p>{{ __('app.success') }}</p>

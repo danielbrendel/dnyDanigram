@@ -31,6 +31,8 @@
 </div>
 
 <div class="thread">
+    <a name="thread"></a>
+
     @foreach ($threads as $thread)
         <a name="{{ $thread->id }}"></a>
 
