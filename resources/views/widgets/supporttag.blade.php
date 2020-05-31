@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-<div class="member-form">
-    <strong>{{ __('app.support_hashtag') }}: <i class="far fa-heart is-pointer"></i> {{ $heart_count }}</strong>
-</div>
+
+<strong>{{ __('app.support_hashtag') }}<i class="far fa-heart is-pointer"></i> {{ $heart_count }}</strong>
+
 

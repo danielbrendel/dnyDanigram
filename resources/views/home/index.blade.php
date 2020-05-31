@@ -30,7 +30,7 @@
                 <div class="field">
                     <label class="label">{{ __('app.email') }}</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="email" name="email" placeholder="name@domain.com">
+                        <input class="input" type="email" name="email" placeholder="name@domain.com" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -40,7 +40,7 @@
                 <div class="field">
                     <label class="label">{{ __('app.password') }}</label>
                     <div class="control">
-                        <input class="input" type="password" name="password" placeholder="{{ __('app.password') }}">
+                        <input class="input" type="password" name="password" placeholder="{{ __('app.password') }}" required>
                     </div>
                 </div>
 

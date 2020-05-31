@@ -28,8 +28,21 @@
 
     <div class="column is-4 fixed-frame-parent">
         <div class="fixed-frame">
-            @include('member.support_tag', ['heart_count' => $tagdata->hearts])
-            @include('member.fixed_frame')
+            <div class="member-form">
+                @include('widgets.supporttag', ['heart_count' => $tagdata->hearts])
+            </div>
+
+            <div class="member-form">
+                @include('widgets.populartags')
+            </div>
+
+            <div class="member-form">
+                @include('widgets.taginfo')
+            </div>
+
+            <div class="member-form">
+                @include('widgets.company')
+            </div>
         </div>
     </div>
 

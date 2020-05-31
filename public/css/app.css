@@ -130,6 +130,10 @@ a:hover {
   color: #d20000 !important;
 }
 
+.is-stretched {
+  width: 100% !important;
+}
+
 .is-no-border {
   border: none !important;
 }

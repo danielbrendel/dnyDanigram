@@ -34,7 +34,7 @@
 
             <div class="show-post-attributes">
                 <div class="is-inline-block"><i class="fas fa-heart"></i>&nbsp;{{ $post->hearts }}</div>
-                <div class="is-inline-block is-right" style="float:right;">{{ __('app.comment_count', ['count' => $post->thread_count]) }}</div>
+                <div class="is-inline-block is-right" style="float:right;">{{ __('app.comment_count', ['count' => $thread_count]) }}</div>
             </div>
 
             <div class="show-post-description">

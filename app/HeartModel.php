@@ -65,6 +65,14 @@ class HeartModel extends Model
             $heart->entityId = $entityId;
             $heart->type = $entType;
             $heart->save();
+
+            if ($entType === 'ENT_POST') {
+                $post = PostModel::where('id', '=', $entityId)->first();
+                if ($post) {
+                    $post->hearts++;
+                    $post->save();
+                }
+            }
         } catch (\Exception $e) {
             throw $e;
         }
@@ -88,6 +96,14 @@ class HeartModel extends Model
             }
 
             $heart->delete();
+
+            if ($entType === 'ENT_POST') {
+                $post = PostModel::where('id', '=', $entityId)->first();
+                if ($post) {
+                    $post->hearts--;
+                    $post->save();
+                }
+            }
         } catch (\Exception $e) {
             throw $e;
         }

@@ -21,6 +21,7 @@ use App\TagsModel;
 use App\ThreadModel;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use stdClass;
@@ -139,6 +140,36 @@ class PostsController extends Controller
                 return back()->with('notice', __('app.hashtag_not_yet_used'));
             }
 
+            $tag->stats = new stdClass();
+            $tag->stats->posts = Cache::remember('tag_stats_posts', 3600 * 24, function () use ($hashtag) {
+                return PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->count();
+            });
+            $tag->stats->comments = Cache::remember('tag_stats_comments', 3600 * 24, function () use ($hashtag) {
+                $comments = 0;
+                $posts = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->get();
+                foreach ($posts as $post) {
+                    $comments += ThreadModel::where('postId', '=', $post->id)->count();
+                }
+                return $comments;
+            });
+            $tag->stats->hearts = Cache::remember('tag_stats_hearts', 3600 * 24, function () use ($hashtag) {
+                $hearts = 0;
+                $posts = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->get();
+                foreach ($posts as $post) {
+                    $hearts += HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
+                }
+                return $hearts;
+            });
+
+            $tag->top_image = Cache::remember('tag_top_image', 24, function() use ($hashtag) {
+               $post = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->orderBy('hearts', 'desc')->first();
+               if ($post) {
+                   return $post->image_thumb;
+               }
+
+               return null;
+            });
+
             $user = User::getByAuthId();
             if ($user) {
                 $user->stats = new stdClass();
@@ -150,6 +181,7 @@ class PostsController extends Controller
                 'user' => $user,
                 'taglist' => TagsModel::getPopularTags(),
                 'hashtag' => $hashtag,
+                'tag' => $tag,
                 'tagdata' => $tag
             ]);
         } catch (Exception $e) {

@@ -137,7 +137,7 @@ class MainController extends Controller
                 'email' => $attr['email'],
                 'password' => $attr['password']
             ])) {
-                return redirect('/')->with('success', __('app.login_welcome_back'));
+                return redirect('/feed');
             } else {
                 return back()->with('error', __('app.login_failed'));
             }

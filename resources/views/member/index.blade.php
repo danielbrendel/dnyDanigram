@@ -28,7 +28,17 @@
 
     <div class="column is-4 fixed-frame-parent">
         <div class="fixed-frame">
-            @include('member.fixed_frame')
+            <div class="member-form">
+                @include('widgets.populartags')
+            </div>
+
+            <div class="member-form">
+                @include('widgets.userinfo')
+            </div>
+
+            <div class="member-form">
+                @include('widgets.company')
+            </div>
         </div>
     </div>
 

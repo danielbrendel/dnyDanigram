@@ -13,6 +13,8 @@
 <!doctype html>
 <html lang="{{ App::getLocale()  }}">
     <head>
+        @include('layouts.layout_ga')
+
         <meta charset="utf-8">
         <meta name="author" content="{{ env('APP_AUTHOR') }}">
         <meta name="description" content="{{ env('APP_DESCRIPTION') }}">
@@ -74,13 +76,19 @@
 
                     <div class="navbar-item">
                         <div>
-                            <i class="far fa-heart fa-lg is-pointer" title="{{ __('app.member_notifications') }}"  onclick="location.href='{{ url('/notifications') }}';"></i>
+                            <i class="far fa-heart fa-lg is-pointer" title="{{ __('app.notifications') }}"  onclick="location.href='{{ url('/notifications') }}';"></i>
                         </div>
                     </div>
 
                     <div class="navbar-item">
                         <div>
-                            <img class="avatar is-pointer" src="{{ asset('gfx/avatars/' . $user->avatar) }}" title="{{ __('member_profile') }}"  onclick="location.href='{{ url('/profile') }}';">
+                            <img class="avatar is-pointer" src="{{ asset('gfx/avatars/' . $user->avatar) }}" title="{{ __('app.profile') }}"  onclick="location.href='{{ url('/profile') }}';">
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <div>
+                            <i class="fas fa-sign-out-alt fa-lg is-pointer" title="{{ __('app.logout') }}"  onclick="location.href='{{ url('/logout') }}';"></i>
                         </div>
                     </div>
                 </div>
