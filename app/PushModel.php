@@ -33,7 +33,7 @@ class PushModel extends Model
     private static function validatePushType($type)
     {
         try {
-            $types = array('push_hearted', 'push_commented', 'push_highlighted');
+            $types = array('PUSH_HEARTED', 'PUSH_COMMENTED', 'PUSH_HIGHLIGHTED');
             if (!in_array($type, $types)) {
                 throw new \Exception('Invalid notification type: ' . $type);
             }
@@ -45,19 +45,22 @@ class PushModel extends Model
     /**
      * Add a notification to the list
      *
-     * @param string $message The message content
+     * @param $shortMsg
+     * @param $longMsg
      * @param $type
      * @param int $userId The user ID
      * @return void
+     * @throws \Exception
      */
-    public static function addNotification($message, $type, $userId)
+    public static function addNotification($shortMsg, $longMsg, $type, $userId)
     {
         try {
             static::validatePushType($type);
 
             $entry = new PushModel();
             $entry->type = $type;
-            $entry->message = $message;
+            $entry->shortMsg = $shortMsg;
+            $entry->longMsg = $longMsg;
             $entry->seen = false;
             $entry->userId = $userId;
             $entry->save();

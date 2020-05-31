@@ -240,6 +240,7 @@ class PostsController extends Controller
                 $thread->hearts = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread->id)->count();
                 $thread->adminOrOwner = User::isAdmin(auth()->id()) || ($thread->userId === auth()->id());
                 $thread->userHearted = HeartModel::hasUserHearted(auth()->id(), $thread->id, 'ENT_COMMENT');
+                $thread->diffForHumans = $thread->created_at->diffForHumans();
             }
 
             return response()->json(array('code' => 200, 'data' => $threads, 'last' => (count($threads) === 0)));

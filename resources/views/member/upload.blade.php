@@ -12,13 +12,15 @@
 
 @extends('layouts.layout_member')
 
+@section('title', env('APP_NAME') . ' - ' . __('app.post_title'))
+
 @section('body')
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-8">
-        <div class="member-form">
+        <div class="member-form is-default-padding">
             <div>
-                <h1>{{ __('app.upload_title') }}</h1>
+                <h1>{{ __('app.post_title') }}</h1>
             </div>
 
             <div>
@@ -32,14 +34,14 @@
                     <div class="field">
                         <label class="label">{{ __('app.description') }}</label>
                         <div class="control">
-                            <textarea class="textarea" name="description" placeholder="{{ __('app.upload_description') }}"></textarea>
+                            <textarea class="textarea" name="description" placeholder="{{ __('app.post_description') }}"></textarea>
                         </div>
                     </div>
 
                     <div class="field">
                         <label class="label">{{ __('app.hashtags') }}</label>
                         <div class="control">
-                            <textarea class="textarea" name="hashtags" placeholder="{{ __('app.upload_hashtags') }}"></textarea>
+                            <textarea class="textarea" name="hashtags" placeholder="{{ __('app.post_hashtags') }}"></textarea>
                         </div>
                     </div>
 
@@ -48,11 +50,12 @@
                     </div>
 
                     <div>
-                        <input type="submit" value="{{ __('app.upload_button') }}"/>
+                        <input type="submit" value="{{ __('app.post_button') }}"/>
                     </div>
                 </form>
             </div>
         </div>
+        <br/><br/>
     </div>
 
     <div class="column is-2 is-sidespacing"></div>

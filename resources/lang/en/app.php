@@ -98,5 +98,19 @@ return [
     'hash_not_found' => 'The given hash is not valid',
     'no_comments_yet' => 'There are no comments posted yet',
     'no_more_comments' => 'No more comments',
-    'no_notifications_yet' => 'No notifications yet'
+    'no_notifications_yet' => 'No notifications yet',
+    'user_posted_comment' => 'User :name commented on your <a href=":item">post</a>: :msg',
+    'user_posted_comment_short' => 'User :name commented on your post',
+    'user_hearted_post_short' => 'User :name has liked your post',
+    'user_hearted_post' => 'User :name has liked your <a href=":item">post</a>',
+    'user_hearted_comment_short' => 'User :name has liked your comment',
+    'user_hearted_comment' => 'User :name has liked your <a href=":item">comment</a>',
+    'user_highlighted_short' => 'User :name has mentioned you',
+    'user_highlighted' => 'User :name has <a href=":item">mentioned</a> you',
+    'post_title' => 'Submit new post',
+    'description' => 'Description',
+    'hashtags' => 'Hashtags',
+    'post_button' => 'Post',
+    'post_description' => 'Enter your description. Use @name to highlight users',
+    'post_hashtags' => '#tag1 #tag2 #tag3 #tag4'
 ];

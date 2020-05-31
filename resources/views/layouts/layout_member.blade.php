@@ -294,7 +294,7 @@
 
                         response.data.forEach(function(elem, index) {
                             Push.create('{{ env('APP_NAME') }}', {
-                                body: elem.message,
+                                body: elem.shortMsg,
                                 icon: '{{ asset('gfx/logo.png') }}',
                                 timeout: 4000,
                                 onClick: function () {

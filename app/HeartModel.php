@@ -66,11 +66,17 @@ class HeartModel extends Model
             $heart->type = $entType;
             $heart->save();
 
+            $user = User::get($userId);
+
             if ($entType === 'ENT_POST') {
                 $post = PostModel::where('id', '=', $entityId)->first();
                 if ($post) {
                     $post->hearts++;
                     $post->save();
+
+                    if ($userId !== $post->userId) {
+                        PushModel::addNotification(__('app.user_hearted_post_short', ['name' => $user->username]), __('app.user_hearted_post', ['name' => $user->username, 'item' => url('/p/' . $entityId)]), 'PUSH_HEARTED', $post->userId);
+                    }
                 }
             } else if ($entType === 'ENT_HASHTAG') {
                 $tag = TagsModel::where('id', '=', $entityId)->first();
@@ -83,6 +89,10 @@ class HeartModel extends Model
                 if ($comment) {
                     $comment->hearts++;
                     $comment->save();
+
+                    if ($userId !== $comment->userId) {
+                        PushModel::addNotification(__('app.user_hearted_comment_short', ['name' => $user->username]), __('app.user_hearted_comment', ['name' => $user->username, 'item' => url('/p/' . $comment->postId . '#' . $entityId)]), 'PUSH_HEARTED', $comment->userId);
+                    }
                 }
             }
         } catch (\Exception $e) {

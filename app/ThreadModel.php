@@ -30,11 +30,29 @@ class ThreadModel extends Model
     public static function add($userId, $postId, $text)
     {
         try {
+            $post = PostModel::getPost($postId);
+            if (!$post) {
+                throw new \Exception('Post not found: ' . $postId);
+            }
+
             $thread = new ThreadModel();
             $thread->userId = $userId;
             $thread->postId = $postId;
             $thread->text = $text;
             $thread->save();
+
+            $user = User::get($post->userId);
+            if (($user) && ($userId !== $post->userId)) {
+                PushModel::addNotification(__('app.user_posted_comment_short', ['name' => $user->username]), __('app.user_posted_comment', ['name' => $user->username, 'msg' => $text, 'item' => url('/p/' . $postId . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
+            }
+
+            $highlightNames = AppModel::getHighlightList($text);
+            foreach ($highlightNames as $name) {
+                $curUser = User::getByUsername($name);
+                if ($curUser) {
+                    PushModel::addNotification(__('app.user_highlighted_short', ['name' => $user->username]), __('app.user_highlighted', ['name' => $user->username, 'item' => url('/p/' . $post->id . '#' . $thread->id)]), 'PUSH_HIGHLIGHTED', $curUser->id);
+                }
+            }
 
             return $thread->id;
         } catch (\Exception $e) {

@@ -28,7 +28,8 @@ class CreatePushModelsTable extends Migration
         Schema::create('push_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->string('message');
+            $table->string('shortMsg');
+            $table->string('longMsg');
             $table->string('type');
             $table->boolean('seen')->default(false);
             $table->timestamps();

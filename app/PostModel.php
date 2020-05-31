@@ -194,10 +194,16 @@ class PostModel extends Model
                 'hashtags' => 'nullable'
             ]);
 
+            $user = User::where('id', '=', auth()->id())->first();
+
             $hashtagList = explode(' ', trim($attr['hashtags']));
             foreach ($hashtagList as $ht) {
+                if ($ht[0] === '#') {
+                    $ht = substr($ht, 1);
+                }
+
                 if (!AppModel::isValidNameIdent($ht)) {
-                    return back()->with('error', __('app.upload_hashtag_invalid', ['hashtag' => $ht]));
+                    throw new \Exception(__('app.upload_hashtag_invalid', ['hashtag' => $ht]));
                 }
             }
 
@@ -222,7 +228,7 @@ class PostModel extends Model
                 $post->image_full = $fname . '.' . $fext;
                 $post->image_thumb = $fname . '_thumb.' . $fext;
                 $post->description = $attr['description'];
-                $post->hashtags = trim($attr['hashtags']);
+                $post->hashtags = str_replace('#', '', trim($attr['hashtags']));
                 if ($post->hashtags[strlen($post->hashtags)-1] !== ' ') {
                     $post->hashtags .= ' ';
                 }
@@ -231,6 +237,14 @@ class PostModel extends Model
 
                 foreach ($hashtagList as $ht) {
                     TagsModel::addTag($ht);
+                }
+
+                $highlightNames = AppModel::getHighlightList($attr['description']);
+                foreach ($highlightNames as $name) {
+                    $curUser = User::getByUsername($name);
+                    if ($curUser) {
+                        PushModel::addNotification(__('app.user_highlighted_short', ['name' => $user->username]), __('app.user_highlighted', ['name' => $user->username, 'item' => url('/p/' . $post->id)]), 'PUSH_HIGHLIGHTED', $curUser->id);
+                    }
                 }
 
                 return $post->id;

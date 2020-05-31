@@ -18,6 +18,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class AppModel
+ *
+ * General application interface
+ */
 class AppModel extends Model
 {
     const ONE_HOUR = 3600;
@@ -133,5 +138,42 @@ class AppModel extends Model
         }
 
         return null;
+    }
+
+    /**
+     * Get a list of highlighted users
+     *
+     * @param $text
+     * @return array
+     */
+    public static function getHighlightList($text)
+    {
+        $inHighlight = false;
+        $terminationChars = array(' ', '.', '!', '\n');
+        $curName = '';
+
+        $result = array();
+
+        for ($i = 0; $i < strlen($text); $i++) {
+            if ($text[$i] === '@') {
+                $inHighlight = true;
+                if (strlen($curName) > 0) {
+                    $result[] = $curName;
+                }
+                $curName = '';
+                continue;
+            }
+
+            if ($inHighlight) {
+                $curName .= $text[$i];
+
+                if ((in_array($text[$i], $terminationChars)) || ($i === strlen($text) - 1)) {
+                    $result[] = $curName;
+                    $curName = '';
+                }
+            }
+        }
+
+        return $result;
     }
 }
