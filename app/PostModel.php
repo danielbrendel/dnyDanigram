@@ -274,11 +274,12 @@ class PostModel extends Model
      * @param $type
      * @param $limit
      * @param $hashtag
+     * @param $user
      * @param null $paginateFrom
      * @return mixed
      * @throws \Exception
      */
-    public static function getPostPack($type, $limit, $hashtag, $paginateFrom = null)
+    public static function getPostPack($type, $limit, $hashtag, $user, $paginateFrom = null)
     {
         try {
             $posts = null;
@@ -303,6 +304,10 @@ class PostModel extends Model
 
             if ($hashtag !== null) {
                 $posts->where('hashtags', 'like', '%' . $hashtag . ' %');
+            }
+
+            if ($user !== null) {
+                $posts->where('userId', '=', $user);
             }
 
             return $posts->limit($limit)->get();

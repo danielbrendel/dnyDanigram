@@ -15,7 +15,7 @@
         <img src="{{ asset('gfx/avatars/' . $user->avatar) }}" width="24" height="24">
     </div>
 
-    <div class="userinfo-name is-inline-block is-pointer" onclick="location.href='{{ url('/p/' . $user->id) }}';">
+    <div class="userinfo-name is-inline-block is-pointer" onclick="location.href='{{ url('/u/' . $user->id) }}';">
         {{ $user->username }}
         &nbsp;&nbsp;&nbsp;
         @if ($user->admin)

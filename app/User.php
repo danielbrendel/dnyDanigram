@@ -21,6 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use \App\ClientModel;
 use \App\AgentModel;
 use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 /**
  * Class User
@@ -241,6 +242,25 @@ class User extends Authenticatable
             $user->password = password_hash($password, PASSWORD_BCRYPT);
             $user->password_reset = '';
             $user->save();
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get user stats
+     *
+     * @param $userId
+     * @return stdClass
+     * @throws Exception
+     */
+    public static function getStats($userId)
+    {
+        try {
+            $stats = new stdClass();
+            $stats->posts = PostModel::where('userId', '=', $userId)->count();
+            $stats->comments = ThreadModel::where('userId', '=', $userId)->count();
+            return $stats;
         } catch (Exception $e) {
             throw $e;
         }

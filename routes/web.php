@@ -33,3 +33,6 @@ Route::get('/p/{id}', 'PostsController@showPost');
 Route::post('/p/{id}/thread/add', 'PostsController@addThread');
 Route::post('/p/heart', 'PostsController@heartPost');
 Route::post('/p/{id}/report', 'PostsController@reportPost');
+
+Route::get('/u/{id}', 'MemberController@show');
+Route::get('/profile', 'MemberController@profile');

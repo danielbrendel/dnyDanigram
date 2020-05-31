@@ -105,9 +105,7 @@ class PostsController extends Controller
         try {
             $user = User::getByAuthId();
             if ($user) {
-                $user->stats = new stdClass();
-                $user->stats->posts = PostModel::where('userId', '=', $user->id)->count();
-                $user->stats->comments = ThreadModel::where('userId', '=', $user->id)->count();
+                $user->stats = User::getStats($user->id);
             }
 
             return view('member.index', [
@@ -193,8 +191,9 @@ class PostsController extends Controller
             $type = request('type', PostModel::FETCH_TOP);
             $paginate = request('paginate', null);
             $hashtag = request('hashtag', null);
+            $user = request('user', null);
 
-            $posts = PostModel::getPostPack($type, $this->postPackLimit, $hashtag, $paginate);
+            $posts = PostModel::getPostPack($type, $this->postPackLimit, $hashtag, $user, $paginate);
             foreach ($posts as &$post) {
                 $post->diffForHumans = $post->created_at->diffForHumans();
                 $post->user = User::get($post->userId);

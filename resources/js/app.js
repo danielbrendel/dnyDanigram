@@ -184,32 +184,32 @@ window.renderPost = function(elem)
                                 </div>
 
                                 <div class="show-post-options is-inline-block">
-                                    <div class="dropdown is-right" id="post-options">
+                                    <div class="dropdown is-right" id="post-options-` + elem.id + `">
                                         <div class="dropdown-trigger">
-                                            <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.togglePostOptions(document.getElementById('post-options'));"></i>
+                                            <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));"></i>
                                         </div>
                                         <div class="dropdown-menu" role="menu">
                                             <div class="dropdown-content">
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="whatsapp://send?text=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="whatsapp://send?text=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
                                                     <i class="far fa-copy"></i>&nbsp;Share via WhatsApp
                                                 </a>
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="https://twitter.com/share?url=` + encodeURIComponent(window.location.origin + '/p/' + elem.id) + `&text=` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="https://twitter.com/share?url=` + encodeURIComponent(window.location.origin + '/p/' + elem.id) + `&text=` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
                                                     <i class="fab fa-twitter"></i>&nbsp;Share via Twitter
                                                 </a>
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="https://www.facebook.com/sharer/sharer.php?u=` + window.location.origin + `/p/` + elem.id + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="https://www.facebook.com/sharer/sharer.php?u=` + window.location.origin + `/p/` + elem.id + `" class="dropdown-item">
                                                     <i class="fab fa-facebook"></i>&nbsp;Share via Facebook
                                                 </a>
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="mailto:name@domain.com?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="mailto:name@domain.com?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
                                                     <i class="far fa-envelope"></i>&nbsp;Share via E-Mail
                                                 </a>
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="sms:000000000?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="sms:000000000?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
                                                     <i class="fas fa-sms"></i>&nbsp;Share via SMS
                                                 </a>
-                                                <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `'); window.vue.togglePostOptions(document.getElementById('post-options'));" class="dropdown-item">
+                                                <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `'); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
                                                     <i class="far fa-copy"></i>&nbsp;Copy link
                                                 </a>
                                                 <hr class="dropdown-divider">
-                                                <a href="javascript:void(0)" onclick="reportPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options'));" class="dropdown-item">
+                                                <a href="javascript:void(0)" onclick="reportPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
                                                     Report
                                                 </a>
                                             </div>
