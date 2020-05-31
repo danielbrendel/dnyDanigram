@@ -139,6 +139,8 @@ class PostsController extends Controller
     public function hashtag($hashtag)
     {
         try {
+            $hashtag = strtolower($hashtag);
+
             $tag = TagsModel::where('tag', '=', $hashtag)->first();
             if (!$tag) {
                 return back()->with('notice', __('app.hashtag_not_yet_used'));

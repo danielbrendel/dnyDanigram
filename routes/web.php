@@ -52,3 +52,6 @@ Route::post('/b/remove', 'BookmarksController@remove');
 
 Route::get('/notifications/list', 'NotificationController@list');
 Route::get('/notifications/fetch', 'NotificationController@fetch');
+
+Route::get('/install', 'InstallerController@viewInstall');
+Route::post('/install', 'InstallerController@install');

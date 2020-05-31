@@ -112,5 +112,6 @@ return [
     'hashtags' => 'Hashtags',
     'post_button' => 'Post',
     'post_description' => 'Enter your description. Use @name to highlight users',
-    'post_hashtags' => '#tag1 #tag2 #tag3 #tag4'
+    'post_hashtags' => '#tag1 #tag2 #tag3 #tag4',
+    'product_installed' => 'The product has been successfully installed'
 ];
