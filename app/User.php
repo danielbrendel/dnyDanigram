@@ -169,6 +169,9 @@ class User extends Authenticatable
             $user->avatar = 'default.png';
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
             $user->save();
+
+            $html = view('mail.registered', ['username' => $user->username, 'hash' => $user->account_confirm])->render();
+            MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.mail_subject_register'), $html);
         } catch (Exception $e) {
             throw $e;
         }

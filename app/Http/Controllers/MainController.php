@@ -207,6 +207,20 @@ class MainController extends Controller
     }
 
     /**
+     * View password reset form
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewReset()
+    {
+        return view('home.pwreset', [
+            'hash' => request('hash', ''),
+            'captcha' => CaptchaModel::createSum(session()->getId()),
+            'cookie_consent' => $this->cookie_consent
+        ]);
+    }
+
+    /**
      * Process registration
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -224,7 +238,7 @@ class MainController extends Controller
         try {
             User::register($attr);
 
-            return back()->with('success', __('app_register_confirm_email'));
+            return back()->with('success', __('app.register_confirm_email'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

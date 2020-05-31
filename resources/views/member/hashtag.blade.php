@@ -32,15 +32,15 @@
                 @include('widgets.supporttag', ['heart_count' => $tagdata->hearts])
             </div>
 
-            <div class="member-form">
+            <div class="member-form is-default-padding">
                 @include('widgets.populartags')
             </div>
 
-            <div class="member-form">
+            <div class="member-form is-default-padding">
                 @include('widgets.taginfo')
             </div>
 
-            <div class="member-form">
+            <div class="member-form is-default-padding">
                 @include('widgets.company')
             </div>
         </div>

@@ -174,13 +174,13 @@ let vue = new Vue({
         showError: function ()
         {
             document.getElementById('flash-error').style.display = 'inherit';
-            setTimeout(function() { document.getElementById('flash-error').style.display = 'none'; }, 5000);
+            setTimeout(function() { document.getElementById('flash-error').style.display = 'none'; }, 3500);
         },
 
         showSuccess: function()
         {
             document.getElementById('flash-success').style.display = 'inherit';
-            setTimeout(function() { document.getElementById('flash-success').style.display = 'none'; }, 5000);
+            setTimeout(function() { document.getElementById('flash-success').style.display = 'none'; }, 3500);
         }
     }
 });
@@ -195,7 +195,7 @@ window.renderPost = function(elem)
 
     let html = `
                             <div class="member-form">
-                            <div class="show-post-header">
+                            <div class="show-post-header is-default-padding">
                                 <div class="show-post-avatar">
                                     <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" class="is-pointer" onclick="location.href='` + window.location.origin + `/u/` + elem.user.id + `'" width="32" height="32">
                                 </div>
@@ -244,16 +244,16 @@ window.renderPost = function(elem)
                                 <img class="is-pointer" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">
                             </div>
 
-                            <div class="show-post-attributes">
+                            <div class="show-post-attributes is-default-padding-left is-default-padding-right">
                                 <div class="is-inline-block"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
                                 <div class="is-inline-block is-right" style="float:right;"><a href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 
-                            <div class="show-post-description">
+                            <div class="show-post-description is-default-padding">
                                 ` + elem.description + `
                                        </div>
 
-                                       <div class="show-post-hashtags">
+                                       <div class="show-post-hashtags is-default-padding">
                                         ` + hashTags + `
                                        </div>
                                    </div>

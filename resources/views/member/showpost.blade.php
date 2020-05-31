@@ -18,7 +18,7 @@
     <div class="column is-4">
         <div id="singlepost"><center><i class="fas fa-spinner fa-spin"></i></center></div>
 
-        <div class="member-form">
+        <div class="member-form is-default-padding">
             <div class="thread-input">
                 <form method="POST" action="{{ url('/p/' . $post->id . '/thread/add') }}">
                     @csrf
@@ -81,9 +81,11 @@
 
             window.vue.ajaxRequest('get', '{{ url('/fetch/thread') }}?post={{ $post->id }}' + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
                 if (response.code == 200) {
-                    response.data.forEach(function(elem, index) {
-                        let insertHtml = renderThread(elem, elem.adminOrOwner);
-                        document.getElementById('thread').innerHTML += insertHtml;
+                    if (response.data.length > 0) {
+                        response.data.forEach(function (elem, index) {
+                            let insertHtml = renderThread(elem, elem.adminOrOwner);
+                            document.getElementById('thread').innerHTML += insertHtml;
+                        });
 
                         window.paginate = response.data[response.data.length - 1].id;
 
@@ -91,9 +93,15 @@
                         document.getElementById('loadmore').style.display = 'block';
 
                         if (response.last) {
-                            document.getElementById('loadmore').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_more_comments')  }}</i></center>';
+                            document.getElementById('loading').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_more_comments')  }}</i></center>';
                         }
-                    });
+                    } else {
+                        if (window.paginate === null) {
+                            document.getElementById('loading').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_comments_yet')  }}</i></center>';
+                        } else {
+                            document.getElementById('loading').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_more_comments')  }}</i></center>';
+                        }
+                    }
                 }
             });
         }

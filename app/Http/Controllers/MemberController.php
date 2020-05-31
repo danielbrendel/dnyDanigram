@@ -34,6 +34,9 @@ class MemberController extends Controller
     {
         try {
             $user = User::get($id);
+            if (!$user) {
+                $user = User::getByUsername($id);
+            }
             if ((!$user) || ($user->deactivated)) {
                 return back()->with('error', __('app.user_not_found_or_deactivated'));
             }

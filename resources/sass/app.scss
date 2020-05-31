@@ -93,6 +93,15 @@ a:hover {
 .is-app-title {
     font-family: 'Segoe Script', 'Nunito', sans-serif;
 }
+.is-default-padding {
+    padding: 21px;
+}
+.is-default-padding-left {
+    padding-left: 10px;
+}
+.is-default-padding-right {
+    padding-right: 10px;
+}
 .is-about-nav {
     color: rgb(120, 120, 120);
 }
@@ -220,7 +229,6 @@ a:hover {
     }
     margin-top: 21px;
     margin-bottom: 25px;
-    padding: 21px;
 }
 .member-form div h1 {
     margin-bottom: 70px;

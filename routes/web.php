@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'MainController@index');
 Route::post('/register', 'MainController@register');
+Route::get('/confirm', 'MainController@confirm');
+Route::get('/reset', 'MainController@viewReset');
+Route::post('/recover', 'MainController@recover');
+Route::post('/reset', 'MainController@reset');
 Route::post('/login', 'MainController@login');
 Route::any('/logout', 'MainController@logout');
 Route::get('/about', 'MainController@about');

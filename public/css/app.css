@@ -110,6 +110,18 @@ a:hover {
   font-family: "Segoe Script", "Nunito", sans-serif;
 }
 
+.is-default-padding {
+  padding: 21px;
+}
+
+.is-default-padding-left {
+  padding-left: 10px;
+}
+
+.is-default-padding-right {
+  padding-right: 10px;
+}
+
 .is-about-nav {
   color: #787878;
 }
@@ -252,7 +264,6 @@ a:hover {
   position: relative;
   margin-top: 21px;
   margin-bottom: 25px;
-  padding: 21px;
 }
 
 @media screen and (min-width: 380px) {

@@ -242,7 +242,7 @@ class PostsController extends Controller
                 $thread->userHearted = HeartModel::hasUserHearted(auth()->id(), $thread->id, 'ENT_COMMENT');
             }
 
-            return response()->json(array('code' => 200, 'data' => $threads, 'last' => $threads[count($threads)-1]->id === 1));
+            return response()->json(array('code' => 200, 'data' => $threads, 'last' => (count($threads) === 0)));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

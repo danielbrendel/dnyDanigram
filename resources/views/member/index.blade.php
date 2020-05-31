@@ -28,15 +28,15 @@
 
     <div class="column is-4 fixed-frame-parent">
         <div class="fixed-frame">
-            <div class="member-form">
+            <div class="member-form is-default-padding">
                 @include('widgets.populartags')
             </div>
 
-            <div class="member-form">
+            <div class="member-form is-default-padding">
                 @include('widgets.bookmarks')
             </div>
 
-            <div class="member-form">
+            <div class="member-form is-default-padding">
                 @include('widgets.company')
             </div>
         </div>
