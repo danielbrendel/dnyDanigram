@@ -110,7 +110,8 @@ var vue = new Vue({
   el: '#main',
   data: {
     bShowRecover: false,
-    bShowRegister: false
+    bShowRegister: false,
+    bShowEditProfile: false
   },
   methods: {
     invalidLoginEmail: function invalidLoginEmail() {
@@ -236,6 +237,18 @@ var vue = new Vue({
       document.execCommand('copy');
       document.body.removeChild(el);
       alert('Text has been copyied to clipboard!');
+    },
+    showError: function showError() {
+      document.getElementById('flash-error').style.display = 'inherit';
+      setTimeout(function () {
+        document.getElementById('flash-error').style.display = 'none';
+      }, 5000);
+    },
+    showSuccess: function showSuccess() {
+      document.getElementById('flash-success').style.display = 'inherit';
+      setTimeout(function () {
+        document.getElementById('flash-success').style.display = 'none';
+      }, 5000);
     }
   }
 });

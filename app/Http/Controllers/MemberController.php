@@ -14,6 +14,8 @@
 
 namespace App\Http\Controllers;
 
+use App\AppModel;
+use App\PostModel;
 use App\TagsModel;
 use App\User;
 use Illuminate\Http\Request;
@@ -54,5 +56,79 @@ class MemberController extends Controller
     public function profile()
     {
         return redirect('/u/' . auth()->id());
+    }
+
+    public function save()
+    {
+        try {
+            $attr = request()->validate([
+               'username' => 'nullable',
+               'bio' => 'nullable',
+               'password' => 'nullable',
+               'password_confirm' => 'nullable',
+               'email' => 'nullable|email'
+            ]);
+
+            if (isset($attr['username'])) {
+                User::changeUsername(auth()->id(), $attr['username']);
+            }
+
+            if (isset($attr['bio'])) {
+                User::changeBio(auth()->id(), $attr['bio']);
+            }
+
+            if (isset($attr['password'])) {
+                if ($attr['password'] !== $attr['password_confirm']) {
+                    return back()->with('error', __('app.password_mismatch'));
+                }
+
+                User::changePassword(auth()->id(), $attr['password']);
+            }
+
+            if (isset($attr['email'])) {
+                User::changeEMail(auth()->id(), $attr['email']);
+            }
+
+            $av = request()->file('avatar');
+            if ($av != null) {
+                $tmpName = md5(random_bytes(55));
+
+                $av->move(base_path() . '/public/gfx/avatars', $tmpName . '.' . $av->getClientOriginalExtension());
+
+                list($width, $height) = getimagesize(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension());
+
+                $avimg = imagecreatetruecolor(64, 64);
+                if (!$avimg)
+                    throw new \Exception('imagecreatetruecolor() failed');
+
+                $srcimage = null;
+                $newname =  md5_file(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension()) . '.' . $av->getClientOriginalExtension();
+                switch (AppModel::getImageType(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension())) {
+                    case IMAGETYPE_PNG:
+                        $srcimage = imagecreatefrompng(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension());
+                        imagecopyresampled($avimg, $srcimage, 0, 0, 0, 0, 64, 64, $width, $height);
+                        imagepng($avimg, base_path() . '/public/gfx/avatars/' . $newname);
+                        break;
+                    case IMAGETYPE_JPEG:
+                        $srcimage = imagecreatefromjpeg(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension());
+                        imagecopyresampled($avimg, $srcimage, 0, 0, 0, 0, 64, 64, $width, $height);
+                        imagejpeg($avimg, base_path() . '/public/gfx/avatars/' . $newname);
+                        break;
+                    default:
+                        return back()->with('error', __('app.settings_avatar_invalid_image_type'));
+                        break;
+                }
+
+                unlink(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension());
+
+                $user = User::get(auth()->id());
+                $user->avatar = $newname;
+                $user->save();
+            }
+
+            return back()->with('flash.success', __('app.profile_saved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
     }
 }

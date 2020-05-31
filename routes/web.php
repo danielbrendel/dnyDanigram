@@ -36,3 +36,4 @@ Route::post('/p/{id}/report', 'PostsController@reportPost');
 
 Route::get('/u/{id}', 'MemberController@show');
 Route::get('/profile', 'MemberController@profile');
+Route::post('/profile/edit', 'MemberController@save');

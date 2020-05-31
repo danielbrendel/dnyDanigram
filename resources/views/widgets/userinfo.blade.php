@@ -35,3 +35,9 @@
     <i class="far fa-file-image"></i>&nbsp;{{ __('app.stats_posts', ['count' => $user->stats->posts]) }}<br/>
     <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_posts', ['count' => $user->stats->comments]) }}<br/>
 </div>
+
+@if ($user->id === auth()->id())
+    <div class="userinfo-edit">
+        <a href="javascript:void(0)" onclick="window.vue.bShowEditProfile = true;">{{ __('app.edit_profile') }}</a>
+    </div>
+@endif

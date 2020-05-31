@@ -265,4 +265,98 @@ class User extends Authenticatable
             throw $e;
         }
     }
+
+    /**
+     * Change username
+     *
+     * @param $id
+     * @param $name
+     * @throws Exception
+     */
+    public static function changeUsername($id, $name)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated) && ($user->username !== $name)) {
+                $inuse = User::where('username', '=', $name)->count();
+                if ($inuse > 0) {
+                    throw new Exception(__('app.name_already_in_use'));
+                }
+
+                if (!AppModel::isValidNameIdent($name)) {
+                    throw new Exception(__('app.invalid_name_ident'));
+                }
+
+                $user->username = $name;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Change bio
+     *
+     * @param $id
+     * @param $bio
+     * @throws Exception
+     */
+    public static function changeBio($id, $bio)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->bio = $bio;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Change password
+     *
+     * @param $id
+     * @param $password
+     * @throws Exception
+     */
+    public static function changePassword($id, $password)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->password = password_hash($password, PASSWORD_BCRYPT);
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Change E-Mail
+     *
+     * @param $id
+     * @param $email
+     * @throws Exception
+     */
+    public static function changeEMail($id, $email)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated) && ($user->email !== $email)) {
+                $oldMail = $user->email;
+                $user->email = $email;
+                $user->save();
+
+                $html = view('mail.email_changed', ['name' => $user->name, 'newmail' => $email])->render();
+                MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.email_changed'), $html);
+                MailerModel::sendMail($oldMail, '[' . env('APP_NAME') . '] ' . __('app.email_changed'), $html);
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

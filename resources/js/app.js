@@ -19,6 +19,7 @@ let vue = new Vue({
     data: {
         bShowRecover: false,
         bShowRegister: false,
+        bShowEditProfile: false,
     },
 
     methods: {
@@ -159,6 +160,18 @@ let vue = new Vue({
             document.execCommand('copy');
             document.body.removeChild(el);
             alert('Text has been copyied to clipboard!');
+        },
+
+        showError: function ()
+        {
+            document.getElementById('flash-error').style.display = 'inherit';
+            setTimeout(function() { document.getElementById('flash-error').style.display = 'none'; }, 5000);
+        },
+
+        showSuccess: function()
+        {
+            document.getElementById('flash-success').style.display = 'inherit';
+            setTimeout(function() { document.getElementById('flash-success').style.display = 'none'; }, 5000);
         }
     }
 });

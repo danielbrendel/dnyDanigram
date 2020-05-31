@@ -128,6 +128,22 @@
                 <br/>
             @endif
 
+            <div class="flash is-flash-error" id="flash-error">
+                <p id="flash-error-content">
+                    @if (Session::has('flash.error'))
+                        {{ Session::get('flash.error') }}
+                    @endif
+                </p>
+            </div>
+
+            <div class="flash is-flash-success" id="flash-success">
+                <p id="flash-success-content">
+                    @if (Session::has('flash.success'))
+                        {{ Session::get('flash.success') }}
+                    @endif
+                </p>
+            </div>
+
             @if (Session::has('notice'))
                 <div id="notice-message" class="is-z-index-3">
                     <article class="message is-info">
@@ -161,6 +177,72 @@
             <div class="columns is-vcentered is-multiline">
                 @yield('body')
             </div>
+
+            <div class="modal" :class="{'is-active': bShowEditProfile}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.edit_profile') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowEditProfile = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/profile/edit') }}" id="formEditProfile" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.avatar') }}</label>
+                                <div class="settings-avatar-image"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}"></div>
+                                <div class="settings-avatar-input"><input type="file" name="avatar" data-role="file" data-button-title="<i class='far fa-folder'></i>"></div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.username') }}</label>
+                                <div class="control">
+                                    <input type="text" name="username" value="{{ $user->username }}">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.bio') }}</label>
+                                <div class="control">
+                                    <textarea name="bio">{{ $user->bio }}</textarea>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.password') }}</label>
+                                <div class="control">
+                                    <input type="text" name="password">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.password_confirm') }}</label>
+                                <div class="control">
+                                    <input type="text" name="password_confirm">
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.email') }}</label>
+                                <div class="control">
+                                    <input type="email" name="email" value="{{ $user->email }}">
+                                </div>
+                            </div>
+
+                            <input type="submit" id="editprofilesubmit" class="is-hidden">
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('editprofilesubmit').click();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowEditProfile = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
         </div>
     </body>
 
@@ -190,6 +272,14 @@
                     });
                 });
             }
+
+            @if (Session::has('flash.error'))
+                setTimeout('window.vue.showError()', 500);
+            @endif
+
+            @if (Session::has('flash.success'))
+                setTimeout('window.vue.showSuccess()', 500);
+            @endif
         });
     </script>
 </html>

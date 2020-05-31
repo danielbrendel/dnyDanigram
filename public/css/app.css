@@ -430,6 +430,10 @@ a:hover {
   margin-top: 15px;
 }
 
+.userinfo-edit {
+  margin-top: 15px;
+}
+
 .badge-admin {
   background-color: indianred;
   border: 1px solid red;
@@ -442,5 +446,48 @@ a:hover {
 .badge-admin p {
   padding: 4px;
   font-weight: bold;
+}
+
+.settings-avatar-image {
+  display: inline-block;
+}
+
+.settings-avatar-image img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  top: -15px;
+  position: relative;
+}
+
+.settings-avatar-input {
+  display: inline-block;
+  width: 95%;
+}
+
+.flash {
+  position: fixed;
+  left: 20%;
+  top: 105px;
+  width: 50%;
+  z-index: 3;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: none;
+}
+
+.flash p {
+  position: relative;
+  margin: 10px;
+  color: white;
+}
+
+.is-flash-error {
+  background-color: #ff7575;
+}
+
+.is-flash-success {
+  background-color: #80ff80;
 }
 

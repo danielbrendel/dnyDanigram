@@ -110,4 +110,28 @@ class AppModel extends Model
     {
         return !preg_match('/[^a-z_\-0-9]/i', $ident);
     }
+
+    /**
+     * Get image type of file
+     *
+     * @param $file
+     * @return mixed|null
+     */
+    public static function getImageType($file)
+    {
+        $imagetypes = array(
+            array('png', IMAGETYPE_PNG),
+            array('jpg', IMAGETYPE_JPEG),
+            array('jpeg', IMAGETYPE_JPEG)
+        );
+
+        for ($i = 0; $i < count($imagetypes); $i++) {
+            if (strtolower(pathinfo($file, PATHINFO_EXTENSION)) == $imagetypes[$i][0]) {
+                if (exif_imagetype($file) == $imagetypes[$i][1])
+                    return $imagetypes[$i][1];
+            }
+        }
+
+        return null;
+    }
 }

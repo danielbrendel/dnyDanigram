@@ -51,5 +51,16 @@ return [
     'pw_recovery_ok' => 'A mail has been dispatched to your address with further details',
     'password_reset_ok' => 'The password reset operation has been processed successfully',
     'app_register_confirm_email' => 'You have been registered! Please confirm your E-Mail address before logging in',
-    'register_confirmed_ok' => 'Your account has been confirmed. Have fun using our service!'
+    'register_confirmed_ok' => 'Your account has been confirmed. Have fun using our service!',
+    'edit' => 'Edit',
+    'edit_profile' => 'Edit profile',
+    'bio' => 'Bio',
+    'save' => 'Save',
+    'avatar' => 'Avatar',
+    'name_already_in_use' => 'Username is already in use',
+    'invalid_name_ident' => 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'.',
+    'profile_saved' => 'Your profile has been saved',
+    'password_confirm' => 'Password confirmation',
+    'password_mismatch' => 'The passwords do not match',
+    'settings_avatar_invalid_image_type' => 'The given image file is invalid'
 ];
