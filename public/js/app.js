@@ -178,7 +178,7 @@ var vue = new Vue({
       }
 
       this.setPostFetchType(2);
-      return 1;
+      return 2;
     },
     ajaxRequest: function ajaxRequest(method, url) {
       var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};

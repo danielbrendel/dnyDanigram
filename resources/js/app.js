@@ -96,7 +96,7 @@ let vue = new Vue({
 
             this.setPostFetchType(2);
 
-            return 1;
+            return 2;
         },
 
         ajaxRequest: function (method, url, data = {}, successfunc = function(data){}, finalfunc = function(){})
