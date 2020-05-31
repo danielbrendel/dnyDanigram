@@ -10,6 +10,8 @@
     Released under the MIT license
 */
 
+const MAX_SHARE_TEXT_LENGTH = 15;
+
 //Make Vue instance
 let vue = new Vue({
     el: '#main',
@@ -139,6 +141,24 @@ let vue = new Vue({
                    document.getElementById('count-' + elemId).innerHTML = response.count;
                }
             });
+        },
+
+        togglePostOptions: function(elem) {
+            if (elem.classList.contains('is-active')) {
+                elem.classList.remove('is-active');
+            } else {
+                elem.classList.add('is-active');
+            }
+        },
+
+        copyToClipboard: function(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert('Text has been copyied to clipboard!');
         }
     }
 });
@@ -155,12 +175,46 @@ window.renderPost = function(elem)
                             <div class="member-form">
                             <div class="show-post-header">
                                 <div class="show-post-avatar">
-                                    <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" class="is-pointer" onclick="location.href='` + window.location.origin + `/u/` + elem.user.id + `'">
+                                    <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" class="is-pointer" onclick="location.href='` + window.location.origin + `/u/` + elem.user.id + `'" width="32" height="32">
                                 </div>
 
                                 <div class="show-post-userinfo">
                                     <div>` + elem.user.username + `</div>
                                     <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
+                                </div>
+
+                                <div class="show-post-options is-inline-block">
+                                    <div class="dropdown is-right" id="post-options">
+                                        <div class="dropdown-trigger">
+                                            <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.togglePostOptions(document.getElementById('post-options'));"></i>
+                                        </div>
+                                        <div class="dropdown-menu" role="menu">
+                                            <div class="dropdown-content">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="whatsapp://send?text=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                    <i class="far fa-copy"></i>&nbsp;Share via WhatsApp
+                                                </a>
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="https://twitter.com/share?url=` + encodeURIComponent(window.location.origin + '/p/' + elem.id) + `&text=` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                    <i class="fab fa-twitter"></i>&nbsp;Share via Twitter
+                                                </a>
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="https://www.facebook.com/sharer/sharer.php?u=` + window.location.origin + `/p/` + elem.id + `" class="dropdown-item">
+                                                    <i class="fab fa-facebook"></i>&nbsp;Share via Facebook
+                                                </a>
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="mailto:name@domain.com?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                    <i class="far fa-envelope"></i>&nbsp;Share via E-Mail
+                                                </a>
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options'));" href="sms:000000000?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                    <i class="fas fa-sms"></i>&nbsp;Share via SMS
+                                                </a>
+                                                <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `'); window.vue.togglePostOptions(document.getElementById('post-options'));" class="dropdown-item">
+                                                    <i class="far fa-copy"></i>&nbsp;Copy link
+                                                </a>
+                                                <hr class="dropdown-divider">
+                                                <a href="javascript:void(0)" onclick="reportPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options'));" class="dropdown-item">
+                                                    Report
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -214,6 +268,14 @@ window.renderThread = function(elem) {
     `;
 
     return html;
+};
+
+window.reportPost = function(id) {
+  window.vue.ajaxRequest('post', window.location.origin + '/p/' + id + '/report', {}, function(response) {
+    if (response.code === 200) {
+        alert('The post has been reported!');
+    }
+  });
 };
 
 //Make vue instance available globally

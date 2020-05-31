@@ -16,37 +16,7 @@
     <div class="column is-4 is-sidespacing"></div>
 
     <div class="column is-4">
-        <div class="member-form">
-            <div class="show-post-header">
-                <div class="show-post-avatar">
-                    <img src="{{ asset('gfx/avatars/' . $poster->avatar) }}" class="is-pointer" onclick="location.href='{{ url('/u/' . $poster->id) }}'">
-                </div>
-
-                <div class="show-post-userinfo">
-                    <div>{{ __('app.posted_by', ['username' => $poster->username]) }}</div>
-                    <div title="{{ $post->created_at }}">{{ __('app.posted_at', ['date' => $post->created_at->diffForHumans()]) }}</div>
-                </div>
-            </div>
-
-            <div class="show-post-image">
-                <img class="is-pointer" src="{{ asset('gfx/posts/' . $post->image_thumb) }}" onclick="window.open('{{ asset('gfx/posts/' . $post->image_full) }}')">
-            </div>
-
-            <div class="show-post-attributes">
-                <div class="is-inline-block"><i class="fas fa-heart"></i>&nbsp;{{ $post->hearts }}</div>
-                <div class="is-inline-block is-right" style="float:right;">{{ __('app.comment_count', ['count' => $thread_count]) }}</div>
-            </div>
-
-            <div class="show-post-description">
-                {{ $post->description }}
-            </div>
-
-            <div class="show-post-hashtags">
-                @foreach ($post->hashtags as $tag)
-                    <a href="{{ url('/t/' . $tag) }}">#{{ $tag }}</a>
-                @endforeach
-            </div>
-        </div>
+        <div id="singlepost"><center><i class="fas fa-spinner fa-spin"></i></center></div>
 
         <div class="member-form">
             <div class="thread-input">
@@ -87,8 +57,22 @@
         document.addEventListener('DOMContentLoaded', function() {
             window.paginate = null;
 
+            fetchSinglePost();
             fetchThread();
         });
+
+        function fetchSinglePost()
+        {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('loadmore').style.display = 'none';
+
+            window.vue.ajaxRequest('get', '{{ url('/fetch/post') }}?post={{ $post->id }}', {}, function(response){
+                if (response.code == 200) {
+                    let insertHtml = renderPost(response.elem);
+                    document.getElementById('singlepost').innerHTML = insertHtml;
+                }
+            });
+        }
 
         function fetchThread()
         {

@@ -57,10 +57,11 @@ class ReportModel extends Model
 
             $report = ReportModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->first();
             if ($report) {
-                throw new \Exception(__('app.already_reported'));
+                //throw new \Exception(__('app.already_reported'));
+                return;
             }
 
-            $report = new HeartModel;
+            $report = new ReportModel();
             $report->userId = $userId;
             $report->entityId = $entityId;
             $report->type = $entType;

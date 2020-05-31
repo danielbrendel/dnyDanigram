@@ -17,9 +17,11 @@ namespace App\Http\Controllers;
 use App\AppModel;
 use App\HeartModel;
 use App\PostModel;
+use App\ReportModel;
 use App\TagsModel;
 use App\ThreadModel;
 use Exception;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
@@ -80,22 +82,13 @@ class PostsController extends Controller
     {
         try {
             $post = PostModel::getPost($id);
-            $user = User::where('id', '=', $post->userId)->first();
-
-            $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
-            $post->hashtags = explode(' ', trim($post->hashtags));
-
-            $threads = ThreadModel::getFromPost($post->id);
-            foreach ($threads as &$thread) {
-                $thread->user = User::get($thread->userId);
+            if (!$post) {
+                return back()->with('error', __('app.post_not_found_or_locked'));
             }
 
             return view('member.showpost', [
                 'user' => User::getByAuthId(),
                 'post' => $post,
-                'thread_count' => ThreadModel::where('postId', '=', $post->id)->where('locked', '=', false)->count(),
-                'poster' => $user,
-                'threads' => $threads
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -279,6 +272,52 @@ class PostsController extends Controller
             }
 
             return response()->json(array('code' => 200, 'value' => $attr['value'], 'count' => HeartModel::where('entityId', '=', $attr['post'])->where('type', '=', 'ENT_POST')->count()));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Fetch single post
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchSinglePost()
+    {
+        try {
+            $postId = request('post');
+
+            $post = PostModel::getPost($postId);
+            $post->user = User::where('id', '=', $post->userId)->first();
+
+            $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
+            $post->userHearted = HeartModel::hasUserHearted(auth()->id(), $post->id, 'ENT_POST');
+            $post->diffForHumans = $post->created_at->diffForHumans();
+            $post->comment_count = ThreadModel::where('postId', '=', $post->id)->count();
+
+            return response()->json(array('code' => 200, 'elem' => $post));
+        } catch (Exception $e) {
+            return response()->json(array('codee' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Report a post
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reportPost($id)
+    {
+        try {
+            $post = PostModel::getPost($id);
+            if (!$post) {
+                return response()->json(array('code' => 404, 'msg' => __('app.post_not_found')));
+            }
+
+            ReportModel::addReport(auth()->id(), $id, 'ENT_POST');
+
+            return response()->json(array('code' => 200));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

@@ -283,7 +283,8 @@ a:hover {
 .show-post-userinfo {
   position: relative;
   display: inline-block;
-  top: 15px;
+  top: 9px;
+  font-size: 0.8em;
 }
 
 .show-post-image {
@@ -293,6 +294,12 @@ a:hover {
 .show-post-description {
   margin-top: 45px;
   margin-bottom: 15px;
+}
+
+.show-post-options {
+  position: relative;
+  float: right;
+  top: 20px;
 }
 
 .feed-nav {
