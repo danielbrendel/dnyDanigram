@@ -284,6 +284,22 @@ window.renderThread = function (elem) {
   return html;
 };
 
+window.renderNotification = function (elem) {
+  var newItem = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var icon = 'fas fa-info-circle';
+
+  if (elem.type === 'PUSH_HEARTED') {
+    icon = 'far fa-heart';
+  } else if (elem.type === 'PUSH_COMMENTED') {
+    icon = 'far fa-comment';
+  } else if (elem.type === 'PUSH_HIGHLIGHTED') {
+    icon = 'fas fa-bolt';
+  }
+
+  var html = "\n        <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n            <div class=\"notification-item-icon\"><i class=\"" + icon + "\"></i></div>\n            <div class=\"notification-item-message\">" + elem.message + "</div>\n        </div>\n    ";
+  return html;
+};
+
 window.reportPost = function (id) {
   window.vue.ajaxRequest('post', window.location.origin + '/p/' + id + '/report', {}, function (response) {
     if (response.code === 200) {
@@ -368,6 +384,26 @@ window.removeBookmark = function (entityId, type) {
       document.getElementById('bookmark-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="addBookmark(' + entityId + ', \'' + type + '\')">Add bookmark</a>';
     }
   });
+};
+
+window.clearPushIndicator = function (obj) {
+  if (obj.classList.contains('is-hearted')) {
+    obj.classList.remove('fas', 'is-hearted');
+    obj.classList.add('far');
+    obj.setAttribute('title', 'Notifications');
+  }
+};
+
+window.toggleNotifications = function (ident) {
+  var obj = document.getElementById(ident);
+
+  if (obj) {
+    if (obj.style.display === 'block') {
+      obj.style.display = 'none';
+    } else {
+      obj.style.display = 'block';
+    }
+  }
 }; //Make vue instance available globally
 
 

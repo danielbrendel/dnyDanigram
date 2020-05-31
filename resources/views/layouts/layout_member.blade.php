@@ -44,7 +44,7 @@
                     <strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}
                 </a>
 
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
+                <a id="navbarBurger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu" onclick="window.menuVisible = !document.getElementById('navbarMenu').classList.contains('is-active');">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -52,9 +52,7 @@
             </div>
 
             <div id="navbarMenu" class="navbar-menu">
-                <div class="navbar-start">
-
-                </div>
+                <div class="navbar-start"></div>
 
                 <center>
                     <div class="field navbar-search">
@@ -76,7 +74,7 @@
 
                     <div class="navbar-item">
                         <div>
-                            <i class="far fa-heart fa-lg is-pointer" title="{{ __('app.notifications') }}"  onclick="location.href='{{ url('/notifications') }}';"></i>
+                            <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"  onclick="location.href='{{ url('/notifications') }}';"></i>
                         </div>
                     </div>
 
@@ -96,6 +94,10 @@
         </nav>
 
         <div id="main" class="container">
+            <div class="notifications" id="notifications">
+                <div class="notifications-content" id="notification-content"></div>
+            </div>
+
             @if ($errors->any())
                 <div id="error-message-1" class="is-z-index-3">
                     <article class="message is-danger">
@@ -279,23 +281,93 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('javascript')
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        window.fetchNotifications = function() {
+            window.vue.ajaxRequest('get', '{{ url('/notifications/list') }}', {}, function(response){
+                if (response.code === 200) {
+                    if (response.data.length > 0) {
+                        let indicator = document.getElementById('notification-indicator');
+                        if (indicator) {
+                            indicator.classList.remove('far');
+                            indicator.classList.add('fas', 'is-hearted');
+                            indicator.setAttribute('title', response.data.length + ' new notifications');
+                        }
 
-            // Get all "navbar-burger" elements
+                        response.data.forEach(function(elem, index) {
+                            Push.create('{{ env('APP_NAME') }}', {
+                                body: elem.message,
+                                icon: '{{ asset('gfx/logo.png') }}',
+                                timeout: 4000,
+                                onClick: function () {
+                                    window.focus();
+                                    this.close();
+                                }
+                            });
+
+                            let html = renderNotification(elem, true);
+                            document.getElementById('notification-content').innerHTML = html + document.getElementById('notification-content').innerHTML;
+                        });
+                    }
+                }
+            });
+
+            setTimeout('fetchNotifications()', 50000);
+        };
+
+        window.notificationPagination = null;
+        window.fetchNotificationList = function() {
+            document.getElementById('notification-content').innerHTML += '<center><i id="notification-spinner" class="fas fa-spinner fa-spin"></i></center>';
+
+            let loader = document.getElementById('load-more-notifications');
+            if (loader) {
+                loader.remove();
+            }
+
+            window.vue.ajaxRequest('get', '{{ url('/notifications/fetch') }}' + ((window.notificationPagination) ? '?paginate=' + window.notificationPagination : ''), {}, function(response) {
+                if (response.code === 200) {
+                    if (response.data.length > 0) {
+                        response.data.forEach(function(elem, index) {
+                            let html = renderNotification(elem);
+
+                            document.getElementById('notification-content').innerHTML += html;
+                        });
+
+                        window.notificationPagination = response.data[response.data.length-1].id;
+
+                        document.getElementById('notification-content').innerHTML += '<center><i id="load-more-notifications" class="fas fa-arrow-down is-pointer" onclick="fetchNotificationList()"></i></center>';
+                        document.getElementById('notification-spinner').remove();
+                    } else {
+                        if (window.notificationPagination === null) {
+                            document.getElementById('notification-content').innerHTML = '<center><i>{{ __('app.no_notifications_yet') }}</i></center>';
+                        }
+
+                        let loader = document.getElementById('load-more-notifications');
+                        if (loader) {
+                            loader.remove();
+                        }
+
+                        let spinner = document.getElementById('notification-spinner');
+                        if (spinner) {
+                            spinner.remove();
+                        }
+                    }
+                }
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout('fetchNotifications()', 5000);
+            setTimeout('fetchNotificationList()', 100);
+
+            window.menuVisible = false;
+
             const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-            // Check if there are any navbar burgers
             if ($navbarBurgers.length > 0) {
-
-                // Add a click event on each of them
                 $navbarBurgers.forEach( el => {
                     el.addEventListener('click', () => {
-
-                        // Get the target from the "data-target" attribute
                         const target = el.dataset.target;
                         const $target = document.getElementById(target);
 
-                        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
                         el.classList.toggle('is-active');
                         $target.classList.toggle('is-active');
 

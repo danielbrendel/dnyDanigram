@@ -97,10 +97,10 @@ a:hover {
     padding: 21px;
 }
 .is-default-padding-left {
-    padding-left: 10px;
+    padding-left: 18px;
 }
 .is-default-padding-right {
-    padding-right: 10px;
+    padding-right: 18px;
 }
 .is-about-nav {
     color: rgb(120, 120, 120);
@@ -444,5 +444,45 @@ a:hover {
     background-color: rgb(255, 117, 117);
 }
 .is-flash-success {
+    background-color: rgb(128, 255, 128);
+}
+
+//Notification area
+.notifications {
+    position: absolute;
+    @media screen and (min-width: 481px) {
+        right: -151px;
+        top: -9px;
+        width: 550px;
+        height: 90%;
+    }
+    @media screen and (max-width: 480px) {
+        width: 480px;
+        height: 100%;
+        top: 44px;
+    }
+    z-index: 4;
+    background-color: rgb(240, 240, 230);
+    display: none;
+}
+.notifications-content {
+    margin: 25px;
+    height: 100%;
+    overflow-y: auto;
+}
+.notification-item {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    padding: 21px;
+}
+.notification-item-icon {
+    display: inline-block;
+}
+.notification-item-message {
+    display: inline-block;
+}
+.is-new-notification {
     background-color: rgb(128, 255, 128);
 }

@@ -49,3 +49,6 @@ Route::post('/profile/edit', 'MemberController@save');
 
 Route::post('/b/add', 'BookmarksController@add');
 Route::post('/b/remove', 'BookmarksController@remove');
+
+Route::get('/notifications/list', 'NotificationController@list');
+Route::get('/notifications/fetch', 'NotificationController@fetch');

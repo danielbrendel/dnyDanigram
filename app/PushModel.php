@@ -25,21 +25,45 @@ use App\User;
 class PushModel extends Model
 {
     /**
+     * Validate notification type
+     *
+     * @param $type
+     * @throws \Exception
+     */
+    private static function validatePushType($type)
+    {
+        try {
+            $types = array('push_hearted', 'push_commented', 'push_highlighted');
+            if (!in_array($type, $types)) {
+                throw new \Exception('Invalid notification type: ' . $type);
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Add a notification to the list
      *
-     * @param string $title The title of the notification
      * @param string $message The message content
+     * @param $type
      * @param int $userId The user ID
      * @return void
      */
-    public static function addNotification($title, $message, $userId)
+    public static function addNotification($message, $type, $userId)
     {
-        $entry = new PushModel();
-        $entry->title = $title;
-        $entry->message = $message;
-        $entry->seen = false;
-        $entry->user_id = $userId;
-        $entry->save();
+        try {
+            static::validatePushType($type);
+
+            $entry = new PushModel();
+            $entry->type = $type;
+            $entry->message = $message;
+            $entry->seen = false;
+            $entry->userId = $userId;
+            $entry->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -47,15 +71,44 @@ class PushModel extends Model
      *
      * @param int $userId The ID of the user
      * @return mixed Items or null if non exist
+     * @throws \Exception
      */
     public static function getUnseenNotifications($userId)
     {
-        $items = PushModel::where('user_id', '=', $userId)->where('seen', '=', false)->get();
-        foreach ($items as $item) {
-            $item->seen = true;
-            $item->save();
-        }
+        try {
+            $items = PushModel::where('userId', '=', $userId)->where('seen', '=', false)->get();
+            foreach ($items as $item) {
+                $item->seen = true;
+                $item->save();
+            }
 
-        return $items;
+            return $items;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get notifications of user
+     *
+     * @param $userId
+     * @param $limit
+     * @param null $paginate
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getNotifications($userId, $limit, $paginate = null)
+    {
+        try {
+            $rowset = PushModel::where('userId', '=', $userId)->where('seen', '=', true);
+
+            if ($paginate !== null) {
+                $rowset->where('id', '<', $paginate);
+            }
+
+            return $rowset->orderBy('id', 'desc')->limit($limit)->get();
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

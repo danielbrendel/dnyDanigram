@@ -97,5 +97,6 @@ return [
     'reset' => 'Reset',
     'hash_not_found' => 'The given hash is not valid',
     'no_comments_yet' => 'There are no comments posted yet',
-    'no_more_comments' => 'No more comments'
+    'no_more_comments' => 'No more comments',
+    'no_notifications_yet' => 'No notifications yet'
 ];
