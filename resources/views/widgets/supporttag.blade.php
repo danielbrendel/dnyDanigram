@@ -10,7 +10,9 @@
     Released under the MIT license
 --}}
 
-
-<strong>{{ __('app.support_hashtag') }}<i class="far fa-heart is-pointer"></i> {{ $heart_count }}</strong>
-
+@if ($hearted)
+    <strong>{{ __('app.support_hashtag') }}<i id="heart-ent_hashtag-{{ $tag->id }}" class="fas fa-heart is-pointer is-hearted" onclick="window.vue.toggleHeart({{ $tag->id }}, 'ENT_HASHTAG')"></i> <span id="count-ent_hashtag-{{ $tag->id }}">{{ $heart_count }}</span></strong>
+@else
+    <strong>{{ __('app.support_hashtag') }}<i id="heart-ent_hashtag-{{ $tag->id }}" class="far fa-heart is-pointer" onclick="window.vue.toggleHeart({{ $tag->id }}, 'ENT_HASHTAG')"></i> <span id="count-ent_hashtag-{{ $tag->id }}">{{ $heart_count }}</span></strong>
+@endif
 

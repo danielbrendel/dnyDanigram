@@ -41,7 +41,15 @@
         <a href="javascript:void(0)" onclick="window.vue.bShowEditProfile = true;">{{ __('app.edit_profile') }}</a>
     </div>
 @else
-    <div class="userinfo-report">
+    <div class="userinfo-bookmark" id="bookmark-ent_user">
+        @if ($bookmarked)
+            <a href="javascript:void(0)" onclick="removeBookmark({{ $user->id }}, 'ENT_USER')">{{ __('app.bookmark_remove') }}</a>
+        @else
+            <a href="javascript:void(0)" onclick="addBookmark({{ $user->id }}, 'ENT_USER')">{{ __('app.bookmark_add') }}</a>
+        @endif
+    </div>
+
+    <div class="userinfo-report float-right">
         <a href="javascript:void(0)" onclick="reportProfile({{ $user->id }})">{{ __('app.report_profile') }}</a>
     </div>
 @endif

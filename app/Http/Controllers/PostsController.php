@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
+use App\BookmarksModel;
 use App\HeartModel;
 use App\PostModel;
 use App\ReportModel;
@@ -108,9 +109,21 @@ class PostsController extends Controller
                 $user->stats = User::getStats($user->id);
             }
 
+            $bookmarks = BookmarksModel::getForUser(auth()->id());
+            foreach ($bookmarks as &$bookmark) {
+                if ($bookmark->type === 'ENT_HASHTAG') {
+                    $hashtag = TagsModel::where('id', '=', $bookmark->entityId)->first();
+                    $bookmark->name = $hashtag->tag;
+                } else if ($bookmark->type === 'ENT_USER') {
+                    $user = User::get($bookmark->entityId);
+                    $bookmark->name = $user->username;
+                }
+            }
+
             return view('member.index', [
                 'user' => $user,
-                'taglist' => TagsModel::getPopularTags()
+                'taglist' => TagsModel::getPopularTags(),
+                'bookmarks' => $bookmarks
             ]);
         } catch (Exception $e) {
             abort(500);
@@ -173,7 +186,9 @@ class PostsController extends Controller
                 'taglist' => TagsModel::getPopularTags(),
                 'hashtag' => $hashtag,
                 'tag' => $tag,
-                'tagdata' => $tag
+                'tagdata' => $tag,
+                'bookmarked' => BookmarksModel::hasUserBookmarked(auth()->id(), $tag->id, 'ENT_HASHTAG'),
+                'hearted' => HeartModel::hasUserHearted(auth()->id(), $tag->id, 'ENT_HASHTAG')
             ]);
         } catch (Exception $e) {
             abort(500);
@@ -262,17 +277,17 @@ class PostsController extends Controller
     public function heart()
     {
         try {
-            $attr['post'] = request('post');
+            $attr['entity'] = request('entity');
             $attr['value'] = request('value');
             $attr['type'] = request('type');
 
             if ($attr['value']) {
-                HeartModel::addHeart(auth()->id(), $attr['post'], $attr['type']);
+                HeartModel::addHeart(auth()->id(), $attr['entity'], $attr['type']);
             } else {
-                HeartModel::removeHeart(auth()->id(), $attr['post'], $attr['type']);
+                HeartModel::removeHeart(auth()->id(), $attr['entity'], $attr['type']);
             }
 
-            return response()->json(array('code' => 200, 'value' => $attr['value'], 'count' => HeartModel::where('entityId', '=', $attr['post'])->where('type', '=', $attr['type'])->count()));
+            return response()->json(array('code' => 200, 'value' => $attr['value'], 'count' => HeartModel::where('entityId', '=', $attr['entity'])->where('type', '=', $attr['type'])->count()));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
@@ -319,6 +334,28 @@ class PostsController extends Controller
             ReportModel::addReport(auth()->id(), $id, 'ENT_POST');
 
             return response()->json(array('code' => 200));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Report a tag
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reportTag($id)
+    {
+        try {
+            $tag = TagsModel::where('id', '=', $id);
+            if (!$tag) {
+                return response()->json(array('code' => 404, 'msg' => __('app.tag_not_found')));
+            }
+
+            ReportModel::addReport(auth()->id(), $id, 'ENT_HASHTAG');
+
+            return response()->json(array('code' => 200, 'msg' => __('app.tag_reported')));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

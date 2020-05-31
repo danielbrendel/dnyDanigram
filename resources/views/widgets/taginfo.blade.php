@@ -30,3 +30,15 @@
     <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_comments', ['count' => $tag->stats->comments]) }}<br/>
     <i class="fas fa-heart"></i>&nbsp;{{ __('app.stats_hearts', ['count' => $tag->stats->hearts]) }}<br/>
 </div>
+
+<div class="userinfo-bookmark" id="bookmark-ent_hashtag">
+    @if ($bookmarked)
+        <a href="javascript:void(0)" onclick="removeBookmark({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.bookmark_remove') }}</a>
+    @else
+        <a href="javascript:void(0)" onclick="addBookmark({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.bookmark_add') }}</a>
+    @endif
+</div>
+
+<div class="userinfo-report float-right">
+    <a href="javascript:void(0)" onclick="reportTag({{ $tag->id }})">{{ __('app.report_tag') }}</a>
+</div>

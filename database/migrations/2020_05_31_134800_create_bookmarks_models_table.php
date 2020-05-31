@@ -16,7 +16,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHeartModelsTable extends Migration
+class CreateBookmarksModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -25,11 +25,11 @@ class CreateHeartModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('heart_models', function (Blueprint $table) {
+        Schema::create('bookmarks_models', function (Blueprint $table) {
             $table->id();
             $table->integer('userId');
             $table->integer('entityId');
-            $table->string('type');
+            $table->string('type', 35);
             $table->timestamps();
         });
     }
@@ -41,6 +41,6 @@ class CreateHeartModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('heart_models');
+        Schema::dropIfExists('bookmarks_models');
     }
 }

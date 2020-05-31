@@ -33,7 +33,7 @@
             </div>
 
             <div class="member-form">
-                @include('widgets.userinfo')
+                @include('widgets.bookmarks')
             </div>
 
             <div class="member-form">

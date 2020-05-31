@@ -206,7 +206,7 @@ var vue = new Vue({
     toggleHeart: function toggleHeart(elemId, type) {
       var obj = document.getElementById('heart-' + type.toLowerCase() + '-' + elemId);
       this.ajaxRequest('post', window.location.origin + '/heart', {
-        post: elemId,
+        entity: elemId,
         value: !parseInt(obj.getAttribute('data-value')),
         type: type
       }, function (response) {
@@ -339,6 +339,34 @@ window.reportComment = function (elemId) {
 window.reportProfile = function (elemId) {
   window.vue.ajaxRequest('get', window.location.origin + '/u/' + elemId + '/report', {}, function (response) {
     alert(response.msg);
+  });
+};
+
+window.reportTag = function (elemId) {
+  window.vue.ajaxRequest('get', window.location.origin + '/t/' + elemId + '/report', {}, function (response) {
+    alert(response.msg);
+  });
+};
+
+window.addBookmark = function (entityId, type) {
+  window.vue.ajaxRequest('post', window.location.origin + '/b/add', {
+    entityId: entityId,
+    entType: type
+  }, function (response) {
+    if (response.code === 200) {
+      document.getElementById('bookmark-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="removeBookmark(' + entityId + ', \'' + type + '\')">Remove bookmark</a>';
+    }
+  });
+};
+
+window.removeBookmark = function (entityId, type) {
+  window.vue.ajaxRequest('post', window.location.origin + '/b/remove', {
+    entityId: entityId,
+    entType: type
+  }, function (response) {
+    if (response.code === 200) {
+      document.getElementById('bookmark-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="addBookmark(' + entityId + ', \'' + type + '\')">Add bookmark</a>';
+    }
   });
 }; //Make vue instance available globally
 

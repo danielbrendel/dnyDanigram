@@ -440,8 +440,14 @@ a:hover {
   margin-top: 15px;
 }
 
+.userinfo-bookmark {
+  display: inline-block;
+  margin-top: 15px;
+}
+
 .userinfo-report {
   margin-top: 15px;
+  display: inline-block;
 }
 
 .badge-admin {

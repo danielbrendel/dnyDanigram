@@ -36,8 +36,12 @@ Route::post('/p/{id}/report', 'PostsController@reportPost');
 Route::post('/comment/edit', 'PostsController@editComment');
 Route::post('/comment/delete', 'PostsController@deleteComment');
 Route::post('/comment/report', 'PostsController@reportComment');
+Route::get('/t/{id}/report', 'PostsController@reportTag');
 
 Route::get('/u/{id}', 'MemberController@show');
 Route::get('/u/{id}/report', 'MemberController@report');
 Route::get('/profile', 'MemberController@profile');
 Route::post('/profile/edit', 'MemberController@save');
+
+Route::post('/b/add', 'BookmarksController@add');
+Route::post('/b/remove', 'BookmarksController@remove');

@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
+use App\BookmarksModel;
 use App\PostModel;
 use App\ReportModel;
 use App\TagsModel;
@@ -42,7 +43,8 @@ class MemberController extends Controller
             return view('member.profile', [
                 'user' => User::getByAuthId(),
                 'profile' => $user,
-                'taglist' => TagsModel::getPopularTags()
+                'taglist' => TagsModel::getPopularTags(),
+                'bookmarked' => BookmarksModel::hasUserBookmarked(auth()->id(), $user->id, 'ENT_USER')
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
