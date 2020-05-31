@@ -283,7 +283,6 @@ class PostModel extends Model
     {
         try {
             $posts = null;
-
             $type = (int)$type;
 
             if ($type === self::FETCH_TOP) {

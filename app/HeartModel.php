@@ -72,6 +72,18 @@ class HeartModel extends Model
                     $post->hearts++;
                     $post->save();
                 }
+            } else if ($entType === 'ENT_HASHTAG') {
+                $tag = TagsModel::where('id', '=', $entityId)->first();
+                if ($tag) {
+                    $tag->hearts++;
+                    $tag->save();
+                }
+            } else if ($entType === 'ENT_COMMENT') {
+                $comment = ThreadModel::where('id', '=', $entityId)->first();
+                if ($comment) {
+                    $comment->hearts++;
+                    $comment->save();
+                }
             }
         } catch (\Exception $e) {
             throw $e;
@@ -102,6 +114,18 @@ class HeartModel extends Model
                 if ($post) {
                     $post->hearts--;
                     $post->save();
+                }
+            } else if ($entType === 'ENT_HASHTAG') {
+                $tag = TagsModel::where('id', '=', $entityId)->first();
+                if ($tag) {
+                    $tag->hearts--;
+                    $tag->save();
+                }
+            } else if ($entType === 'ENT_COMMENT') {
+                $comment = ThreadModel::where('id', '=', $entityId)->first();
+                if ($comment) {
+                    $comment->hearts--;
+                    $comment->save();
                 }
             }
         } catch (\Exception $e) {

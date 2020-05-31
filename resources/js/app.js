@@ -94,7 +94,7 @@ let vue = new Vue({
                 }
             }
 
-            this.setPostFetchType(1);
+            this.setPostFetchType(2);
 
             return 1;
         },

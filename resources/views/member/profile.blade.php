@@ -83,19 +83,24 @@
 
             window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : '') + '&user=' + {{ $profile->id }}, {}, function(response){
                 if (response.code == 200) {
-                    response.data.forEach(function(elem, index) {
-                        let insertHtml = renderPost(elem);
+                    if (!response.last) {
+                        response.data.forEach(function (elem, index) {
+                            let insertHtml = renderPost(elem);
 
-                        document.getElementById('feed').innerHTML += insertHtml;
+                            document.getElementById('feed').innerHTML += insertHtml;
 
-                        if (window.vue.getPostFetchType() == 1) {
-                            window.paginate = response.data[response.data.length - 1].hearts;
-                        } else if (window.vue.getPostFetchType() == 2) {
-                            window.paginate = response.data[response.data.length - 1].id;
-                        }
+                            if (window.vue.getPostFetchType() == 1) {
+                                window.paginate = response.data[response.data.length - 1].hearts;
+                            } else if (window.vue.getPostFetchType() == 2) {
+                                window.paginate = response.data[response.data.length - 1].id;
+                            }
 
+                            document.getElementById('loading').style.display = 'none';
+                        });
+                    } else {
+                        document.getElementById('feed').innerHTML += '<center><i>{{ __('app.no_more_posts') }}</i></center><br/>';
                         document.getElementById('loading').style.display = 'none';
-                    });
+                    }
                 }
             });
         }

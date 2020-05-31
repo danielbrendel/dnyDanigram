@@ -217,7 +217,7 @@ class PostsController extends Controller
                 $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
             }
 
-            return response()->json(array('code' => 200, 'data' => $posts));
+            return response()->json(array('code' => 200, 'data' => $posts, 'last' => (count($posts) === 0)));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

@@ -81,4 +81,5 @@ return [
     'report_tag' => 'Report',
     'tag_reported' => 'Tag has been reported',
     'remove' => 'Remove',
+    'no_more_posts' => 'No more posts'
 ];
