@@ -40,4 +40,8 @@
     <div class="userinfo-edit">
         <a href="javascript:void(0)" onclick="window.vue.bShowEditProfile = true;">{{ __('app.edit_profile') }}</a>
     </div>
+@else
+    <div class="userinfo-report">
+        <a href="javascript:void(0)" onclick="reportProfile({{ $user->id }})">{{ __('app.report_profile') }}</a>
+    </div>
 @endif

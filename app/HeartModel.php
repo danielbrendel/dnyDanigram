@@ -129,4 +129,24 @@ class HeartModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Get all hearts from a specific entity
+     * @param $entityId
+     * @param $entType
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getFromEntity($entityId, $entType)
+    {
+        try {
+            static::validateEntityType($entType);
+
+            $rowset = HeartModel::where('entityId', '=', $entityId)->where('type', '=', $entType)->get();
+
+            return $rowset;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }

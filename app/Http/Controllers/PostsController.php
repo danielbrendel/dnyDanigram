@@ -224,6 +224,7 @@ class PostsController extends Controller
                 $thread->user = User::get($thread->userId);
                 $thread->hearts = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread->id)->count();
                 $thread->adminOrOwner = User::isAdmin(auth()->id()) || ($thread->userId === auth()->id());
+                $thread->userHearted = HeartModel::hasUserHearted(auth()->id(), $thread->id, 'ENT_COMMENT');
             }
 
             return response()->json(array('code' => 200, 'data' => $threads, 'last' => $threads[count($threads)-1]->id === 1));
@@ -258,19 +259,20 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function heartPost()
+    public function heart()
     {
         try {
             $attr['post'] = request('post');
             $attr['value'] = request('value');
+            $attr['type'] = request('type');
 
             if ($attr['value']) {
-                HeartModel::addHeart(auth()->id(), $attr['post'], 'ENT_POST');
+                HeartModel::addHeart(auth()->id(), $attr['post'], $attr['type']);
             } else {
-                HeartModel::removeHeart(auth()->id(), $attr['post'], 'ENT_POST');
+                HeartModel::removeHeart(auth()->id(), $attr['post'], $attr['type']);
             }
 
-            return response()->json(array('code' => 200, 'value' => $attr['value'], 'count' => HeartModel::where('entityId', '=', $attr['post'])->where('type', '=', 'ENT_POST')->count()));
+            return response()->json(array('code' => 200, 'value' => $attr['value'], 'count' => HeartModel::where('entityId', '=', $attr['post'])->where('type', '=', $attr['type'])->count()));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
@@ -315,6 +317,96 @@ class PostsController extends Controller
             }
 
             ReportModel::addReport(auth()->id(), $id, 'ENT_POST');
+
+            return response()->json(array('code' => 200));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Report a post
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reportComment()
+    {
+        try {
+            $id = request('comment');
+
+            $cmt = ThreadModel::where('id', '=', $id)->first();
+            if (!$cmt) {
+                return response()->json(array('code' => 404, 'msg' => __('app.comment_not_found')));
+            }
+
+            ReportModel::addReport(auth()->id(), $id, 'ENT_COMMENT');
+
+            return response()->json(array('code' => 200, 'msg' => __('app.comment_reported')));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Edit comment
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function editComment()
+    {
+        try {
+            $id = request('comment');
+            $text = request('text');
+
+            $comment = ThreadModel::where('id', '=', $id)->first();
+
+            if (!$comment) {
+                return response()->json(array('code' => 404, 'msg' => __('app.comment_not_found')));
+            }
+
+            $user = User::get(auth()->id());
+
+            if (($comment->userId !== auth()->id()) && (!$user->admin)) {
+                return response()->json(array('code' => 403, 'msg' => __('app.insufficient_permissions')));
+            }
+
+            $comment->text = $text;
+            $comment->save();
+
+            return response()->json(array('code' => 200));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Delete comment
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteComment()
+    {
+        try {
+            $id = request('comment');
+
+            $comment = ThreadModel::where('id', '=', $id)->first();
+
+            if (!$comment) {
+                return response()->json(array('code' => 404, 'msg' => __('app.comment_not_found')));
+            }
+
+            $user = User::get(auth()->id());
+
+            if (($comment->userId !== auth()->id()) && (!$user->admin)) {
+                return response()->json(array('code' => 403, 'msg' => __('app.insufficient_permissions')));
+            }
+
+            $hearts = HeartModel::getFromEntity($comment->id, 'ENT_COMMENT');
+            foreach ($hearts as $heart) {
+                $heart->delete();
+            }
+
+            $comment->delete();
 
             return response()->json(array('code' => 200));
         } catch (Exception $e) {

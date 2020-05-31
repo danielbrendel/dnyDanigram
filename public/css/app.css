@@ -397,6 +397,12 @@ a:hover {
   display: inline-block;
 }
 
+.thread-header-options {
+  position: relative;
+  float: right;
+  top: 20px;
+}
+
 .taglist-item {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -431,6 +437,10 @@ a:hover {
 }
 
 .userinfo-edit {
+  margin-top: 15px;
+}
+
+.userinfo-report {
   margin-top: 15px;
 }
 

@@ -31,9 +31,13 @@ Route::get('/upload', 'PostsController@viewUpload');
 Route::post('/upload', 'PostsController@upload');
 Route::get('/p/{id}', 'PostsController@showPost');
 Route::post('/p/{id}/thread/add', 'PostsController@addThread');
-Route::post('/p/heart', 'PostsController@heartPost');
+Route::post('/heart', 'PostsController@heart');
 Route::post('/p/{id}/report', 'PostsController@reportPost');
+Route::post('/comment/edit', 'PostsController@editComment');
+Route::post('/comment/delete', 'PostsController@deleteComment');
+Route::post('/comment/report', 'PostsController@reportComment');
 
 Route::get('/u/{id}', 'MemberController@show');
+Route::get('/u/{id}/report', 'MemberController@report');
 Route::get('/profile', 'MemberController@profile');
 Route::post('/profile/edit', 'MemberController@save');

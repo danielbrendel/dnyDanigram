@@ -82,7 +82,7 @@
             window.vue.ajaxRequest('get', '{{ url('/fetch/thread') }}?post={{ $post->id }}' + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
                 if (response.code == 200) {
                     response.data.forEach(function(elem, index) {
-                        let insertHtml = renderThread(elem);
+                        let insertHtml = renderThread(elem, elem.adminOrOwner);
                         document.getElementById('thread').innerHTML += insertHtml;
 
                         window.paginate = response.data[response.data.length - 1].id;

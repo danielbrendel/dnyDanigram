@@ -62,5 +62,14 @@ return [
     'profile_saved' => 'Your profile has been saved',
     'password_confirm' => 'Password confirmation',
     'password_mismatch' => 'The passwords do not match',
-    'settings_avatar_invalid_image_type' => 'The given image file is invalid'
+    'settings_avatar_invalid_image_type' => 'The given image file is invalid',
+    'submit' => 'Submit',
+    'edit_comment' => 'Edit comment',
+    'text' => 'Text',
+    'comment_saved' => 'Comment has been saved',
+    'comment_not_found' => 'The specified comment could not be found',
+    'insufficient_permissions' => 'Insufficient permissions',
+    'comment_reported' => 'Comment has been reported',
+    'user_reported' => 'User has been reported',
+    'report_profile' => 'Report',
 ];

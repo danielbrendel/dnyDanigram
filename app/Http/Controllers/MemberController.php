@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 
 use App\AppModel;
 use App\PostModel;
+use App\ReportModel;
 use App\TagsModel;
 use App\User;
 use Illuminate\Http\Request;
@@ -129,6 +130,28 @@ class MemberController extends Controller
             return back()->with('flash.success', __('app.profile_saved'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Report a user
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function report($id)
+    {
+        try {
+            $user = User::get($id);
+            if (!$user) {
+                return response()->json(array('code' => 404, 'msg' => __('app.user_not_found')));
+            }
+
+            ReportModel::addReport(auth()->id(), $user->id, 'ENT_USER');
+
+            return response()->json(array('code' => 200, 'msg' => __('app.user_reported')));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 }

@@ -111,7 +111,8 @@ var vue = new Vue({
   data: {
     bShowRecover: false,
     bShowRegister: false,
-    bShowEditProfile: false
+    bShowEditProfile: false,
+    bShowEditComment: false
   },
   methods: {
     invalidLoginEmail: function invalidLoginEmail() {
@@ -202,11 +203,12 @@ var vue = new Vue({
         finalfunc();
       });
     },
-    toggleHeart: function toggleHeart(elemId) {
-      var obj = document.getElementById('heart-' + elemId);
-      this.ajaxRequest('post', window.location.origin + '/p/heart', {
+    toggleHeart: function toggleHeart(elemId, type) {
+      var obj = document.getElementById('heart-' + type.toLowerCase() + '-' + elemId);
+      this.ajaxRequest('post', window.location.origin + '/heart', {
         post: elemId,
-        value: !parseInt(obj.getAttribute('data-value'))
+        value: !parseInt(obj.getAttribute('data-value')),
+        type: type
       }, function (response) {
         if (response.code === 200) {
           if (response.value) {
@@ -218,11 +220,18 @@ var vue = new Vue({
           }
 
           obj.setAttribute('data-value', response.value ? '1' : '0');
-          document.getElementById('count-' + elemId).innerHTML = response.count;
+          document.getElementById('count-' + type.toLowerCase() + '-' + elemId).innerHTML = response.count;
         }
       });
     },
     togglePostOptions: function togglePostOptions(elem) {
+      if (elem.classList.contains('is-active')) {
+        elem.classList.remove('is-active');
+      } else {
+        elem.classList.add('is-active');
+      }
+    },
+    toggleCommentOptions: function toggleCommentOptions(elem) {
       if (elem.classList.contains('is-active')) {
         elem.classList.remove('is-active');
       } else {
@@ -259,12 +268,19 @@ window.renderPost = function (elem) {
   hashArr.forEach(function (elem, index) {
     hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
   });
-  var html = "\n                            <div class=\"member-form\">\n                            <div class=\"show-post-header\">\n                                <div class=\"show-post-avatar\">\n                                    <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href='" + window.location.origin + "/u/" + elem.user.id + "'\" width=\"32\" height=\"32\">\n                                </div>\n\n                                <div class=\"show-post-userinfo\">\n                                    <div>" + elem.user.username + "</div>\n                                    <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                                </div>\n\n                                <div class=\"show-post-options is-inline-block\">\n                                    <div class=\"dropdown is-right\" id=\"post-options-" + elem.id + "\">\n                                        <div class=\"dropdown-trigger\">\n                                            <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\"></i>\n                                        </div>\n                                        <div class=\"dropdown-menu\" role=\"menu\">\n                                            <div class=\"dropdown-content\">\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"whatsapp://send?text=" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"far fa-copy\"></i>&nbsp;Share via WhatsApp\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"https://twitter.com/share?url=" + encodeURIComponent(window.location.origin + '/p/' + elem.id) + "&text=" + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"fab fa-twitter\"></i>&nbsp;Share via Twitter\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"https://www.facebook.com/sharer/sharer.php?u=" + window.location.origin + "/p/" + elem.id + "\" class=\"dropdown-item\">\n                                                    <i class=\"fab fa-facebook\"></i>&nbsp;Share via Facebook\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"mailto:name@domain.com?body=" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"far fa-envelope\"></i>&nbsp;Share via E-Mail\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"sms:000000000?body=" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"fas fa-sms\"></i>&nbsp;Share via SMS\n                                                </a>\n                                                <a href=\"javascript:void(0)\" onclick=\"window.vue.copyToClipboard('" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "'); window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                                                    <i class=\"far fa-copy\"></i>&nbsp;Copy link\n                                                </a>\n                                                <hr class=\"dropdown-divider\">\n                                                <a href=\"javascript:void(0)\" onclick=\"reportPost(" + elem.id + "); window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                                                    Report\n                                                </a>\n                                            </div>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"show-post-image\">\n                                <img class=\"is-pointer\" src=\"" + window.location.origin + "/gfx/posts/" + elem.image_thumb + "\" onclick=\"location.href='" + window.location.origin + '/p/' + elem.id + "'\">\n                            </div>\n\n                            <div class=\"show-post-attributes\">\n                                <div class=\"is-inline-block\"><i id=\"heart-" + elem.id + "\" class=\"" + (elem.userHearted ? 'fas fa-heart is-hearted' : 'far fa-heart') + " is-pointer\" onclick=\"window.vue.toggleHeart(" + elem.id + ")\" data-value=\"" + (elem.userHearted ? '1' : '0') + "\"></i> <span id=\"count-" + elem.id + "\">" + elem.hearts + "</span></div>\n                                <div class=\"is-inline-block is-right\" style=\"float:right;\"><a href=\"" + window.location.origin + "/p/" + elem.id + "#thread\">" + elem.comment_count + " comments</a></div>\n                            </div>\n\n                            <div class=\"show-post-description\">\n                                " + elem.description + "\n                                       </div>\n\n                                       <div class=\"show-post-hashtags\">\n                                        " + hashTags + "\n                                       </div>\n                                   </div>\n                        ";
+  var html = "\n                            <div class=\"member-form\">\n                            <div class=\"show-post-header\">\n                                <div class=\"show-post-avatar\">\n                                    <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href='" + window.location.origin + "/u/" + elem.user.id + "'\" width=\"32\" height=\"32\">\n                                </div>\n\n                                <div class=\"show-post-userinfo\">\n                                    <div>" + elem.user.username + "</div>\n                                    <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                                </div>\n\n                                <div class=\"show-post-options is-inline-block\">\n                                    <div class=\"dropdown is-right\" id=\"post-options-" + elem.id + "\">\n                                        <div class=\"dropdown-trigger\">\n                                            <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\"></i>\n                                        </div>\n                                        <div class=\"dropdown-menu\" role=\"menu\">\n                                            <div class=\"dropdown-content\">\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"whatsapp://send?text=" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"far fa-copy\"></i>&nbsp;Share via WhatsApp\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"https://twitter.com/share?url=" + encodeURIComponent(window.location.origin + '/p/' + elem.id) + "&text=" + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"fab fa-twitter\"></i>&nbsp;Share via Twitter\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"https://www.facebook.com/sharer/sharer.php?u=" + window.location.origin + "/p/" + elem.id + "\" class=\"dropdown-item\">\n                                                    <i class=\"fab fa-facebook\"></i>&nbsp;Share via Facebook\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"mailto:name@domain.com?body=" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"far fa-envelope\"></i>&nbsp;Share via E-Mail\n                                                </a>\n                                                <a onclick=\"window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" href=\"sms:000000000?body=" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "\" class=\"dropdown-item\">\n                                                    <i class=\"fas fa-sms\"></i>&nbsp;Share via SMS\n                                                </a>\n                                                <a href=\"javascript:void(0)\" onclick=\"window.vue.copyToClipboard('" + window.location.origin + "/p/" + elem.id + " " + (elem.description.length > MAX_SHARE_TEXT_LENGTH ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + "'); window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                                                    <i class=\"far fa-copy\"></i>&nbsp;Copy link\n                                                </a>\n                                                <hr class=\"dropdown-divider\">\n                                                <a href=\"javascript:void(0)\" onclick=\"reportPost(" + elem.id + "); window.vue.togglePostOptions(document.getElementById('post-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                                                    Report\n                                                </a>\n                                            </div>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n\n                            <div class=\"show-post-image\">\n                                <img class=\"is-pointer\" src=\"" + window.location.origin + "/gfx/posts/" + elem.image_thumb + "\" onclick=\"location.href='" + window.location.origin + '/p/' + elem.id + "'\">\n                            </div>\n\n                            <div class=\"show-post-attributes\">\n                                <div class=\"is-inline-block\"><i id=\"heart-ent_post-" + elem.id + "\" class=\"" + (elem.userHearted ? 'fas fa-heart is-hearted' : 'far fa-heart') + " is-pointer\" onclick=\"window.vue.toggleHeart(" + elem.id + ", 'ENT_POST')\" data-value=\"" + (elem.userHearted ? '1' : '0') + "\"></i> <span id=\"count-ent_post-" + elem.id + "\">" + elem.hearts + "</span></div>\n                                <div class=\"is-inline-block is-right\" style=\"float:right;\"><a href=\"" + window.location.origin + "/p/" + elem.id + "#thread\">" + elem.comment_count + " comments</a></div>\n                            </div>\n\n                            <div class=\"show-post-description\">\n                                " + elem.description + "\n                                       </div>\n\n                                       <div class=\"show-post-hashtags\">\n                                        " + hashTags + "\n                                       </div>\n                                   </div>\n                        ";
   return html;
 };
 
 window.renderThread = function (elem) {
-  var html = "\n        <a name=\"" + elem.id + "\"></a>\n\n        <div class=\"thread-header\">\n            <div class=\"thread-header-avatar is-inline-block\">\n                <img width=\"24\" height=\"24\" src=\"" + window.location.origin + "/gfx/avatars/" + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href = '';\" title=\"\">\n            </div>\n\n            <div class=\"thread-header-info is-inline-block\">\n                <div>" + elem.user.username + "</div>\n                <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n            </div>\n        </div>\n\n        <div class=\"thread-text\">\n            " + elem.text + "\n        </div>\n\n        <div class=\"thread-footer\">\n            <div class=\"thread-footer-hearts\"><i class=\"far fa-heart\"></i>&nbsp;" + elem.hearts + "</div>\n            <div class=\"thread-footer-options\">\n                " + (elem.ownerOrAdmin ? '<a href="">Edit</a> | <a href="">Delete</a> |' : '') + "\n                <a href=\"\">Report</a>\n            </div>\n        </div>\n    ";
+  var adminOrOwner = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var options = '';
+
+  if (adminOrOwner) {
+    options = "\n            <a onclick=\"showEditComment(" + elem.id + "); window.vue.toggleCommentOptions(document.getElementById('thread-options-" + elem.id + "'));\" href=\"whatsapp://send?text=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `\" class=\"dropdown-item\">\n                <i class=\"far fa-edit\"></i>&nbsp;Edit\n            </a>\n            <a onclick=\"deleteComment(" + elem.id + "); window.vue.toggleCommentOptions(document.getElementById('thread-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                <i class=\"fas fa-times\"></i>&nbsp;Delete\n            </a>\n            <hr class=\"dropdown-divider\">\n        ";
+  }
+
+  var html = "\n        <div id=\"thread-" + elem.id + "\">\n            <a name=\"" + elem.id + "\"></a>\n\n            <div class=\"thread-header\">\n                <div class=\"thread-header-avatar is-inline-block\">\n                    <img width=\"24\" height=\"24\" src=\"" + window.location.origin + "/gfx/avatars/" + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href = '';\" title=\"\">\n                </div>\n\n                <div class=\"thread-header-info is-inline-block\">\n                    <div>" + elem.user.username + "</div>\n                    <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                </div>\n\n                <div class=\"thread-header-options is-inline-block\">\n                    <div class=\"dropdown is-right\" id=\"thread-options-" + elem.id + "\">\n                        <div class=\"dropdown-trigger\">\n                            <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.togglePostOptions(document.getElementById('thread-options-" + elem.id + "'));\"></i>\n                        </div>\n                        <div class=\"dropdown-menu\" role=\"menu\">\n                            <div class=\"dropdown-content\">\n                                " + options + "\n\n                                <a href=\"javascript:void(0)\" onclick=\"reportComment(" + elem.id + "); window.vue.togglePostOptions(document.getElementById('thread-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                                    Report\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"thread-text\" id=\"thread-text-" + elem.id + "\">\n                " + elem.text + "\n            </div>\n\n            <div class=\"thread-footer\">\n                <div class=\"thread-footer-hearts\"><i id=\"heart-ent_comment-" + elem.id + "\" class=\"" + (elem.userHearted ? 'fas fa-heart is-hearted' : 'far fa-heart') + " is-pointer\" onclick=\"window.vue.toggleHeart(" + elem.id + ", 'ENT_COMMENT')\"></i>&nbsp;<span id=\"count-ent_comment-" + elem.id + "\">" + elem.hearts + "</span></div>\n            </div>\n        </div>\n    ";
   return html;
 };
 
@@ -273,6 +289,56 @@ window.reportPost = function (id) {
     if (response.code === 200) {
       alert('The post has been reported!');
     }
+  });
+};
+
+window.showEditComment = function (elemId) {
+  document.getElementById('editCommentId').value = elemId;
+  document.getElementById('editCommentText').value = document.getElementById('thread-text-' + elemId).innerHTML;
+  window.vue.bShowEditComment = true;
+};
+
+window.editComment = function (elemId, text) {
+  var oldContent = document.getElementById('thread-text-' + elemId).innerHTML;
+  document.getElementById('thread-text-' + elemId).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  window.vue.ajaxRequest('post', window.location.origin + '/comment/edit', {
+    comment: elemId,
+    text: text
+  }, function (response) {
+    if (response.code === 200) {
+      document.getElementById('thread-text-' + elemId).innerHTML = text;
+    } else {
+      document.getElementById('thread-text-' + elemId).innerHTML = oldContent;
+      alert(response.msg);
+    }
+  });
+};
+
+window.deleteComment = function (elemId) {
+  if (confirm('Do you really want to delete this comment?')) {
+    window.vue.ajaxRequest('post', window.location.origin + '/comment/delete', {
+      comment: elemId
+    }, function (response) {
+      if (response.code === 200) {
+        document.getElementById('thread-' + elemId).remove();
+      } else {
+        alert(response.msg);
+      }
+    });
+  }
+};
+
+window.reportComment = function (elemId) {
+  window.vue.ajaxRequest('post', window.location.origin + '/comment/report', {
+    comment: elemId
+  }, function (response) {
+    alert(response.msg);
+  });
+};
+
+window.reportProfile = function (elemId) {
+  window.vue.ajaxRequest('get', window.location.origin + '/u/' + elemId + '/report', {}, function (response) {
+    alert(response.msg);
   });
 }; //Make vue instance available globally
 

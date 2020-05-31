@@ -20,6 +20,7 @@ let vue = new Vue({
         bShowRecover: false,
         bShowRegister: false,
         bShowEditProfile: false,
+        bShowEditComment: false,
     },
 
     methods: {
@@ -124,10 +125,10 @@ let vue = new Vue({
             );
         },
 
-        toggleHeart: function(elemId) {
-            let obj = document.getElementById('heart-' + elemId);
+        toggleHeart: function(elemId, type) {
+            let obj = document.getElementById('heart-' + type.toLowerCase() + '-' + elemId);
 
-            this.ajaxRequest('post', window.location.origin + '/p/heart', { post: elemId, value: !parseInt(obj.getAttribute('data-value'))}, function(response) {
+            this.ajaxRequest('post', window.location.origin + '/heart', { post: elemId, value: !parseInt(obj.getAttribute('data-value')), type: type}, function(response) {
                if (response.code === 200) {
                    if (response.value) {
                        obj.classList.remove('far', 'fa-heart');
@@ -139,12 +140,20 @@ let vue = new Vue({
 
                    obj.setAttribute('data-value', ((response.value) ? '1' : '0'));
 
-                   document.getElementById('count-' + elemId).innerHTML = response.count;
+                   document.getElementById('count-' + type.toLowerCase() + '-' + elemId).innerHTML = response.count;
                }
             });
         },
 
         togglePostOptions: function(elem) {
+            if (elem.classList.contains('is-active')) {
+                elem.classList.remove('is-active');
+            } else {
+                elem.classList.add('is-active');
+            }
+        },
+
+        toggleCommentOptions: function(elem) {
             if (elem.classList.contains('is-active')) {
                 elem.classList.remove('is-active');
             } else {
@@ -236,7 +245,7 @@ window.renderPost = function(elem)
                             </div>
 
                             <div class="show-post-attributes">
-                                <div class="is-inline-block"><i id="heart-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `)" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i> <span id="count-` + elem.id + `">` + elem.hearts + `</span></div>
+                                <div class="is-inline-block"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
                                 <div class="is-inline-block is-right" style="float:right;"><a href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 
@@ -252,30 +261,59 @@ window.renderPost = function(elem)
     return html;
 };
 
-window.renderThread = function(elem) {
+window.renderThread = function(elem, adminOrOwner = false) {
+    let options = '';
+
+    if (adminOrOwner) {
+        options = `
+            <a onclick="showEditComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" href="whatsapp://send?text=\` + window.location.origin + \`/p/\` + elem.id + \` \` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + \`" class="dropdown-item">
+                <i class="far fa-edit"></i>&nbsp;Edit
+            </a>
+            <a onclick="deleteComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" class="dropdown-item">
+                <i class="fas fa-times"></i>&nbsp;Delete
+            </a>
+            <hr class="dropdown-divider">
+        `;
+    }
+
     let html = `
-        <a name="` + elem.id + `"></a>
+        <div id="thread-` + elem.id + `">
+            <a name="` + elem.id + `"></a>
 
-        <div class="thread-header">
-            <div class="thread-header-avatar is-inline-block">
-                <img width="24" height="24" src="` + window.location.origin + `/gfx/avatars/` + elem.user.avatar + `" class="is-pointer" onclick="location.href = '';" title="">
+            <div class="thread-header">
+                <div class="thread-header-avatar is-inline-block">
+                    <img width="24" height="24" src="` + window.location.origin + `/gfx/avatars/` + elem.user.avatar + `" class="is-pointer" onclick="location.href = '';" title="">
+                </div>
+
+                <div class="thread-header-info is-inline-block">
+                    <div>` + elem.user.username + `</div>
+                    <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
+                </div>
+
+                <div class="thread-header-options is-inline-block">
+                    <div class="dropdown is-right" id="thread-options-` + elem.id + `">
+                        <div class="dropdown-trigger">
+                            <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.togglePostOptions(document.getElementById('thread-options-` + elem.id + `'));"></i>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                                ` + options + `
+
+                                <a href="javascript:void(0)" onclick="reportComment(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('thread-options-` + elem.id + `'));" class="dropdown-item">
+                                    Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="thread-header-info is-inline-block">
-                <div>` + elem.user.username + `</div>
-                <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
+            <div class="thread-text" id="thread-text-` + elem.id + `">
+                ` + elem.text + `
             </div>
-        </div>
 
-        <div class="thread-text">
-            ` + elem.text + `
-        </div>
-
-        <div class="thread-footer">
-            <div class="thread-footer-hearts"><i class="far fa-heart"></i>&nbsp;` + elem.hearts + `</div>
-            <div class="thread-footer-options">
-                ` + ((elem.ownerOrAdmin) ? '<a href="">Edit</a> | <a href="">Delete</a> |' : '') + `
-                <a href="">Report</a>
+            <div class="thread-footer">
+                <div class="thread-footer-hearts"><i id="heart-ent_comment-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_COMMENT')"></i>&nbsp;<span id="count-ent_comment-` + elem.id + `">` + elem.hearts + `</span></div>
             </div>
         </div>
     `;
@@ -289,6 +327,49 @@ window.reportPost = function(id) {
         alert('The post has been reported!');
     }
   });
+};
+
+window.showEditComment = function(elemId) {
+    document.getElementById('editCommentId').value = elemId;
+    document.getElementById('editCommentText').value = document.getElementById('thread-text-' + elemId).innerHTML;
+    window.vue.bShowEditComment = true;
+};
+
+window.editComment = function(elemId, text) {
+    let oldContent = document.getElementById('thread-text-' + elemId).innerHTML;
+    document.getElementById('thread-text-' + elemId).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    window.vue.ajaxRequest('post', window.location.origin + '/comment/edit', { comment: elemId, text: text}, function (response) {
+      if (response.code === 200) {
+          document.getElementById('thread-text-' + elemId).innerHTML = text;
+      } else {
+          document.getElementById('thread-text-' + elemId).innerHTML = oldContent;
+              alert(response.msg);
+      }
+    });
+};
+
+window.deleteComment = function(elemId) {
+  if (confirm('Do you really want to delete this comment?')) {
+      window.vue.ajaxRequest('post', window.location.origin + '/comment/delete', { comment: elemId }, function(response) {
+          if (response.code === 200) {
+              document.getElementById('thread-' + elemId).remove();
+          } else {
+              alert(response.msg);
+          }
+      });
+  }
+};
+
+window.reportComment = function(elemId) {
+    window.vue.ajaxRequest('post', window.location.origin + '/comment/report', { comment: elemId }, function(response) {
+        alert(response.msg);
+    });
+};
+
+window.reportProfile = function(elemId) {
+    window.vue.ajaxRequest('get', window.location.origin + '/u/' + elemId + '/report', {}, function(response) {
+        alert(response.msg);
+    });
 };
 
 //Make vue instance available globally

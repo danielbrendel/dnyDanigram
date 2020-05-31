@@ -336,6 +336,11 @@ a:hover {
     float: right;
     display: inline-block;
 }
+.thread-header-options {
+    position: relative;
+    float: right;
+    top: 20px;
+}
 
 //Tag list
 .taglist-item {
@@ -369,6 +374,9 @@ a:hover {
     margin-top: 15px;
 }
 .userinfo-edit {
+    margin-top: 15px;
+}
+.userinfo-report {
     margin-top: 15px;
 }
 
