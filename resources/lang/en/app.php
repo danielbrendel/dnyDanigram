@@ -113,5 +113,15 @@ return [
     'post_button' => 'Post',
     'post_description' => 'Enter your description. Use @name to highlight users',
     'post_hashtags' => '#tag1 #tag2 #tag3 #tag4',
-    'product_installed' => 'The product has been successfully installed'
+    'product_installed' => 'The product has been successfully installed',
+    'messages' => 'Messages',
+    'no_messages' => 'No messages to display',
+    'message_not_found' => 'Message could not be found',
+    'message_thread' => 'Conversation with :name',
+    'new_message_short' => 'New message received',
+    'new_message' => ':name has sent you a message: :subject',
+    'subject' => 'Subject',
+    'send' => 'Send',
+    'message_create' => 'Create new message',
+    'message_sent' => 'The message has been sent'
 ];

@@ -23,7 +23,7 @@
         </div>
 
         <div id="feed"></div>
-        <div id="loading" style="display: none;"><center><i class="fas fa-spinner fa-spin"></i></center></div>
+        <div id="loading" style="display: none;"><br/><br/><center><i class="fas fa-spinner fa-spin"></i></center></div>
     </div>
 
     <div class="column is-4 fixed-frame-parent">

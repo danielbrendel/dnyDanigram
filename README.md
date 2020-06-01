@@ -21,6 +21,7 @@ notification system and e-mail system. The system comes with a friendly installe
 + See latest and top posts and comments
 + Bookmark system
 + Notification system
++ Messaging system
 + E-Mail system
 + Installer
 

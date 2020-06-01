@@ -451,16 +451,21 @@ a:hover {
 //Notification area
 .notifications {
     position: absolute;
-    @media screen and (min-width: 481px) {
+    top: -9px;
+    @media screen and (min-width: 769px) {
         right: -151px;
-        top: -9px;
         width: 550px;
         height: 90%;
     }
-    @media screen and (max-width: 480px) {
-        width: 480px;
+    @media screen and (max-width: 768px) {
+        width: 100%;
         height: 100%;
+    }
+    @media screen and (max-width: 483px) {
         top: 44px;
+    }
+    @media screen and (min-height: 520px) {
+        height: 520px;
     }
     z-index: 4;
     background-color: rgb(240, 240, 230);
@@ -468,7 +473,10 @@ a:hover {
 }
 .notifications-content {
     margin: 25px;
-    height: 100%;
+    height: 78%;
+    @media screen and (max-width: 480px) {
+        height: 95%;
+    }
     overflow-y: auto;
 }
 .notification-item {
@@ -486,4 +494,90 @@ a:hover {
 }
 .is-new-notification {
     background-color: rgb(128, 255, 128);
+}
+
+//Messages
+.messages {
+    padding: 21px;
+    background-color: rgb(230, 230, 230);
+}
+.messages-item {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    padding: 21px;
+}
+.messages-item-avatar {
+    display: inline-block;
+}
+.messages-item-avatar img {
+    width: 24px;
+    height: 24px;
+}
+.messages-item-name {
+    display: inline-block;
+    margin-right: 15px;
+}
+.messages-item-name a {
+    color: rgb(150, 150, 150);
+}
+.messages-item-subject {
+    display: inline-block;
+}
+.messages-item-subject a {
+    color: rgb(50, 50, 50);
+}
+.messages-item-date {
+    display: inline-block;
+    color: rgb(150, 150, 150);
+    float: right;
+}
+.is-new-message {
+    background-color: rgb(128, 255, 128);
+}
+.messages-footer {
+    margin-top: 8px;
+}
+.messages-footer-count {
+    color: rgb(150, 150, 150);
+    display: inline-block;
+}
+.messages-footer-nav {
+    display: inline-block;
+    float: right;
+}
+.messages-footer-nav span {
+    margin-left: 15px;
+}
+.message-thread {
+    background-color: rgb(240, 240, 240);
+    padding: 21px;
+    margin-bottom: 25px;
+}
+.message-thread-header {
+    margin-bottom: 25px;
+    display: inline-block;
+}
+.message-thread-header-avatar {
+    display: inline-block;
+}
+.message-thread-header-avatar img {
+    width: 24px;
+    height: 24px;
+}
+.message-thread-header-userinfo {
+    color: rgb(200, 200, 200);
+    display: inline-block;
+    font-size: 0.8em;
+    top: 9px;
+}
+.message-thread-header-subject {
+    color: rgb(50, 50, 50);
+    display: inline-block;
+    margin-left: 25px;
+}
+.message-thread-text {
+    color: rgb(150, 150, 150);
+    margin-left: 25px;
 }

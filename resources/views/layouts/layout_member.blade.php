@@ -74,6 +74,12 @@
 
                     <div class="navbar-item">
                         <div>
+                            <i class="far fa-comment fa-lg is-pointer" title="{{ __('app.member_messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <div>
                             <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"  onclick="location.href='{{ url('/notifications') }}';"></i>
                         </div>
                     </div>
@@ -325,6 +331,11 @@
             window.vue.ajaxRequest('get', '{{ url('/notifications/fetch') }}' + ((window.notificationPagination) ? '?paginate=' + window.notificationPagination : ''), {}, function(response) {
                 if (response.code === 200) {
                     if (response.data.length > 0) {
+                        let noyet = document.getElementById('no-notifications-yet');
+                        if (noyet) {
+                            noyet.remove();
+                        }
+
                         response.data.forEach(function(elem, index) {
                             let html = renderNotification(elem);
 
@@ -337,7 +348,7 @@
                         document.getElementById('notification-spinner').remove();
                     } else {
                         if (window.notificationPagination === null) {
-                            document.getElementById('notification-content').innerHTML = '<center><i>{{ __('app.no_notifications_yet') }}</i></center>';
+                            document.getElementById('notification-content').innerHTML = '<div id="no-notifications-yet"><center><i>{{ __('app.no_notifications_yet') }}</i></center></div>';
                         }
 
                         let loader = document.getElementById('load-more-notifications');

@@ -53,5 +53,11 @@ Route::post('/b/remove', 'BookmarksController@remove');
 Route::get('/notifications/list', 'NotificationController@list');
 Route::get('/notifications/fetch', 'NotificationController@fetch');
 
+Route::get('/messages', 'MessageController@list');
+Route::get('/messages/list', 'MessageController@fetchList');
+Route::get('/messages/show/{id}', 'MessageController@show');
+Route::get('/messages/create', 'MessageController@create');
+Route::post('/messages/send', 'MessageController@send');
+
 Route::get('/install', 'InstallerController@viewInstall');
 Route::post('/install', 'InstallerController@install');

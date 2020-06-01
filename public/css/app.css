@@ -521,32 +521,49 @@ a:hover {
 
 .notifications {
   position: absolute;
+  top: -9px;
   z-index: 4;
   background-color: #f0f0e6;
   display: none;
 }
 
-@media screen and (min-width: 481px) {
+@media screen and (min-width: 769px) {
   .notifications {
     right: -151px;
-    top: -9px;
     width: 550px;
     height: 90%;
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
   .notifications {
-    width: 480px;
+    width: 100%;
     height: 100%;
+  }
+}
+
+@media screen and (max-width: 483px) {
+  .notifications {
     top: 44px;
+  }
+}
+
+@media screen and (min-height: 520px) {
+  .notifications {
+    height: 520px;
   }
 }
 
 .notifications-content {
   margin: 25px;
-  height: 100%;
+  height: 78%;
   overflow-y: auto;
+}
+
+@media screen and (max-width: 480px) {
+  .notifications-content {
+    height: 95%;
+  }
 }
 
 .notification-item {
@@ -567,5 +584,110 @@ a:hover {
 
 .is-new-notification {
   background-color: #80ff80;
+}
+
+.messages {
+  padding: 21px;
+  background-color: #e6e6e6;
+}
+
+.messages-item {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: white;
+  padding: 21px;
+}
+
+.messages-item-avatar {
+  display: inline-block;
+}
+
+.messages-item-avatar img {
+  width: 24px;
+  height: 24px;
+}
+
+.messages-item-name {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.messages-item-name a {
+  color: #969696;
+}
+
+.messages-item-subject {
+  display: inline-block;
+}
+
+.messages-item-subject a {
+  color: #323232;
+}
+
+.messages-item-date {
+  display: inline-block;
+  color: #969696;
+  float: right;
+}
+
+.is-new-message {
+  background-color: #80ff80;
+}
+
+.messages-footer {
+  margin-top: 8px;
+}
+
+.messages-footer-count {
+  color: #969696;
+  display: inline-block;
+}
+
+.messages-footer-nav {
+  display: inline-block;
+  float: right;
+}
+
+.messages-footer-nav span {
+  margin-left: 15px;
+}
+
+.message-thread {
+  background-color: #f0f0f0;
+  padding: 21px;
+  margin-bottom: 25px;
+}
+
+.message-thread-header {
+  margin-bottom: 25px;
+  display: inline-block;
+}
+
+.message-thread-header-avatar {
+  display: inline-block;
+}
+
+.message-thread-header-avatar img {
+  width: 24px;
+  height: 24px;
+}
+
+.message-thread-header-userinfo {
+  color: #c8c8c8;
+  display: inline-block;
+  font-size: 0.8em;
+  top: 9px;
+}
+
+.message-thread-header-subject {
+  color: #323232;
+  display: inline-block;
+  margin-left: 25px;
+}
+
+.message-thread-text {
+  color: #969696;
+  margin-left: 25px;
 }
 

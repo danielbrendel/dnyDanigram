@@ -329,6 +329,8 @@ window.renderNotification = function(elem, newItem = false) {
         icon = 'far fa-comment';
     } else if (elem.type === 'PUSH_HIGHLIGHTED') {
         icon = 'fas fa-bolt';
+    } else if (elem.type === 'PUSH_MESSAGED') {
+        icon = 'far fa-comments';
     }
 
     let html = `
@@ -340,6 +342,30 @@ window.renderNotification = function(elem, newItem = false) {
 
     return html;
 };
+
+window.renderMessageListItem = function(item) {
+    let html = `
+        <div class="messages-item ` + ((!item.seen) ? 'is-new-message' : '') + `">
+            <div class="messages-item-avatar">
+                <img src="` + window.location.origin + `/gfx/avatars/` + item.user.avatar + `">
+            </div>
+
+            <div class="messages-item-name">
+                <a href="` + window.location.origin + `/u/` + item.user.username + `">` + item.user.username + `</a>
+            </div>
+
+            <div class="messages-item-subject">
+                <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.subject + `</a>
+            </div>
+
+            <div class="messages-item-date" title="` + item.created_at + `">
+                ` + item.diffForHumans + `
+            </div>
+        </div>
+    `;
+
+    return html;
+}
 
 window.reportPost = function(id) {
   window.vue.ajaxRequest('post', window.location.origin + '/p/' + id + '/report', {}, function(response) {

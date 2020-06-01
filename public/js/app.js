@@ -294,9 +294,16 @@ window.renderNotification = function (elem) {
     icon = 'far fa-comment';
   } else if (elem.type === 'PUSH_HIGHLIGHTED') {
     icon = 'fas fa-bolt';
+  } else if (elem.type === 'PUSH_MESSAGED') {
+    icon = 'far fa-comments';
   }
 
   var html = "\n        <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n            <div class=\"notification-item-icon\"><i class=\"" + icon + "\"></i></div>\n            <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n        </div>\n    ";
+  return html;
+};
+
+window.renderMessageListItem = function (item) {
+  var html = "\n        <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n            <div class=\"messages-item-avatar\">\n                <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n            </div>\n\n            <div class=\"messages-item-name\">\n                <a href=\"" + window.location.origin + "/u/" + item.user.username + "\">" + item.user.username + "</a>\n            </div>\n\n            <div class=\"messages-item-subject\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n            </div>\n\n            <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                " + item.diffForHumans + "\n            </div>\n        </div>\n    ";
   return html;
 };
 
