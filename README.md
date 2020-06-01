@@ -29,7 +29,7 @@ feature list see below.
 
 ## System requirements
 The product is being developed with the following engine versions:
-+ PHP 7.4.1
++ PHP 7.4.6
 + MySQL 10.4.11-MariaDB
 + Default PHP extensions
 
