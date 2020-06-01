@@ -111,6 +111,9 @@ a:hover {
 .is-default-headline-color {
     color: rgb(120, 120, 120);
 }
+.is-top-25 {
+    top: 25px;
+}
 .is-color-grey {
     color: rgb(120, 120, 120);
 }
@@ -489,6 +492,10 @@ a:hover {
     height: auto;
     background-color: rgb(255, 255, 255);
     padding: 21px;
+    border-radius: 4px;
+}
+.notification-item:hover {
+    background-color: rgb(250, 250, 250);
 }
 .notification-item-icon {
     display: inline-block;
@@ -511,6 +518,10 @@ a:hover {
     height: auto;
     background-color: rgb(255, 255, 255);
     padding: 21px;
+    border-radius: 4px;
+}
+.messages-item:hover {
+    background-color: rgb(250, 250, 250);
 }
 .messages-item-avatar {
     display: inline-block;

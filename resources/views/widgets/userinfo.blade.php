@@ -56,7 +56,7 @@
     @endif
 @endif
 
-@if ($admin)
+@if (($admin) && ($user->id !== auth()->id()))
     <div class="userinfo-lock float-right">
         <a href="javascript:void(0)" onclick="lockUser({{ $user->id }})">{{ __('app.lock_profile') }}</a>
     </div>

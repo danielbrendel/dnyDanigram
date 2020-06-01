@@ -206,7 +206,7 @@ window.renderPost = function(elem, adminOrOwner = false)
                             <div class="member-form">
                             <div class="show-post-header is-default-padding">
                                 <div class="show-post-avatar">
-                                    <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" class="is-pointer" onclick="location.href='` + window.location.origin + `/u/` + elem.user.id + `'" width="32" height="32">
+                                    <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" class="is-pointer" onclick="location.href='` + window.location.origin + `/u/` + elem.user.username + `'" width="32" height="32">
                                 </div>
 
                                 <div class="show-post-userinfo">
@@ -292,7 +292,7 @@ window.renderThread = function(elem, adminOrOwner = false) {
 
             <div class="thread-header">
                 <div class="thread-header-avatar is-inline-block">
-                    <img width="24" height="24" src="` + window.location.origin + `/gfx/avatars/` + elem.user.avatar + `" class="is-pointer" onclick="location.href = '';" title="">
+                    <img width="24" height="24" src="` + window.location.origin + `/gfx/avatars/` + elem.user.avatar + `" class="is-pointer" onclick="location.href = '` + window.location.origin + `/u/` + elem.user.username + `';" title="">
                 </div>
 
                 <div class="thread-header-info is-inline-block">

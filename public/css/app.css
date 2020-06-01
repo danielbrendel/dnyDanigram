@@ -134,6 +134,10 @@ a:hover {
   color: #787878;
 }
 
+.is-top-25 {
+  top: 25px;
+}
+
 .is-color-grey {
   color: #787878;
 }
@@ -577,6 +581,11 @@ a:hover {
   height: auto;
   background-color: white;
   padding: 21px;
+  border-radius: 4px;
+}
+
+.notification-item:hover {
+  background-color: #fafafa;
 }
 
 .notification-item-icon {
@@ -602,6 +611,11 @@ a:hover {
   height: auto;
   background-color: white;
   padding: 21px;
+  border-radius: 4px;
+}
+
+.messages-item:hover {
+  background-color: #fafafa;
 }
 
 .messages-item-avatar {

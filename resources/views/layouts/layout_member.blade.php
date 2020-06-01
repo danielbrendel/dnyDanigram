@@ -188,7 +188,7 @@
 
             <div class="modal" :class="{'is-active': bShowEditProfile}">
                 <div class="modal-background"></div>
-                <div class="modal-card">
+                <div class="modal-card is-top-25">
                     <header class="modal-card-head is-stretched">
                         <p class="modal-card-title">{{ __('app.edit_profile') }}</p>
                         <button class="delete" aria-label="close" onclick="vue.bShowEditProfile = false;"></button>
@@ -244,6 +244,17 @@
 
                             <input type="submit" id="editprofilesubmit" class="is-hidden">
                         </form>
+
+                        <hr/>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.deactivate_label') }}</label>
+                            <div class="control">
+                                <input type="button" value="{{ __('app.deactivate') }}" onclick="lockUser({{ auth()->id() }})">
+                            </div>
+                        </div>
+
+                        <br/>
                     </section>
                     <footer class="modal-card-foot is-stretched">
                         <button class="button is-success" onclick="document.getElementById('editprofilesubmit').click();">{{ __('app.save') }}</button>

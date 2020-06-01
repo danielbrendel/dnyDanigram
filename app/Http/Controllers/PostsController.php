@@ -218,7 +218,7 @@ class PostsController extends Controller
             foreach ($posts as &$post) {
                 $post->diffForHumans = $post->created_at->diffForHumans();
                 $post->user = User::get($post->userId);
-                $post->comment_count = ThreadModel::where('postId', '=', $post->id)->count();
+                $post->comment_count = ThreadModel::where('postId', '=', $post->id)->where('locked', '=', false)->count();
                 $post->userHearted = HeartModel::hasUserHearted(auth()->id(), $post->id, 'ENT_POST');
                 $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
             }
@@ -316,7 +316,7 @@ class PostsController extends Controller
             $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
             $post->userHearted = HeartModel::hasUserHearted(auth()->id(), $post->id, 'ENT_POST');
             $post->diffForHumans = $post->created_at->diffForHumans();
-            $post->comment_count = ThreadModel::where('postId', '=', $post->id)->count();
+            $post->comment_count = ThreadModel::where('postId', '=', $post->id)->where('locked', '=', false)->count();
 
             return response()->json(array('code' => 200, 'elem' => $post));
         } catch (Exception $e) {
