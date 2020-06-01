@@ -28,7 +28,7 @@
 
     <div class="column is-4 fixed-frame-parent">
         <div class="fixed-frame">
-            <div class="member-form">
+            <div class="member-form is-default-padding">
                 @include('widgets.supporttag', ['heart_count' => $tagdata->hearts])
             </div>
 

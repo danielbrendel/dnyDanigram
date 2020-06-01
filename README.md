@@ -27,6 +27,9 @@ feature list see below.
 + Administration
 + Installer
 
+## System requirements
++ Developed with PHP 7.4.6 and MySQL
+
 ## Installation:
 Place a file 'do_install' in the root directory of the project.
 Then go to /install. The setup wizard will guide you through the
@@ -39,6 +42,11 @@ In order to run the tests successfully you need to ensure that the following tes
 + TEST_USERID_NONEXISTENT: ID of a non-existing user
 + TEST_USEREMAIL: E-Mail of an existing user
 + TEST_USERNAME: Username of an existing user
++ TEST_USERPW: Password for login used together with TEST_USEREMAIL
 + TEST_ENTITY_HASHTAG: ID of an existing hashtag
++ TEST_HASHTAG_NAME: Name of an existing hashtag
 + TEST_POSTID: ID of an existing post
++ TEST_COMMENT: ID of an existing comment
++ TEST_MESSAGEID: ID of an existing message
++ TEST_COMMENTID: ID of an existing comment
 + TEST_FETCHLIMIT: The fetch limit
