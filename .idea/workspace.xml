@@ -163,13 +163,13 @@
       <recent name="E:\Projects\dnyDanigram\resources\views\widgets" />
     </key>
   </component>
-  <component name="RunManager" selected="PHPUnit.PostsControllerTest.testEditComment">
-    <configuration name="PostsControllerTest.testEditComment" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\PostsControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PostsControllerTest.php" method="testEditComment" scope="Method" />
+  <component name="RunManager" selected="PHPUnit.PostsControllerTest.testDeleteComment">
+    <configuration name="PostsControllerTest.testDeleteComment" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\PostsControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PostsControllerTest.php" method="testDeleteComment" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="PostsControllerTest.testFetchSinglePost" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\PostsControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PostsControllerTest.php" method="testFetchSinglePost" scope="Method" />
+    <configuration name="PostsControllerTest.testEditComment" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\PostsControllerTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PostsControllerTest.php" method="testEditComment" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="PostsControllerTest.testReportComment" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
@@ -190,11 +190,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.PostsControllerTest.testDeleteComment" />
         <item itemvalue="PHPUnit.PostsControllerTest.testEditComment" />
         <item itemvalue="PHPUnit.PostsControllerTest.testReportComment" />
         <item itemvalue="PHPUnit.PostsControllerTest.testReportTag" />
         <item itemvalue="PHPUnit.PostsControllerTest.testReportPost" />
-        <item itemvalue="PHPUnit.PostsControllerTest.testFetchSinglePost" />
       </list>
     </recent_temporary>
   </component>

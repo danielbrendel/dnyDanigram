@@ -160,4 +160,15 @@ class PostsControllerTest extends TestCase
         $content = json_decode($response->getContent());
         $this->assertEquals(200, $content->code);
     }
+
+    public function testDeleteComment()
+    {
+        $response = $this->post('/comment/delete', [
+            'comment' => env('TEST_COMMENTID')
+        ]);
+
+        $response->assertStatus(200);
+        $content = json_decode($response->getContent());
+        $this->assertEquals(200, $content->code);
+    }
 }
