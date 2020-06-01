@@ -33,7 +33,7 @@
             </div>
 
             <div class="member-form is-default-padding">
-                @include('widgets.userinfo', ['user' => $profile])
+                @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
             </div>
 
             <div class="member-form is-default-padding">

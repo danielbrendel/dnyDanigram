@@ -85,7 +85,9 @@
                 if (response.code == 200) {
                     if (!response.last) {
                         response.data.forEach(function (elem, index) {
-                            let insertHtml = renderPost(elem);
+                            let adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+
+                            let insertHtml = renderPost(elem, adminOrOwner);
 
                             document.getElementById('feed').innerHTML += insertHtml;
 

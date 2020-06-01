@@ -38,7 +38,7 @@ class MemberController extends Controller
                 $user = User::getByUsername($id);
             }
             if ((!$user) || ($user->deactivated)) {
-                return back()->with('error', __('app.user_not_found_or_deactivated'));
+                return redirect('/')->with('flash.error', __('app.user_not_found_or_deactivated'));
             }
 
             $user->stats = User::getStats($user->id);

@@ -49,7 +49,15 @@
         @endif
     </div>
 
+    @if (!$admin)
     <div class="userinfo-report float-right">
         <a href="javascript:void(0)" onclick="reportProfile({{ $user->id }})">{{ __('app.report_profile') }}</a>
+    </div>
+    @endif
+@endif
+
+@if ($admin)
+    <div class="userinfo-lock float-right">
+        <a href="javascript:void(0)" onclick="lockUser({{ $user->id }})">{{ __('app.lock_profile') }}</a>
     </div>
 @endif

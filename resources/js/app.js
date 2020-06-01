@@ -185,13 +185,22 @@ let vue = new Vue({
     }
 });
 
-window.renderPost = function(elem)
+window.renderPost = function(elem, adminOrOwner = false)
 {
     let hashTags = '';
     let hashArr = elem.hashtags.trim().split(' ');
     hashArr.forEach(function (elem, index) {
         hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
     });
+
+    let adminOptions = '';
+    if (adminOrOwner) {
+        adminOptions = `
+            <a href="javascript:void(0)" onclick="lockPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
+                Lock
+            </a>
+        `;
+    }
 
     let html = `
                             <div class="member-form">
@@ -234,6 +243,7 @@ window.renderPost = function(elem)
                                                 <a href="javascript:void(0)" onclick="reportPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
                                                     Report
                                                 </a>
+                                                ` + adminOptions + `
                                             </div>
                                         </div>
                                     </div>
@@ -269,8 +279,8 @@ window.renderThread = function(elem, adminOrOwner = false) {
             <a onclick="showEditComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" href="whatsapp://send?text=\` + window.location.origin + \`/p/\` + elem.id + \` \` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + \`" class="dropdown-item">
                 <i class="far fa-edit"></i>&nbsp;Edit
             </a>
-            <a onclick="deleteComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" class="dropdown-item">
-                <i class="fas fa-times"></i>&nbsp;Delete
+            <a onclick="lockComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" class="dropdown-item">
+                <i class="fas fa-times"></i>&nbsp;Lock
             </a>
             <hr class="dropdown-divider">
         `;
@@ -458,6 +468,42 @@ window.toggleNotifications = function(ident) {
         }
     }
 }
+
+window.lockPost = function (id) {
+    if (confirm('Do you want to lock this post?')) {
+        window.vue.ajaxRequest('get', window.location.origin + '/p/' + id + '/lock', {}, function (response) {
+            alert(response.msg);
+        });
+    }
+};
+
+window.lockHashtag = function (id) {
+    if (confirm('Do you want to lock this hashtag?')) {
+        window.vue.ajaxRequest('get', window.location.origin + '/t/' + id + '/lock', {}, function (response) {
+            alert(response.msg);
+        });
+    }
+};
+
+window.lockUser = function (id) {
+    if (confirm('Do you want to lock this profile?')) {
+        window.vue.ajaxRequest('get', window.location.origin + '/u/' + id + '/deactivate', {}, function (response) {
+            alert(response.msg);
+
+            if ((typeof response.logout !== 'undefined') && (response.logout)) {
+                location.href = window.location.origin;
+            }
+        });
+    }
+};
+
+window.lockComment = function (id) {
+    if (confirm('Do you want to lock this comment?')) {
+        window.vue.ajaxRequest('get', window.location.origin + '/c/' + id + '/lock', {}, function (response) {
+            alert(response.msg);
+        });
+    }
+};
 
 //Make vue instance available globally
 window.vue = vue;

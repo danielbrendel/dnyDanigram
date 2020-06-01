@@ -123,5 +123,15 @@ return [
     'subject' => 'Subject',
     'send' => 'Send',
     'message_create' => 'Create new message',
-    'message_sent' => 'The message has been sent'
+    'message_sent' => 'The message has been sent',
+    'post_locked' => 'Post has been locked',
+    'hashtag_locked' => 'Hashtag has been locked',
+    'user_deactivated' => 'User account has been deactivated',
+    'lock_profile' => 'Lock',
+    'deactivate' => 'Deactivate',
+    'deactivate_label' => 'Deactivate your account (Note in order to re-activate your account you need to contact our service administration)',
+    'lock_hashtag' => 'Lock',
+    'user_not_found_or_deactivated' => 'User either does not exist or is deactivated',
+    'post_is_locked' => 'Post has been locked',
+    'comment_locked' => 'Comment has been locked'
 ];

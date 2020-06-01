@@ -84,7 +84,7 @@ class PostsController extends Controller
         try {
             $post = PostModel::getPost($id);
             if (!$post) {
-                return back()->with('error', __('app.post_not_found_or_locked'));
+                return redirect('/')->with('flash.error', __('app.post_not_found_or_locked'));
             }
 
             return view('member.showpost', [
@@ -144,6 +144,10 @@ class PostsController extends Controller
             $tag = TagsModel::where('tag', '=', $hashtag)->first();
             if (!$tag) {
                 return back()->with('notice', __('app.hashtag_not_yet_used'));
+            }
+
+            if ($tag->locked) {
+                return redirect('/')->with('flash.error', __('app.hashtag_locked'));
             }
 
             $tag->stats = new stdClass();

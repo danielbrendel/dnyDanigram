@@ -59,5 +59,10 @@ Route::get('/messages/show/{id}', 'MessageController@show');
 Route::get('/messages/create', 'MessageController@create');
 Route::post('/messages/send', 'MessageController@send');
 
+Route::get('/p/{id}/lock', 'AdminController@lockPost');
+Route::get('/t/{id}/lock', 'AdminController@lockHashtag');
+Route::get('/u/{id}/deactivate', 'AdminController@deactivateUser');
+Route::get('/c/{id}/lock', 'AdminController@lockComment');
+
 Route::get('/install', 'InstallerController@viewInstall');
 Route::post('/install', 'InstallerController@install');

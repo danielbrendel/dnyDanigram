@@ -57,6 +57,8 @@ class MainController extends Controller
                 'taglist' => TagsModel::getPopularTags()
             ]);
         } else {
+            session()->reflash();
+
             return redirect('/feed');
         }
     }
