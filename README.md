@@ -28,7 +28,10 @@ feature list see below.
 + Installer
 
 ## System requirements
-+ Developed with PHP 7.4.6 and MySQL
+The product is being developed with the following engine versions:
++ PHP 7.4.1
++ MySQL 10.4.11-MariaDB
++ Default PHP extensions
 
 ## Installation:
 Place a file 'do_install' in the root directory of the project.
