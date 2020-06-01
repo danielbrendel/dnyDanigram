@@ -139,5 +139,11 @@ return [
     'mail_email_changed_title' => 'E-Mail change',
     'mail_email_changed_body' => 'Your E-Mail address has been successfully changed. Your new E-Mail address: :email',
     'password_changed' => 'Password changed',
-    'register_captcha_invalid' => 'The captcha is invalid'
+    'register_captcha_invalid' => 'The captcha is invalid',
+    'mail_message_received_title' => 'Message received',
+    'mail_message_received_body' => 'You have received a new message from a user',
+    'mail_message_open' => 'Open message',
+    'message_received' => 'Message received',
+    'view_post' => 'View post',
+    'view_profile' => 'Profile of :name'
 ];

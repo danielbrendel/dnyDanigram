@@ -106,6 +106,8 @@ class InstallerModel extends Model
             \Artisan::call('migrate:install');
             \Artisan::call('migrate:refresh', array('--path' => 'database/migrations', '--force' => true));
 
+            \DB::insert("INSERT INTO app_settings (home_index_content, cookie_consent, about, imprint, tos, reg_info) VALUES('home_index_content', 'cookie_consent', 'about', 'imprint', 'tos', 'reg_info')");
+
             unlink(base_path() . '/do_install');
         } catch (\Exception $e) {
             throw $e;

@@ -54,6 +54,9 @@ class MessageModel extends Model
 
             PushModel::addNotification(__('app.new_message_short'), __('app.new_message', ['name' => $sender->username, 'subject' => $subject]), 'PUSH_MESSAGED', $userId);
 
+            $html = view('mail.message', [])->render();
+            MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.message_received'), $html);
+
             return $msg->id;
         } catch (\Exception $e) {
             throw $e;

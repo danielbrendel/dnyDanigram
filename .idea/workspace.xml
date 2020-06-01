@@ -21,14 +21,17 @@
   <component name="ChangeListManager">
     <list default="true" id="ee51f6de-3dae-4b9a-b120-236d9eba2c28" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/AppModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/AppModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ThreadModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/ThreadModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_200000_create_app_settings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_200000_create_app_settings_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/InstallerModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/InstallerModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/MessageModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/MessageModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/en/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ExampleTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home/pwreset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home/pwreset.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/layout_home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/layout_home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/layout_member.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/layout_member.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/member/hashtag.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/member/hashtag.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/member/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/member/profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/member/showpost.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/member/showpost.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +170,11 @@
       <recent name="E:\Projects\dnyDanigram\resources\views\widgets" />
     </key>
   </component>
-  <component name="RunManager" selected="PHPUnit.UserModelTest.testRegister">
+  <component name="RunManager" selected="PHPUnit.BookmarksModelTest.testValidateEntityType">
+    <configuration name="BookmarksModelTest.testValidateEntityType" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\Models\BookmarksModelTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/BookmarksModelTest.php" method="testValidateEntityType" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="UserModelTest.testChangeEmail" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\Models\UserModelTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/UserModelTest.php" method="testChangeEmail" scope="Method" />
       <method v="2" />
@@ -180,10 +187,6 @@
       <TestRunner class="Tests\Feature\Models\UserModelTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/UserModelTest.php" method="testConfirm" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="UserModelTest.testGetByUsername" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\Models\UserModelTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/UserModelTest.php" method="testGetByUsername" scope="Method" />
-      <method v="2" />
-    </configuration>
     <configuration name="UserModelTest.testRegister" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\Models\UserModelTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/UserModelTest.php" method="testRegister" scope="Method" />
       <method v="2" />
@@ -194,11 +197,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.UserModelTest.testRegister" />
+        <item itemvalue="PHPUnit.BookmarksModelTest.testValidateEntityType" />
         <item itemvalue="PHPUnit.UserModelTest.testConfirm" />
+        <item itemvalue="PHPUnit.UserModelTest.testRegister" />
         <item itemvalue="PHPUnit.UserModelTest.testChangePassword" />
         <item itemvalue="PHPUnit.UserModelTest.testChangeEmail" />
-        <item itemvalue="PHPUnit.UserModelTest.testGetByUsername" />
       </list>
     </recent_temporary>
   </component>
@@ -215,7 +218,8 @@
       <workItem from="1590855289552" duration="5612000" />
       <workItem from="1590868592032" duration="17027000" />
       <workItem from="1590913290911" duration="50300000" />
-      <workItem from="1590988385573" duration="27710000" />
+      <workItem from="1590988385573" duration="28323000" />
+      <workItem from="1591026866451" duration="4085000" />
     </task>
     <servers />
   </component>
@@ -267,38 +271,38 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1590939961815" />
-    <state width="818" height="272" key="GridCell.Tab.0.bottom" timestamp="1591018216789">
+    <state width="818" height="272" key="GridCell.Tab.0.bottom" timestamp="1591018895509">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="272" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1591018216789" />
-    <state width="818" height="272" key="GridCell.Tab.0.center" timestamp="1591018216789">
+    <state width="818" height="272" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895509" />
+    <state width="818" height="272" key="GridCell.Tab.0.center" timestamp="1591018895509">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="272" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1591018216789" />
-    <state width="818" height="272" key="GridCell.Tab.0.left" timestamp="1591018216789">
+    <state width="818" height="272" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895509" />
+    <state width="818" height="272" key="GridCell.Tab.0.left" timestamp="1591018895509">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="272" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1591018216789" />
-    <state width="818" height="272" key="GridCell.Tab.0.right" timestamp="1591018216789">
+    <state width="818" height="272" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895509" />
+    <state width="818" height="272" key="GridCell.Tab.0.right" timestamp="1591018895509">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="272" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1591018216789" />
-    <state width="818" height="336" key="GridCell.Tab.1.bottom" timestamp="1591015737021">
+    <state width="818" height="272" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895509" />
+    <state width="818" height="336" key="GridCell.Tab.1.bottom" timestamp="1591018895506">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="336" key="GridCell.Tab.1.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1591015737021" />
-    <state width="818" height="336" key="GridCell.Tab.1.center" timestamp="1591015737021">
+    <state width="818" height="336" key="GridCell.Tab.1.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895506" />
+    <state width="818" height="336" key="GridCell.Tab.1.center" timestamp="1591018895506">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="336" key="GridCell.Tab.1.center/0.0.1680.1010@0.0.1680.1010" timestamp="1591015737021" />
-    <state width="818" height="336" key="GridCell.Tab.1.left" timestamp="1591015737021">
+    <state width="818" height="336" key="GridCell.Tab.1.center/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895506" />
+    <state width="818" height="336" key="GridCell.Tab.1.left" timestamp="1591018895506">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="336" key="GridCell.Tab.1.left/0.0.1680.1010@0.0.1680.1010" timestamp="1591015737021" />
-    <state width="818" height="336" key="GridCell.Tab.1.right" timestamp="1591015737021">
+    <state width="818" height="336" key="GridCell.Tab.1.left/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895506" />
+    <state width="818" height="336" key="GridCell.Tab.1.right" timestamp="1591018895506">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="818" height="336" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1591015737021" />
+    <state width="818" height="336" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1591018895506" />
     <state width="1637" height="336" key="GridCell.Tab.2.bottom" timestamp="1591011290582">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -333,7 +337,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/PostsController.php</url>
-          <line>290</line>
+          <line>303</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -353,7 +357,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/PostsController.php</url>
-          <line>435</line>
+          <line>448</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -368,12 +372,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/PostsController.php</url>
-          <line>217</line>
+          <line>230</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/PostsController.php</url>
-          <line>239</line>
+          <line>252</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -398,7 +402,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/MessageModel.php</url>
-          <line>76</line>
+          <line>79</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">

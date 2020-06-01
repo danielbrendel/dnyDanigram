@@ -12,8 +12,10 @@
 
 @extends('layouts.layout_member')
 
+@section('title', env('APP_NAME') . ' - ' . __('app.view_post'))
+
 @section('body')
-    <div class="column is-4 is-sidespacing"></div>
+    <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-4">
         <div id="singlepost"><center><i class="fas fa-spinner fa-spin"></i></center></div>
@@ -49,7 +51,23 @@
         </div>
     </div>
 
-    <div class="column is-4 is-sidespacing"></div>
+    <div class="column is-4 fixed-frame-parent">
+        <div class="fixed-frame">
+            <div class="member-form is-default-padding">
+                @include('widgets.populartags')
+            </div>
+
+            <div class="member-form is-default-padding">
+                @include('widgets.bookmarks')
+            </div>
+
+            <div class="member-form is-default-padding">
+                @include('widgets.company')
+            </div>
+        </div>
+    </div>
+
+    <div class="column is-2 is-sidespacing"></div>
 @endsection
 
 @section('javascript')

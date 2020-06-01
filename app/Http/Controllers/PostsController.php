@@ -87,9 +87,22 @@ class PostsController extends Controller
                 return redirect('/')->with('flash.error', __('app.post_not_found_or_locked'));
             }
 
+            $bookmarks = BookmarksModel::getForUser(auth()->id());
+            foreach ($bookmarks as &$bookmark) {
+                if ($bookmark->type === 'ENT_HASHTAG') {
+                    $hashtag = TagsModel::where('id', '=', $bookmark->entityId)->first();
+                    $bookmark->name = $hashtag->tag;
+                } else if ($bookmark->type === 'ENT_USER') {
+                    $user = User::get($bookmark->entityId);
+                    $bookmark->name = $user->username;
+                }
+            }
+
             return view('member.showpost', [
                 'user' => User::getByAuthId(),
                 'post' => $post,
+                'taglist' => TagsModel::getPopularTags(),
+                'bookmarks' => $bookmarks
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
