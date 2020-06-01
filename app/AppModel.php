@@ -141,14 +141,14 @@ class AppModel extends Model
     }
 
     /**
-     * Get a list of highlighted users
+     * Get a list of mentioned users
      *
      * @param $text
      * @return array
      */
-    public static function getHighlightList($text)
+    public static function getMentionList($text)
     {
-        $inHighlight = false;
+        $inMention = false;
         $terminationChars = array(' ', '.', '!', '\n');
         $curName = '';
 
@@ -156,7 +156,7 @@ class AppModel extends Model
 
         for ($i = 0; $i < strlen($text); $i++) {
             if ($text[$i] === '@') {
-                $inHighlight = true;
+                $inMention = true;
                 if (strlen($curName) > 0) {
                     $result[] = $curName;
                 }
@@ -164,11 +164,11 @@ class AppModel extends Model
                 continue;
             }
 
-            if ($inHighlight) {
+            if ($inMention) {
                 if ((in_array($text[$i], $terminationChars)) || ($i === strlen($text) - 1)) {
                     $result[] = $curName;
                     $curName = '';
-                    $inHighlight = false;
+                    $inMention = false;
                     continue;
                 }
 

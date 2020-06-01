@@ -11,7 +11,7 @@ Released under the MIT license
 ## Description:
 Danigram is a lightweight photo community platform software. Users can register and share images
 using hashtags. Users can comment on posts, like posts, comments and hashtags and 
-highlight users. Users can bookmark hashtags and users. There is also profile management,
+mention users. Users can bookmark hashtags and users. There is also profile management,
 notification system and e-mail system. The system comes with a friendly installer. For a full
 feature list see below.
 
@@ -20,6 +20,7 @@ feature list see below.
 + Comment on images
 + Like images, comments, hashtags
 + See latest and top posts and comments
++ Hashtag system
 + Bookmark system
 + Notification system
 + Messaging system

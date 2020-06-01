@@ -239,11 +239,11 @@ class PostModel extends Model
                     TagsModel::addTag($ht);
                 }
 
-                $highlightNames = AppModel::getHighlightList($attr['description']);
-                foreach ($highlightNames as $name) {
+                $mentionNames = AppModel::getMentionList($attr['description']);
+                foreach ($mentionNames as $name) {
                     $curUser = User::getByUsername($name);
                     if ($curUser) {
-                        PushModel::addNotification(__('app.user_highlighted_short', ['name' => $user->username]), __('app.user_highlighted', ['name' => $user->username, 'item' => url('/p/' . $post->id)]), 'PUSH_HIGHLIGHTED', $curUser->id);
+                        PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id)]), 'PUSH_MENTIONED', $curUser->id);
                     }
                 }
 

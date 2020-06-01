@@ -46,11 +46,11 @@ class ThreadModel extends Model
                 PushModel::addNotification(__('app.user_posted_comment_short', ['name' => $user->username]), __('app.user_posted_comment', ['name' => $user->username, 'msg' => $text, 'item' => url('/p/' . $postId . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
             }
 
-            $highlightNames = AppModel::getHighlightList($text);
-            foreach ($highlightNames as $name) {
+            $mentionedNames = AppModel::getMentionList($text);
+            foreach ($mentionedNames as $name) {
                 $curUser = User::getByUsername($name);
                 if ($curUser) {
-                    PushModel::addNotification(__('app.user_highlighted_short', ['name' => $user->username]), __('app.user_highlighted', ['name' => $user->username, 'item' => url('/p/' . $post->id . '#' . $thread->id)]), 'PUSH_HIGHLIGHTED', $curUser->id);
+                    PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id . '#' . $thread->id)]), 'PUSH_MENTIONED', $curUser->id);
                 }
             }
 

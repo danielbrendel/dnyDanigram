@@ -90,10 +90,10 @@ class AppModelTest extends TestCase
         $this->assertEquals(null, $result);
     }
 
-    public function testGetHighlightList()
+    public function testGetMentionList()
     {
         $string = 'Test Test @test @username @another Test';
-        $list = AppModel::getHighlightList($string);
+        $list = AppModel::getMentionList($string);
         $this->assertCount(3, $list);
         $this->assertEquals('test', $list[0]);
         $this->assertEquals('username', $list[1]);

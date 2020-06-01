@@ -337,7 +337,7 @@ window.renderNotification = function(elem, newItem = false) {
         icon = 'far fa-heart';
     } else if (elem.type === 'PUSH_COMMENTED') {
         icon = 'far fa-comment';
-    } else if (elem.type === 'PUSH_HIGHLIGHTED') {
+    } else if (elem.type === 'PUSH_MENTIONED') {
         icon = 'fas fa-bolt';
     } else if (elem.type === 'PUSH_MESSAGED') {
         icon = 'far fa-comments';
