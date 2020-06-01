@@ -165,12 +165,14 @@ class AppModel extends Model
             }
 
             if ($inHighlight) {
-                $curName .= $text[$i];
-
                 if ((in_array($text[$i], $terminationChars)) || ($i === strlen($text) - 1)) {
                     $result[] = $curName;
                     $curName = '';
+                    $inHighlight = false;
+                    continue;
                 }
+
+                $curName .= $text[$i];
             }
         }
 

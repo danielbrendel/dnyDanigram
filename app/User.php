@@ -332,6 +332,9 @@ class User extends Authenticatable
             if (($user) && (!$user->deactivated)) {
                 $user->password = password_hash($password, PASSWORD_BCRYPT);
                 $user->save();
+
+                $html = view('mail.pw_changed', ['name' => $user->name])->render();
+                MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.password_changed'), $html);
             }
         } catch (Exception $e) {
             throw $e;
@@ -354,7 +357,7 @@ class User extends Authenticatable
                 $user->email = $email;
                 $user->save();
 
-                $html = view('mail.email_changed', ['name' => $user->name, 'newmail' => $email])->render();
+                $html = view('mail.email_changed', ['name' => $user->name, 'email' => $email])->render();
                 MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.email_changed'), $html);
                 MailerModel::sendMail($oldMail, '[' . env('APP_NAME') . '] ' . __('app.email_changed'), $html);
             }

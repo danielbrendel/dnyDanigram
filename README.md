@@ -31,3 +31,14 @@ feature list see below.
 Place a file 'do_install' in the root directory of the project.
 Then go to /install. The setup wizard will guide you through the
 installation process.
+
+## Testing
+In order to run the tests successfully you need to ensure that the following test data is valid:
++ TEST_USERID: ID of an existing user
++ TEST_USERID2: ID of another existing user. May not be the same as the other user
++ TEST_USERID_NONEXISTENT: ID of a non-existing user
++ TEST_USEREMAIL: E-Mail of an existing user
++ TEST_USERNAME: Username of an existing user
++ TEST_ENTITY_HASHTAG: ID of an existing hashtag
++ TEST_POSTID: ID of an existing post
++ TEST_FETCHLIMIT: The fetch limit

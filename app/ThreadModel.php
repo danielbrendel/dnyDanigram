@@ -66,10 +66,14 @@ class ThreadModel extends Model
      * @param $threadId
      * @throws \Exception
      */
-    public static function remove($threadId)
+    public static function remove($threadId, $userId = null)
     {
         try {
-            $thread = ThreadModel::where('id', '=', $threadId)->where('userId', '=', auth()->id())->first();
+            if ($userId === null) {
+                $userId = auth()->id();
+            }
+
+            $thread = ThreadModel::where('id', '=', $threadId)->where('userId', '=', $userId)->first();
             if ($thread) {
                 $thread->delete();
             }
@@ -83,12 +87,17 @@ class ThreadModel extends Model
      *
      * @param $threadId
      * @param $newText
+     * @param null $userId
      * @throws \Exception
      */
-    public static function edit($threadId, $newText)
+    public static function edit($threadId, $newText, $userId = null)
     {
         try {
-            $thread = ThreadModel::where('id', '=', $threadId)->where('userId', '=', auth()->id())->first();
+            if ($userId === null) {
+                $userId = auth()->id();
+            }
+
+            $thread = ThreadModel::where('id', '=', $threadId)->where('userId', '=', $userId)->first();
             if ($thread) {
                 $thread->text = $newText;
                 $thread->save();

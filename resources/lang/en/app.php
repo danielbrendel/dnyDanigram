@@ -133,5 +133,11 @@ return [
     'lock_hashtag' => 'Lock',
     'user_not_found_or_deactivated' => 'User either does not exist or is deactivated',
     'post_is_locked' => 'Post has been locked',
-    'comment_locked' => 'Comment has been locked'
+    'comment_locked' => 'Comment has been locked',
+    'mail_pw_changed_title' => 'Password change',
+    'mail_pw_changed_body' => 'Your password has been successfully changed',
+    'mail_email_changed_title' => 'E-Mail change',
+    'mail_email_changed_body' => 'Your E-Mail address has been successfully changed. Your new E-Mail address: :email',
+    'password_changed' => 'Password changed',
+    'register_captcha_invalid' => 'The captcha is invalid'
 ];
