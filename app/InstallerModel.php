@@ -46,7 +46,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_DEBUG=false' . PHP_EOL;
             $envcontent .= 'APP_URL=http://localhost' . PHP_EOL;
             $envcontent .= 'APP_AUTHOR="Daniel Brendel"' . PHP_EOL;
-            $envcontent .= 'APP_DESCRIPTION="The photo community platform"' . PHP_EOL;
+            $envcontent .= 'APP_DESCRIPTION="The lightweight image sharing community platform system"' . PHP_EOL;
             $envcontent .= 'APP_TAGS=""' . PHP_EOL;
             $envcontent .= 'APP_TITLE="${APP_NAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
             $envcontent .= 'APP_DIVISION=' . $divisor . PHP_EOL;
