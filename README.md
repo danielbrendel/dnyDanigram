@@ -28,6 +28,7 @@ feature list see below.
 + Administration
 + Maintainer system
 + Installer
++ Security features
 
 ## System requirements
 The product is being developed with the following engine versions:
