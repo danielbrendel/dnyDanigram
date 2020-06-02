@@ -47,8 +47,8 @@ Route::get('/u/{id}/report', 'MemberController@report');
 Route::get('/profile', 'MemberController@profile');
 Route::post('/profile/edit', 'MemberController@save');
 
-Route::post('/b/add', 'BookmarksController@add');
-Route::post('/b/remove', 'BookmarksController@remove');
+Route::post('/f/add', 'FavoritesController@add');
+Route::post('/f/remove', 'FavoritesController@remove');
 
 Route::get('/notifications/list', 'NotificationController@list');
 Route::get('/notifications/fetch', 'NotificationController@fetch');
@@ -66,3 +66,10 @@ Route::get('/c/{id}/lock', 'AdminController@lockComment');
 
 Route::get('/install', 'InstallerController@viewInstall');
 Route::post('/install', 'InstallerController@install');
+
+Route::get('/maintainer', 'MaintainerController@index');
+Route::post('/maintainer/save', 'MaintainerController@save');
+Route::post('/maintainer/faq/create', 'MaintainerController@addFaq');
+Route::post('/maintainer/faq/edit', 'MaintainerController@editFaq');
+Route::get('/maintainer/faq/{id}/remove', 'MaintainerController@removeFaq');
+Route::post('/maintainer/env/save', 'MaintainerController@envSave');

@@ -15,7 +15,7 @@
 namespace Tests\Feature\Models;
 
 use App\AppModel;
-use App\BookmarksModel;
+use App\FavoritesModel;
 use App\CaptchaModel;
 use App\FaqModel;
 use App\HeartModel;

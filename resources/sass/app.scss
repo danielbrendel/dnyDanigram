@@ -123,6 +123,11 @@ a:hover {
 .is-stretched {
     width: 100% !important;
 }
+.is-only-mobile {
+    @media screen and (min-width: 769px) {
+        display: none;
+    }
+}
 .is-no-border {
     border: none !important;
 }
@@ -388,7 +393,7 @@ a:hover {
 .userinfo-edit {
     margin-top: 15px;
 }
-.userinfo-bookmark {
+.userinfo-favorite {
     display: inline-block;
     margin-top: 15px;
 }
@@ -595,4 +600,36 @@ a:hover {
 .message-thread-text {
     color: rgb(150, 150, 150);
     margin-left: 25px;
+}
+
+//Overlay list
+.overlay-list {
+    position: absolute;
+    top: -9px;
+    @media screen and (min-width: 769px) {
+        right: -151px;
+        width: 550px;
+        height: 90%;
+    }
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        height: 100%;
+    }
+    @media screen and (max-width: 483px) {
+        top: 44px;
+    }
+    @media screen and (min-height: 520px) {
+        height: 520px;
+    }
+    z-index: 4;
+    background-color: rgb(255, 255, 255);
+    display: none;
+}
+.overlay-list-content {
+    margin: 25px;
+    height: 78%;
+    @media screen and (max-width: 480px) {
+        height: 95%;
+    }
+    overflow-y: auto;
 }

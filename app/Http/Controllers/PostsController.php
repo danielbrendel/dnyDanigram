@@ -15,7 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
-use App\BookmarksModel;
+use App\FavoritesModel;
 use App\HeartModel;
 use App\PostModel;
 use App\ReportModel;
@@ -34,13 +34,19 @@ class PostsController extends Controller
     private $postPackLimit;
 
     /**
-     * PostsController constructor.
+     * Validate permissions
+     *
+     * @return void
      */
     public function __construct()
     {
-        if (Auth::guest()) {
-            //throw new Exception('Reserved for registered users only', 403);
-        }
+        $this->middleware(function ($request, $next) {
+           if (Auth::guest()) {
+               abort(403);
+           }
+
+            return $next($request);
+        });
 
         $this->postPackLimit = env('APP_POSTPACKLIMIT');
     }
@@ -87,22 +93,13 @@ class PostsController extends Controller
                 return redirect('/')->with('flash.error', __('app.post_not_found_or_locked'));
             }
 
-            $bookmarks = BookmarksModel::getForUser(auth()->id());
-            foreach ($bookmarks as &$bookmark) {
-                if ($bookmark->type === 'ENT_HASHTAG') {
-                    $hashtag = TagsModel::where('id', '=', $bookmark->entityId)->first();
-                    $bookmark->name = $hashtag->tag;
-                } else if ($bookmark->type === 'ENT_USER') {
-                    $user = User::get($bookmark->entityId);
-                    $bookmark->name = $user->username;
-                }
-            }
+            $favorites = FavoritesModel::getDetailedForUser(auth()->id());
 
             return view('member.showpost', [
                 'user' => User::getByAuthId(),
                 'post' => $post,
                 'taglist' => TagsModel::getPopularTags(),
-                'bookmarks' => $bookmarks
+                'favorites' => $favorites
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -122,21 +119,12 @@ class PostsController extends Controller
                 $user->stats = User::getStats($user->id);
             }
 
-            $bookmarks = BookmarksModel::getForUser(auth()->id());
-            foreach ($bookmarks as &$bookmark) {
-                if ($bookmark->type === 'ENT_HASHTAG') {
-                    $hashtag = TagsModel::where('id', '=', $bookmark->entityId)->first();
-                    $bookmark->name = $hashtag->tag;
-                } else if ($bookmark->type === 'ENT_USER') {
-                    $user = User::get($bookmark->entityId);
-                    $bookmark->name = $user->username;
-                }
-            }
+            $favorites = FavoritesModel::getDetailedForUser(auth()->id());
 
             return view('member.index', [
                 'user' => $user,
                 'taglist' => TagsModel::getPopularTags(),
-                'bookmarks' => $bookmarks
+                'favorites' => $favorites
             ]);
         } catch (Exception $e) {
             abort(500);
@@ -206,7 +194,7 @@ class PostsController extends Controller
                 'hashtag' => $hashtag,
                 'tag' => $tag,
                 'tagdata' => $tag,
-                'bookmarked' => BookmarksModel::hasUserBookmarked(auth()->id(), $tag->id, 'ENT_HASHTAG'),
+                'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $tag->id, 'ENT_HASHTAG'),
                 'hearted' => HeartModel::hasUserHearted(auth()->id(), $tag->id, 'ENT_HASHTAG')
             ]);
         } catch (Exception $e) {

@@ -12,7 +12,11 @@
 
 <div class="userinfo-header">
     <div class="userinfo-image is-inline-block">
-        <img src="{{ asset('gfx/posts/' . $tag->top_image) }}" width="24" height="24">
+        @if ($tag->top_image !== null)
+            <img src="{{ asset('gfx/posts/' . $tag->top_image) }}" width="24" height="24">
+        @else
+            <i class="fas fa-hashtag fa-lg"></i>
+        @endif
     </div>
 
     <div class="userinfo-name is-inline-block is-pointer">
@@ -31,11 +35,11 @@
     <i class="fas fa-heart"></i>&nbsp;{{ __('app.stats_hearts', ['count' => $tag->stats->hearts]) }}<br/>
 </div>
 
-<div class="userinfo-bookmark" id="bookmark-ent_hashtag">
-    @if ($bookmarked)
-        <a href="javascript:void(0)" onclick="removeBookmark({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.bookmark_remove') }}</a>
+<div class="userinfo-favorite" id="favorite-ent_hashtag">
+    @if ($favorited)
+        <a href="javascript:void(0)" onclick="removeFavorite({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.favorite_remove') }}</a>
     @else
-        <a href="javascript:void(0)" onclick="addBookmark({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.bookmark_add') }}</a>
+        <a href="javascript:void(0)" onclick="addFavorite({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.favorite_add') }}</a>
     @endif
 </div>
 

@@ -68,6 +68,18 @@
                 </center>
 
                 <div class="navbar-end">
+                    <div class="navbar-item is-only-mobile">
+                        <div>
+                            <i class="far fa-star fa-lg is-pointer" title="{{ __('app.favorites') }}" onclick="window.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item is-only-mobile">
+                        <div>
+                            <i class="fas fa-hashtag fa-lg is-pointer" title="{{ __('app.popular_tags') }}" onclick="window.toggleOverlay('popular-tags'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>
+                        </div>
+                    </div>
+
                     <div class="navbar-item">
                         <div>
                             <i class="fas fa-upload fa-lg is-pointer" title="{{ __('app.member_upload') }}" onclick="location.href='{{ url('/upload') }}';"></i>
@@ -92,6 +104,14 @@
                         </div>
                     </div>
 
+                    @if ($user->maintainer)
+                    <div class="navbar-item">
+                        <div>
+                            <i class="fas fa-tools is-pointer" title="{{ __('app.maintainer_area') }}"  onclick="location.href='{{ url('/maintainer') }}';"></i>
+                        </div>
+                    </div>
+                    @endif
+
                     <div class="navbar-item">
                         <div>
                             <i class="fas fa-sign-out-alt fa-lg is-pointer" title="{{ __('app.logout') }}"  onclick="location.href='{{ url('/logout') }}';"></i>
@@ -104,6 +124,18 @@
         <div id="main" class="container">
             <div class="notifications" id="notifications">
                 <div class="notifications-content" id="notification-content"></div>
+            </div>
+
+            <div class="overlay-list" id="overlay-favorites">
+                <div class="overlay-list-content">
+                    @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id()), 'inoverlay' => true])
+                </div>
+            </div>
+
+            <div class="overlay-list" id="overlay-popular-tags">
+                <div class="overlay-list-content">
+                    @include('widgets.populartags', ['taglist' => \App\TagsModel::getPopularTags(), 'inoverlay' => true])
+                </div>
             </div>
 
             @if ($errors->any())
@@ -241,6 +273,12 @@
                                 <label class="label">{{ __('app.email') }}</label>
                                 <div class="control">
                                     <input type="email" name="email" value="{{ $user->email }}">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type="checkbox" name="email_on_message" value="1" data-role="checkbox" data-style="2" data-caption="{{ __('app.email_on_message') }}" @if ($user->email_on_message) {{ 'checked' }} @endif>
                                 </div>
                             </div>
 

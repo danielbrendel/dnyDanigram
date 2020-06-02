@@ -15,30 +15,30 @@
 namespace Tests\Feature\Models;
 
 use App\AppModel;
-use App\BookmarksModel;
+use App\FavoritesModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class BookmarksModelTest extends TestCase
+class FavoritesModelTest extends TestCase
 {
     public function testValidateEntityType()
     {
-        BookmarksModel::validateEntityType('ENT_USER');
+        FavoritesModel::validateEntityType('ENT_USER');
         $this->addToAssertionCount(1);
 
         $this->expectExceptionMessage('Invalid entity type: ENT_INVALID');
-        BookmarksModel::validateEntityType('ENT_INVALID');
+        FavoritesModel::validateEntityType('ENT_INVALID');
     }
 
     public function testAdd()
     {
         try {
-            BookmarksModel::add(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
-            $result = BookmarksModel::where('userId', '=', env('TEST_USERID'))->where('entityId', '=', env('TEST_ENTITY_HASHTAG'))->count();
+            FavoritesModel::add(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
+            $result = FavoritesModel::where('userId', '=', env('TEST_USERID'))->where('entityId', '=', env('TEST_ENTITY_HASHTAG'))->count();
             $this->assertEquals($result, 1);
 
-            BookmarksModel::add(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
-            $result = BookmarksModel::where('userId', '=', env('TEST_USERID'))->where('entityId', '=', env('TEST_ENTITY_HASHTAG'))->count();
+            FavoritesModel::add(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
+            $result = FavoritesModel::where('userId', '=', env('TEST_USERID'))->where('entityId', '=', env('TEST_ENTITY_HASHTAG'))->count();
             $this->assertEquals($result, 1);
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
@@ -48,13 +48,13 @@ class BookmarksModelTest extends TestCase
     /**
      * @depends testAdd
      */
-    public function testHasUserBookmarked()
+    public function testHasUserFavorited()
     {
         try {
-            $result = BookmarksModel::hasUserBookmarked(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
+            $result = FavoritesModel::hasUserFavorited(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
             $this->assertTrue($result);
 
-            $result = BookmarksModel::hasUserBookmarked(env('TEST_USERID_NONEXISTENT'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
+            $result = FavoritesModel::hasUserFavorited(env('TEST_USERID_NONEXISTENT'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
             $this->assertFalse($result);
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
@@ -62,12 +62,12 @@ class BookmarksModelTest extends TestCase
     }
 
     /**
-     * @depends testHasUserBookmarked
+     * @depends testHasUserFavorited
      */
     public function testGetForUser()
     {
         try {
-            $result = BookmarksModel::getForUser(env('TEST_USERID'));
+            $result = FavoritesModel::getForUser(env('TEST_USERID'));
             $this->assertIsObject($result);
             $this->assertTrue(count($result) > 0);
         } catch (\Exception $e) {
@@ -81,8 +81,8 @@ class BookmarksModelTest extends TestCase
     public function testRemove()
     {
         try {
-            BookmarksModel::remove(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
-            $result = BookmarksModel::where('userId', '=', env('TEST_USERID'))->where('entityId', '=', env('TEST_ENTITY_HASHTAG'))->count();
+            FavoritesModel::remove(env('TEST_USERID'), env('TEST_ENTITY_HASHTAG'), 'ENT_HASHTAG');
+            $result = FavoritesModel::where('userId', '=', env('TEST_USERID'))->where('entityId', '=', env('TEST_ENTITY_HASHTAG'))->count();
             $this->assertEquals($result, 0);
         } catch (\Exception $e) {
             $this->fail($e->getMessage());

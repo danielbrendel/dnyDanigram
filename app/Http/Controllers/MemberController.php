@@ -15,7 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
-use App\BookmarksModel;
+use App\FavoritesModel;
 use App\PostModel;
 use App\ReportModel;
 use App\TagsModel;
@@ -47,7 +47,7 @@ class MemberController extends Controller
                 'user' => User::getByAuthId(),
                 'profile' => $user,
                 'taglist' => TagsModel::getPopularTags(),
-                'bookmarked' => BookmarksModel::hasUserBookmarked(auth()->id(), $user->id, 'ENT_USER')
+                'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $user->id, 'ENT_USER')
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -72,7 +72,8 @@ class MemberController extends Controller
                'bio' => 'nullable',
                'password' => 'nullable',
                'password_confirm' => 'nullable',
-               'email' => 'nullable|email'
+               'email' => 'nullable|email',
+                'email_on_message' => 'nullable|numeric'
             ]);
 
             if (isset($attr['username'])) {
@@ -94,6 +95,12 @@ class MemberController extends Controller
             if (isset($attr['email'])) {
                 User::changeEMail(auth()->id(), $attr['email']);
             }
+
+            if (!isset($attr['email_on_message'])) {
+                $attr['email_on_message'] = false;
+            }
+
+            User::saveEmailOnMessageFlag(auth()->id(), (bool)$attr['email_on_message']);
 
             $av = request()->file('avatar');
             if ($av != null) {

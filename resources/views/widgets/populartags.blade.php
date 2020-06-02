@@ -10,7 +10,12 @@
     Released under the MIT license
 --}}
 
-<h2 class="is-default-headline-color">{{ __('app.popular_tags') }}</h2>
+<div>
+    <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.popular_tags') }}</h2></div>
+    @if ((isset($inoverlay)) && ($inoverlay))
+        <div class="is-inline-block float-right is-top-25"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('popular-tags')"></i></div>
+    @endif
+</div>
 
 <div>
     @foreach ($taglist as $tag)

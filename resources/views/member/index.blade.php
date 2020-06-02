@@ -33,7 +33,7 @@
             </div>
 
             <div class="member-form is-default-padding">
-                @include('widgets.bookmarks')
+                @include('widgets.favorites')
             </div>
 
             <div class="member-form is-default-padding">

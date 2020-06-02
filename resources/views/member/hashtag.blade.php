@@ -106,7 +106,7 @@
                             document.getElementById('loading').style.display = 'none';
                         });
                     } else {
-                        document.getElementById('feed').innerHTML += '<center><i>{{ __('app.no_more_posts') }}</i></center><br/>';
+                        document.getElementById('feed').innerHTML += '<br/<br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/>';
                         document.getElementById('loading').style.display = 'none';
                     }
                 }

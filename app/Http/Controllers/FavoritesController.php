@@ -15,12 +15,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\BookmarksModel;
+use App\FavoritesModel;
 
-class BookmarksController extends Controller
+class FavoritesController extends Controller
 {
     /**
-     * Add bookmark
+     * Add favorite
      * @return \Illuminate\Http\JsonResponse
      */
     public function add()
@@ -29,16 +29,16 @@ class BookmarksController extends Controller
             $entityId = request('entityId');
             $entType = request('entType');
 
-            BookmarksModel::add(auth()->id(), $entityId, $entType);
+            FavoritesModel::add(auth()->id(), $entityId, $entType);
 
-            return response()->json(array('code' => 200, 'msg' => __('app.bookmark_added')));
+            return response()->json(array('code' => 200, 'msg' => __('app.favorite_added')));
         } catch (\Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 
     /**
-     * Remove bookmark
+     * Remove favorite
      * @return \Illuminate\Http\JsonResponse
      */
     public function remove()
@@ -47,9 +47,9 @@ class BookmarksController extends Controller
             $entityId = request('entityId');
             $entType = request('entType');
 
-            BookmarksModel::remove(auth()->id(), $entityId, $entType);
+            FavoritesModel::remove(auth()->id(), $entityId, $entType);
 
-            return response()->json(array('code' => 200, 'msg' => __('app.bookmark_removed')));
+            return response()->json(array('code' => 200, 'msg' => __('app.favorite_removed')));
         } catch (\Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

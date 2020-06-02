@@ -11,7 +11,7 @@ Released under the MIT license
 ## Description:
 Danigram is a lightweight image sharing community platform system. Users can register and share 
 images using hashtags. Users can comment on posts, like posts, comments and hashtags and 
-mention users. Users can bookmark hashtags and users. There is also profile management,
+mention users. Users can add favorites for hashtags and users. There is also profile management,
 notification system and e-mail system. The system comes with a friendly installer. For a full
 feature list see below.
 
@@ -21,11 +21,12 @@ feature list see below.
 + Like images, comments, hashtags
 + See latest and top posts and comments
 + Hashtag system
-+ Bookmark system
++ Favorites system
 + Notification system
 + Messaging system
 + E-Mail system
 + Administration
++ Maintainer system
 + Installer
 
 ## System requirements
@@ -54,3 +55,4 @@ In order to run the tests successfully you need to ensure that the following tes
 + TEST_MESSAGEID: ID of an existing message
 + TEST_COMMENTID: ID of an existing comment
 + TEST_FETCHLIMIT: The fetch limit
++ TEST_FAQID: ID of an existing FAQ item

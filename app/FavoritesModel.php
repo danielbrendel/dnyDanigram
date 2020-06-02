@@ -17,11 +17,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class BookmarksModel
+ * Class FavoritesModel
  *
- * Interface to bookmarks
+ * Interface to favorites
  */
-class BookmarksModel extends Model
+class FavoritesModel extends Model
 {
     /**
      * Validate entity type
@@ -43,7 +43,7 @@ class BookmarksModel extends Model
     }
 
     /**
-     * Add new bookmark entry
+     * Add new favorite entry
      *
      * @param $userId
      * @param $entityId
@@ -55,9 +55,9 @@ class BookmarksModel extends Model
         try {
             static::validateEntityType($entType);
 
-            $exists = BookmarksModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->count();
+            $exists = FavoritesModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->count();
             if (!$exists) {
-                $entry = new BookmarksModel();
+                $entry = new FavoritesModel();
                 $entry->userId = $userId;
                 $entry->entityId = $entityId;
                 $entry->type = $entType;
@@ -69,7 +69,7 @@ class BookmarksModel extends Model
     }
 
     /**
-     * Remove bookmark
+     * Remove favorite
      *
      * @param $userId
      * @param $entityId
@@ -81,7 +81,7 @@ class BookmarksModel extends Model
         try {
             static::validateEntityType($entType);
 
-            $exists = BookmarksModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->first();
+            $exists = FavoritesModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->first();
             if ($exists) {
                 $exists->delete();
             }
@@ -91,7 +91,7 @@ class BookmarksModel extends Model
     }
 
     /**
-     * Check if user as bookmarked a specific entity
+     * Check if user as favorited a specific entity
      *
      * @param $userId
      * @param $entityId
@@ -99,10 +99,10 @@ class BookmarksModel extends Model
      * @return bool
      * @throws \Exception
      */
-    public static function hasUserBookmarked($userId, $entityId, $entType)
+    public static function hasUserFavorited($userId, $entityId, $entType)
     {
         try {
-            $exists = BookmarksModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->count();
+            $exists = FavoritesModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->count();
 
             return $exists > 0;
         } catch (\Exception $e) {
@@ -111,7 +111,7 @@ class BookmarksModel extends Model
     }
 
     /**
-     * Get bookmarks of user
+     * Get favorites of user
      *
      * @param $id
      * @return mixed
@@ -120,7 +120,34 @@ class BookmarksModel extends Model
     public static function getForUser($id)
     {
         try {
-            return BookmarksModel::where('userId', '=', $id)->get();
+            return FavoritesModel::where('userId', '=', $id)->get();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get favorites with details
+     *
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getDetailedForUser($id)
+    {
+        try {
+            $favorites = FavoritesModel::getForUser($id);
+            foreach ($favorites as &$favorite) {
+                if ($favorite->type === 'ENT_HASHTAG') {
+                    $hashtag = TagsModel::where('id', '=', $favorite->entityId)->first();
+                    $favorite->name = $hashtag->tag;
+                } else if ($favorite->type === 'ENT_USER') {
+                    $user = User::get($favorite->entityId);
+                    $favorite->name = $user->username;
+                }
+            }
+
+            return $favorites;
         } catch (\Exception $e) {
             throw $e;
         }

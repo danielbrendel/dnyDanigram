@@ -365,4 +365,24 @@ class User extends Authenticatable
             throw $e;
         }
     }
+
+    /**
+     * Save email on message flag
+     *
+     * @param $id
+     * @param $value
+     * @throws Exception
+     */
+    public static function saveEmailOnMessageFlag($id, $value)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->email_on_message = $value;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

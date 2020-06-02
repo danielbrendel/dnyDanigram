@@ -108,6 +108,17 @@ class InstallerModel extends Model
 
             \DB::insert("INSERT INTO app_settings (home_index_content, cookie_consent, about, imprint, tos, reg_info) VALUES('home_index_content', 'cookie_consent', 'about', 'imprint', 'tos', 'reg_info')");
 
+            $user = new User();
+            $user->username = 'admin';
+            $user->email = $attr['email'];
+            $user->password = password_hash($attr['password'], PASSWORD_BCRYPT);
+            $user->maintainer = true;
+            $user->admin = true;
+            $user->account_confirm = '_confirmed';
+            $user->avatar = 'default.png';
+            $user->bio = 'Project administrator';
+            $user->email_on_message = true;
+
             unlink(base_path() . '/do_install');
         } catch (\Exception $e) {
             throw $e;

@@ -17,7 +17,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AdminControllerTest extends TestCase
+class FavoritesControllerTest extends TestCase
 {
     public function setUp(): void
     {
@@ -31,7 +31,7 @@ class AdminControllerTest extends TestCase
 
     public function testAdd()
     {
-        $response = $this->post('/b/add?entityId=' . env('TEST_ENTITY_HASHTAG') . '&entType=ENT_HASHTAG');
+        $response = $this->post('/f/add?entityId=' . env('TEST_ENTITY_HASHTAG') . '&entType=ENT_HASHTAG');
 
         $response->assertStatus(200);
         $content = json_decode($response->getContent());
@@ -43,7 +43,7 @@ class AdminControllerTest extends TestCase
      */
     public function testRemove()
     {
-        $response = $this->post('/b/remove?entityId=' . env('TEST_ENTITY_HASHTAG') . '&entType=ENT_HASHTAG');
+        $response = $this->post('/f/remove?entityId=' . env('TEST_ENTITY_HASHTAG') . '&entType=ENT_HASHTAG');
 
         $response->assertStatus(200);
         $content = json_decode($response->getContent());

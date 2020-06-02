@@ -21,6 +21,8 @@ let vue = new Vue({
         bShowRegister: false,
         bShowEditProfile: false,
         bShowEditComment: false,
+        bShowCreateFaq: false,
+        bShowEditFaq: false,
     },
 
     methods: {
@@ -434,18 +436,18 @@ window.reportTag = function(elemId) {
     });
 };
 
-window.addBookmark = function(entityId, type) {
-  window.vue.ajaxRequest('post', window.location.origin + '/b/add', { entityId: entityId, entType: type}, function(response) {
+window.addFavorite = function(entityId, type) {
+  window.vue.ajaxRequest('post', window.location.origin + '/f/add', { entityId: entityId, entType: type}, function(response) {
       if (response.code === 200) {
-          document.getElementById('bookmark-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="removeBookmark(' + entityId + ', \'' + type + '\')">Remove bookmark</a>';
+          document.getElementById('favorite-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="removeFavorite(' + entityId + ', \'' + type + '\')">Remove favorite</a>';
       }
   });
 };
 
-window.removeBookmark = function(entityId, type) {
-    window.vue.ajaxRequest('post', window.location.origin + '/b/remove', { entityId: entityId, entType: type}, function(response) {
+window.removeFavorite = function(entityId, type) {
+    window.vue.ajaxRequest('post', window.location.origin + '/f/remove', { entityId: entityId, entType: type}, function(response) {
         if (response.code === 200) {
-            document.getElementById('bookmark-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="addBookmark(' + entityId + ', \'' + type + '\')">Add bookmark</a>';
+            document.getElementById('favorite-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="addFavorite(' + entityId + ', \'' + type + '\')">Add favorite</a>';
         }
     });
 };
@@ -504,6 +506,15 @@ window.lockComment = function (id) {
         });
     }
 };
+
+window.toggleOverlay = function(name) {
+    let obj = document.getElementById('overlay-' + name);
+    if ((obj.style.display === 'none') || (obj.style.display == '')) {
+        obj.style.display = 'unset';
+    } else {
+        obj.style.display = 'none';
+    }
+}
 
 //Make vue instance available globally
 window.vue = vue;

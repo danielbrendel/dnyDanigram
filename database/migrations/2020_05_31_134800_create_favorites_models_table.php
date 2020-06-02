@@ -16,7 +16,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookmarksModelsTable extends Migration
+class CreateFavoritesModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -25,7 +25,7 @@ class CreateBookmarksModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bookmarks_models', function (Blueprint $table) {
+        Schema::create('favorites_models', function (Blueprint $table) {
             $table->id();
             $table->integer('userId');
             $table->integer('entityId');
@@ -41,6 +41,6 @@ class CreateBookmarksModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookmarks_models');
+        Schema::dropIfExists('favorites_models');
     }
 }

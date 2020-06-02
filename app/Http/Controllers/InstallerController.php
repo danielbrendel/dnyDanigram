@@ -14,6 +14,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AppModel;
 use App\InstallerModel;
 use Illuminate\Http\Request;
 
@@ -63,9 +64,11 @@ class InstallerController extends Controller
                 $attr['ga'] = '';
             }
 
+            $attr['password'] = AppModel::getRandomPassword(10);
+
             InstallerModel::install($attr);
 
-            return redirect('/')->with('success', __('app.product_installed'));
+            return redirect('/')->with('success', __('app.product_installed', ['password' => $attr['password']]));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

@@ -112,7 +112,9 @@ var vue = new Vue({
     bShowRecover: false,
     bShowRegister: false,
     bShowEditProfile: false,
-    bShowEditComment: false
+    bShowEditComment: false,
+    bShowCreateFaq: false,
+    bShowEditFaq: false
   },
   methods: {
     invalidLoginEmail: function invalidLoginEmail() {
@@ -378,24 +380,24 @@ window.reportTag = function (elemId) {
   });
 };
 
-window.addBookmark = function (entityId, type) {
-  window.vue.ajaxRequest('post', window.location.origin + '/b/add', {
+window.addFavorite = function (entityId, type) {
+  window.vue.ajaxRequest('post', window.location.origin + '/f/add', {
     entityId: entityId,
     entType: type
   }, function (response) {
     if (response.code === 200) {
-      document.getElementById('bookmark-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="removeBookmark(' + entityId + ', \'' + type + '\')">Remove bookmark</a>';
+      document.getElementById('favorite-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="removeFavorite(' + entityId + ', \'' + type + '\')">Remove favorite</a>';
     }
   });
 };
 
-window.removeBookmark = function (entityId, type) {
-  window.vue.ajaxRequest('post', window.location.origin + '/b/remove', {
+window.removeFavorite = function (entityId, type) {
+  window.vue.ajaxRequest('post', window.location.origin + '/f/remove', {
     entityId: entityId,
     entType: type
   }, function (response) {
     if (response.code === 200) {
-      document.getElementById('bookmark-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="addBookmark(' + entityId + ', \'' + type + '\')">Add bookmark</a>';
+      document.getElementById('favorite-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="addFavorite(' + entityId + ', \'' + type + '\')">Add favorite</a>';
     }
   });
 };
@@ -453,6 +455,16 @@ window.lockComment = function (id) {
     window.vue.ajaxRequest('get', window.location.origin + '/c/' + id + '/lock', {}, function (response) {
       alert(response.msg);
     });
+  }
+};
+
+window.toggleOverlay = function (name) {
+  var obj = document.getElementById('overlay-' + name);
+
+  if (obj.style.display === 'none' || obj.style.display == '') {
+    obj.style.display = 'unset';
+  } else {
+    obj.style.display = 'none';
   }
 }; //Make vue instance available globally
 

@@ -103,6 +103,13 @@
                             </div>
 
                             <div class="field">
+                                <label class="label">E-Mail address</label>
+                                <div class="control">
+                                    <input type="text" name="email" placeholder="name@domain.tld" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
                                 <label class="label">Database name</label>
                                 <div class="control">
                                     <input type="text" name="database" value="danigram" required>
