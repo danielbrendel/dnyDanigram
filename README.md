@@ -28,7 +28,8 @@ feature list see below.
 + Administration
 + Maintainer system
 + Installer
-+ Security features
++ Security
++ Responsive design
 + Testcases
 
 ## System requirements
