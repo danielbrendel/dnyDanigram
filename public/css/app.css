@@ -672,7 +672,7 @@ a:hover {
 }
 
 .messages-item:hover {
-  background-color: #fafafa;
+  background-color: gainsboro;
 }
 
 .messages-item-avatar {
@@ -709,6 +709,10 @@ a:hover {
 
 .is-new-message {
   background-color: #80ff80;
+}
+
+.is-new-message:hover {
+  background-color: #80c880;
 }
 
 .messages-footer {
