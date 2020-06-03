@@ -75,4 +75,14 @@ class MaintainerControllerTest extends TestCase
 
         $response->assertStatus(302);
     }
+
+    public function testUserDetails()
+    {
+        $response = $this->get('/maintainer/u/details?ident=' . env('TEST_USERID'));
+        $response->assertStatus(200);
+
+        $content = json_decode($response->getContent());
+        $this->assertEquals(200, $content->code);
+        $this->assertIsObject($content->data);
+    }
 }

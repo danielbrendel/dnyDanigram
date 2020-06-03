@@ -159,7 +159,9 @@ class AppModel extends Model
             if ($text[$i] === '@') {
                 $inMention = true;
                 if (strlen($curName) > 0) {
-                    $result[] = $curName;
+                    if (!in_array($curName, $result)) {
+                        $result[] = $curName;
+                    }
                 }
                 $curName = '';
                 continue;
@@ -167,7 +169,10 @@ class AppModel extends Model
 
             if ($inMention) {
                 if ((in_array($text[$i], $terminationChars)) || ($i === strlen($text) - 1)) {
-                    $result[] = $curName;
+                    if (!in_array($curName, $result)) {
+                        $result[] = $curName;
+                    }
+
                     $curName = '';
                     $inMention = false;
                     continue;
