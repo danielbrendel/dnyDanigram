@@ -289,6 +289,12 @@ a:hover {
   margin-bottom: 70px;
 }
 
+@media screen and (max-width: 769px) {
+  .show-post {
+    border-bottom: 1px solid #ccc;
+  }
+}
+
 .show-post-header {
   position: relative;
   color: #787878;
@@ -314,7 +320,7 @@ a:hover {
 }
 
 .show-post-description {
-  margin-top: 45px;
+  margin-top: 25px;
   margin-bottom: 15px;
 }
 
@@ -324,8 +330,30 @@ a:hover {
   top: 20px;
 }
 
+@media screen and (max-width: 480px) {
+  .show-post-options {
+    margin-right: 15px;
+  }
+}
+
+.show-post-hashtags {
+  padding-top: 4px !important;
+}
+
+.show-post-hashtags a {
+  color: darkred;
+}
+
 .feed-nav {
   margin-bottom: 45px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+@media screen and (max-width: 380px) {
+  .feed-nav {
+    top: 58px;
+  }
 }
 
 .fixed-frame {
@@ -430,7 +458,26 @@ a:hover {
   margin-bottom: 5px;
 }
 
+.taglist-item-left a {
+  color: #6e6e6c;
+  font-weight: bold;
+}
+
 .taglist-item-right {
+  float: right;
+}
+
+.favorites-item {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.favorites-item-left a {
+  color: #6e6e6c;
+  font-weight: bold;
+}
+
+.favorites-item-right {
   float: right;
 }
 

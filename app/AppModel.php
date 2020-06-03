@@ -27,6 +27,7 @@ class AppModel extends Model
 {
     const ONE_HOUR = 3600;
     const ONE_DAY = self::ONE_HOUR * 24;
+    const MAX_EXPRESSION_LENGTH = 25;
 
     /**
      * Get name parts
@@ -319,5 +320,18 @@ class AppModel extends Model
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * Get short expression
+     *
+     * @param $exp
+     * @return string
+     */
+    public static function getShortExpression($exp)
+    {
+        return (strlen($exp) > self::MAX_EXPRESSION_LENGTH) ?
+            substr($exp, 0, self::MAX_EXPRESSION_LENGTH) . '...' :
+            $exp;
     }
 }

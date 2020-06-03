@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FavoritesModel extends Model
 {
+    const MAX_SHORT_NAME = 15;
+
     /**
      * Validate entity type
      *
@@ -141,9 +143,11 @@ class FavoritesModel extends Model
                 if ($favorite->type === 'ENT_HASHTAG') {
                     $hashtag = TagsModel::where('id', '=', $favorite->entityId)->first();
                     $favorite->name = $hashtag->tag;
+                    $favorite->short_name = AppModel::getShortExpression($favorite->name);
                 } else if ($favorite->type === 'ENT_USER') {
                     $user = User::get($favorite->entityId);
                     $favorite->name = $user->username;
+                    $favorite->short_name = AppModel::getShortExpression($favorite->name);
                 }
             }
 

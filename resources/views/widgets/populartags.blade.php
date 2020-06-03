@@ -20,7 +20,7 @@
 <div>
     @foreach ($taglist as $tag)
         <div class="taglist-item is-block">
-            <div class="taglist-item-left is-inline-block"><a href="{{ url('/t/' . $tag->tag) }}">#{{ $tag->tag }}</a></div>
+            <div class="taglist-item-left is-inline-block"><a href="{{ url('/t/' . $tag->tag) }}">#{{ \App\AppModel::getShortExpression($tag->tag) }}</a></div>
             <div class="taglist-item-right is-inline-block"><i class="far fa-heart"></i>&nbsp;{{ $tag->hearts }}</div>
         </div>
     @endforeach

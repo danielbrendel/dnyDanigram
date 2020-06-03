@@ -20,16 +20,16 @@
 <div>
     @if (count($favorites) > 0)
         @foreach ($favorites as $favorite)
-            <div class="taglist-item is-block" id="favorite-item-{{ $favorite->id }}">
-                <div class="taglist-item-left is-inline-block">
+            <div class="favorites-item is-block" id="favorite-item-{{ $favorite->id }}">
+                <div class="favorites-item-left is-inline-block">
                     @if ($favorite->type === 'ENT_HASHTAG')
-                        <a href="{{ url('/t/' . $favorite->name) }}">#{{ $favorite->name }}</a>
+                        <a href="{{ url('/t/' . $favorite->name) }}">#{{ $favorite->short_name }}</a>
                     @elseif ($favorite->type === 'ENT_USER')
-                        <a href="{{ url('/u/' . $favorite->name) }}">{{ $favorite->name }}</a>
+                        <a href="{{ url('/u/' . $favorite->name) }}">{{ $favorite->short_name }}</a>
                     @endif
                 </div>
 
-                <div class="taglist-item-right is-inline-block"><i onclick="deleteFavorite({{ $favorite->id }}, {{ $favorite->entityId }}, '{{ $favorite->type }}')" class="fas fa-times is-pointer" title="{{ __('app.remove') }}"></i></div>
+                <div class="favorites-item-right is-inline-block"><i onclick="deleteFavorite({{ $favorite->id }}, {{ $favorite->entityId }}, '{{ $favorite->type }}')" class="fas fa-times is-pointer" title="{{ __('app.remove') }}"></i></div>
             </div>
         @endforeach
     @else
