@@ -222,6 +222,9 @@ class MaintainerController extends Controller
             $user->deactivated = (isset($attr['deactivated'])) ? (bool)$attr['deactivated'] : false;
             $user->admin = (isset($attr['admin'])) ? (bool)$attr['admin'] : false;
             $user->maintainer = (isset($attr['maintainer'])) ? (bool)$attr['maintainer'] : false;
+            if ($user->maintainer === true) {
+                $user->admin = true;
+            }
             $user->save();
 
             return back()->with('flash.success', __('app.saved'));

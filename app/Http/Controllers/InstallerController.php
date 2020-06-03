@@ -17,6 +17,7 @@ namespace App\Http\Controllers;
 use App\AppModel;
 use App\InstallerModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InstallerController extends Controller
 {
@@ -44,6 +45,7 @@ class InstallerController extends Controller
         try {
             $attr = request()->validate([
                 'project' => 'required',
+                'email' => 'required|email',
                 'dbhost' => 'required',
                 'dbuser' => 'required',
                 'dbport' => 'required|numeric',

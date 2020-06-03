@@ -113,7 +113,7 @@ return [
     'post_button' => 'Post',
     'post_description' => 'Enter your description. Use @name to mention users',
     'post_hashtags' => '#tag1 #tag2 #tag3 #tag4',
-    'product_installed' => 'The product has been successfully installed. Your current login password :password.',
+    'product_installed' => 'The product has been successfully installed. Your current login password: :password. You can change it in your settings.',
     'messages' => 'Messages',
     'no_messages' => 'No messages to display',
     'message_not_found' => 'Message could not be found',

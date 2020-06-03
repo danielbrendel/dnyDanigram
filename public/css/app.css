@@ -341,7 +341,8 @@ a:hover {
 }
 
 .show-post-hashtags a {
-  color: darkred;
+  color: #6e6e6c;
+  font-weight: bold;
 }
 
 .feed-nav {
