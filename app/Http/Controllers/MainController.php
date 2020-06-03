@@ -49,7 +49,7 @@ class MainController extends Controller
      */
     public function index()
     {
-        if (Auth::guest()) {
+        if ((Auth::guest()) && (!env('APP_PUBLICFEED'))) {
             return view('home.index', [
                 'captcha' => CaptchaModel::createSum(session()->getId()),
                 'cookie_consent' => $this->cookie_consent,

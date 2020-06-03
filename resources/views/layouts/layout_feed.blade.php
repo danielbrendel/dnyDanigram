@@ -71,11 +71,26 @@
                 </center>
 
                 <div class="navbar-end">
+                    @guest
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a class="button is-primary is-bold" href="javascript:void(0);" onclick="vue.bShowRegister = true;">
+                                    {{ __('app.register') }}
+                                </a>
+                                <a class="button is-light" href="javascript:void(0);" onclick="vue.bShowLogin = true;">
+                                    {{ __('app.login') }}
+                                </a>
+                            </div>
+                        </div>
+                    @endguest
+
+                    @auth
                     <div class="navbar-item is-mobile-like-screen-width">
                         <div>
                             <i class="far fa-star fa-lg is-pointer" title="{{ __('app.favorites') }}" onclick="window.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>
                         </div>
                     </div>
+                    @endauth
 
                     <div class="navbar-item is-mobile-like-screen-width">
                         <div>
@@ -83,6 +98,7 @@
                         </div>
                     </div>
 
+                    @auth
                     <div class="navbar-item">
                         <div>
                             <i class="fas fa-upload fa-lg is-pointer" title="{{ __('app.member_upload') }}" onclick="location.href='{{ url('/upload') }}';"></i>
@@ -120,9 +136,22 @@
                             <i class="fas fa-sign-out-alt fa-lg is-pointer" title="{{ __('app.logout') }}"  onclick="location.href='{{ url('/logout') }}';"></i>
                         </div>
                     </div>
+                    @endauth
                 </div>
             </div>
         </nav>
+
+        @if (env('APP_PUBLICFEED'))
+            <div id="cookie-consent" class="cookie-consent has-text-centered is-top-53">
+                <div class="cookie-consent-inner">
+                    {{ $cookie_consent }}
+                </div>
+
+                <div class="cookie-consent-button">
+                    <i class="fas fa-times is-pointer" title="{{ __('app.cookie_consent_close') }}" onclick="vue.clickedCookieConsentButton()"></i>
+                </div>
+            </div>
+        @endif
 
         <div id="main" class="container">
             <div class="notifications" id="notifications">
@@ -155,7 +184,6 @@
                         </div>
                     </article>
                 </div>
-                <br/>
             @endif
 
             @if (Session::has('error'))
@@ -170,7 +198,6 @@
                         </div>
                     </article>
                 </div>
-                <br/>
             @endif
 
             <div class="flash is-flash-error" id="flash-error">
@@ -223,6 +250,7 @@
                 @yield('body')
             </div>
 
+            @auth
             <div class="modal" :class="{'is-active': bShowEditProfile}">
                 <div class="modal-background"></div>
                 <div class="modal-card is-top-25">
@@ -341,12 +369,18 @@
                     </footer>
                 </div>
             </div>
+            @endauth
+
+            @guest
+                @include('layouts.layout_guest')
+            @endguest
         </div>
     </body>
 
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('javascript')
     <script>
+        @auth
         window.fetchNotifications = function() {
             window.vue.ajaxRequest('get', '{{ url('/notifications/list') }}', {}, function(response){
                 if (response.code === 200) {
@@ -424,10 +458,15 @@
                 }
             });
         };
+        @endauth
 
         document.addEventListener('DOMContentLoaded', () => {
+            @auth
             setTimeout('fetchNotifications()', 5000);
             setTimeout('fetchNotificationList()', 100);
+            @endauth
+
+            window.vue.handleCookieConsent();
 
             window.menuVisible = false;
 

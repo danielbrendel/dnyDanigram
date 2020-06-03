@@ -136,6 +136,18 @@ a:hover {
 
 .is-top-25 {
   top: 25px;
+  position: fixed;
+  z-index: 5;
+}
+
+.is-top-53 {
+  top: 53px;
+}
+
+@media screen and (min-width: 1455px) {
+  .is-negative-top {
+    top: -68px;
+  }
 }
 
 .is-color-grey {
@@ -354,6 +366,18 @@ a:hover {
 @media screen and (max-width: 380px) {
   .feed-nav {
     top: 58px;
+  }
+}
+
+@media screen and (min-width: 482px) {
+  .feed-nav {
+    margin-top: -87px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .feed-nav {
+    margin-top: 20px;
   }
 }
 

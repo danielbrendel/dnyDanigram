@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-@extends('layouts.layout_member')
+@extends('layouts.layout_feed')
 
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.view_post'))
 
@@ -21,6 +21,7 @@
         <div id="singlepost"><center><i class="fas fa-spinner fa-spin"></i></center></div>
 
         <div class="member-form is-default-padding">
+            @auth
             <div class="thread-input">
                 <form method="POST" action="{{ url('/p/' . $post->id . '/thread/add') }}">
                     @csrf
@@ -40,6 +41,7 @@
                     </div>
                 </form>
             </div>
+            @endauth
 
             <div class="thread">
                 <a name="thread"></a>

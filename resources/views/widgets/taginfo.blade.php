@@ -43,12 +43,14 @@
     @endif
 </div>
 
-@if ($user->admin)
-    <div class="userinfo-lock float-right">
-        <a href="javascript:void(0)" onclick="lockHashtag({{ $tag->id }})">{{ __('app.lock_hashtag') }}</a>
-    </div>
-@else
-    <div class="userinfo-report float-right">
-        <a href="javascript:void(0)" onclick="reportTag({{ $tag->id }})">{{ __('app.report_tag') }}</a>
-    </div>
-@endif
+@auth
+    @if ($user->admin)
+        <div class="userinfo-lock float-right">
+            <a href="javascript:void(0)" onclick="lockHashtag({{ $tag->id }})">{{ __('app.lock_hashtag') }}</a>
+        </div>
+    @else
+        <div class="userinfo-report float-right">
+            <a href="javascript:void(0)" onclick="reportTag({{ $tag->id }})">{{ __('app.report_tag') }}</a>
+        </div>
+    @endif
+@endauth

@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-@extends('layouts.layout_member')
+@extends('layouts.layout_feed')
 
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.maintainer_area'))
 
@@ -335,6 +335,13 @@
                                         <option value="{{ $lang }}" @if ($lang === env('APP_LANG')) {{ 'selected' }} @endif>{{ $lang }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_public_feed') }}</label>
+                            <div class="control">
+                                <input type="checkbox" value="1" data-role="checkbox" data-type="2" data-caption="{{ __('app.project_public_feed') }}" @if (env('APP_PUBLICFEED')) {{ 'selected' }} @endif>
                             </div>
                         </div>
 

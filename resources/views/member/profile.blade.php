@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-@extends('layouts.layout_member')
+@extends('layouts.layout_feed')
 
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.view_profile', ['name' => $profile->username]))
 
@@ -28,12 +28,18 @@
 
     <div class="column is-4 fixed-frame-parent">
         <div class="fixed-frame">
+            @auth
             <div class="member-form is-default-padding">
                 @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
             </div>
+            @endauth
 
             <div class="member-form is-default-padding">
-                @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
+                @auth
+                    @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
+                @elseauth
+                    @include('widgets.userinfo', ['user' => $profile, 'admin' => false])
+                @endauth
             </div>
 
             <div class="member-form is-default-padding">

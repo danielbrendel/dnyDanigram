@@ -206,5 +206,6 @@ return [
     'favicon_info' => 'Favicon file. PNG only',
     'not_a_png_file' => 'File is not a valid PNG file',
     'deactivated' => 'Deactivated',
-    'edit_faq' => 'Edit FAQ item'
+    'edit_faq' => 'Edit FAQ item',
+    'project_public_feed' => 'Make the feed public'
 ];

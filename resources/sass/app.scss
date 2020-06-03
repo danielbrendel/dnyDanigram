@@ -113,6 +113,16 @@ a:hover {
 }
 .is-top-25 {
     top: 25px;
+    position: fixed;
+    z-index: 5;
+}
+.is-top-53 {
+    top: 53px;
+}
+.is-negative-top {
+    @media screen and (min-width: 1455px) {
+        top: -68px;
+    }
 }
 .is-color-grey {
     color: rgb(120, 120, 120);
@@ -293,6 +303,12 @@ a:hover {
     margin-bottom: 45px;
     @media screen and (max-width: 380px) {
         top: 58px;
+    }
+    @media screen and (min-width: 482px) {
+        margin-top: -87px;
+    }
+    @media screen and (min-width: 769px) {
+        margin-top: 20px;
     }
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;

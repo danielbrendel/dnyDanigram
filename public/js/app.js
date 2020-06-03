@@ -114,7 +114,8 @@ var vue = new Vue({
     bShowEditProfile: false,
     bShowEditComment: false,
     bShowCreateFaq: false,
-    bShowEditFaq: false
+    bShowEditFaq: false,
+    bShowLogin: false
   },
   methods: {
     invalidLoginEmail: function invalidLoginEmail() {
@@ -158,6 +159,7 @@ var vue = new Vue({
 
       if (foundCookie === false) {
         document.getElementById('cookie-consent').style.display = 'inline-block';
+        document.getElementById('feed-left').classList.add('is-negative-top');
       }
     },
     clickedCookieConsentButton: function clickedCookieConsentButton() {
@@ -165,6 +167,7 @@ var vue = new Vue({
       var curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
       document.cookie = 'cookieconsent=1; expires=' + curDate.toUTCString() + ';';
       document.getElementById('cookie-consent').style.display = 'none';
+      document.getElementById('feed-left').classList.remove('is-negative-top');
     },
     setPostFetchType: function setPostFetchType(type) {
       var curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);

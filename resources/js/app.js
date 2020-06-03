@@ -23,6 +23,7 @@ let vue = new Vue({
         bShowEditComment: false,
         bShowCreateFaq: false,
         bShowEditFaq: false,
+        bShowLogin: false,
     },
 
     methods: {
@@ -70,6 +71,7 @@ let vue = new Vue({
 
             if (foundCookie === false) {
                 document.getElementById('cookie-consent').style.display = 'inline-block';
+                document.getElementById('feed-left').classList.add('is-negative-top');
             }
         },
 
@@ -80,6 +82,8 @@ let vue = new Vue({
             document.cookie = 'cookieconsent=1; expires=' + curDate.toUTCString() + ';';
 
             document.getElementById('cookie-consent').style.display = 'none';
+
+            document.getElementById('feed-left').classList.remove('is-negative-top');
         },
 
         setPostFetchType: function (type) {

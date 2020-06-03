@@ -10,9 +10,9 @@
     Released under the MIT license
 --}}
 
-@extends('layouts.layout_member')
+@extends('layouts.layout_feed')
 
-@section('title', env('APP_PROJECTNAME') . ' - #' . $hashtag)
+@section('title', env('APP_PROJECTNAME'))
 
 @section('body')
     <div class="column is-2 is-sidespacing"></div>
@@ -23,21 +23,19 @@
         </div>
 
         <div id="feed"></div>
-        <div id="loading" style="display: none;"><center><i class="fas fa-spinner fa-spin"></i></center></div>
+        <div id="loading" style="display: none;"><br/><br/><center><i class="fas fa-spinner fa-spin"></i></center></div>
     </div>
 
     <div class="column is-4 fixed-frame-parent">
         <div class="fixed-frame">
+            @auth
             <div class="member-form is-default-padding">
-                @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
+                @include('widgets.favorites')
             </div>
+            @endauth
 
             <div class="member-form is-default-padding">
-                @include('widgets.supporttag', ['heart_count' => $tagdata->hearts])
-            </div>
-
-            <div class="member-form is-default-padding">
-                @include('widgets.taginfo')
+                @include('widgets.populartags')
             </div>
 
             <div class="member-form is-default-padding">
@@ -51,8 +49,6 @@
 
 @section('javascript')
     <script>
-        window.hashtag = '{{ $hashtag }}';
-
         window.onscroll = function(ev) {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                 fetchPosts();
@@ -60,17 +56,17 @@
         };
 
         window.onresize = function() {
-            if (window.innerWidth < 1454) {
-                document.getElementById('feed-left').classList.remove('is-4');
-                document.getElementById('feed-left').classList.add('is-8');
-            } else {
-                document.getElementById('feed-left').classList.remove('is-8');
-                document.getElementById('feed-left').classList.add('is-4');
-            }
+          if (window.innerWidth < 1454) {
+              document.getElementById('feed-left').classList.remove('is-4');
+              document.getElementById('feed-left').classList.add('is-8');
+          } else {
+              document.getElementById('feed-left').classList.remove('is-8');
+              document.getElementById('feed-left').classList.add('is-4');
+          }
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            window.paginate = null;
+           window.paginate = null;
 
             fetchPosts();
         });
@@ -87,11 +83,15 @@
                 document.getElementById('linkFetchLatest').style.textDecoration = 'underline';
             }
 
-            window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + '&hashtag=' + window.hashtag + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
+            window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
                 if (response.code == 200) {
                     if (!response.last) {
                         response.data.forEach(function (elem, index) {
-                            let adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                            let adminOrOwner = false;
+
+                            @auth
+                                adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                            @endauth
 
                             let insertHtml = renderPost(elem, adminOrOwner);
 
@@ -106,7 +106,7 @@
                             document.getElementById('loading').style.display = 'none';
                         });
                     } else {
-                        document.getElementById('feed').innerHTML += '<br/<br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/>';
+                        document.getElementById('feed').innerHTML += '<br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/>';
                         document.getElementById('loading').style.display = 'none';
                     }
                 }

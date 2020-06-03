@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
+use App\CaptchaModel;
 use App\FavoritesModel;
 use App\PostModel;
 use App\ReportModel;
@@ -47,7 +48,9 @@ class MemberController extends Controller
                 'user' => User::getByAuthId(),
                 'profile' => $user,
                 'taglist' => TagsModel::getPopularTags(),
-                'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $user->id, 'ENT_USER')
+                'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $user->id, 'ENT_USER'),
+                'captcha' => CaptchaModel::createSum(session()->getId()),
+                'cookie_consent' => AppModel::getCookieConsentText()
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

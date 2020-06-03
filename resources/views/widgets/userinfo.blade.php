@@ -36,28 +36,30 @@
     <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_posts', ['count' => $user->stats->comments]) }}<br/>
 </div>
 
-@if ($user->id === auth()->id())
-    <div class="userinfo-edit">
-        <a href="javascript:void(0)" onclick="window.vue.bShowEditProfile = true;">{{ __('app.edit_profile') }}</a>
-    </div>
-@else
-    <div class="userinfo-favorite" id="favorite-ent_user">
-        @if ($favorited)
-            <a href="javascript:void(0)" onclick="removeFavorite({{ $user->id }}, 'ENT_USER')">{{ __('app.favorite_remove') }}</a>
-        @else
-            <a href="javascript:void(0)" onclick="addFavorite({{ $user->id }}, 'ENT_USER')">{{ __('app.favorite_add') }}</a>
+@auth
+    @if ($user->id === auth()->id())
+        <div class="userinfo-edit">
+            <a href="javascript:void(0)" onclick="window.vue.bShowEditProfile = true;">{{ __('app.edit_profile') }}</a>
+        </div>
+    @else
+        <div class="userinfo-favorite" id="favorite-ent_user">
+            @if ($favorited)
+                <a href="javascript:void(0)" onclick="removeFavorite({{ $user->id }}, 'ENT_USER')">{{ __('app.favorite_remove') }}</a>
+            @else
+                <a href="javascript:void(0)" onclick="addFavorite({{ $user->id }}, 'ENT_USER')">{{ __('app.favorite_add') }}</a>
+            @endif
+        </div>
+
+        @if (!$admin)
+        <div class="userinfo-report float-right">
+            <a href="javascript:void(0)" onclick="reportProfile({{ $user->id }})">{{ __('app.report_profile') }}</a>
+        </div>
         @endif
-    </div>
-
-    @if (!$admin)
-    <div class="userinfo-report float-right">
-        <a href="javascript:void(0)" onclick="reportProfile({{ $user->id }})">{{ __('app.report_profile') }}</a>
-    </div>
     @endif
-@endif
 
-@if (($admin) && ($user->id !== auth()->id()))
-    <div class="userinfo-lock float-right">
-        <a href="javascript:void(0)" onclick="lockUser({{ $user->id }})">{{ __('app.lock_profile') }}</a>
-    </div>
-@endif
+    @if (($admin) && ($user->id !== auth()->id()))
+        <div class="userinfo-lock float-right">
+            <a href="javascript:void(0)" onclick="lockUser({{ $user->id }})">{{ __('app.lock_profile') }}</a>
+        </div>
+    @endif
+@endauth

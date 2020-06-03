@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-@extends('layouts.layout_member')
+@extends('layouts.layout_feed')
 
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.messages'))
 

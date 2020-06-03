@@ -160,6 +160,10 @@ class MaintainerController extends Controller
     public function envSave()
     {
         try {
+            if (!isset($_POST['ENV_APP_PUBLICFEED'])) {
+                $_POST['ENV_APP_PUBLICFEED'] = false;
+            }
+
             foreach ($_POST as $key => $value) {
                 if (substr($key, 0, 4) === 'ENV_') {
                     $_ENV[substr($key, 4)] = $value;

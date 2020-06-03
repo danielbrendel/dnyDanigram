@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
+use App\CaptchaModel;
 use App\FavoritesModel;
 use App\HeartModel;
 use App\PostModel;
@@ -41,7 +42,7 @@ class PostsController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-           if (Auth::guest()) {
+           if ((!env('APP_PUBLICFEED')) && (Auth::guest())) {
                abort(403);
            }
 
@@ -95,11 +96,13 @@ class PostsController extends Controller
 
             $favorites = FavoritesModel::getDetailedForUser(auth()->id());
 
-            return view('member.showpost', [
+            return view('feed.showpost', [
                 'user' => User::getByAuthId(),
                 'post' => $post,
                 'taglist' => TagsModel::getPopularTags(),
-                'favorites' => $favorites
+                'favorites' => $favorites,
+                'captcha' => CaptchaModel::createSum(session()->getId()),
+                'cookie_consent' => AppModel::getCookieConsentText()
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -121,10 +124,12 @@ class PostsController extends Controller
 
             $favorites = FavoritesModel::getDetailedForUser(auth()->id());
 
-            return view('member.index', [
+            return view('feed.index', [
                 'user' => $user,
                 'taglist' => TagsModel::getPopularTags(),
-                'favorites' => $favorites
+                'favorites' => $favorites,
+                'captcha' => CaptchaModel::createSum(session()->getId()),
+                'cookie_consent' => AppModel::getCookieConsentText()
             ]);
         } catch (Exception $e) {
             abort(500);
@@ -188,14 +193,16 @@ class PostsController extends Controller
                 $user->stats->comments = ThreadModel::where('userId', '=', $user->id)->count();
             }
 
-            return view('member.hashtag', [
+            return view('feed.hashtag', [
                 'user' => $user,
+                'captcha' => CaptchaModel::createSum(session()->getId()),
                 'taglist' => TagsModel::getPopularTags(),
                 'hashtag' => $hashtag,
                 'tag' => $tag,
                 'tagdata' => $tag,
                 'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $tag->id, 'ENT_HASHTAG'),
-                'hearted' => HeartModel::hasUserHearted(auth()->id(), $tag->id, 'ENT_HASHTAG')
+                'hearted' => HeartModel::hasUserHearted(auth()->id(), $tag->id, 'ENT_HASHTAG'),
+                'cookie_consent' => AppModel::getCookieConsentText()
             ]);
         } catch (Exception $e) {
             abort(500);
