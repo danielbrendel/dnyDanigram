@@ -12,7 +12,7 @@
 
 @extends('layouts.layout_member')
 
-@section('title', env('APP_NAME') . ' - ' . __('app.view_profile', ['name' => $profile->username]))
+@section('title', env('APP_PROJECTNAME') . ' - ' . __('app.view_profile', ['name' => $profile->username]))
 
 @section('body')
     <div class="column is-2 is-sidespacing"></div>
@@ -29,7 +29,7 @@
     <div class="column is-4 fixed-frame-parent">
         <div class="fixed-frame">
             <div class="member-form is-default-padding">
-                @include('widgets.populartags')
+                @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
             </div>
 
             <div class="member-form is-default-padding">

@@ -35,8 +35,8 @@ class AppModel extends Model
     public static function getNameParts()
     {
         return array(
-          substr(env('APP_NAME'), 0, env('APP_DIVISION')),
-          substr(env('APP_NAME'), env('APP_DIVISION'))
+          substr(env('APP_PROJECTNAME'), 0, env('APP_DIVISION')),
+          substr(env('APP_PROJECTNAME'), env('APP_DIVISION'))
         );
     }
 
@@ -257,6 +257,62 @@ class AppModel extends Model
 
             for ($i = 0; $i < $length; $i++) {
                 $result .= $chars[rand(0, strlen($chars) - 1)];
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get custom CSS content
+     *
+     * @return false|string
+     * @throws \Exception
+     */
+    public static function getCustomCss()
+    {
+        try {
+            if (file_exists(public_path() . '/css/custom.css')) {
+                return file_get_contents(public_path() . '/css/custom.css');
+            }
+
+            return '';
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save custom CSS content
+     *
+     * @throws \Exception
+     */
+    public static function saveCustomCss($code)
+    {
+        try {
+            file_put_contents(public_path() . '/css/custom.css', $code);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get list of available languages
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public static function getLanguageList()
+    {
+        try {
+            $result = array();
+            $files = scandir(base_path() . '/resources/lang');
+            foreach ($files as $file) {
+                if (($file[0] !== '.') && (is_dir(base_path() . '/resources/lang/' . $file))) {
+                    $result[] = $file;
+                }
             }
 
             return $result;

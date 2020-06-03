@@ -151,7 +151,7 @@ a:hover {
 }
 
 @media screen and (min-width: 769px) {
-  .is-only-mobile {
+  .is-mobile-like-screen-width {
     display: none;
   }
 }

@@ -172,13 +172,6 @@
                                 </div>
                             </div>
 
-                            <div class="field">
-                                <label class="label">Google Analytics Token</label>
-                                <div class="control">
-                                    <input type="text" name="ga">
-                                </div>
-                            </div>
-
                             <br/>
 
                             <input type="submit" value="Install">

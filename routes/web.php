@@ -25,6 +25,7 @@ Route::get('/about', 'MainController@about');
 Route::get('/faq', 'MainController@faq');
 Route::get('/tos', 'MainController@tos');
 Route::get('/imprint', 'MainController@imprint');
+Route::get('/news', 'MainController@news');
 
 Route::get('/feed', 'PostsController@feed');
 Route::get('/t/{hashtag}', 'PostsController@hashtag');
@@ -73,3 +74,8 @@ Route::post('/maintainer/faq/create', 'MaintainerController@addFaq');
 Route::post('/maintainer/faq/edit', 'MaintainerController@editFaq');
 Route::get('/maintainer/faq/{id}/remove', 'MaintainerController@removeFaq');
 Route::post('/maintainer/env/save', 'MaintainerController@envSave');
+Route::get('/maintainer/u/details', 'MaintainerController@userDetails');
+Route::post('/maintainer/u/save', 'MaintainerController@userSave');
+Route::post('/maintainer/newsletter', 'MaintainerController@newsletter');
+Route::post('/maintainer/css/save', 'MaintainerController@saveCss');
+Route::post('/maintainer/favicon/save', 'MaintainerController@saveFavicon');

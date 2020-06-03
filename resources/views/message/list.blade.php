@@ -12,7 +12,7 @@
 
 @extends('layouts.layout_member')
 
-@section('title', env('APP_NAME') . ' - ' . __('app.messages'))
+@section('title', env('APP_PROJECTNAME') . ' - ' . __('app.messages'))
 
 @section('body')
     <div class="column is-2 is-sidespacing"></div>

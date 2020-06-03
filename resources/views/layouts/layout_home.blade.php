@@ -23,6 +23,9 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        @if (file_exists(public_path() . '/css/custom.css'))
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+        @endif
 
         <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon.png') }}">
 
@@ -191,7 +194,7 @@
 
             <nav class="navbar is-fixed-bottom">
                 <div class="home-bottombar has-text-centered is-uppercase">
-                    &copy; {{ date('Y') }} {{ env('APP_NAME') }} | <a href="{{ url('/about') }}" target="_blank">{{ __('app.about') }}</a>&nbsp;&nbsp;<a href="{{ url('/faq') }}" target="_blank">{{ __('app.faq') }}</a>&nbsp;&nbsp;<a href="{{ url('/tos') }}" target="_blank">{{ __('app.tos') }}</a>&nbsp;&nbsp;<a href="{{ url('/imprint') }}" target="_blank">{{ __('app.imprint') }}</a>
+                    &copy; {{ date('Y') }} {{ env('APP_PROJECTNAME') }} | @if (env('TWITTER_NEWS', null) !== null) <a href="{{ url('/news') }}" target="_blank">{{ __('app.news') }}</a>&nbsp;&nbsp;@endif<a href="{{ url('/about') }}" target="_blank">{{ __('app.about') }}</a>&nbsp;&nbsp;<a href="{{ url('/faq') }}" target="_blank">{{ __('app.faq') }}</a>&nbsp;&nbsp;<a href="{{ url('/tos') }}" target="_blank">{{ __('app.tos') }}</a>&nbsp;&nbsp;<a href="{{ url('/imprint') }}" target="_blank">{{ __('app.imprint') }}</a>
                 </div>
             </nav>
         </div>

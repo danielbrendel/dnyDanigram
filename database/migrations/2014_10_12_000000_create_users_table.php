@@ -37,6 +37,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar');
             $table->string('bio', 1024)->default('');
             $table->boolean('email_on_message')->default(true);
+            $table->boolean('newsletter')->default(false);
             $table->boolean('deactivated')->default(false);
             $table->boolean('admin')->default(false);
             $table->boolean('maintainer')->default(false);

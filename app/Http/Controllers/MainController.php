@@ -102,6 +102,16 @@ class MainController extends Controller
     }
 
     /**
+     * View news page
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function news()
+    {
+        return view('home.news', ['captcha' => CaptchaModel::createSum(session()->getId()), 'cookie_consent' => $this->cookie_consent]);
+    }
+
+    /**
      * View tos page
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View

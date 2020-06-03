@@ -50,7 +50,9 @@ class MaintainerController extends Controller
         return view('maintainer.index', [
             'user' => User::get(auth()->id()),
             'settings' => AppModel::getSettings(),
-            'faqs' => FaqModel::getAll()
+            'faqs' => FaqModel::getAll(),
+            'custom_css' => AppModel::getCustomCss(),
+            'langs' => AppModel::getLanguageList()
         ]);
     }
 
@@ -167,6 +169,153 @@ class MaintainerController extends Controller
             AppModel::saveEnvironmentConfig();
 
             return back()->with('flash.success', __('app.env_saved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Get user details
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userDetails()
+    {
+        try {
+            $ident = request('ident');
+
+            $user = User::getByIdent($ident);
+            if (!$user) {
+                return response()->json(array('code' => 404, 'msg' => __('app.user_not_found')));
+            }
+
+            return response()->json(array('code' => 200, 'data' => $user));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Save user data
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function userSave()
+    {
+        try {
+            $attr = request()->validate([
+                'id' => 'required|numeric',
+                'username' => 'required',
+                'email' => 'required|email',
+                'deactivated' => 'nullable|numeric',
+                'admin' => 'nullable|numeric',
+                'maintainer' => 'nullable|numeric'
+            ]);
+
+            $user = User::get($attr['id']);
+            if (!$user) {
+                return back()->with('flash.error', __('app.user_not_found'));
+            }
+
+            $user->username = $attr['username'];
+            $user->email = $attr['email'];
+            $user->deactivated = (isset($attr['deactivated'])) ? (bool)$attr['deactivated'] : false;
+            $user->admin = (isset($attr['admin'])) ? (bool)$attr['admin'] : false;
+            $user->maintainer = (isset($attr['maintainer'])) ? (bool)$attr['maintainer'] : false;
+            $user->save();
+
+            return back()->with('flash.success', __('app.saved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Send newsletter
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function newsletter()
+    {
+        try {
+            $attr = request()->validate([
+               'subject' => 'required',
+               'content' => 'required'
+            ]);
+
+            User::sendNewsletter($attr['subject'], $attr['content']);
+
+            return back()->with('flash.success', __('app.newsletter_sent'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save CSS content
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveCss()
+    {
+        try {
+            $attr = request()->validate([
+               'code' => 'nullable'
+            ]);
+
+            AppModel::saveCustomCss($attr['code']);
+
+            return back()->with('flash.success', __('app.custom_css_saved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save favicon
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveFavicon()
+    {
+        try {
+            $attr = request()->validate([
+               'favicon' => 'required|file'
+            ]);
+
+            $av = request()->file('favicon');
+            if ($av != null) {
+                if ($av->getClientOriginalExtension() !== 'png') {
+                    return back()->with('error', __('app.not_a_png_file'));
+                }
+
+                $tmpName = md5(random_bytes(55));
+
+                $av->move(base_path() . '/public/', $tmpName . '.' . $av->getClientOriginalExtension());
+
+                list($width, $height) = getimagesize(base_path() . '/public/' . $tmpName . '.' . $av->getClientOriginalExtension());
+
+                $avimg = imagecreatetruecolor(64, 64);
+                if (!$avimg)
+                    throw new \Exception('imagecreatetruecolor() failed');
+
+                $srcimage = null;
+                $newname =  'favicon.' . $av->getClientOriginalExtension();
+                switch (AppModel::getImageType(base_path() . '/public/' . $tmpName . '.' . $av->getClientOriginalExtension())) {
+                    case IMAGETYPE_PNG:
+                        $srcimage = imagecreatefrompng(base_path() . '/public/' . $tmpName . '.' . $av->getClientOriginalExtension());
+                        imagecopyresampled($avimg, $srcimage, 0, 0, 0, 0, 64, 64, $width, $height);
+                        imagepng($avimg, base_path() . '/public/' . $newname);
+                        break;
+                    default:
+                        return back()->with('error', __('app.not_a_png_file'));
+                        break;
+                }
+
+                unlink(base_path() . '/public/' . $tmpName . '.' . $av->getClientOriginalExtension());
+
+                return back()->with('success', __('app.saved'));
+            }
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

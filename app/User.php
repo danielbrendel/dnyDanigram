@@ -171,7 +171,7 @@ class User extends Authenticatable
             $user->save();
 
             $html = view('mail.registered', ['username' => $user->username, 'hash' => $user->account_confirm])->render();
-            MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.mail_subject_register'), $html);
+            MailerModel::sendMail($user->email, '[' . env('APP_PROJECTNAME') . '] ' . __('app.mail_subject_register'), $html);
         } catch (Exception $e) {
             throw $e;
         }
@@ -216,7 +216,7 @@ class User extends Authenticatable
             $user->save();
 
             $htmlCode = view('mail.pwreset', ['username' => $user->username, 'hash' => $user->password_reset])->render();
-            MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.mail_password_reset_subject'), $htmlCode);
+            MailerModel::sendMail($user->email, '[' . env('APP_PROJECTNAME') . '] ' . __('app.mail_password_reset_subject'), $htmlCode);
         } catch (Exception $e) {
             throw $e;
         }
@@ -334,7 +334,7 @@ class User extends Authenticatable
                 $user->save();
 
                 $html = view('mail.pw_changed', ['name' => $user->name])->render();
-                MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.password_changed'), $html);
+                MailerModel::sendMail($user->email, '[' . env('APP_PROJECTNAME') . '] ' . __('app.password_changed'), $html);
             }
         } catch (Exception $e) {
             throw $e;
@@ -358,8 +358,8 @@ class User extends Authenticatable
                 $user->save();
 
                 $html = view('mail.email_changed', ['name' => $user->name, 'email' => $email])->render();
-                MailerModel::sendMail($user->email, '[' . env('APP_NAME') . '] ' . __('app.email_changed'), $html);
-                MailerModel::sendMail($oldMail, '[' . env('APP_NAME') . '] ' . __('app.email_changed'), $html);
+                MailerModel::sendMail($user->email, '[' . env('APP_PROJECTNAME') . '] ' . __('app.email_changed'), $html);
+                MailerModel::sendMail($oldMail, '[' . env('APP_PROJECTNAME') . '] ' . __('app.email_changed'), $html);
             }
         } catch (Exception $e) {
             throw $e;
@@ -380,6 +380,69 @@ class User extends Authenticatable
             if (($user) && (!$user->deactivated)) {
                 $user->email_on_message = $value;
                 $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save newsletter flag
+     *
+     * @param $id
+     * @param $value
+     * @throws Exception
+     */
+    public static function saveNewsletterFlag($id, $value)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->newsletter = $value;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get user by ID, username or e-mail
+     *
+     * @param $ident
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getByIdent($ident)
+    {
+        try {
+            $user = User::get($ident);
+            if (!$user) {
+                $user = User::getByUsername($ident);
+                if (!$user) {
+                    $user = User::getByEmail($ident);
+                }
+            }
+
+            return $user;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Send news letter
+     *
+     * @param $subject
+     * @param $content
+     * @throws Exception
+     */
+    public static function sendNewsletter($subject, $content)
+    {
+        try {
+            $users = User::where('deactivated', '=', false)->where('newsletter', '=', true)->get();
+            foreach ($users as $user) {
+                MailerModel::sendMail($user->email, $subject, $content);
             }
         } catch (Exception $e) {
             throw $e;

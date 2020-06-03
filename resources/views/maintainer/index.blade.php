@@ -12,7 +12,7 @@
 
 @extends('layouts.layout_member')
 
-@section('title', env('APP_NAME') . ' - ' . __('app.maintainer_area'))
+@section('title', env('APP_PROJECTNAME') . ' - ' . __('app.maintainer_area'))
 
 @section('body')
     <div class="column is-2 is-sidespacing"></div>
@@ -23,6 +23,14 @@
                 <h1>{{ __('app.maintainer_area') }}</h1>
             </div>
 
+            <div>
+                <div><strong>{{ env('APP_NAME') }}</strong></div>
+                <div><strong>Author: </strong>{{ env('APP_AUTHOR') }}</div>
+                <div><strong>Codename: </strong>{{ env('APP_CODENAME') }}</div>
+                <div><strong>Contact: </strong>{{ env('APP_CONTACT') }}</div>
+                <div><strong>Version: </strong>{{ env('APP_VERSION') }}</div>
+                <br/>
+            </div>
 
             <ul data-role="tabs" data-expand="true">
                 <li><a href="#tab-page-1">{{ __('app.index_content') }}</a></li>
@@ -33,6 +41,10 @@
                 <li><a href="#tab-page-6">{{ __('app.reg_info') }}</a></li>
                 <li><a href="#tab-page-7">{{ __('app.faq') }}</a></li>
                 <li><a href="#tab-page-8">{{ __('app.environment') }}</a></li>
+                <li><a href="#tab-page-9">{{ __('app.users') }}</a></li>
+                <li><a href="#tab-page-10">{{ __('app.newsletter') }}</a></li>
+                <li><a href="#tab-page-11">{{ __('app.custom_css') }}</a></li>
+                <li><a href="#tab-page-12">{{ __('app.favicon') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
                 <div id="tab-page-1">
@@ -246,7 +258,7 @@
                         <div class="modal-background"></div>
                         <div class="modal-card is-top-25">
                             <header class="modal-card-head is-stretched">
-                                <p class="modal-card-title">{{ __('app.edit_profile') }}</p>
+                                <p class="modal-card-title">{{ __('app.edit_faq') }}</p>
                                 <button class="delete" aria-label="close" onclick="vue.bShowEditFaq = false;"></button>
                             </header>
                             <section class="modal-card-body is-stretched">
@@ -290,7 +302,7 @@
                         <div class="field">
                             <label class="label">{{ __('app.project_name') }}</label>
                             <div class="control">
-                                <input type="text" name="ENV_APP_NAME" value="{{ env('APP_NAME') }}">
+                                <input type="text" name="ENV_APP_PROJECTNAME" value="{{ env('APP_PROJECTNAME') }}">
                             </div>
                         </div>
 
@@ -312,6 +324,17 @@
                             <label class="label">{{ __('app.project_division') }}</label>
                             <div class="control">
                                 <input type="text" name="ENV_APP_DIVISION" value="{{ env('APP_DIVISION') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_lang') }}</label>
+                            <div class="control">
+                                <select name="ENV_APP_LANG">
+                                    @foreach ($langs as $lang)
+                                        <option value="{{ $lang }}" @if ($lang === env('APP_LANG')) {{ 'selected' }} @endif>{{ $lang }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -358,6 +381,136 @@
                         </div>
 
                         <div class="field">
+                            <label class="label">{{ __('app.project_twitter_news') }}</label>
+                            <div class="control">
+                                <input type="text" name="ENV_TWITTER_NEWS" value="{{ env('TWITTER_NEWS') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" value="{{ __('app.save') }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="tab-page-9">
+                    <div class="field">
+                        <input type="text" id="userident">
+                    </div>
+
+                    <div class="field">
+                        <input type="button" value="{{ __('app.get_user_details') }}" onclick="getUserDetails(document.getElementById('userident').value);">
+                    </div>
+
+                    <div id="user_settings" class="is-hidden">
+                        <form method="POST" action="{{ url('/maintainer/u/save') }}">
+                            @csrf
+
+                            <input type="hidden" name="id" id="user_id">
+
+                            <div class="field">
+                                <label class="label">{{ __('app.username') }}</label>
+                                <div class="control">
+                                    <input type="text" id="user_name" name="username">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.email') }}</label>
+                                <div class="control">
+                                    <input type="text" name="email" id="user_email">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type class="checkbox" name="deactivated" id="user_deactivated" data-role="checkbox" data-style="2" data-caption="{{ __('app.deactivated') }}" value="1">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type class="checkbox" name="admin" id="user_admin" data-role="checkbox" data-style="2" data-caption="{{ __('app.admin') }}" value="1">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type class="checkbox" name="maintainer" id="user_maintainer" data-role="checkbox" data-style="2" data-caption="{{ __('app.maintainer') }}" value="1">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type="submit" value="{{ __('app.save') }}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="tab-page-10">
+                    <div>
+                        <form method="POST" action="{{ url('/maintainer/newsletter') }}">
+                            @csrf
+
+                            <div class="field">
+                                <label class="label">{{ __('app.subject') }}</label>
+                                <div class="control">
+                                    <input type="text" name="subject">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.text') }}</label>
+                                <div class="control">
+                                    <textarea name="content"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type="submit" value="{{ __('app.send') }}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="tab-page-11">
+                    <form method="POST" action="{{ url('/maintainer/css/save') }}">
+                        @csrf
+
+                        <div class="field">
+                            <label class="label">{{ __('app.custom_css_code') }}</label>
+                            <div class="control">
+                                <textarea class="textarea" name="code">{{ $custom_css }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" value="{{ __('app.save') }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="tab-page-12">
+                    <form method="POST" action="{{ url('/maintainer/favicon/save') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="field">
+                            <label class="label">{{ __('app.favicon_info') }}</label>
+                            <div class="control">
+                                <div><img src="{{ url('/favicon.png') }}" alt="favicon"></div>
+                                <div><input type="file" name="favicon" data-role="file"></div>
+                            </div>
+                        </div>
+
+                        <div class="field">
                             <div class="control">
                                 <input type="submit" value="{{ __('app.save') }}">
                             </div>
@@ -374,5 +527,25 @@
 
 @section('javascript')
     <script>
+        function getUserDetails(ident)
+        {
+            window.vue.ajaxRequest('get', '{{ url('/maintainer/u/details') }}?ident=' + ident, {}, function(response) {
+                if (response.code === 200) {
+                    document.getElementById('user_settings').classList.remove('is-hidden');
+
+                    document.getElementById('user_id').value = response.data.id;
+
+                    document.getElementById('user_name').value = response.data.username;
+                    document.getElementById('user_email').value = response.data.email;
+
+                    document.getElementById('user_deactivated').checked = response.data.deactivated;
+                    document.getElementById('user_admin').checked = response.data.admin;
+                    document.getElementById('user_maintainer').checked = response.data.admin;
+                } else {
+                    document.getElementById('user_settings').classList.add('is-hidden');
+                    alert(response.msg);
+                }
+            });
+        }
     </script>
 @endsection

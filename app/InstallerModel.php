@@ -39,13 +39,16 @@ class InstallerModel extends Model
             $divisor = strlen($attr['project']) / 2;
 
             $envcontent = '#Danigram Environment configuration' . PHP_EOL;
-            $envcontent .= 'APP_NAME=' . $attr['project'] . PHP_EOL;
+            $envcontent .= 'APP_NAME=Danigram' . $attr['project'] . PHP_EOL;
             $envcontent .= 'APP_CODENAME=dnyDanigram' . PHP_EOL;
+            $envcontent .= 'APP_AUTHOR="Daniel Brendel"' . PHP_EOL;
+            $envcontent .= 'APP_CONTACT="dbrendel1988@gmail.com"' . PHP_EOL;
+            $envcontent .= 'APP_VERSION="1.0"' . PHP_EOL;
             $envcontent .= 'APP_ENV=local' . PHP_EOL;
             $envcontent .= 'APP_KEY=base64:fBr7/RVVAQlyln5NEVSGyrKmqV9AWEvhnvAcSUtSQzo=' . PHP_EOL;
             $envcontent .= 'APP_DEBUG=false' . PHP_EOL;
             $envcontent .= 'APP_URL=http://localhost' . PHP_EOL;
-            $envcontent .= 'APP_AUTHOR="Daniel Brendel"' . PHP_EOL;
+            $envcontent .= 'APP_PROJECTNAME="' . $attr['project'] . '"' . PHP_EOL;
             $envcontent .= 'APP_DESCRIPTION="The lightweight image sharing community platform system"' . PHP_EOL;
             $envcontent .= 'APP_TAGS=""' . PHP_EOL;
             $envcontent .= 'APP_TITLE="${APP_NAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
@@ -67,7 +70,7 @@ class InstallerModel extends Model
             $envcontent .= 'SMTP_USERNAME="' . $attr['smtpuser'] . '"' . PHP_EOL;
             $envcontent .= 'SMTP_PASSWORD="' . $attr['smtppassword'] . '"' . PHP_EOL;
             $envcontent .= 'GA_ENABLE=' . ((strlen($attr['ga']) > 0) ? 'true' : 'false') . PHP_EOL;
-            $envcontent .= 'GA_TOKEN="' . $attr['ga'] . '"' . PHP_EOL;
+            $envcontent .= 'GA_TOKEN=""' . PHP_EOL;
             $envcontent .= 'BROADCAST_DRIVER=log' . PHP_EOL;
             $envcontent .= 'CACHE_DRIVER=file' . PHP_EOL;
             $envcontent .= 'QUEUE_CONNECTION=sync' . PHP_EOL;

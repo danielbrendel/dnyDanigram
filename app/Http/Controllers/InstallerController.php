@@ -52,8 +52,7 @@ class InstallerController extends Controller
                 'smtphost' => 'required',
                 'smtpuser' => 'required',
                 'smtppassword' => 'required',
-                'smtpfromaddress' => 'required|email',
-                'ga' => 'nullable'
+                'smtpfromaddress' => 'required|email'
             ]);
 
             if (!isset($attr['dbpassword'])) {
@@ -68,7 +67,12 @@ class InstallerController extends Controller
 
             InstallerModel::install($attr);
 
-            return redirect('/')->with('success', __('app.product_installed', ['password' => $attr['password']]));
+            Auth::attempt([
+               'email' => $attr['email'],
+               'password' => $attr['password']
+            ]);
+
+            return redirect('/maintainer')->with('success', __('app.product_installed', ['password' => $attr['password']]));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

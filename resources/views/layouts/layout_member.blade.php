@@ -23,6 +23,9 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        @if (file_exists(public_path() . '/css/custom.css'))
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+        @endif
 
         <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon.png') }}">
 
@@ -68,13 +71,13 @@
                 </center>
 
                 <div class="navbar-end">
-                    <div class="navbar-item is-only-mobile">
+                    <div class="navbar-item is-mobile-like-screen-width">
                         <div>
                             <i class="far fa-star fa-lg is-pointer" title="{{ __('app.favorites') }}" onclick="window.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>
                         </div>
                     </div>
 
-                    <div class="navbar-item is-only-mobile">
+                    <div class="navbar-item is-mobile-like-screen-width">
                         <div>
                             <i class="fas fa-hashtag fa-lg is-pointer" title="{{ __('app.popular_tags') }}" onclick="window.toggleOverlay('popular-tags'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>
                         </div>
@@ -282,6 +285,12 @@
                                 </div>
                             </div>
 
+                            <div class="field">
+                                <div class="control">
+                                    <input type="checkbox" name="newsletter" value="1" data-role="checkbox" data-style="2" data-caption="{{ __('app.newsletter_setting') }}" @if ($user->newsletter) {{ 'checked' }} @endif>
+                                </div>
+                            </div>
+
                             <input type="submit" id="editprofilesubmit" class="is-hidden">
                         </form>
 
@@ -350,7 +359,7 @@
                         }
 
                         response.data.forEach(function(elem, index) {
-                            Push.create('{{ env('APP_NAME') }}', {
+                            Push.create('{{ env('APP_PROJECTNAME') }}', {
                                 body: elem.shortMsg,
                                 icon: '{{ asset('gfx/logo.png') }}',
                                 timeout: 4000,
