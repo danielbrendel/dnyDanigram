@@ -75,7 +75,7 @@ class InstallerModel extends Model
             $envcontent .= 'CACHE_DRIVER=file' . PHP_EOL;
             $envcontent .= 'QUEUE_CONNECTION=sync' . PHP_EOL;
             $envcontent .= 'SESSION_DRIVER=file' . PHP_EOL;
-            $envcontent .= 'SESSION_LIFETIME=1440' . PHP_EOL;
+            $envcontent .= 'SESSION_LIFETIME=2880' . PHP_EOL;
 
             file_put_contents(base_path() . '/.env', $envcontent);
 
