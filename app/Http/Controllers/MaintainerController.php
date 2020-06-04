@@ -15,6 +15,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModel;
+use App\CaptchaModel;
 use App\FaqModel;
 use App\User;
 use Dotenv\Dotenv;
@@ -52,7 +53,8 @@ class MaintainerController extends Controller
             'settings' => AppModel::getSettings(),
             'faqs' => FaqModel::getAll(),
             'custom_css' => AppModel::getCustomCss(),
-            'langs' => AppModel::getLanguageList()
+            'langs' => AppModel::getLanguageList(),
+			'cookie_consent' => AppModel::getCookieConsentText()
         ]);
     }
 

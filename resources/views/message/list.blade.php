@@ -22,6 +22,10 @@
             <div>
                 <h1>{{ __('app.messages') }}</h1>
             </div>
+			
+			<div>
+				<button type="button" class="button" onclick="location.href = '{{ url('/messages/create') }}';">{{ __('app.create') }}</button><br/><br/>
+			</div>
 
             <div class="messages">
                 <div class="messages-list" id="messages-list">

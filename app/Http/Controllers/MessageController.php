@@ -14,6 +14,8 @@
 
 namespace App\Http\Controllers;
 
+use App\AppModel;
+use App\CaptchaModel;
 use App\MessageModel;
 use App\User;
 use Illuminate\Http\Request;
@@ -28,7 +30,8 @@ class MessageController extends Controller
     public function list()
     {
         return view('message.list', [
-            'user' => User::getByAuthId()
+            'user' => User::getByAuthId(),
+			'cookie_consent' => AppModel::getCookieConsentText()
         ]);
     }
 
@@ -78,7 +81,8 @@ class MessageController extends Controller
 
             return view('message.show', [
                 'user' => User::getByAuthId(),
-                'thread' => $thread
+                'thread' => $thread,
+				'cookie_consent' => AppModel::getCookieConsentText()
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -94,7 +98,8 @@ class MessageController extends Controller
     {
         return view('message.create', [
             'user' => User::getByAuthId(),
-            'username' => request('u', '')
+            'username' => request('u', ''),
+			'cookie_consent' => AppModel::getCookieConsentText()
         ]);
     }
 
