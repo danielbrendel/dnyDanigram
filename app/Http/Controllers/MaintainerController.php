@@ -17,6 +17,8 @@ namespace App\Http\Controllers;
 use App\AppModel;
 use App\CaptchaModel;
 use App\FaqModel;
+use App\ReportModel;
+use App\TagsModel;
 use App\User;
 use Dotenv\Dotenv;
 use Illuminate\Http\Request;
@@ -48,13 +50,21 @@ class MaintainerController extends Controller
      */
     public function index()
     {
+        $reports = array(
+          'users' => ReportModel::getReportPack('ENT_USER'),
+          'posts' => ReportModel::getReportPack('ENT_POST'),
+          'hashtags' => ReportModel::getReportPack('ENT_HASHTAG'),
+          'comments' => ReportModel::getReportPack('ENT_COMMENT')
+        );
+
         return view('maintainer.index', [
             'user' => User::get(auth()->id()),
             'settings' => AppModel::getSettings(),
             'faqs' => FaqModel::getAll(),
             'custom_css' => AppModel::getCustomCss(),
             'langs' => AppModel::getLanguageList(),
-			'cookie_consent' => AppModel::getCookieConsentText()
+			'cookie_consent' => AppModel::getCookieConsentText(),
+            'reports' => $reports
         ]);
     }
 
@@ -325,6 +335,84 @@ class MaintainerController extends Controller
 
                 return back()->with('success', __('app.saved'));
             }
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Lock entity
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function lockEntity()
+    {
+        try {
+            $id = request('id');
+            $type = request('type');
+
+            AppModel::lockEntity($id, $type);
+
+            return back()->with('flash.success', __('app.entity_locked'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete entity
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteEntity()
+    {
+        try {
+            $id = request('id');
+            $type = request('type');
+
+            AppModel::deleteEntity($id, $type);
+
+            return back()->with('flash.success', __('app.entity_deleted'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Set entity safe
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function setSafeEntity()
+    {
+        try {
+            $id = request('id');
+            $type = request('type');
+
+            AppModel::setEntitySafe($id, $type);
+
+            return back()->with('flash.success', __('app.entity_set_safe'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    public function welcomeOverlay()
+    {
+        try {
+            $attr = request()->validate([
+               'content' => 'nullable'
+            ]);
+
+            if (!isset($attr['content'])) {
+                $attr['content'] = '';
+            }
+
+            $item = AppModel::saveSetting('welcome_overlay', $attr['content']);
+
+            Artisan::call('cache:clear');
+
+            return back()->with('flash.success', __('app.welcome_overlay_content_saved'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

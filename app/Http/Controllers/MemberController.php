@@ -50,7 +50,8 @@ class MemberController extends Controller
                 'taglist' => TagsModel::getPopularTags(),
                 'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $user->id, 'ENT_USER'),
                 'captcha' => CaptchaModel::createSum(session()->getId()),
-                'cookie_consent' => AppModel::getCookieConsentText()
+                'cookie_consent' => AppModel::getCookieConsentText(),
+                'meta_description' => $user->bio,
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

@@ -33,6 +33,7 @@ class CreateAppSettingsTable extends Migration
             $table->text('imprint');
             $table->text('tos');
             $table->string('reg_info');
+            $table->text('welcome_overlay')->default('');
             $table->timestamps();
         });
     }

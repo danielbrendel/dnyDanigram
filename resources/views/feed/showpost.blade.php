@@ -119,7 +119,9 @@
                         if (window.paginate === null) {
                             document.getElementById('loading').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_comments_yet')  }}</i></center>';
                         } else {
-                            document.getElementById('loading').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_more_comments')  }}</i></center>';
+                            if (document.getElementById('no-more-comments') == null) {
+                                document.getElementById('thread').innerHTML += '<div id="no-more-comments"><br/><br/><center><i>{{ __('app.no_more_comments') }}</i></center><br/></div>';
+                            }
                         }
                     }
                 }

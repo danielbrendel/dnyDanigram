@@ -102,7 +102,9 @@ class PostsController extends Controller
                 'taglist' => TagsModel::getPopularTags(),
                 'favorites' => $favorites,
                 'captcha' => CaptchaModel::createSum(session()->getId()),
-                'cookie_consent' => AppModel::getCookieConsentText()
+                'cookie_consent' => AppModel::getCookieConsentText(),
+                'meta_description' => $post->description,
+                'meta_tags' => $post->hashtags
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -202,7 +204,8 @@ class PostsController extends Controller
                 'tagdata' => $tag,
                 'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $tag->id, 'ENT_HASHTAG'),
                 'hearted' => HeartModel::hasUserHearted(auth()->id(), $tag->id, 'ENT_HASHTAG'),
-                'cookie_consent' => AppModel::getCookieConsentText()
+                'cookie_consent' => AppModel::getCookieConsentText(),
+                'meta_description' => __('app.tag_is_about', ['subject' => $tag->tag])
             ]);
         } catch (Exception $e) {
             abort(500);

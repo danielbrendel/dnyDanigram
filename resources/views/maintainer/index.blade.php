@@ -45,6 +45,8 @@
                 <li><a href="#tab-page-10">{{ __('app.newsletter') }}</a></li>
                 <li><a href="#tab-page-11">{{ __('app.custom_css') }}</a></li>
                 <li><a href="#tab-page-12">{{ __('app.favicon') }}</a></li>
+                <li><a href="#tab-page-13">{{ __('app.reports') }}</a></li>
+                <li><a href="#tab-page-14">{{ __('app.welcome_overlay') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
                 <div id="tab-page-1">
@@ -514,6 +516,231 @@
                             <div class="control">
                                 <div><img src="{{ url('/favicon.png') }}" alt="favicon"></div>
                                 <div><input type="file" name="favicon" data-role="file"></div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" value="{{ __('app.save') }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="tab-page-13">
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.report_id') }}</th>
+                            <th class="text-left">{{ __('app.report_entity') }}</th>
+                            <th class="text-left">{{ __('app.report_type') }}</th>
+                            <th class="text-left">{{ __('app.report_count') }}</th>
+                            <th class="text-right">{{ __('app.report_lock') }}</th>
+                            <th class="text-right">{{ __('app.report_delete') }}</th>
+                            <th class="text-right">{{ __('app.report_safe') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($reports['posts'] as $item)
+                            <tr>
+                                <td>
+                                    #{{ $item->id }}
+                                </td>
+
+                                <td class="right">
+                                    {{ $item->entityId }}
+                                </td>
+
+                                <td>
+                                    {{ $item->type }}
+                                </td>
+
+                                <td>{{ $item->count }}</td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_lock') }}')) location.href = '{{ url('/maintainer/entity/lock?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_lock') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_delete') }}')) location.href = '{{ url('/maintainer/entity/delete?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_delete') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_safe') }}')) location.href = '{{ url('/maintainer/entity/safe?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_safe') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.report_id') }}</th>
+                            <th class="text-left">{{ __('app.report_entity') }}</th>
+                            <th class="text-left">{{ __('app.report_type') }}</th>
+                            <th class="text-left">{{ __('app.report_count') }}</th>
+                            <th class="text-right">{{ __('app.report_lock') }}</th>
+                            <th class="text-right">{{ __('app.report_delete') }}</th>
+                            <th class="text-right">{{ __('app.report_safe') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($reports['users'] as $item)
+                            <tr>
+                                <td>
+                                    #{{ $item->id }}
+                                </td>
+
+                                <td class="right">
+                                    {{ $item->entityId }}
+                                </td>
+
+                                <td>
+                                    {{ $item->type }}
+                                </td>
+
+                                <td>{{ $item->count }}</td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_lock') }}')) location.href = '{{ url('/maintainer/entity/lock?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_lock') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_delete') }}')) location.href = '{{ url('/maintainer/entity/delete?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_delete') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_safe') }}')) location.href = '{{ url('/maintainer/entity/safe?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_safe') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.report_id') }}</th>
+                            <th class="text-left">{{ __('app.report_entity') }}</th>
+                            <th class="text-left">{{ __('app.report_type') }}</th>
+                            <th class="text-left">{{ __('app.report_count') }}</th>
+                            <th class="text-right">{{ __('app.report_lock') }}</th>
+                            <th class="text-right">{{ __('app.report_delete') }}</th>
+                            <th class="text-right">{{ __('app.report_safe') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($reports['comments'] as $item)
+                            <tr>
+                                <td>
+                                    #{{ $item->id }}
+                                </td>
+
+                                <td class="right">
+                                    {{ $item->entityId }}
+                                </td>
+
+                                <td>
+                                    {{ $item->type }}
+                                </td>
+
+                                <td>{{ $item->count }}</td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_lock') }}')) location.href = '{{ url('/maintainer/entity/lock?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_lock') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_delete') }}')) location.href = '{{ url('/maintainer/entity/delete?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_delete') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_safe') }}')) location.href = '{{ url('/maintainer/entity/safe?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_safe') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.report_id') }}</th>
+                            <th class="text-left">{{ __('app.report_entity') }}</th>
+                            <th class="text-left">{{ __('app.report_type') }}</th>
+                            <th class="text-left">{{ __('app.report_count') }}</th>
+                            <th class="text-right">{{ __('app.report_lock') }}</th>
+                            <th class="text-right">{{ __('app.report_delete') }}</th>
+                            <th class="text-right">{{ __('app.report_safe') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($reports['hashtags'] as $item)
+                            <tr>
+                                <td>
+                                    #{{ $item->id }}
+                                </td>
+
+                                <td class="right">
+                                    {{ $item->entityId }}
+                                </td>
+
+                                <td>
+                                    {{ $item->type }}
+                                </td>
+
+                                <td>{{ $item->count }}</td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_lock') }}')) location.href = '{{ url('/maintainer/entity/lock?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_lock') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_delete') }}')) location.href = '{{ url('/maintainer/entity/delete?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_delete') }}</a>
+                                </td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.report_confirm_safe') }}')) location.href = '{{ url('/maintainer/entity/safe?id=' . $item->entityId . '&type=' . $item->type) }}';">{{ __('app.report_safe') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab-page-14">
+                    <form method="POST" action="{{ url('/maintainer/welcomeoverlay') }}">
+                        @csrf
+
+                        <div class="field">
+                            <label class="label">{{ __('app.welcome_overlay') }}</label>
+                            <div class="control">
+                                <textarea class="textarea" name="content">{{ $settings->welcome_overlay }}</textarea>
                             </div>
                         </div>
 

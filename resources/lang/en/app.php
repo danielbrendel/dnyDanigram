@@ -207,5 +207,22 @@ return [
     'not_a_png_file' => 'File is not a valid PNG file',
     'deactivated' => 'Deactivated',
     'edit_faq' => 'Edit FAQ item',
-    'project_public_feed' => 'Make the feed public'
+    'project_public_feed' => 'Make the feed public',
+    'report_id' => 'ID',
+    'report_entity' => 'Entity',
+    'report_type' => 'Type',
+    'report_count' => 'Count',
+    'report_lock' => 'Lock',
+    'report_delete' => 'Delete',
+    'report_safe' => 'Safe',
+    'report_confirm_lock' => 'Do you want to lock this entity?',
+    'report_confirm_delete' => 'DO you want to delete this entity?',
+    'report_confirm_safe' => 'Do you want to set this entity safe?',
+    'reports' => 'Reports',
+    'entity_deleted' => 'Entity has been deleted',
+    'entity_set_safe' => 'Entity has been made safe',
+    'entity_locked' => 'Entity has been locked',
+    'welcome_overlay' => 'Welcome overlay',
+    'welcome_overlay_content_saved' => 'Welcome overlay content saved',
+    'continue' => 'Continue'
 ];

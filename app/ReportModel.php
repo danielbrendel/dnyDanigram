@@ -15,6 +15,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class ReportModel
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ReportModel extends Model
 {
+    const REPORT_PACK_COUNT = 15;
+
     /**
      * Throw if type is unknown
      *
@@ -69,5 +72,50 @@ class ReportModel extends Model
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * Get report pack of entity
+     *
+     * @param $entType
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getReportPack($entType)
+    {
+        try {
+            $list = DB::select("SELECT entityId, id, type, COUNT(*) as 'count' FROM report_models WHERE type = ? GROUP BY entityId, id, type ORDER BY count DESC LIMIT ?", array($entType, self::REPORT_PACK_COUNT));
+
+            $result = array();
+
+            foreach ($list as $item) {
+                if (!static::packItemExists($item, $result)) {
+                    $item->count = ReportModel::where('type', '=', $item->type)->where('entityId', '=', $item->entityId)->count();
+                    $result[] = $item;
+                }
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Check if item does already exist in list
+     *
+     * @param $item
+     * @param array $list
+     * @return bool
+     */
+    private static function packItemExists($item, array $list)
+    {
+        foreach ($list as $entry) {
+            if (($entry->entityId === $item->entityId) && ($entry->type === $item->type)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

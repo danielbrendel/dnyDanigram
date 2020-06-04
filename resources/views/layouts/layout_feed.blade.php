@@ -16,9 +16,18 @@
         @include('layouts.layout_ga')
 
         <meta charset="utf-8">
-        <meta name="author" content="{{ env('APP_AUTHOR') }}">
-        <meta name="description" content="{{ env('APP_DESCRIPTION') }}">
-        <meta name="tags" content="{{ env('APP_TAGS') }}">
+
+        @if (isset($meta_description))
+            <meta name="description" content="{{ $meta_description }}">
+        @else
+            <meta name="description" content="{{ env('APP_DESCRIPTION') }}">
+        @endif
+
+        @if (isset($meta_tags))
+            <meta name="tags" content="{{ $meta_tags }}">
+        @else
+            <meta name="tags" content="{{ env('APP_TAGS') }}">
+        @endif
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
@@ -370,6 +379,33 @@
                 </div>
             </div>
             @endauth
+
+            <?php
+                $welcome_overlay = \App\AppModel::getWelcomeOverlay();
+            ?>
+            @if (strlen($welcome_overlay) > 0)
+                <div class="modal" :class="{'is-active': bShowWelcomeOverlay}">
+                    <div class="modal-background is-almost-not-transparent"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head is-stretched">
+                            <p class="modal-card-title">{{ env('APP_PROJECTNAME') }}</p>
+                            <button class="delete" aria-label="close" onclick="vue.bShowWelcomeOverlay = false;"></button>
+                        </header>
+                        <section class="modal-card-body is-stretched">
+                            {{ $welcome_overlay }}
+                        </section>
+                        <footer class="modal-card-foot is-stretched">
+                            <button class="button is-success" onclick="vue.markWelcomeOverlayRead();">{{ __('app.continue') }}</button>
+                        </footer>
+                    </div>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                       window.vue.handleWelcomeOverlay();
+                    });
+                </script>
+            @endif
 
             @guest
                 @include('layouts.layout_guest')

@@ -16,7 +16,6 @@
         @include('layouts.layout_ga')
 
         <meta charset="utf-8">
-        <meta name="author" content="{{ env('APP_AUTHOR') }}">
         <meta name="description" content="{{ env('APP_DESCRIPTION') }}">
         <meta name="tags" content="{{ env('APP_TAGS') }}">
 

@@ -108,6 +108,17 @@ class AppModel extends Model
     }
 
     /**
+     * Get welcome overlay text
+     * @return mixed
+     */
+    public static function getWelcomeOverlay()
+    {
+        return Cache::remember('welcome_overlay', AppModel::ONE_DAY, function() {
+            return DB::table('app_settings')->first()->welcome_overlay;
+        });
+    }
+
+    /**
      * Return if string is a valid identifier for usernames and tags
      * @param $ident
      * @return false|int
@@ -338,5 +349,125 @@ class AppModel extends Model
         return (strlen($exp) > self::MAX_EXPRESSION_LENGTH) ?
             substr($exp, 0, self::MAX_EXPRESSION_LENGTH) . '...' :
             $exp;
+    }
+
+    /**
+     * Lock entity
+     * @param $id
+     * @param $type
+     * @throws \Exception
+     */
+    public static function lockEntity($id, $type)
+    {
+        try {
+            if ($type === 'ENT_HASHTAG') {
+                $item = TagsModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->locked = true;
+                    $item->save();
+                }
+            } else if ($type === 'ENT_USER') {
+                $item = User::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->deactivated = true;
+                    $item->save();
+                }
+            } else if ($type === 'ENT_POST') {
+                $item = PostModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->locked = true;
+                    $item->save();
+                }
+            } else if ($type === 'ENT_COMMENT') {
+                $item = ThreadModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->locked = true;
+                    $item->save();
+                }
+            } else {
+                throw new Exception('Invalid type: ' . $type, 500);
+            }
+
+            $rows = ReportModel::where('entityId', '=', $id)->where('type', '=', $type)->get();
+            foreach ($rows as $row) {
+                $row->delete();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Delete entity
+     * @param $id
+     * @param $type
+     * @throws \Exception
+     */
+    public static function deleteEntity($id, $type)
+    {
+        try {
+            if ($type === 'ENT_HASHTAG') {
+                $item = TagsModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->delete();
+                }
+            } else if ($type === 'ENT_USER') {
+                $item = User::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->username = 'ghost';
+                    $item->email = md5(random_bytes(55));
+                    $item->avatar = 'default.png';
+                    $item->password = '';
+                    $item->save();
+                }
+            } else if ($type === 'ENT_POST') {
+                $item = PostModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->locked = true;
+                    $item->save();
+                    if (file_exists(public_path() . '/gfx/posts/' . $item->image_full)) {
+                        unlink(public_path() . '/gfx/posts/' . $item->image_full);
+                    }
+                    if (file_exists(public_path() . '/gfx/posts/' . $item->image_thumb)) {
+                        unlink(public_path() . '/gfx/posts/' . $item->image_thumb);
+                    }
+                }
+            } else if ($type === 'ENT_COMMENT') {
+                $item = ThreadModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->locked = true;
+                    $item->text = '';
+                    $item->save();
+                }
+            } else {
+                throw new Exception('Invalid type: ' . $type, 500);
+            }
+
+            $rows = ReportModel::where('entityId', '=', $id)->where('type', '=', $type)->get();
+            foreach ($rows as $row) {
+                $row->delete();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Set entity safe
+     *
+     * @param $id
+     * @param $type
+     * @throws \Exception
+     */
+    public static function setEntitySafe($id, $type)
+    {
+        try {
+            $rows = ReportModel::where('entityId', '=', $id)->where('type', '=', $type)->get();
+            foreach ($rows as $row) {
+                $row->delete();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

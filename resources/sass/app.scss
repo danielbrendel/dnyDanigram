@@ -141,6 +141,9 @@ a:hover {
 .is-no-border {
     border: none !important;
 }
+.is-almost-not-transparent {
+    background-color: rgba(10, 10, 10, 0.98) !important;
+}
 .avatar {
     border-radius: 50%;
 }

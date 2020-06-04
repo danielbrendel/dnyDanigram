@@ -70,15 +70,7 @@ class MainController extends Controller
      */
     public function about()
     {
-        $donationCode = null;
-
-        if (file_exists(public_path() . '/data/donation.txt')) {
-            $donationCode = Cache::remember('donation_code', 3600, function() {
-                return file_get_contents(public_path() . '/data/donation.txt');
-            });
-        }
-
-        return view('home.about', ['captcha' => CaptchaModel::createSum(session()->getId()), 'cookie_consent' => $this->cookie_consent, 'donationCode' => $donationCode, 'about_content' => AppModel::getAboutContent()]);
+        return view('home.about', ['captcha' => CaptchaModel::createSum(session()->getId()), 'cookie_consent' => $this->cookie_consent, 'about_content' => AppModel::getAboutContent()]);
     }
 
     /**

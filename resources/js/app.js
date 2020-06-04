@@ -24,6 +24,7 @@ let vue = new Vue({
         bShowCreateFaq: false,
         bShowEditFaq: false,
         bShowLogin: false,
+        bShowWelcomeOverlay: false,
     },
 
     methods: {
@@ -76,14 +77,30 @@ let vue = new Vue({
         },
 
         clickedCookieConsentButton: function () {
-            //Client clicked on Ok-button so set cookie to not show consent anymore
-
-            let curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-            document.cookie = 'cookieconsent=1; expires=' + curDate.toUTCString() + ';';
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'cookieconsent=1; expires=' + expDate.toUTCString() + ';';
 
             document.getElementById('cookie-consent').style.display = 'none';
 
             document.getElementById('feed-left').classList.remove('is-negative-top');
+        },
+
+        markWelcomeOverlayRead: function() {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'welcome_overlay=1; expires=' + expDate.toUTCString() + ';';
+            this.bShowWelcomeOverlay = false;
+        },
+
+        handleWelcomeOverlay: function () {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('welcome_overlay') !== -1) {
+                    this.bShowWelcomeOverlay = false;
+                    return;
+                }
+            }
+
+            this.bShowWelcomeOverlay = true;
         },
 
         setPostFetchType: function (type) {
@@ -216,7 +233,7 @@ window.renderPost = function(elem, adminOrOwner = false)
                                 </div>
 
                                 <div class="show-post-userinfo">
-                                    <div>` + elem.user.username + `</div>
+                                    <div><a href="` + window.location.origin + `/u/` + elem.user.username + `" class="is-color-grey">` + elem.user.username + `</a></div>
                                     <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
                                 </div>
 
@@ -302,7 +319,7 @@ window.renderThread = function(elem, adminOrOwner = false) {
                 </div>
 
                 <div class="thread-header-info is-inline-block">
-                    <div>` + elem.user.username + `</div>
+                    <div><a href="` + window.location.origin + `/u/` + elem.user.username + `" class="is-color-grey">` + elem.user.username + `</a></div>
                     <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
                 </div>
 

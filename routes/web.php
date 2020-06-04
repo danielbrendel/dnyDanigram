@@ -79,3 +79,7 @@ Route::post('/maintainer/u/save', 'MaintainerController@userSave');
 Route::post('/maintainer/newsletter', 'MaintainerController@newsletter');
 Route::post('/maintainer/css/save', 'MaintainerController@saveCss');
 Route::post('/maintainer/favicon/save', 'MaintainerController@saveFavicon');
+Route::get('/maintainer/entity/lock', 'MaintainerController@lockEntity');
+Route::get('/maintainer/entity/delete', 'MaintainerController@deleteEntity');
+Route::get('/maintainer/entity/safe', 'MaintainerController@setSafeEntity');
+Route::post('/maintainer/welcomeoverlay', 'MaintainerController@welcomeOverlay');

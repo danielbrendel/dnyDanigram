@@ -73,6 +73,10 @@
 
         function fetchPosts()
         {
+            if (document.getElementById('no-more-posts') !== null) {
+                return;
+            }
+
             document.getElementById('loading').style.display = 'block';
 
             if (window.vue.getPostFetchType() == 1) {
@@ -106,7 +110,10 @@
                             document.getElementById('loading').style.display = 'none';
                         });
                     } else {
-                        document.getElementById('feed').innerHTML += '<br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/>';
+                        if (document.getElementById('no-more-posts') == null) {
+                            document.getElementById('feed').innerHTML += '<div id="no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
+                        }
+
                         document.getElementById('loading').style.display = 'none';
                     }
                 }
