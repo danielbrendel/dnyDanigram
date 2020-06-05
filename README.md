@@ -25,6 +25,7 @@ feature list see below.
 + Notification system
 + Messaging system
 + E-Mail system
++ Mention system
 + Administration
 + Maintainer system
 + Twitter news integration
