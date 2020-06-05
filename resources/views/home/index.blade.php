@@ -21,7 +21,11 @@
             <a name="login"></a>
 
             <div class="has-text-centered">
-                <h1><strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}</h1>
+                @if (strlen(\App\AppModel::getFormattedProjectName()) > 0)
+                    {!! \App\AppModel::getFormattedProjectName() !!}
+                @else
+                    <h1><strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}</h1>
+                @endif
             </div>
 
             <form method="POST" action="{{ url('/login') }}">

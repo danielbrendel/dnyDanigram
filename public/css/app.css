@@ -176,6 +176,12 @@ a:hover {
   background-color: rgba(10, 10, 10, 0.98) !important;
 }
 
+.is-highlighted-comment {
+  background-color: lightskyblue;
+  border-radius: 15px;
+  padding: 10px;
+}
+
 .avatar {
   border-radius: 50%;
 }

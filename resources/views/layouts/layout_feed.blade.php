@@ -55,7 +55,11 @@
         <nav class="navbar has-border-bottom is-fixed-top" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <a class="navbar-item is-app-title" href="{{ url('/') }}">
-                    <strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}
+                    @if (strlen(\App\AppModel::getFormattedProjectName()) > 0)
+                        {!! \App\AppModel::getFormattedProjectName() !!}
+                    @else
+                        <strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}
+                    @endif
                 </a>
 
                 <a id="navbarBurger" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu" onclick="window.menuVisible = !document.getElementById('navbarMenu').classList.contains('is-active');">

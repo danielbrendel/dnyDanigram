@@ -17,8 +17,10 @@ namespace App\Http\Controllers;
 use App\AppModel;
 use App\CaptchaModel;
 use App\FaqModel;
+use App\PostModel;
 use App\ReportModel;
 use App\TagsModel;
+use App\ThreadModel;
 use App\User;
 use Dotenv\Dotenv;
 use Illuminate\Http\Request;
@@ -56,6 +58,10 @@ class MaintainerController extends Controller
           'hashtags' => ReportModel::getReportPack('ENT_HASHTAG'),
           'comments' => ReportModel::getReportPack('ENT_COMMENT')
         );
+
+        foreach ($reports['comments'] as &$cmt) {
+            $cmt->postId = ThreadModel::where('id', '=', $cmt->entityId)->first()->postId;
+        }
 
         return view('maintainer.index', [
             'user' => User::get(auth()->id()),
@@ -413,6 +419,32 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.welcome_overlay_content_saved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Save formatted project name
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saveFormattedProjectName()
+    {
+        try {
+            $attr = request()->validate([
+                'code' => 'nullable'
+            ]);
+
+            if (!isset($attr['code'])) {
+                $attr['code'] = '';
+            }
+
+            AppModel::saveFormattedProjectName($attr['code']);
+
+            Artisan::call('cache:clear');
+
+            return back()->with('flash.success', __('app.formatted_project_name_saved'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

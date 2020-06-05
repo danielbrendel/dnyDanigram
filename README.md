@@ -27,6 +27,8 @@ feature list see below.
 + E-Mail system
 + Administration
 + Maintainer system
++ Twitter news integration
++ HelpRealm integration
 + Installer
 + Security
 + Responsive design

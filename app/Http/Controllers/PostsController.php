@@ -94,6 +94,18 @@ class PostsController extends Controller
                 return redirect('/')->with('flash.error', __('app.post_not_found_or_locked'));
             }
 
+            $cmdId = request('c', null);
+            if (is_numeric($cmdId)) {
+                $cmt = ThreadModel::where('id', '=', $cmdId)->where('postId', '=', $id)->first();
+                $cmt->user = User::get($cmt->userId);
+                $cmt->hearts = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $cmt->id)->count();
+                $cmt->adminOrOwner = User::isAdmin(auth()->id()) || ($cmt->userId === auth()->id());
+                $cmt->userHearted = HeartModel::hasUserHearted(auth()->id(), $cmt->id, 'ENT_COMMENT');
+            } else {
+                $cmt = null;
+            }
+
+
             $favorites = FavoritesModel::getDetailedForUser(auth()->id());
 
             return view('feed.showpost', [
@@ -104,7 +116,8 @@ class PostsController extends Controller
                 'captcha' => CaptchaModel::createSum(session()->getId()),
                 'cookie_consent' => AppModel::getCookieConsentText(),
                 'meta_description' => $post->description,
-                'meta_tags' => $post->hashtags
+                'meta_tags' => $post->hashtags,
+                'highlight_comment' => $cmt
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -149,7 +162,7 @@ class PostsController extends Controller
         try {
             $hashtag = strtolower($hashtag);
 
-            $tag = TagsModel::where('tag', '=', $hashtag)->first();
+            $tag = TagsModel::where('tag', '=', $hashtag)->orWhere('id', '=', $hashtag)->first();
             if (!$tag) {
                 return back()->with('notice', __('app.hashtag_not_yet_used'));
             }

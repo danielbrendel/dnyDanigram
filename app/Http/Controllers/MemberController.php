@@ -51,7 +51,7 @@ class MemberController extends Controller
                 'favorited' => FavoritesModel::hasUserFavorited(auth()->id(), $user->id, 'ENT_USER'),
                 'captcha' => CaptchaModel::createSum(session()->getId()),
                 'cookie_consent' => AppModel::getCookieConsentText(),
-                'meta_description' => $user->bio,
+                'meta_description' => str_replace(PHP_EOL, ' ', $user->bio),
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

@@ -26,6 +26,8 @@ Route::get('/faq', 'MainController@faq');
 Route::get('/tos', 'MainController@tos');
 Route::get('/imprint', 'MainController@imprint');
 Route::get('/news', 'MainController@news');
+Route::get('/contact', 'MainController@viewContact');
+Route::post('/contact', 'MainController@contact');
 
 Route::get('/feed', 'PostsController@feed');
 Route::get('/t/{hashtag}', 'PostsController@hashtag');
@@ -83,3 +85,4 @@ Route::get('/maintainer/entity/lock', 'MaintainerController@lockEntity');
 Route::get('/maintainer/entity/delete', 'MaintainerController@deleteEntity');
 Route::get('/maintainer/entity/safe', 'MaintainerController@setSafeEntity');
 Route::post('/maintainer/welcomeoverlay', 'MaintainerController@welcomeOverlay');
+Route::post('/maintainer/formattedprojectname', 'MaintainerController@saveFormattedProjectName');

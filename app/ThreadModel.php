@@ -43,7 +43,7 @@ class ThreadModel extends Model
 
             $user = User::get($post->userId);
             if (($user) && ($userId !== $post->userId)) {
-                PushModel::addNotification(__('app.user_posted_comment_short', ['name' => $user->username]), __('app.user_posted_comment', ['name' => $user->username, 'msg' => $text, 'item' => url('/p/' . $postId . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
+                PushModel::addNotification(__('app.user_posted_comment_short', ['name' => $user->username]), __('app.user_posted_comment', ['name' => $user->username, 'msg' => $text, 'item' => url('/p/' . $postId . '?c=' . $thread->id . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
             }
 
             $mentionedNames = AppModel::getMentionList($text);

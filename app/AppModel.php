@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -119,12 +120,27 @@ class AppModel extends Model
     }
 
     /**
+     * Get formatted project name
+     * @return mixed
+     */
+    public static function getFormattedProjectName()
+    {
+        return Cache::remember('formatted_project_name', AppModel::ONE_DAY, function() {
+            return DB::table('app_settings')->first()->formatted_project_name;
+        });
+    }
+
+    /**
      * Return if string is a valid identifier for usernames and tags
      * @param $ident
      * @return false|int
      */
     public static function isValidNameIdent($ident)
     {
+        if (is_numeric($ident)) {
+            return false;
+        }
+
         return !preg_match('/[^a-z_\-0-9]/i', $ident);
     }
 
@@ -465,6 +481,66 @@ class AppModel extends Model
             $rows = ReportModel::where('entityId', '=', $id)->where('type', '=', $type)->get();
             foreach ($rows as $row) {
                 $row->delete();
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save formatted project name
+     *
+     * @param $code
+     * @throws \Exception
+     */
+    public static function saveFormattedProjectName($code)
+    {
+        try {
+            DB::update('UPDATE app_settings SET formatted_project_name = ? WHERE id = 1', array($code));
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Create a HelpRealm ticket
+     *
+     * @param $name
+     * @param $email
+     * @param $subject
+     * @param $body
+     * @throws \Exception
+     */
+    public static function createTicket($name, $email, $subject, $body)
+    {
+        try {
+            $postFields = [
+                'apitoken' => env('HELPREALM_TOKEN'),
+                'subject' => $subject,
+                'text' => $body,
+                'name' => $name,
+                'email' => $email,
+                'type' => '1',
+                'prio' => '1',
+                'attachment' => null
+            ];
+
+            $ch = curl_init("https://helprealm.io/api/" . env('HELPREALM_WORKSPACE') . '/ticket/create');
+
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+
+            $response = curl_exec($ch);
+            if(curl_error($ch)) {
+                throw new Exception(curl_error($ch), curl_errno($ch));
+            }
+
+            curl_close($ch);
+
+            $json = json_decode($response);
+            if ($json->code !== 201) {
+                throw new Exception('Backend returned error ' . ((isset($json->data->invalid_fields)) ? print_r($json->data->invalid_fields, true) : ''), $json->code);
             }
         } catch (\Exception $e) {
             throw $e;

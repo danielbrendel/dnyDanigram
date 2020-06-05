@@ -144,6 +144,11 @@ a:hover {
 .is-almost-not-transparent {
     background-color: rgba(10, 10, 10, 0.98) !important;
 }
+.is-highlighted-comment {
+    background-color: rgb(135,206,250);
+    border-radius: 15px;
+    padding: 10px;
+}
 .avatar {
     border-radius: 50%;
 }

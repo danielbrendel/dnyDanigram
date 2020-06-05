@@ -299,10 +299,10 @@ window.renderThread = function(elem, adminOrOwner = false) {
 
     if (adminOrOwner) {
         options = `
-            <a onclick="showEditComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" href="whatsapp://send?text=\` + window.location.origin + \`/p/\` + elem.id + \` \` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + \`" class="dropdown-item">
+            <a onclick="showEditComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" href="javascript:void(0)" class="dropdown-item">
                 <i class="far fa-edit"></i>&nbsp;Edit
             </a>
-            <a onclick="lockComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" class="dropdown-item">
+            <a onclick="lockComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" href="javascript:void(0)" class="dropdown-item">
                 <i class="fas fa-times"></i>&nbsp;Lock
             </a>
             <hr class="dropdown-divider">

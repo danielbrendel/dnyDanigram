@@ -58,7 +58,7 @@ return [
     'save' => 'Save',
     'avatar' => 'Avatar',
     'name_already_in_use' => 'Username is already in use',
-    'invalid_name_ident' => 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'.',
+    'invalid_name_ident' => 'The name is invalid. Please use only alphanumeric characters, numbers 0-9 and the characters \'-\' and \'_\'. Also number only identifiers are considered invalid',
     'profile_saved' => 'Your profile has been saved',
     'password_confirm' => 'Password confirmation',
     'password_mismatch' => 'The passwords do not match',
@@ -224,5 +224,16 @@ return [
     'entity_locked' => 'Entity has been locked',
     'welcome_overlay' => 'Welcome overlay',
     'welcome_overlay_content_saved' => 'Welcome overlay content saved',
-    'continue' => 'Continue'
+    'continue' => 'Continue',
+    'project_name_formatted' => 'Formatted project name',
+    'project_name_formatted_description' => 'Here you can specify HTML code for the project name which will be used for the top menu or the guest index page etc. If nothing is specified then the default format will be used',
+    'formatted_project_name_saved' => 'Formatted project name saved',
+    'project_helprealm_workspace' => 'HelpRealm Workspace if shall be used as support ticket backend',
+    'project_helprealm_token' => 'HelpRealm API Token',
+    'contact_name' => 'Name',
+    'contact_email' => 'E-Mail',
+    'contact_subject' => 'Subject',
+    'contact_body' => 'Your message',
+    'contact' => 'Contact',
+    'contact_success' => 'Thank you for contacting us. We will process your message as soon as possible.'
 ];

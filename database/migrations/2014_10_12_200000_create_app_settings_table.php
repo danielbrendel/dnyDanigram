@@ -34,6 +34,7 @@ class CreateAppSettingsTable extends Migration
             $table->text('tos');
             $table->string('reg_info');
             $table->text('welcome_overlay')->default('');
+            $table->text('project_name_formatted')->default('');
             $table->timestamps();
         });
     }

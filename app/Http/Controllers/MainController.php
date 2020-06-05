@@ -114,6 +114,39 @@ class MainController extends Controller
     }
 
     /**
+     * View contact page
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewContact()
+    {
+        return view('home.contact', ['captcha' => CaptchaModel::createSum(session()->getId()), 'cookie_consent' => $this->cookie_consent]);
+    }
+
+    /**
+     * Process contact request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function contact()
+    {
+        try {
+            $attr = request()->validate([
+               'name' => 'required',
+               'email' => 'required|email',
+               'subject' => 'required',
+               'body' => 'required'
+            ]);
+
+            AppModel::createTicket($attr['name'], $attr['email'], $attr['subject'], $attr['body']);
+
+            return back()->with('success', __('app.contact_success'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
      * Perform login
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -161,7 +194,7 @@ class MainController extends Controller
             Auth::logout();
             request()->session()->invalidate();
 
-            return  redirect('/')->with('success', __('app.logout_success'));
+            return  redirect('/')->with('flash.success', __('app.logout_success'));
         } else {
             return  redirect('/')->with('error', __('app.not_logged_in'));
         }

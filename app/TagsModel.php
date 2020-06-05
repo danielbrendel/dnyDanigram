@@ -34,7 +34,7 @@ class TagsModel extends Model
     public static function addTag($name)
     {
         try {
-            $name = str_replace('#', '', $name);
+            $name = strtolower(str_replace('#', '', $name));
 
             $exists = TagsModel::where('tag', '=', $name)->first();
             if (!$exists) {

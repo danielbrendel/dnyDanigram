@@ -47,6 +47,7 @@
                 <li><a href="#tab-page-12">{{ __('app.favicon') }}</a></li>
                 <li><a href="#tab-page-13">{{ __('app.reports') }}</a></li>
                 <li><a href="#tab-page-14">{{ __('app.welcome_overlay') }}</a></li>
+                <li><a href="#tab-page-15">{{ __('app.project_name_formatted') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
                 <div id="tab-page-1">
@@ -323,13 +324,6 @@
                         </div>
 
                         <div class="field">
-                            <label class="label">{{ __('app.project_division') }}</label>
-                            <div class="control">
-                                <input type="text" name="ENV_APP_DIVISION" value="{{ env('APP_DIVISION') }}">
-                            </div>
-                        </div>
-
-                        <div class="field">
                             <label class="label">{{ __('app.project_lang') }}</label>
                             <div class="control">
                                 <select name="ENV_APP_LANG">
@@ -393,6 +387,20 @@
                             <label class="label">{{ __('app.project_twitter_news') }}</label>
                             <div class="control">
                                 <input type="text" name="ENV_TWITTER_NEWS" value="{{ env('TWITTER_NEWS') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_helprealm_workspace') }}</label>
+                            <div class="control">
+                                <input type="text" name="ENV_HELPREALM_WORKSPACE" value="{{ env('HELPREALM_WORKSPACE') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_helprealm_token') }}</label>
+                            <div class="control">
+                                <input type="text" name="ENV_HELPREALM_TOKEN" value="{{ env('HELPREALM_TOKEN') }}">
                             </div>
                         </div>
 
@@ -554,7 +562,7 @@
                                 </td>
 
                                 <td class="right">
-                                    {{ $item->entityId }}
+                                    <a href="{{ url('/p/' . $item->entityId) }}" target="_blank">{{ $item->entityId }}</a>
                                 </td>
 
                                 <td>
@@ -605,7 +613,7 @@
                                 </td>
 
                                 <td class="right">
-                                    {{ $item->entityId }}
+                                    <a href="{{ url('/u/' . $item->entityId) }}" target="_blank">{{ $item->entityId }}</a>
                                 </td>
 
                                 <td>
@@ -656,7 +664,7 @@
                                 </td>
 
                                 <td class="right">
-                                    {{ $item->entityId }}
+                                    <a href="{{ url('/p/' . $item->postId . '?c=' . $item->entityId . '#' . $item->entityId) }}" target="_blank">{{ $item->entityId }}</a>
                                 </td>
 
                                 <td>
@@ -707,7 +715,7 @@
                                 </td>
 
                                 <td class="right">
-                                    {{ $item->entityId }}
+                                    <a href="{{ url('/t/' . $item->entityId) }}" target="_blank">{{ $item->entityId }}</a>
                                 </td>
 
                                 <td>
@@ -741,6 +749,25 @@
                             <label class="label">{{ __('app.welcome_overlay') }}</label>
                             <div class="control">
                                 <textarea class="textarea" name="content">{{ $settings->welcome_overlay }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" value="{{ __('app.save') }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="tab-page-15">
+                    <form method="POST" action="{{ url('/maintainer/formattedprojectname') }}">
+                        @csrf
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_name_formatted_description') }}</label>
+                            <div class="control">
+                                <textarea class="textarea" name="code">{{ $settings->formatted_project_name }}</textarea>
                             </div>
                         </div>
 

@@ -141,6 +141,8 @@ class User extends Authenticatable
                 throw new Exception(__('app.register_already_signed_in'));
             }
 
+            $attr['username'] = strtolower($attr['username']);
+
             if ($attr['password'] !== $attr['password_confirmation']) {
                 throw new Exception(__('app.register_password_mismatch'));
             }

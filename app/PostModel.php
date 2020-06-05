@@ -39,7 +39,8 @@ class PostModel extends Model
     {
         $imagetypes = array(
             IMAGETYPE_PNG,
-            IMAGETYPE_JPEG
+            IMAGETYPE_JPEG,
+            IMAGETYPE_GIF
         );
 
         if (!file_exists($imgFile)) {
@@ -67,7 +68,8 @@ class PostModel extends Model
         $imagetypes = array(
             array('png', IMAGETYPE_PNG),
             array('jpg', IMAGETYPE_JPEG),
-            array('jpeg', IMAGETYPE_JPEG)
+            array('jpeg', IMAGETYPE_JPEG),
+            array('gif', IMAGETYPE_GIF)
         );
 
         for ($i = 0; $i < count($imagetypes); $i++) {
@@ -170,6 +172,9 @@ class PostModel extends Model
                 imagecopyresampled($dstimg, $srcimage, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
                 static::correctImageRotation($srcfile, $dstimg);
                 imagejpeg($dstimg, $basefile . "_thumb." . $fileext);
+                break;
+            case IMAGETYPE_GIF:
+                copy($srcfile, $basefile . "_thumb." . $fileext);
                 break;
             default:
                 return false;
