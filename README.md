@@ -18,7 +18,7 @@ feature list see below.
 ## Features:
 + Share images
 + Comment on images
-+ Like images, comments, hashtags
++ Heart images, comments, hashtags
 + See latest and top posts and comments
 + Hashtag system
 + Favorites system
