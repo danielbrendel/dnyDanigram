@@ -152,9 +152,12 @@ a:hover {
         margin-bottom: 35px;
     }
 }
-.is-top-53-small-screen-width {
-    @media screen and (max-width: 769px) {
-        margin-top: 53px;
+.is-fix-single-post-position {
+    @media screen and (min-width: 481px) and (max-width: 769px) {
+        top: -78px;
+    }
+    @media screen and (max-width: 480px) {
+        top: 25px;
     }
 }
 .is-margin-right-15 {

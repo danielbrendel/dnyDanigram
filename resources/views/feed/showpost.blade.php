@@ -18,7 +18,7 @@
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-4">
-        <div id="singlepost" class="is-top-53-small-screen-width"><center><i class="fas fa-spinner fa-spin"></i></center></div>
+        <div id="singlepost" class="is-fix-single-post-position"><center><i class="fas fa-spinner fa-spin"></i></center></div>
 
         <div class="member-form is-default-padding">
             @auth

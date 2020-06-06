@@ -188,9 +188,15 @@ a:hover {
   }
 }
 
-@media screen and (max-width: 769px) {
-  .is-top-53-small-screen-width {
-    margin-top: 53px;
+@media screen and (min-width: 481px) and (max-width: 769px) {
+  .is-fix-single-post-position {
+    top: -78px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .is-fix-single-post-position {
+    top: 25px;
   }
 }
 
