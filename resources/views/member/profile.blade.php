@@ -18,9 +18,7 @@
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-4" id="feed-left">
-        <div class="member-form is-default-padding is-mobile-like-screen-width is-top-25">
-            <br/><br/>
-
+        <div class="member-form is-default-padding is-mobile-like-screen-width is-top-negative-mobile-like">
             @auth
                 @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
             @elseauth

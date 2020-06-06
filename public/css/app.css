@@ -172,6 +172,16 @@ a:hover {
   }
 }
 
+.is-top-negative-mobile-like {
+  top: -15px !important;
+}
+
+@media screen and (max-width: 480px) {
+  .is-top-negative-mobile-like {
+    top: 35px !important;
+  }
+}
+
 @media screen and (max-width: 769px) {
   .is-margin-bottom-small-screen-size {
     margin-bottom: 35px;

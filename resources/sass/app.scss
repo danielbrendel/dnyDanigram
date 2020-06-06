@@ -141,6 +141,12 @@ a:hover {
         display: none;
     }
 }
+.is-top-negative-mobile-like {
+    top: -15px !important;
+    @media screen and (max-width: 480px) {
+        top: 35px !important;
+    }
+}
 .is-margin-bottom-small-screen-size {
     @media screen and (max-width: 769px) {
         margin-bottom: 35px;

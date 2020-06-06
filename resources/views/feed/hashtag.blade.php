@@ -18,15 +18,15 @@
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-4" id="feed-left">
-        <div class="member-form is-mobile-like-screen-width is-default-padding is-top-25">
-            <br/>
+        @auth
+            <div class="member-form is-mobile-like-screen-width is-default-padding is-top-negative-mobile-like">
+                <br/>
 
-            @auth
                 @include('widgets.supporttag', ['heart_count' => $tagdata->hearts])
-            @endauth
-        </div>
+            </div>
+        @endauth
 
-        <div class="member-form is-mobile-like-screen-width is-default-padding">
+        <div class="member-form is-mobile-like-screen-width is-default-padding is-top-negative-mobile-like">
             @include('widgets.taginfo')
         </div>
 
