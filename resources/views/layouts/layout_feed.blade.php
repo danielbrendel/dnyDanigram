@@ -164,7 +164,7 @@
                 </div>
 
                 <div class="cookie-consent-button">
-                    <i class="fas fa-times is-pointer" title="{{ __('app.cookie_consent_close') }}" onclick="vue.clickedCookieConsentButton()"></i>
+                    <a class="is-color-grey" href="javascript:void(0)" onclick="window.vue.clickedCookieConsentButton()">{{ __('app.cookie_consent_close') }}</a>
                 </div>
             </div>
         @endif

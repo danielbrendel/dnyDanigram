@@ -56,7 +56,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_POSTPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_THREADPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_PUSHPACKLIMIT=25' . PHP_EOL;
-			$envcontent .= 'APP_MESSAGEPACKLIMIT=10' . PHP_EOL;
+			$envcontent .= 'APP_MESSAGEPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_TOPNTAGS=15' . PHP_EOL;
 			$envcontent .= 'APP_PUBLICFEED=false' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
@@ -67,7 +67,7 @@ class InstallerModel extends Model
             $envcontent .= 'DB_USERNAME=' . $attr['dbuser'] . PHP_EOL;
             $envcontent .= 'DB_PASSWORD=' . $attr['dbpassword'] . PHP_EOL;
             $envcontent .= 'SMTP_FROMADDRESS="' . $attr['smtpfromaddress'] . '"' . PHP_EOL;
-            $envcontent .= 'SMTP_FROMNAME="${APP_NAME}"' . PHP_EOL;
+            $envcontent .= 'SMTP_FROMNAME="${APP_PROJECTNAME}"' . PHP_EOL;
             $envcontent .= 'SMTP_HOST="' . $attr['smtphost'] . '"' . PHP_EOL;
             $envcontent .= 'SMTP_USERNAME="' . $attr['smtpuser'] . '"' . PHP_EOL;
             $envcontent .= 'SMTP_PASSWORD="' . $attr['smtppassword'] . '"' . PHP_EOL;

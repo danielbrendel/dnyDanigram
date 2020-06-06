@@ -308,9 +308,13 @@ a:hover {
 .cookie-consent-button {
   position: relative;
   display: inline-block;
-  width: 24px;
   float: right;
+  margin-right: 25px;
   padding: 24px;
+}
+
+.cookie-consent-button a:hover {
+  color: #969696;
 }
 
 .member-form {
