@@ -27,7 +27,7 @@ class CreatePushModelsTable extends Migration
     {
         Schema::create('push_models', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id');
+            $table->integer('userId');
             $table->string('shortMsg');
             $table->string('longMsg');
             $table->string('type');

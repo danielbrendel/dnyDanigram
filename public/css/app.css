@@ -140,6 +140,10 @@ a:hover {
   z-index: 5;
 }
 
+.is-margin-top-25 {
+  margin-top: 25px;
+}
+
 .is-top-53 {
   top: 53px;
 }
@@ -166,6 +170,22 @@ a:hover {
   .is-mobile-like-screen-width {
     display: none;
   }
+}
+
+@media screen and (max-width: 769px) {
+  .is-margin-bottom-small-screen-size {
+    margin-bottom: 35px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .is-top-53-small-screen-width {
+    margin-top: 53px;
+  }
+}
+
+.is-margin-right-15 {
+  margin-right: 15px;
 }
 
 .is-no-border {
@@ -274,6 +294,7 @@ a:hover {
   background-color: #3c3c3a;
   color: #b4b4b4;
   font-size: 0.8em;
+  z-index: 5;
 }
 
 .cookie-consent-inner {
@@ -324,6 +345,7 @@ a:hover {
 
 .show-post-avatar {
   display: inline-block;
+  margin-right: 5px;
 }
 
 .show-post-avatar img {
@@ -338,12 +360,12 @@ a:hover {
 }
 
 .show-post-image {
-  margin-top: 35px;
+  margin-top: 14px;
 }
 
 .show-post-description {
-  margin-top: 25px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .show-post-options {
@@ -433,6 +455,12 @@ a:hover {
 .thread-input-header-text {
   width: 87%;
   height: 90%;
+}
+
+@media screen and (max-width: 385px) {
+  .thread-input-header-text {
+    width: 84%;
+  }
 }
 
 .thread-input-header-text textarea {
@@ -540,6 +568,12 @@ a:hover {
   font-style: italic;
 }
 
+.userinfo-badges {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
 .userinfo-stats {
   margin-top: 15px;
 }
@@ -563,18 +597,27 @@ a:hover {
   display: inline-block;
 }
 
-.badge-admin {
-  background-color: indianred;
-  border: 1px solid red;
+.member-badge {
   border-radius: 4px;
-  color: white;
   font-size: 0.6em;
   text-align: center;
 }
 
-.badge-admin p {
+.member-badge p {
   padding: 4px;
   font-weight: bold;
+}
+
+.member-badge-maintainer {
+  color: white;
+  background-color: lightskyblue;
+  border: 1px solid blue;
+}
+
+.member-badge-admin {
+  color: white;
+  background-color: indianred;
+  border: 1px solid red;
 }
 
 .settings-avatar-image {

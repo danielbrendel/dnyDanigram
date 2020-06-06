@@ -116,6 +116,9 @@ a:hover {
     position: fixed;
     z-index: 5;
 }
+.is-margin-top-25 {
+    margin-top: 25px
+}
 .is-top-53 {
     top: 53px;
 }
@@ -137,6 +140,19 @@ a:hover {
     @media screen and (min-width: 769px) {
         display: none;
     }
+}
+.is-margin-bottom-small-screen-size {
+    @media screen and (max-width: 769px) {
+        margin-bottom: 35px;
+    }
+}
+.is-top-53-small-screen-width {
+    @media screen and (max-width: 769px) {
+        margin-top: 53px;
+    }
+}
+.is-margin-right-15 {
+    margin-right: 15px;
 }
 .is-no-border {
     border: none !important;
@@ -229,6 +245,7 @@ a:hover {
     background-color: rgb(60, 60, 58);
     color: rgb(180, 180, 180);
     font-size: 0.8em;
+    z-index: 5;
 }
 .cookie-consent-inner {
     position: relative;
@@ -273,6 +290,7 @@ a:hover {
 }
 .show-post-avatar {
     display: inline-block;
+    margin-right: 5px;
 }
 .show-post-avatar img {
     border-radius: 50%;
@@ -284,11 +302,11 @@ a:hover {
     font-size: 0.8em;
 }
 .show-post-image {
-    margin-top: 35px;
+    margin-top: 14px;
 }
 .show-post-description {
-    margin-top: 25px;
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .show-post-options {
     position: relative;
@@ -358,6 +376,9 @@ a:hover {
 }
 .thread-input-header-text {
     width: 87%;
+    @media screen and (max-width: 385px) {
+        width: 84%;
+    }
     height: 90%;
 }
 .thread-input-header-text textarea {
@@ -450,6 +471,11 @@ a:hover {
     margin-bottom: 5px;
     font-style: italic;
 }
+.userinfo-badges {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
 .userinfo-stats {
     margin-top: 15px;
 }
@@ -470,17 +496,24 @@ a:hover {
 }
 
 //Admin badge
-.badge-admin {
-    background-color: indianred;
-    border: 1px solid rgb(255, 0, 0);
+.member-badge {
     border-radius: 4px;
-    color: rgb(255, 255, 255);
     font-size: 0.6em;
     text-align: center;
 }
-.badge-admin p {
+.member-badge p {
     padding: 4px;
     font-weight: bold;
+}
+.member-badge-maintainer {
+    color: rgb(255, 255, 255);
+    background-color: lightskyblue;
+    border: 1px solid rgb(0, 0, 255);
+}
+.member-badge-admin {
+    color: rgb(255, 255, 255);
+    background-color: indianred;
+    border: 1px solid rgb(255, 0, 0);
 }
 
 //Settings

@@ -10,10 +10,10 @@
     Released under the MIT license
 --}}
 
-<div>
+<div class="is-block">
     <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.popular_tags') }}</h2></div>
     @if ((isset($inoverlay)) && ($inoverlay))
-        <div class="is-inline-block float-right is-top-25"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('popular-tags')"></i></div>
+        <div class="is-inline-block float-right is-margin-top-25 is-margin-right-15"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('popular-tags')"></i></div>
     @endif
 </div>
 

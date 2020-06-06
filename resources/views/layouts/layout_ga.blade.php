@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-@if (env('GA_ENABLE'))
+@if ((env('GA_TOKEN', null) !== null) && (env('GA_TOKEN', null) !== ''))
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GA_TOKEN') }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

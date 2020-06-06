@@ -132,17 +132,22 @@ class MainController extends Controller
     {
         try {
             $attr = request()->validate([
-               'name' => 'required',
-               'email' => 'required|email',
-               'subject' => 'required',
-               'body' => 'required'
+                'name' => 'required',
+                'email' => 'required|email',
+                'subject' => 'required',
+                'body' => 'required',
+                'captcha' => 'required'
             ]);
+
+            if ($attr['captcha'] !== CaptchaModel::querySum(session()->getId())) {
+                return back()->with('error', __('app.captcha_invalid'))->withInput();
+            }
 
             AppModel::createTicket($attr['name'], $attr['email'], $attr['subject'], $attr['body']);
 
             return back()->with('success', __('app.contact_success'));
         } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', $e->getMessage())->withInput();
         }
     }
 

@@ -176,4 +176,20 @@ class MemberController extends Controller
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
+
+    /**
+     * Delete own user account
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteOwnAccount()
+    {
+        try {
+            AppModel::deleteEntity(auth()->id(), 'ENT_USER');
+
+            return response()->json(array('code' => 200, 'msg' => __('app.account_deleted')));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
 }

@@ -25,6 +25,8 @@ let vue = new Vue({
         bShowEditFaq: false,
         bShowLogin: false,
         bShowWelcomeOverlay: false,
+        bShowCreateTheme: false,
+        bShowEditTheme: false,
     },
 
     methods: {
@@ -274,7 +276,7 @@ window.renderPost = function(elem, adminOrOwner = false)
                             </div>
 
                             <div class="show-post-image">
-                                <img class="is-pointer" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">
+                                <img class="is-pointer is-stretched" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">
                             </div>
 
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">
@@ -282,13 +284,11 @@ window.renderPost = function(elem, adminOrOwner = false)
                                 <div class="is-inline-block is-right float-right"><a class="is-color-grey" href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 
-                            <div class="show-post-description is-default-padding">
+                            <div class="show-post-description is-default-padding is-color-grey">
                                 ` + elem.description + `
                                        </div>
 
-                                       <div class="show-post-hashtags is-default-padding">
-                                        ` + hashTags + `
-                                       </div>
+                                       <div class="show-post-hashtags is-default-padding is-wordbreak">` + hashTags + `</div>
                                    </div>
                         `;
     return html;
@@ -341,7 +341,7 @@ window.renderThread = function(elem, adminOrOwner = false) {
                 </div>
             </div>
 
-            <div class="thread-text" id="thread-text-` + elem.id + `">
+            <div class="thread-text is-color-grey" id="thread-text-` + elem.id + `">
                 ` + elem.text + `
             </div>
 
@@ -514,7 +514,19 @@ window.lockUser = function (id) {
             alert(response.msg);
 
             if ((typeof response.logout !== 'undefined') && (response.logout)) {
-                location.href = window.location.origin;
+                location.reload();
+            }
+        });
+    }
+};
+
+window.deleteUserAccount = function () {
+    if (confirm('Do you really want to delete your profile?')) {
+        window.vue.ajaxRequest('get', window.location.origin + '/u/deleteownaccount', {}, function (response) {
+            alert(response.msg);
+
+            if (response.code == 200) {
+                location.reload();
             }
         });
     }
@@ -534,6 +546,15 @@ window.toggleOverlay = function(name) {
         obj.style.display = 'unset';
     } else {
         obj.style.display = 'none';
+    }
+}
+
+window.setTheme = function(theme) {
+    if ((theme !== null) && (typeof theme === 'string') && (theme.length > 0)) {
+        let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+        document.cookie = 'theme=' + theme + '; expires=' + expDate.toUTCString() + ';';
+
+        location.reload();
     }
 }
 

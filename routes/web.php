@@ -49,6 +49,7 @@ Route::get('/u/{id}', 'MemberController@show');
 Route::get('/u/{id}/report', 'MemberController@report');
 Route::get('/profile', 'MemberController@profile');
 Route::post('/profile/edit', 'MemberController@save');
+Route::post('/u/deleteownaccount', 'MemberController@deleteOwnAccount');
 
 Route::post('/f/add', 'FavoritesController@add');
 Route::post('/f/remove', 'FavoritesController@remove');
@@ -79,7 +80,9 @@ Route::post('/maintainer/env/save', 'MaintainerController@envSave');
 Route::get('/maintainer/u/details', 'MaintainerController@userDetails');
 Route::post('/maintainer/u/save', 'MaintainerController@userSave');
 Route::post('/maintainer/newsletter', 'MaintainerController@newsletter');
-Route::post('/maintainer/css/save', 'MaintainerController@saveCss');
+Route::post('/maintainer/themes/add', 'MaintainerController@addTheme');
+Route::post('/maintainer/themes/edit', 'MaintainerController@editTheme');
+Route::get('/maintainer/themes/delete', 'MaintainerController@deleteTheme');
 Route::post('/maintainer/favicon/save', 'MaintainerController@saveFavicon');
 Route::get('/maintainer/entity/lock', 'MaintainerController@lockEntity');
 Route::get('/maintainer/entity/delete', 'MaintainerController@deleteEntity');

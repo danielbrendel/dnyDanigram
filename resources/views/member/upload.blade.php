@@ -19,7 +19,7 @@
 
     <div class="column is-8">
         <div class="member-form is-default-padding">
-            <div>
+            <div class="is-margin-top-25">
                 <h1>{{ __('app.post_title') }}</h1>
             </div>
 

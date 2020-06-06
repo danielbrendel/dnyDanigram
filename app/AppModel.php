@@ -299,39 +299,6 @@ class AppModel extends Model
     }
 
     /**
-     * Get custom CSS content
-     *
-     * @return false|string
-     * @throws \Exception
-     */
-    public static function getCustomCss()
-    {
-        try {
-            if (file_exists(public_path() . '/css/custom.css')) {
-                return file_get_contents(public_path() . '/css/custom.css');
-            }
-
-            return '';
-        } catch (\Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
-     * Save custom CSS content
-     *
-     * @throws \Exception
-     */
-    public static function saveCustomCss($code)
-    {
-        try {
-            file_put_contents(public_path() . '/css/custom.css', $code);
-        } catch (\Exception $e) {
-            throw $e;
-        }
-    }
-
-    /**
      * Get list of available languages
      *
      * @return array

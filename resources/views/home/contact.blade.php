@@ -27,28 +27,35 @@
                 <div class="field">
                     <label class="label">{{ __('app.contact_name') }}</label>
                     <div class="control">
-                        <input type="text" name="name">
+                        <input type="text" name="name" value="{{ old('name') }}" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">{{ __('app.contact_email') }}</label>
                     <div class="control">
-                        <input type="email" name="email">
+                        <input type="email" name="email" value="{{ old('email') }}" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">{{ __('app.contact_subject') }}</label>
                     <div class="control">
-                        <input type="text" name="subject">
+                        <input type="text" name="subject" value="{{ old('subject') }}" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">{{ __('app.contact_body') }}</label>
                     <div class="control">
-                        <textarea name="body"></textarea>
+                        <textarea name="body" required>{{ old('body') }}</textarea>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">{{ $captcha[0] }} + {{ $captcha[1] }} = ?</label>
+                    <div class="control">
+                        <input type="text" name="captcha" required>
                     </div>
                 </div>
 

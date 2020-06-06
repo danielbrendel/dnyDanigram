@@ -87,7 +87,7 @@
                     <h1>Install Danigram</h1>
                     <br/>
                     <span>
-                        Welcome to the installation of Danigram. The installation will be very fast. Just fill out and submit the form
+                        Welcome to the installation of Danigram. The installation is intended to be fast. Just fill out and submit the form
                         and the system will perform the installation. If everything goes well you will then be redirected to the index page.
                     </span>
 

@@ -13,7 +13,7 @@
 <div>
     <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.favorites') }}</h2></div>
     @if ((isset($inoverlay)) && ($inoverlay))
-        <div class="is-inline-block float-right is-top-25"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('favorites')"></i></div>
+        <div class="is-inline-block float-right is-margin-top-25"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('favorites')"></i></div>
     @endif
 </div>
 
@@ -25,7 +25,7 @@
                     @if ($favorite->type === 'ENT_HASHTAG')
                         <a href="{{ url('/t/' . $favorite->name) }}">#{{ $favorite->short_name }}</a>
                     @elseif ($favorite->type === 'ENT_USER')
-                        <a href="{{ url('/u/' . $favorite->name) }}">{{ $favorite->short_name }}</a>
+                        <a href="{{ url('/u/' . $favorite->name) }}">{{ '@' . $favorite->short_name }}</a>
                     @endif
                 </div>
 

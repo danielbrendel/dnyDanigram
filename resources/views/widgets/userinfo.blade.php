@@ -17,12 +17,6 @@
 
     <div class="userinfo-name is-inline-block is-pointer" onclick="location.href='{{ url('/u/' . $user->id) }}';">
         {{ $user->username }}
-        &nbsp;&nbsp;&nbsp;
-        @if ($user->admin)
-            <div class="badge-admin is-inline-block">
-                <p>{{ __('app.admin') }}</p>
-            </div>
-        @endif
     </div>
 </div>
 
@@ -30,10 +24,28 @@
     {{ $user->bio }}
 </div>
 
+<div class="userinfo-badges">
+
+    @if ($user->maintainer)
+        <div class="is-inline-block">
+            <div class="member-badge member-badge-maintainer"><p>{{ __('app.maintainer') }}</p></div>
+        </div>
+    @endif
+
+
+
+    @if ($user->admin)
+        <div class="is-inline-block">
+            <div class="member-badge member-badge-admin"><p>{{ __('app.admin') }}</p></div>
+        </div>
+    @endif
+
+</div>
+
 <div class="userinfo-stats">
     <i class="far fa-calendar-alt" title="{{ $user->created_at }}"></i>&nbsp;{{ __('app.registered_since', ['date' => $user->created_at->diffForHumans()]) }}<br/>
     <i class="far fa-file-image"></i>&nbsp;{{ __('app.stats_posts', ['count' => $user->stats->posts]) }}<br/>
-    <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_posts', ['count' => $user->stats->comments]) }}<br/>
+    <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_comments', ['count' => $user->stats->comments]) }}<br/>
 </div>
 
 @auth

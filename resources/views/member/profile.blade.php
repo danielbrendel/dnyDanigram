@@ -18,6 +18,16 @@
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-4" id="feed-left">
+        <div class="member-form is-default-padding is-mobile-like-screen-width is-top-25">
+            <br/><br/>
+
+            @auth
+                @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
+            @elseauth
+                @include('widgets.userinfo', ['user' => $profile, 'admin' => false])
+            @endauth
+        </div>
+
         <div class="feed-nav member-form is-default-padding">
             <span><a id="linkFetchTop" href="javascript:void(0)" onclick="window.vue.setPostFetchType(1); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();">{{ __('app.top') }}</a></span> | <span><a id="linkFetchLatest" href="javascript:void(0)" onclick="window.vue.setPostFetchType(2); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();">{{ __('app.latest') }}</a></span>
         </div>
@@ -77,6 +87,10 @@
 
         function fetchPosts()
         {
+            if (document.getElementById('user-no-more-posts') !== null) {
+                return;
+            }
+
             document.getElementById('loading').style.display = 'block';
 
             if (window.vue.getPostFetchType() == 1) {
@@ -104,7 +118,7 @@
                             document.getElementById('loading').style.display = 'none';
                         });
                     } else {
-                        document.getElementById('feed').innerHTML += '<br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/>';
+                        document.getElementById('feed').innerHTML += '<div id="user-no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
                         document.getElementById('loading').style.display = 'none';
                     }
                 }

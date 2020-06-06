@@ -20,6 +20,7 @@ use App\FaqModel;
 use App\PostModel;
 use App\ReportModel;
 use App\TagsModel;
+use App\ThemeModel;
 use App\ThreadModel;
 use App\User;
 use Dotenv\Dotenv;
@@ -63,11 +64,19 @@ class MaintainerController extends Controller
             $cmt->postId = ThreadModel::where('id', '=', $cmt->entityId)->first()->postId;
         }
 
+        $themes = array();
+        foreach (ThemeModel::getThemes() as $theme) {
+            $item = new \stdClass();
+            $item->name = $theme;
+            $item->content = ThemeModel::getTheme($theme);
+            $themes[] = $item;
+        }
+
         return view('maintainer.index', [
             'user' => User::get(auth()->id()),
             'settings' => AppModel::getSettings(),
             'faqs' => FaqModel::getAll(),
-            'custom_css' => AppModel::getCustomCss(),
+            'themes' => $themes,
             'langs' => AppModel::getLanguageList(),
 			'cookie_consent' => AppModel::getCookieConsentText(),
             'reports' => $reports
@@ -277,20 +286,59 @@ class MaintainerController extends Controller
     }
 
     /**
-     * Save CSS content
+     * Add new theme
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveCss()
+    public function addTheme()
     {
         try {
             $attr = request()->validate([
-               'code' => 'nullable'
+                'name' => 'required',
+                'code' => 'required'
             ]);
 
-            AppModel::saveCustomCss($attr['code']);
+            if (pathinfo($attr['name'], PATHINFO_EXTENSION) !== 'css') {
+                $attr['name'] .= '.css';
+            }
 
-            return back()->with('flash.success', __('app.custom_css_saved'));
+            ThemeModel::addTheme($attr['name'], $attr['code']);
+
+            return back()->with('flash.success', __('app.theme_created'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Edit theme
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editTheme()
+    {
+        try {
+            $attr = request()->validate([
+                'name' => 'required',
+                'code' => 'required'
+            ]);
+
+            ThemeModel::editTheme($attr['name'], $attr['code']);
+
+            return back()->with('flash.success', __('app.theme_edited'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    public function deleteTheme()
+    {
+        try {
+            $name = request('name');
+
+            ThemeModel::deleteTheme($name);
+
+            return back()->with('flash.success', __('app.theme_deleted'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

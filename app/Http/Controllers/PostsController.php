@@ -60,7 +60,9 @@ class PostsController extends Controller
     public function viewUpload()
     {
         return view('member.upload', [
-            'user' => User::getByAuthId()
+            'user' => User::getByAuthId(),
+            'cookie_consent' => AppModel::getCookieConsentText(),
+            'captcha' => CaptchaModel::createSum(session()->getId()),
         ]);
     }
 

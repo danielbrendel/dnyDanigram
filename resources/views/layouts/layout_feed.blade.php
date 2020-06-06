@@ -29,11 +29,14 @@
             <meta name="tags" content="{{ env('APP_TAGS') }}">
         @endif
 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-        @if (file_exists(public_path() . '/css/custom.css'))
-            <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+        @if ((!isset($_COOKIE['theme'])) || ($_COOKIE['theme'] === '_default') || (!file_exists(public_path() . '/css/themes/' . $_COOKIE['theme'])))
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+        @else
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/themes/' . $_COOKIE['theme']) }}">
         @endif
 
         <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon.png') }}">
@@ -73,7 +76,7 @@
                 <div class="navbar-start"></div>
 
                 <center>
-                    <div class="field navbar-search">
+                    <div class="field navbar-search is-margin-bottom-small-screen-size">
                         <p class="control has-icons-right">
                             <input type="text" name="hashtag" placeholder="{{ __('app.search_jump_to_hashtag') }}" onkeypress="if (event.which === 13) location.href='{{ url('/t') }}/' + this.value;">
                             <span class="icon is-small is-right is-top-navbar">
@@ -100,53 +103,53 @@
                     @auth
                     <div class="navbar-item is-mobile-like-screen-width">
                         <div>
-                            <i class="far fa-star fa-lg is-pointer" title="{{ __('app.favorites') }}" onclick="window.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>
+                            <i class="far fa-star fa-lg is-pointer" title="{{ __('app.favorites') }}" onclick="window.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="window.toggleOverlay('favorites'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.favorites') }}</a></span>
                         </div>
                     </div>
                     @endauth
 
                     <div class="navbar-item is-mobile-like-screen-width">
                         <div>
-                            <i class="fas fa-hashtag fa-lg is-pointer" title="{{ __('app.popular_tags') }}" onclick="window.toggleOverlay('popular-tags'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>
+                            <i class="fas fa-hashtag fa-lg is-pointer" title="{{ __('app.popular_tags') }}" onclick="window.toggleOverlay('popular-tags'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="window.toggleOverlay('popular-tags'); if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.popular_tags') }}</a></span>
                         </div>
                     </div>
 
                     @auth
                     <div class="navbar-item">
                         <div>
-                            <i class="fas fa-upload fa-lg is-pointer" title="{{ __('app.member_upload') }}" onclick="location.href='{{ url('/upload') }}';"></i>
+                            <i class="fas fa-upload fa-lg is-pointer" title="{{ __('app.member_upload') }}" onclick="location.href='{{ url('/upload') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/upload') }}';">{{ __('app.member_upload') }}</a></span>
                         </div>
                     </div>
 
                     <div class="navbar-item">
                         <div>
-                            <i class="far fa-comment fa-lg is-pointer" title="{{ __('app.member_messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>
+                            <i class="far fa-comment fa-lg is-pointer" title="{{ __('app.messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/messages') }}';">{{ __('app.messages') }}</a></span>
                         </div>
                     </div>
 
                     <div class="navbar-item">
                         <div>
-                            <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"  onclick="location.href='{{ url('/notifications') }}';"></i>
+                            <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.notifications') }}</a></span>
                         </div>
                     </div>
 
                     <div class="navbar-item">
                         <div>
-                            <img class="avatar is-pointer" src="{{ asset('gfx/avatars/' . $user->avatar) }}" title="{{ __('app.profile') }}"  onclick="location.href='{{ url('/profile') }}';">
+                            <img class="avatar is-pointer" src="{{ asset('gfx/avatars/' . $user->avatar) }}" title="{{ __('app.profile') }}"  onclick="location.href='{{ url('/profile') }}';">&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/profile') }}';">{{ __('app.profile') }}</a></span>
                         </div>
                     </div>
 
                     @if ($user->maintainer)
                     <div class="navbar-item">
                         <div>
-                            <i class="fas fa-tools is-pointer" title="{{ __('app.maintainer_area') }}"  onclick="location.href='{{ url('/maintainer') }}';"></i>
+                            <i class="fas fa-tools is-pointer" title="{{ __('app.maintainer_area') }}"  onclick="location.href='{{ url('/maintainer') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/maintainer') }}';">{{ __('app.maintainer_area') }}</a></span>
                         </div>
                     </div>
                     @endif
 
                     <div class="navbar-item">
                         <div>
-                            <i class="fas fa-sign-out-alt fa-lg is-pointer" title="{{ __('app.logout') }}"  onclick="location.href='{{ url('/logout') }}';"></i>
+                            <i class="fas fa-sign-out-alt fa-lg is-pointer" title="{{ __('app.logout') }}"  onclick="location.href='{{ url('/logout') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/logout') }}';">{{ __('app.logout') }}</a></span>
                         </div>
                     </div>
                     @endauth
@@ -338,9 +341,34 @@
                         <hr/>
 
                         <div class="field">
+                            <label class="label">{{ __('app.theme') }}</label>
+                            <div class="control">
+                                <select id="themes">
+                                    <option value="_default">{{ __('app.theme_default') }}</option>
+                                    @foreach (\App\ThemeModel::getThemes() as $theme)
+                                        <option value="{{ $theme }}">{{ pathinfo($theme, PATHINFO_FILENAME) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <br/>
+
+                            <button type="button" class="button" onclick="window.setTheme(document.getElementById('themes').value);">{{ __('app.change_theme') }}</button>
+                        </div>
+
+                        <hr/>
+
+                        <div class="field">
                             <label class="label">{{ __('app.deactivate_label') }}</label>
                             <div class="control">
                                 <input type="button" value="{{ __('app.deactivate') }}" onclick="lockUser({{ auth()->id() }})">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.delete_account_label') }}</label>
+                            <div class="control">
+                                <input type="button" value="{{ __('app.delete_account') }}" onclick="deleteUserAccount()">
                             </div>
                         </div>
 
@@ -396,7 +424,7 @@
                             <button class="delete" aria-label="close" onclick="vue.bShowWelcomeOverlay = false;"></button>
                         </header>
                         <section class="modal-card-body is-stretched">
-                            {{ $welcome_overlay }}
+                            {!! $welcome_overlay !!}
                         </section>
                         <footer class="modal-card-foot is-stretched">
                             <button class="button is-success" onclick="vue.markWelcomeOverlayRead();">{{ __('app.continue') }}</button>
@@ -420,11 +448,15 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('javascript')
     <script>
-        @auth
         window.fetchNotifications = function() {
             window.vue.ajaxRequest('get', '{{ url('/notifications/list') }}', {}, function(response){
                 if (response.code === 200) {
                     if (response.data.length > 0) {
+                        let noyet = document.getElementById('no-notifications-yet');
+                        if (noyet) {
+                            noyet.remove();
+                        }
+
                         let indicator = document.getElementById('notification-indicator');
                         if (indicator) {
                             indicator.classList.remove('far');
@@ -498,7 +530,6 @@
                 }
             });
         };
-        @endauth
 
         document.addEventListener('DOMContentLoaded', () => {
             @auth

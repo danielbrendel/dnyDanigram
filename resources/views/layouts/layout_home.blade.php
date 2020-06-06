@@ -19,6 +19,8 @@
         <meta name="description" content="{{ env('APP_DESCRIPTION') }}">
         <meta name="tags" content="{{ env('APP_TAGS') }}">
 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">

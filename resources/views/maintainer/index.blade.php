@@ -43,7 +43,7 @@
                 <li><a href="#tab-page-8">{{ __('app.environment') }}</a></li>
                 <li><a href="#tab-page-9">{{ __('app.users') }}</a></li>
                 <li><a href="#tab-page-10">{{ __('app.newsletter') }}</a></li>
-                <li><a href="#tab-page-11">{{ __('app.custom_css') }}</a></li>
+                <li><a href="#tab-page-11">{{ __('app.themes') }}</a></li>
                 <li><a href="#tab-page-12">{{ __('app.favicon') }}</a></li>
                 <li><a href="#tab-page-13">{{ __('app.reports') }}</a></li>
                 <li><a href="#tab-page-14">{{ __('app.welcome_overlay') }}</a></li>
@@ -223,74 +223,6 @@
                         @endforeach
                         </tbody>
                     </table>
-
-                    <div class="modal" :class="{'is-active': bShowCreateFaq}">
-                        <div class="modal-background"></div>
-                        <div class="modal-card is-top-25">
-                            <header class="modal-card-head is-stretched">
-                                <p class="modal-card-title">{{ __('app.faq_create') }}</p>
-                                <button class="delete" aria-label="close" onclick="vue.bShowCreateFaq = false;"></button>
-                            </header>
-                            <section class="modal-card-body is-stretched">
-                                <form method="POST" action="{{ url('/maintainer/faq/create') }}" id="formCreateFaq">
-                                    @csrf
-
-                                    <div class="field is-stretched">
-                                        <label class="label">{{ __('app.faq_question') }}</label>
-                                        <div class="control">
-                                            <input type="text" name="question">
-                                        </div>
-                                    </div>
-
-                                    <div class="field is-stretched">
-                                        <label class="label">{{ __('app.faq_answer') }}</label>
-                                        <div class="control">
-                                            <textarea name="answer"></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </section>
-                            <footer class="modal-card-foot is-stretched">
-                                <button class="button is-success" onclick="document.getElementById('formCreateFaq').submit();">{{ __('app.save') }}</button>
-                                <button class="button" onclick="vue.bShowCreateFaq = false;">{{ __('app.cancel') }}</button>
-                            </footer>
-                        </div>
-                    </div>
-
-                    <div class="modal" :class="{'is-active': bShowEditFaq}">
-                        <div class="modal-background"></div>
-                        <div class="modal-card is-top-25">
-                            <header class="modal-card-head is-stretched">
-                                <p class="modal-card-title">{{ __('app.edit_faq') }}</p>
-                                <button class="delete" aria-label="close" onclick="vue.bShowEditFaq = false;"></button>
-                            </header>
-                            <section class="modal-card-body is-stretched">
-                                <form method="POST" action="{{ url('/maintainer/faq/edit') }}" id="formEditFaq">
-                                    @csrf
-
-                                    <input type="hidden" name="id" id="faq-id">
-
-                                    <div class="field is-stretched">
-                                        <label class="label">{{ __('app.faq_question') }}</label>
-                                        <div class="control">
-                                            <input type="text" name="question" id="faq-question">
-                                        </div>
-                                    </div>
-
-                                    <div class="field is-stretched">
-                                        <label class="label">{{ __('app.faq_answer') }}</label>
-                                        <div class="control">
-                                            <textarea name="answer" id="faq-answer"></textarea>
-                                        </div>
-                                    </div>
-                                </form>
-                            </section>
-                            <footer class="modal-card-foot is-stretched">
-                                <button class="button is-success" onclick="document.getElementById('formEditFaq').submit();">{{ __('app.save') }}</button>
-                                <button class="button" onclick="vue.bShowEditFaq = false;">{{ __('app.cancel') }}</button>
-                            </footer>
-                        </div>
-                    </div>
 
                     <br/>
 
@@ -497,22 +429,49 @@
                 </div>
 
                 <div id="tab-page-11">
-                    <form method="POST" action="{{ url('/maintainer/css/save') }}">
-                        @csrf
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.theme_name') }}</th>
+                            <th class="text-left">{{ __('app.theme_edit') }}</th>
+                            <th class="text-right">{{ __('app.theme_delete') }}</th>
+                            <th class="is-hidden"></th>
+                        </tr>
+                        </thead>
 
-                        <div class="field">
-                            <label class="label">{{ __('app.custom_css_code') }}</label>
-                            <div class="control">
-                                <textarea class="textarea" name="code">{{ $custom_css }}</textarea>
-                            </div>
-                        </div>
+                        <tbody>
+                        @foreach ($themes as $theme)
+                            <tr>
+                                <td>
+                                    {{ $theme->name }}
+                                </td>
 
-                        <div class="field">
-                            <div class="control">
-                                <input type="submit" value="{{ __('app.save') }}">
-                            </div>
+                                <td>
+                                    <a href="javascript:void(0)" onclick="document.getElementById('theme_name').value = '{{ $theme->name }}'; document.getElementById('theme_code').value = document.getElementById('td-theme-code-{{ $theme->name }}').value; window.vue.bShowEditTheme = true;">{{ __('app.theme_edit') }}</a>
+                                </td>
+
+                                <td class="text-right">
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.theme_confirm_delete') }}')) location.href = '{{ url('/maintainer/themes/delete?name=' . $theme->name) }}';">{{ __('app.theme_delete') }}</a>
+                                </td>
+
+                                <td><textarea id="td-theme-code-{{ $theme->name }}" class="is-hidden">{{ $theme->content }}</textarea></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <br/>
+
+                    <div class="field">
+                        <div class="control">
+                            <button type="button" class="button is-primary" onclick="window.vue.bShowCreateTheme = true;">{{ __('app.theme_create') }}</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
                 <div id="tab-page-12">
@@ -779,6 +738,135 @@
                     </form>
                 </div>
             </div>
+
+            <div class="modal" :class="{'is-active': bShowCreateFaq}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.faq_create') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowCreateFaq = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/faq/create') }}" id="formCreateFaq">
+                            @csrf
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.faq_question') }}</label>
+                                <div class="control">
+                                    <input type="text" name="question">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.faq_answer') }}</label>
+                                <div class="control">
+                                    <textarea name="answer"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formCreateFaq').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowCreateFaq = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowEditFaq}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.edit_faq') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowEditFaq = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/faq/edit') }}" id="formEditFaq">
+                            @csrf
+
+                            <input type="hidden" name="id" id="faq-id">
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.faq_question') }}</label>
+                                <div class="control">
+                                    <input type="text" name="question" id="faq-question">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.faq_answer') }}</label>
+                                <div class="control">
+                                    <textarea name="answer" id="faq-answer"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formEditFaq').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowEditFaq = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowCreateTheme}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.edit_theme') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowCreateTheme = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/themes/add') }}" id="formCreateTheme">
+                            @csrf
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.theme_name') }}</label>
+                                <div class="control">
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.theme_content') }}</label>
+                                <div class="control">
+                                    <textarea name="code"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formCreateTheme').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowCreateTheme = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowEditTheme}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.edit_faq') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowEditTheme = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/themes/edit') }}" id="formEditTheme">
+                            @csrf
+
+                            <input type="hidden" name="name" id="theme_name">
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.theme_content') }}</label>
+                                <div class="control">
+                                    <textarea name="code" id="theme_code"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formEditTheme').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowEditTheme = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
         </div>
         <br/><br/>
     </div>
@@ -801,7 +889,7 @@
 
                     document.getElementById('user_deactivated').checked = response.data.deactivated;
                     document.getElementById('user_admin').checked = response.data.admin;
-                    document.getElementById('user_maintainer').checked = response.data.admin;
+                    document.getElementById('user_maintainer').checked = response.data.maintainer;
                 } else {
                     document.getElementById('user_settings').classList.add('is-hidden');
                     alert(response.msg);
