@@ -195,7 +195,7 @@ class PostModel extends Model
         try {
             $attr = request()->validate([
                 'image' => 'file|required',
-                'description' => 'nullable',
+                'description' => 'nullable|max:4096',
                 'hashtags' => 'nullable'
             ]);
 
