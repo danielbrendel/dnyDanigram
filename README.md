@@ -28,12 +28,12 @@ feature list see below.
 + Mention system
 + Administration
 + Maintainer system
++ Theme system
 + Twitter news integration
 + HelpRealm integration
 + Installer
 + Security
 + Responsive design
-+ Theme system
 + Testcases
 + Documentation
 
