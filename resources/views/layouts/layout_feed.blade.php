@@ -35,6 +35,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
 
         @if ((!isset($_COOKIE['theme'])) || (((isset($_COOKIE['theme'])) && ($_COOKIE['theme'] !== '_default') && (!file_exists(public_path() . '/css/themes/' . $_COOKIE['theme'])))))
+
             @if ((\App\AppModel::getDefaultTheme() === '_default') || (!file_exists(public_path() . '/css/themes/' . \App\AppModel::getDefaultTheme())))
                 <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
             @else
@@ -355,7 +356,7 @@
                                 <select id="themes">
                                     <option value="_default">{{ __('app.theme_default') }}</option>
                                     @foreach (\App\ThemeModel::getThemes() as $theme)
-                                        <option value="{{ $theme }}">{{ pathinfo($theme, PATHINFO_FILENAME) }}</option>
+                                        <option value="{{ $theme }}" <?php if ((isset($_COOKIE['theme'])) && ($_COOKIE['theme'] == $theme)) { echo 'selected'; } ?>>{{ pathinfo($theme, PATHINFO_FILENAME) }}</option>
                                     @endforeach
                                 </select>
                             </div>

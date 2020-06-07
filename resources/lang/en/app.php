@@ -254,5 +254,6 @@ return [
     'theme_content' => 'Content code',
     'theme_default_saved' => 'Default theme saved',
     'theme_reset_default' => 'Reset theme to default',
-    'project_helprealm_tickettypeid' => 'Ticket type ID'
+    'project_helprealm_tickettypeid' => 'Ticket type ID',
+    'selected' => 'selected'
 ];

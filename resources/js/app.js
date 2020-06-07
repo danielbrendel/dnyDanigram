@@ -552,7 +552,7 @@ window.toggleOverlay = function(name) {
 window.setTheme = function(theme) {
     if ((theme !== null) && (typeof theme === 'string') && (theme.length > 0)) {
         let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-        document.cookie = 'theme=' + theme + '; expires=' + expDate.toUTCString() + ';';
+        document.cookie = 'theme=' + theme + '; expires=' + expDate.toUTCString() + '; path=/;';
 
         location.reload();
     }

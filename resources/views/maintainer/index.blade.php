@@ -457,6 +457,10 @@
                             <tr>
                                 <td>
                                     {{ $theme->name }}
+
+                                    @if (\App\AppModel::getDefaultTheme() === $theme->name)
+                                        <span>&nbsp;&dash;&nbsp;{{ __('app.selected') }}</span>
+                                    @endif
                                 </td>
 
                                 <td class="text-right">

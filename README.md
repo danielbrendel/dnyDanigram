@@ -33,7 +33,7 @@ feature list see below.
 + Installer
 + Security
 + Responsive design
-+ Themes
++ Theme system
 + Testcases
 + Documentation
 
