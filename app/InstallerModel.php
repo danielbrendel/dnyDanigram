@@ -54,10 +54,10 @@ class InstallerModel extends Model
             $envcontent .= 'APP_TITLE="${APP_PROJECTNAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
             $envcontent .= 'APP_DIVISION=' . $divisor . PHP_EOL;
             $envcontent .= 'APP_POSTPACKLIMIT=15' . PHP_EOL;
-            $envcontent .= 'APP_THREADPACKLIMIT=15' . PHP_EOL;
+            $envcontent .= 'APP_THREADPACKLIMIT=25' . PHP_EOL;
             $envcontent .= 'APP_PUSHPACKLIMIT=25' . PHP_EOL;
 			$envcontent .= 'APP_MESSAGEPACKLIMIT=15' . PHP_EOL;
-            $envcontent .= 'APP_TOPNTAGS=15' . PHP_EOL;
+            $envcontent .= 'APP_TOPNTAGS=10' . PHP_EOL;
 			$envcontent .= 'APP_PUBLICFEED=false' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
             $envcontent .= 'DB_CONNECTION=mysql' . PHP_EOL;
