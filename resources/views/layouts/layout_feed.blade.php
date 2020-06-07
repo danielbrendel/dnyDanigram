@@ -90,10 +90,10 @@
                     @guest
                         <div class="navbar-item">
                             <div class="buttons">
-                                <a class="button is-primary is-bold" href="javascript:void(0);" onclick="vue.bShowRegister = true;">
+                                <a class="button is-primary is-bold" href="javascript:void(0);" onclick="vue.bShowRegister = true; if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">
                                     {{ __('app.register') }}
                                 </a>
-                                <a class="button is-light" href="javascript:void(0);" onclick="vue.bShowLogin = true;">
+                                <a class="button is-light" href="javascript:void(0);" onclick="vue.bShowLogin = true; if (window.menuVisible) { document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">
                                     {{ __('app.login') }}
                                 </a>
                             </div>
