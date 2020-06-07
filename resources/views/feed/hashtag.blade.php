@@ -70,7 +70,7 @@
         window.hashtag = '{{ $hashtag }}';
 
         window.onscroll = function(ev) {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            if ((window.scrollY + window.innerHeight) >= document.body.scrollHeight - 10) {
                 fetchPosts();
             }
         };
