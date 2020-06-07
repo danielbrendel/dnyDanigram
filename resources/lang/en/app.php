@@ -251,5 +251,8 @@ return [
     'theme_created' => 'Theme has been created',
     'theme_edited' => 'Theme has been updated',
     'theme_deleted' => 'Theme has been deleted',
-    'theme_content' => 'Content code'
+    'theme_content' => 'Content code',
+    'theme_default_saved' => 'Default theme saved',
+    'theme_reset_default' => 'Reset theme to default',
+    'project_helprealm_tickettypeid' => 'Ticket type ID'
 ];

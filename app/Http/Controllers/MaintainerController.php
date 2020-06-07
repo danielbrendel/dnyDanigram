@@ -311,6 +311,26 @@ class MaintainerController extends Controller
     }
 
     /**
+     * Set default theme
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function setDefaultTheme()
+    {
+        try {
+            $name = request('name');
+
+            AppModel::saveSetting('default_theme', $name);
+
+            Artisan::call('cache:clear');
+
+            return back()->with('flash.success', __('app.theme_default_saved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
      * Edit theme
      *
      * @return \Illuminate\Http\RedirectResponse

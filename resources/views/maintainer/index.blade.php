@@ -337,6 +337,13 @@
                         </div>
 
                         <div class="field">
+                            <label class="label">{{ __('app.project_helprealm_tickettypeid') }}</label>
+                            <div class="control">
+                                <input type="text" name="ENV_HELPREALM_TICKETTYPEID" value="{{ env('HELPREALM_TICKETTYPEID') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
                             <div class="control">
                                 <input type="submit" value="{{ __('app.save') }}">
                             </div>
@@ -438,6 +445,7 @@
                         <thead>
                         <tr>
                             <th class="text-left">{{ __('app.theme_name') }}</th>
+                            <th class="text-left">{{ __('app.theme_default') }}</th>
                             <th class="text-left">{{ __('app.theme_edit') }}</th>
                             <th class="text-right">{{ __('app.theme_delete') }}</th>
                             <th class="is-hidden"></th>
@@ -449,6 +457,10 @@
                             <tr>
                                 <td>
                                     {{ $theme->name }}
+                                </td>
+
+                                <td class="text-right">
+                                    <a href="javascript:void(0)" onclick="location.href = '{{ url('/maintainer/themes/setdefault?name=' . $theme->name) }}';">{{ __('app.theme_default') }}</a>
                                 </td>
 
                                 <td>
@@ -469,9 +481,12 @@
 
                     <div class="field">
                         <div class="control">
-                            <button type="button" class="button is-primary" onclick="window.vue.bShowCreateTheme = true;">{{ __('app.theme_create') }}</button>
+                            <button type="button" class="button is-primary" onclick="window.vue.bShowCreateTheme = true;">{{ __('app.theme_create') }}</button>&nbsp;
+                            <button type="button" class="button" onclick="location.href = '{{ url('/maintainer/themes/setdefault?name=_default') }}';">{{ __('app.theme_reset_default') }}</button>
                         </div>
                     </div>
+
+                    <br/>
                 </div>
 
                 <div id="tab-page-12">

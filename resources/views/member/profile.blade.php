@@ -21,7 +21,7 @@
         <div class="member-form is-default-padding is-mobile-like-screen-width is-top-negative-mobile-like">
             @auth
                 @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
-            @elseauth
+            @elseguest
                 @include('widgets.userinfo', ['user' => $profile, 'admin' => false])
             @endauth
         </div>

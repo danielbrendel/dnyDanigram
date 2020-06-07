@@ -131,6 +131,17 @@ class AppModel extends Model
     }
 
     /**
+     * Get formatted project name
+     * @return mixed
+     */
+    public static function getDefaultTheme()
+    {
+        return Cache::remember('default_theme', AppModel::ONE_DAY, function() {
+            return DB::table('app_settings')->first()->default_theme;
+        });
+    }
+
+    /**
      * Return if string is a valid identifier for usernames and tags
      * @param $ident
      * @return false|int
@@ -487,7 +498,7 @@ class AppModel extends Model
                 'text' => $body,
                 'name' => $name,
                 'email' => $email,
-                'type' => '1',
+                'type' => env('HELPREALM_TICKETTYPEID'),
                 'prio' => '1',
                 'attachment' => null
             ];

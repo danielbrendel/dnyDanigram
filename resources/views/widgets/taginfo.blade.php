@@ -35,13 +35,15 @@
     <i class="fas fa-heart"></i>&nbsp;{{ __('app.stats_hearts', ['count' => $tag->stats->hearts]) }}<br/>
 </div>
 
-<div class="userinfo-favorite" id="favorite-ent_hashtag">
-    @if ($favorited)
-        <a href="javascript:void(0)" onclick="removeFavorite({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.favorite_remove') }}</a>
-    @else
-        <a href="javascript:void(0)" onclick="addFavorite({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.favorite_add') }}</a>
-    @endif
-</div>
+@auth
+    <div class="userinfo-favorite" id="favorite-ent_hashtag">
+        @if ($favorited)
+            <a href="javascript:void(0)" onclick="removeFavorite({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.favorite_remove') }}</a>
+        @else
+            <a href="javascript:void(0)" onclick="addFavorite({{ $tag->id }}, 'ENT_HASHTAG')">{{ __('app.favorite_add') }}</a>
+        @endif
+    </div>
+@endauth
 
 @auth
     @if ($user->admin)
