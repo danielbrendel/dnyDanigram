@@ -619,6 +619,9 @@ a:hover {
 .is-new-notification {
     background-color: rgb(128, 255, 128);
 }
+.is-new-notification:hover {
+    background-color: rgb(128, 200, 128);
+}
 
 //Messages
 .messages {

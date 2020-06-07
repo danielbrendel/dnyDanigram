@@ -17,10 +17,10 @@
     @endif
 </div>
 
-<div>
+<div class="favorites-list">
     @if (count($favorites) > 0)
         @foreach ($favorites as $favorite)
-            <div class="favorites-item is-block" id="favorite-item-{{ $favorite->id }}">
+            <div class="favorites-item is-block favorite-item-{{ strtolower($favorite->type) }}-{{ $favorite->entityId }}">
                 <div class="favorites-item-left is-inline-block">
                     @if ($favorite->type === 'ENT_HASHTAG')
                         <a href="{{ url('/t/' . $favorite->name) }}">#{{ $favorite->short_name }}</a>
@@ -33,17 +33,6 @@
             </div>
         @endforeach
     @else
-        <i>{{ __('app.no_favorites_yet') }}</i>
+        <i class="has-no-favorites-yet">{{ __('app.no_favorites_yet') }}</i>
     @endif
 </div>
-
-<script>
-    function deleteFavorite(id, eid, type)
-    {
-        window.vue.ajaxRequest('post', '{{ url('/f/remove') }}', { entityId: eid, entType: type }, function(response){
-            if (response.code === 200) {
-                document.getElementById('favorite-item-' + id).remove();
-            }
-        });
-    }
-</script>

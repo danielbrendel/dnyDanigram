@@ -1,13 +1,17 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-        (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2020 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
     GitHub: https://github.com/danielbrendel/
 
     Released under the MIT license
+*/
+
+/*
+    Sky theme
 */
 
 html,
@@ -20,6 +24,7 @@ body {
   background-size: cover;
   padding: 0;
   overflow-y: hidden;
+  background-image: linear-gradient(to bottom, rgb(204, 221, 229), rgb(248, 247, 242));
 }
 
 .container {
@@ -753,10 +758,6 @@ a:hover {
 
 .is-new-notification {
   background-color: #80ff80;
-}
-
-.is-new-notification:hover {
-  background-color: #80c880;
 }
 
 .messages {

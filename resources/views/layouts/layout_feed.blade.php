@@ -33,21 +33,8 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ \App\ThemeModel::getThemeToInclude() }}">
 
-        @if ((!isset($_COOKIE['theme'])) || (((isset($_COOKIE['theme'])) && ($_COOKIE['theme'] !== '_default') && (!file_exists(public_path() . '/css/themes/' . $_COOKIE['theme'])))))
-
-            @if ((\App\AppModel::getDefaultTheme() === '_default') || (!file_exists(public_path() . '/css/themes/' . \App\AppModel::getDefaultTheme())))
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-            @else
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/themes/' . \App\AppModel::getDefaultTheme()) }}">
-            @endif
-        @else
-            @if ($_COOKIE['theme'] === '_default')
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-            @else
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/themes/' . $_COOKIE['theme']) }}">
-            @endif
-        @endif
 
         <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon.png') }}">
 
@@ -422,10 +409,7 @@
             </div>
             @endauth
 
-            <?php
-                $welcome_overlay = \App\AppModel::getWelcomeOverlay();
-            ?>
-            @if (strlen($welcome_overlay) > 0)
+            @if (strlen(\App\AppModel::getWelcomeOverlay()) > 0)
                 <div class="modal" :class="{'is-active': bShowWelcomeOverlay}">
                     <div class="modal-background is-almost-not-transparent"></div>
                     <div class="modal-card">
@@ -434,19 +418,13 @@
                             <button class="delete" aria-label="close" onclick="vue.bShowWelcomeOverlay = false;"></button>
                         </header>
                         <section class="modal-card-body is-stretched">
-                            {!! $welcome_overlay !!}
+                            {!! \App\AppModel::getWelcomeOverlay() !!}
                         </section>
                         <footer class="modal-card-foot is-stretched">
                             <button class="button is-success" onclick="vue.markWelcomeOverlayRead();">{{ __('app.continue') }}</button>
                         </footer>
                     </div>
                 </div>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                       window.vue.handleWelcomeOverlay();
-                    });
-                </script>
             @endif
 
             @guest
@@ -477,7 +455,7 @@
                         response.data.forEach(function(elem, index) {
                             Push.create('{{ env('APP_PROJECTNAME') }}', {
                                 body: elem.shortMsg,
-                                icon: '{{ asset('gfx/logo.png') }}',
+                                icon: '{{ asset('favicon.png') }}',
                                 timeout: 4000,
                                 onClick: function () {
                                     window.focus();
@@ -548,6 +526,11 @@
             @endauth
 
             window.vue.handleCookieConsent();
+
+            @if (strlen(\App\AppModel::getWelcomeOverlay()) > 0)
+                window.vue.handleWelcomeOverlay();
+            @endif
+
 
             window.menuVisible = false;
 

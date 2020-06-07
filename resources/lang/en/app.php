@@ -255,5 +255,8 @@ return [
     'theme_default_saved' => 'Default theme saved',
     'theme_reset_default' => 'Reset theme to default',
     'project_helprealm_tickettypeid' => 'Ticket type ID',
-    'selected' => 'selected'
+    'selected' => 'selected',
+    'added_to_favorites_short' => 'You have been added to someones favorites',
+    'added_to_favorites' => ':name has added you to their favorites'
+
 ];

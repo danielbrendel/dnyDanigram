@@ -327,6 +327,8 @@ window.renderNotification = function (elem) {
     icon = 'fas fa-bolt';
   } else if (elem.type === 'PUSH_MESSAGED') {
     icon = 'far fa-comments';
+  } else if (elem.type === 'PUSH_FAVORITED') {
+    icon = 'far fa-star';
   }
 
   var html = "\n        <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n            <div class=\"notification-item-icon\"><i class=\"" + icon + "\"></i></div>\n            <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n        </div>\n    ";
@@ -403,23 +405,95 @@ window.reportTag = function (elemId) {
 };
 
 window.addFavorite = function (entityId, type) {
+  var entityName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   window.vue.ajaxRequest('post', window.location.origin + '/f/add', {
     entityId: entityId,
     entType: type
   }, function (response) {
     if (response.code === 200) {
-      document.getElementById('favorite-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="removeFavorite(' + entityId + ', \'' + type + '\')">Remove favorite</a>';
+      var elems = document.getElementsByClassName('favorite-' + type.toLowerCase());
+
+      for (var i = 0; i < elems.length; i++) {
+        elems[i].innerHTML = '<a href="javascript:void(0)" onclick="removeFavorite(' + entityId + ', \'' + type + '\', \'' + entityName + '\')">Remove favorite</a>';
+      }
+
+      var link = '';
+
+      if (type === 'ENT_HASHTAG') {
+        link = '<a href="' + window.location.origin + '/t/' + entityName + '">#' + entityName + '</a>';
+      } else if (type === 'ENT_USER') {
+        link = '<a href="' + window.location.origin + '/u/' + entityName + '">@' + entityName + '</a>';
+      }
+
+      var html = "\n          <div class=\"favorites-item is-block favorite-item-" + type.toLowerCase() + "-" + entityId + "\">\n                <div class=\"favorites-item-left is-inline-block\">\n                    " + link + "\n                </div>\n            </div>\n          ";
+      elems = document.getElementsByClassName('favorites-list');
+
+      for (var _i = 0; _i < elems.length; _i++) {
+        elems[_i].innerHTML += html;
+      }
+
+      elems = document.getElementsByClassName('has-no-favorites-yet');
+
+      while (elems.length > 0) {
+        elems[0].remove();
+      }
     }
   });
 };
 
 window.removeFavorite = function (entityId, type) {
+  var entityName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   window.vue.ajaxRequest('post', window.location.origin + '/f/remove', {
     entityId: entityId,
     entType: type
   }, function (response) {
     if (response.code === 200) {
-      document.getElementById('favorite-' + type.toLowerCase()).innerHTML = '<a href="javascript:void(0)" onclick="addFavorite(' + entityId + ', \'' + type + '\')">Add favorite</a>';
+      var elems = document.getElementsByClassName('favorite-' + type.toLowerCase());
+
+      for (var i = 0; i < elems.length; i++) {
+        elems[i].innerHTML = '<a href="javascript:void(0)" onclick="addFavorite(' + entityId + ', \'' + type + '\', \'' + entityName + '\')">Add favorite</a>';
+      }
+
+      elems = document.getElementsByClassName('favorite-item-' + type.toLowerCase() + '-' + entityId);
+
+      while (elems.length > 0) {
+        elems[0].remove();
+      }
+
+      elems = document.getElementsByClassName('favorites-item');
+
+      if (elems.length === 0) {
+        elems = document.getElementsByClassName('favorites-list');
+
+        for (var _i2 = 0; _i2 < elems.length; _i2++) {
+          elems[_i2].innerHTML += '<i class="has-no-favorites-yet">You don\'t have set any favorites yet</i>';
+        }
+      }
+    }
+  });
+};
+
+window.deleteFavorite = function (id, eid, type) {
+  window.vue.ajaxRequest('post', window.location.origin + '/f/remove', {
+    entityId: eid,
+    entType: type
+  }, function (response) {
+    if (response.code === 200) {
+      var elems = document.getElementsByClassName('favorite-item-' + type.toLowerCase() + '-' + eid);
+
+      while (elems.length > 0) {
+        elems[0].remove();
+      }
+
+      elems = document.getElementsByClassName('favorites-item');
+
+      if (elems.length === 0) {
+        elems = document.getElementsByClassName('favorites-list');
+
+        for (var i = 0; i < elems.length; i++) {
+          elems[i].innerHTML += '<i class="has-no-favorites-yet">You don\'t have set any favorites yet</i>';
+        }
+      }
     }
   });
 };

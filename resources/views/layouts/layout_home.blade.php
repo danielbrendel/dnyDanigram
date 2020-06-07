@@ -23,19 +23,8 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
-        @if ((!isset($_COOKIE['theme'])) || (((isset($_COOKIE['theme'])) && ($_COOKIE['theme'] !== '_default') && (!file_exists(public_path() . '/css/themes/' . $_COOKIE['theme'])))))
-            @if ((\App\AppModel::getDefaultTheme() === '_default') || (!file_exists(public_path() . '/css/themes/' . \App\AppModel::getDefaultTheme())))
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-            @else
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/themes/' . \App\AppModel::getDefaultTheme()) }}">
-            @endif
-        @else
-            @if ($_COOKIE['theme'] === '_default')
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-            @else
-                <link rel="stylesheet" type="text/css" href="{{ asset('css/themes/' . $_COOKIE['theme']) }}">
-            @endif
-        @endif
+        <link rel="stylesheet" type="text/css" href="{{ \App\ThemeModel::getThemeToInclude() }}">
+
         <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon.png') }}">
 
         <script src="{{ asset('js/fontawesome.js') }}"></script>

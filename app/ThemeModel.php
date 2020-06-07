@@ -126,4 +126,30 @@ class ThemeModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Determine which theme to include
+     *
+     * @return string
+     */
+    public static function getThemeToInclude()
+    {
+        try {
+            if ((!isset($_COOKIE['theme'])) || (((isset($_COOKIE['theme'])) && ($_COOKIE['theme'] !== '_default') && (!file_exists(public_path() . '/css/themes/' . $_COOKIE['theme']))))) {
+                if ((AppModel::getDefaultTheme() === '_default') || (!file_exists(public_path() . '/css/themes/' . AppModel::getDefaultTheme()))) {
+                    return asset('css/app.css');
+                } else {
+                    return asset('css/themes/' . AppModel::getDefaultTheme());
+                }
+            } else {
+                if ($_COOKIE['theme'] === '_default') {
+                    return asset('css/app.css');
+                } else {
+                    return asset('css/themes/' . $_COOKIE['theme']);
+                }
+            }
+        } catch (Exception $e) {
+            return asset('css/app.css');
+        }
+    }
 }

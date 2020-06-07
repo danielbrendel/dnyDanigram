@@ -54,11 +54,11 @@
             <a href="javascript:void(0)" onclick="window.vue.bShowEditProfile = true;">{{ __('app.edit_profile') }}</a>
         </div>
     @else
-        <div class="userinfo-favorite" id="favorite-ent_user">
+        <div class="userinfo-favorite favorite-ent_user">
             @if ($favorited)
-                <a href="javascript:void(0)" onclick="removeFavorite({{ $user->id }}, 'ENT_USER')">{{ __('app.favorite_remove') }}</a>
+                <a href="javascript:void(0)" onclick="removeFavorite({{ $user->id }}, 'ENT_USER', '{{ $user->username }}')">{{ __('app.favorite_remove') }}</a>
             @else
-                <a href="javascript:void(0)" onclick="addFavorite({{ $user->id }}, 'ENT_USER')">{{ __('app.favorite_add') }}</a>
+                <a href="javascript:void(0)" onclick="addFavorite({{ $user->id }}, 'ENT_USER', '{{ $user->username }}')">{{ __('app.favorite_add') }}</a>
             @endif
         </div>
 
