@@ -56,7 +56,7 @@ class MessageModel extends Model
 
             if ($user->email_on_message) {
                 $html = view('mail.message', ['name' => $user->username, 'sender' => $sender->username, 'message' => $message])->render();
-                MailerModel::sendMail($user->email, '[' . env('APP_PROJECTNAME') . '] ' . __('app.message_received'), $html);
+                MailerModel::sendMail($user->email, __('app.message_received'), $html);
             }
 
             return $msg->id;
