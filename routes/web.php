@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'MainController@index');
+Route::get('/clep/index', 'MainController@clep_index');
 Route::post('/register', 'MainController@register');
 Route::get('/confirm', 'MainController@confirm');
 Route::get('/reset', 'MainController@viewReset');
@@ -88,5 +89,5 @@ Route::post('/maintainer/favicon/save', 'MaintainerController@saveFavicon');
 Route::get('/maintainer/entity/lock', 'MaintainerController@lockEntity');
 Route::get('/maintainer/entity/delete', 'MaintainerController@deleteEntity');
 Route::get('/maintainer/entity/safe', 'MaintainerController@setSafeEntity');
-Route::post('/maintainer/welcomeoverlay', 'MaintainerController@welcomeOverlay');
+Route::post('/maintainer/welcomecontent', 'MaintainerController@welcomeContent');
 Route::post('/maintainer/formattedprojectname', 'MaintainerController@saveFormattedProjectName');

@@ -64,6 +64,25 @@ class MainController extends Controller
     }
 
     /**
+     * Show client endpoint index
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
+    public function clep_index()
+    {
+        if (((Auth::guest()) && (!env('APP_PUBLICFEED'))) || (!isset($_COOKIE['clep']))) {
+            return view('clep.index', [
+                'captcha' => CaptchaModel::createSum(session()->getId()),
+                'cookie_consent' => $this->cookie_consent
+            ]);
+        } else {
+            session()->reflash();
+
+            return redirect('/feed');
+        }
+    }
+
+    /**
      * View about page
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -46,7 +46,7 @@
                 <li><a href="#tab-page-11">{{ __('app.themes') }}</a></li>
                 <li><a href="#tab-page-12">{{ __('app.favicon') }}</a></li>
                 <li><a href="#tab-page-13">{{ __('app.reports') }}</a></li>
-                <li><a href="#tab-page-14">{{ __('app.welcome_overlay') }}</a></li>
+                <li><a href="#tab-page-14">{{ __('app.welcome_content') }}</a></li>
                 <li><a href="#tab-page-15">{{ __('app.project_name_formatted') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
@@ -720,13 +720,13 @@
                 </div>
 
                 <div id="tab-page-14">
-                    <form method="POST" action="{{ url('/maintainer/welcomeoverlay') }}">
+                    <form method="POST" action="{{ url('/maintainer/welcomecontent') }}">
                         @csrf
 
                         <div class="field">
-                            <label class="label">{{ __('app.welcome_overlay') }}</label>
+                            <label class="label">{{ __('app.welcome_content') }}</label>
                             <div class="control">
-                                <textarea class="textarea" name="content">{{ $settings->welcome_overlay }}</textarea>
+                                <textarea class="textarea" name="content">{{ $settings->welcome_content }}</textarea>
                             </div>
                         </div>
 

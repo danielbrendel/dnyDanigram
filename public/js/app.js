@@ -173,14 +173,14 @@ var vue = new Vue({
     },
     markWelcomeOverlayRead: function markWelcomeOverlayRead() {
       var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-      document.cookie = 'welcome_overlay=1; expires=' + expDate.toUTCString() + ';';
+      document.cookie = 'welcome_content=1; expires=' + expDate.toUTCString() + ';';
       this.bShowWelcomeOverlay = false;
     },
     handleWelcomeOverlay: function handleWelcomeOverlay() {
       var cookies = document.cookie.split(';');
 
       for (var i = 0; i < cookies.length; i++) {
-        if (cookies[i].indexOf('welcome_overlay') !== -1) {
+        if (cookies[i].indexOf('welcome_content') !== -1) {
           this.bShowWelcomeOverlay = false;
           return;
         }

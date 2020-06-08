@@ -31,6 +31,7 @@ feature list see below.
 + Theme system
 + Twitter news integration
 + HelpRealm integration
++ Client endpoint
 + Installer
 + Security
 + Responsive design

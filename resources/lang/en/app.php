@@ -223,8 +223,8 @@ return [
     'entity_deleted' => 'Entity has been deleted',
     'entity_set_safe' => 'Entity has been made safe',
     'entity_locked' => 'Entity has been locked',
-    'welcome_overlay' => 'Welcome overlay',
-    'welcome_overlay_content_saved' => 'Welcome overlay content saved',
+    'welcome_content' => 'Welcome content',
+    'welcome_content_saved' => 'Welcome content saved',
     'continue' => 'Continue',
     'project_name_formatted' => 'Formatted project name',
     'project_name_formatted_description' => 'Here you can specify HTML code for the project name which will be used for the top menu or the guest index page etc. If nothing is specified then the default format will be used',
@@ -257,6 +257,6 @@ return [
     'project_helprealm_tickettypeid' => 'Ticket type ID',
     'selected' => 'selected',
     'added_to_favorites_short' => 'You have been added to someones favorites',
-    'added_to_favorites' => ':name has added you to their favorites'
-
+    'added_to_favorites' => ':name has added you to their favorites',
+    'continue_without_account' => 'Continue without account'
 ];

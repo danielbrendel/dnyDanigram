@@ -109,13 +109,13 @@ class AppModel extends Model
     }
 
     /**
-     * Get welcome overlay text
+     * Get welcome content
      * @return mixed
      */
-    public static function getWelcomeOverlay()
+    public static function getWelcomeContent()
     {
-        return Cache::remember('welcome_overlay', AppModel::ONE_DAY, function() {
-            return DB::table('app_settings')->first()->welcome_overlay;
+        return Cache::remember('welcome_content', AppModel::ONE_DAY, function() {
+            return DB::table('app_settings')->first()->welcome_content;
         });
     }
 

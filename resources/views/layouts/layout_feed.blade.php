@@ -409,7 +409,7 @@
             </div>
             @endauth
 
-            @if (strlen(\App\AppModel::getWelcomeOverlay()) > 0)
+            @if (strlen(\App\AppModel::getWelcomeContent()) > 0)
                 <div class="modal" :class="{'is-active': bShowWelcomeOverlay}">
                     <div class="modal-background is-almost-not-transparent"></div>
                     <div class="modal-card">
@@ -418,7 +418,7 @@
                             <button class="delete" aria-label="close" onclick="vue.bShowWelcomeOverlay = false;"></button>
                         </header>
                         <section class="modal-card-body is-stretched">
-                            {!! \App\AppModel::getWelcomeOverlay() !!}
+                            {!! \App\AppModel::getWelcomeContent() !!}
                         </section>
                         <footer class="modal-card-foot is-stretched">
                             <button class="button is-success" onclick="vue.markWelcomeOverlayRead();">{{ __('app.continue') }}</button>
@@ -527,7 +527,7 @@
 
             window.vue.handleCookieConsent();
 
-            @if (strlen(\App\AppModel::getWelcomeOverlay()) > 0)
+            @if (strlen(\App\AppModel::getWelcomeContent()) > 0)
                 window.vue.handleWelcomeOverlay();
             @endif
 
