@@ -572,8 +572,8 @@ window.lockHashtag = function (id) {
     }
 };
 
-window.lockUser = function (id) {
-    if (confirm('Do you want to lock this profile?')) {
+window.lockUser = function (id, self = false) {
+    if (confirm('Do you want to deactivate this profile?')) {
         window.vue.ajaxRequest('get', window.location.origin + '/u/' + id + '/deactivate', {}, function (response) {
             alert(response.msg);
 
@@ -585,8 +585,9 @@ window.lockUser = function (id) {
 };
 
 window.deleteUserAccount = function () {
-    if (confirm('Do you really want to delete your profile?')) {
-        window.vue.ajaxRequest('get', window.location.origin + '/u/deleteownaccount', {}, function (response) {
+    let pw = prompt("Do you really want to delete your profile? If yes then please enter your password in order to proceed.");
+    if (pw.length > 0) {
+        window.vue.ajaxRequest('post', window.location.origin + '/u/deleteownaccount', { password: pw }, function (response) {
             alert(response.msg);
 
             if (response.code == 200) {

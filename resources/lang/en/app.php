@@ -258,5 +258,7 @@ return [
     'selected' => 'selected',
     'added_to_favorites_short' => 'You have been added to someones favorites',
     'added_to_favorites' => ':name has added you to their favorites',
-    'continue_without_account' => 'Continue without account'
+    'continue_without_account' => 'Continue without account',
+    'invalid_password' => 'Invalid password specified',
+    'account_deleted' => 'Account has been deleted'
 ];

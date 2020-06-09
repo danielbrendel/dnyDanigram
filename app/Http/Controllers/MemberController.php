@@ -22,6 +22,8 @@ use App\ReportModel;
 use App\TagsModel;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
@@ -185,7 +187,17 @@ class MemberController extends Controller
     public function deleteOwnAccount()
     {
         try {
+            $pw = request('password');
+
+            $user = User::get(auth()->id());
+            if ((!$user) || (!Hash::check($pw, $user->password))) {
+                return response()->json(array('code' => 403, 'msg' => __('app.invalid_password')));
+            }
+
             AppModel::deleteEntity(auth()->id(), 'ENT_USER');
+
+            Auth::logout();
+            request()->session()->invalidate();
 
             return response()->json(array('code' => 200, 'msg' => __('app.account_deleted')));
         } catch (\Exception $e) {
