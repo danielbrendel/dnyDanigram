@@ -17,11 +17,15 @@
 @section('body')
     <div class="column is-2 is-sidespacing"></div>
 
-    <div class="column is-8">
+    <div class="column is-8 is-default-padding">
         <div class="has-text-centered info-headline"><h1>{{ __('app.about') }}</h1></div>
 
         <div>
             {!! $about_content !!}
+        </div>
+
+        <div class="home-go-back">
+            <a href="javascript:window.history.back();">{{ __('app.go_back') }}</a>
         </div>
     </div>
 

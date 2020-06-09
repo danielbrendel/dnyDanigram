@@ -260,5 +260,7 @@ return [
     'added_to_favorites' => ':name has added you to their favorites',
     'continue_without_account' => 'Continue without account',
     'invalid_password' => 'Invalid password specified',
-    'account_deleted' => 'Account has been deleted'
+    'account_deleted' => 'Account has been deleted',
+    'go_back' => 'Go back',
+    'more' => 'More'
 ];

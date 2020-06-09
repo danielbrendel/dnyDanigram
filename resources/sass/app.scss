@@ -137,7 +137,7 @@ a:hover {
     width: 100% !important;
 }
 .is-mobile-like-screen-width {
-    @media screen and (min-width: 769px) {
+    @media screen and (min-width: 1087px) {
         display: none;
     }
 }
@@ -159,6 +159,10 @@ a:hover {
     @media screen and (max-width: 480px) {
         top: 25px;
     }
+}
+.is-menu-project-related-links a {
+    color: rgb(150, 150, 150);
+    font-size: 0.8em;
 }
 .is-margin-right-15 {
     margin-right: 15px;
@@ -231,6 +235,10 @@ a:hover {
 }
 .home-bottombar a {
     color: rgb(32, 80, 125);
+}
+.home-go-back {
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 //Tag cloud infos

@@ -23,6 +23,10 @@
         <div>
             <a class="twitter-timeline" href="https://twitter.com/{{ env('TWITTER_NEWS') }}?ref_src=twsrc%5Etfw">Tweets by {{ env('TWITTER_NEWS') }}</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
+
+        <div class="home-go-back">
+            <a href="javascript:window.history.back();">{{ __('app.go_back') }}</a>
+        </div>
     </div>
 
     <div class="column is-2 is-sidespacing"></div>

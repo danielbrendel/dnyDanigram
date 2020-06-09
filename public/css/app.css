@@ -166,7 +166,7 @@ a:hover {
   width: 100% !important;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1087px) {
   .is-mobile-like-screen-width {
     display: none;
   }
@@ -198,6 +198,11 @@ a:hover {
   .is-fix-single-post-position {
     top: 25px;
   }
+}
+
+.is-menu-project-related-links a {
+  color: #969696;
+  font-size: 0.8em;
 }
 
 .is-margin-right-15 {
@@ -287,6 +292,11 @@ a:hover {
 
 .home-bottombar a {
   color: #20507d;
+}
+
+.home-go-back {
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .tagcloud {

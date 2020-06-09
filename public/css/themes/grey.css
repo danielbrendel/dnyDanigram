@@ -171,7 +171,7 @@ a:hover {
   width: 100% !important;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1087px) {
   .is-mobile-like-screen-width {
     display: none;
   }
@@ -179,6 +179,11 @@ a:hover {
 
 .is-top-negative-mobile-like {
   top: -15px !important;
+}
+
+.is-menu-project-related-links a {
+  color: #969696;
+  font-size: 0.8em;
 }
 
 @media screen and (max-width: 480px) {
@@ -292,6 +297,11 @@ a:hover {
 
 .home-bottombar a {
   color: #20507d;
+}
+
+.home-go-back {
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .tagcloud {

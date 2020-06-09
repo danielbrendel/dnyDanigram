@@ -23,6 +23,10 @@
         <div>
             {!! $tos_content !!}
         </div>
+
+        <div class="home-go-back">
+            <a href="javascript:window.history.back();">{{ __('app.go_back') }}</a>
+        </div>
     </div>
 
     <div class="column is-2 is-sidespacing"></div>

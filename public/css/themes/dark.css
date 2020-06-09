@@ -199,7 +199,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
   width: 100% !important;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1087px) {
   .is-mobile-like-screen-width {
     display: none;
   }
@@ -225,6 +225,16 @@ input[type="submit"], button[class="button"], input[type="button"] {
   .is-fix-single-post-position {
     top: -78px;
   }
+}
+
+.is-menu-project-related-links a {
+	color: rgb(150, 150, 150) !important;
+	font-size: 0.8em;
+}
+
+.is-menu-project-related-links a:hover {
+	background-color: unset !important;
+	color: rgb(200, 200, 200) !important;
 }
 
 @media screen and (max-width: 480px) {
@@ -320,6 +330,11 @@ input[type="submit"], button[class="button"], input[type="button"] {
 
 .home-bottombar a {
   color: #20507d;
+}
+
+.home-go-back {
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .tagcloud {

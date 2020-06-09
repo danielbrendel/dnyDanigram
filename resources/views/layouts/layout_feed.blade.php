@@ -150,6 +150,30 @@
                         </div>
                     </div>
                     @endauth
+
+                    <div class="navbar-item has-dropdown is-hoverable is-menu-project-related-links is-mobile-like-screen-width">
+                        <a class="navbar-link" href="javascript:void(0);" onclick="document.getElementById('navbar-dropdown-links').classList.toggle('is-hidden');">
+                            {{ __('app.more') }}
+                        </a>
+
+                        <div class="navbar-dropdown is-menu-project-related-links is-hidden" id="navbar-dropdown-links">
+                            @if (env('TWITTER_NEWS', null) !== null)
+                                <a class="navbar-item" class="navbar-item" href="{{ url('/news') }}">{{ __('app.news') }}</a>
+                            @endif
+
+                            <a class="navbar-item" href="{{ url('/about') }}">{{ __('app.about') }}</a>
+
+                            <a class="navbar-item" href="{{ url('/faq') }}">{{ __('app.faq') }}</a>
+
+                            <a class="navbar-item" href="{{ url('/tos') }}">{{ __('app.tos') }}</a>
+
+                            <a class="navbar-item" href="{{ url('/imprint') }}">{{ __('app.imprint') }}</a>
+
+                            @if (env('HELPREALM_WORKSPACE', null) !== null)
+                                <a class="navbar-item" href="{{ url('/contact') }}">{{ __('app.contact') }}</a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
