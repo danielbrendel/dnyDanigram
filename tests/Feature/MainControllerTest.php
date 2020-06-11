@@ -77,6 +77,14 @@ class MainControllerTest extends TestCase
         $response->assertViewIs('home.news');
     }
 
+    public function testContact()
+    {
+        $response = $this->get('/contact');
+
+        $response->assertStatus(200);
+        $response->assertViewIs('home.contact');
+    }
+
     public function testLogout()
     {
         $response = $this->get('/logout');
