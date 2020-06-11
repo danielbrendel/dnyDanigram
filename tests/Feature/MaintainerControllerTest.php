@@ -85,4 +85,15 @@ class MaintainerControllerTest extends TestCase
         $this->assertEquals(200, $content->code);
         $this->assertIsObject($content->data);
     }
+
+    public function testNewsletter()
+    {
+        $response = $this->post('/maintainer/newsletter', [
+            'subject' => md5(random_bytes(55)),
+            'content' => md5(random_bytes(55))
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+    }
 }
