@@ -129,8 +129,27 @@ class MaintainerControllerTest extends TestCase
 
     public function testAddTheme()
     {
+        $themeName = md5(random_bytes(55));
+
         $response = $this->post('/maintainer/themes/add', [
-            'name' => md5(random_bytes(55)),
+            'name' => $themeName,
+            'code' => 'body { background-color: rgb(' . rand(0, 255) . ', ' . rand(0, 255) . ', ' . rand(0, 255) . '); }'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+
+        return $themeName;
+    }
+
+    /**
+     * @param $themeName
+     * @depends testAddTheme
+     */
+    public function testEditTheme($themeName)
+    {
+        $response = $this->post('/maintainer/themes/edit', [
+            'name' => $themeName,
             'code' => 'body { background-color: rgb(' . rand(0, 255) . ', ' . rand(0, 255) . ', ' . rand(0, 255) . '); }'
         ]);
 
