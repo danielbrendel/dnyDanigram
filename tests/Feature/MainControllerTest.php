@@ -107,4 +107,21 @@ class MainControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect('/');
     }
+
+    public function testRegister()
+    {
+        $username = md5(random_bytes(55));
+        $password = md5(random_bytes(55));
+
+        $response = $this->post('/register', [
+            'username' => $username,
+            'email' => $username . '@domain.tld',
+            'password' => $password,
+            'password_confirmation' => $password,
+            'captcha' => CaptchaModel::querySum(session()->getId())
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+    }
 }
