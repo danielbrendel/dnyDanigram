@@ -263,5 +263,8 @@ return [
     'account_deleted' => 'Account has been deleted',
     'go_back' => 'Go back',
     'more' => 'More',
-    'post_invalid_image' => 'Invalid image file specified. The following images are allowed: PNG, JPG/JPEG and GIF'
+    'post_invalid_image' => 'Invalid image file specified. The following images are allowed: PNG, JPG/JPEG and GIF',
+    'nsfw' => 'NSFW',
+    'nsfw_show' => 'Show NSFW content',
+    'nsfw_enable_filter' => 'Enable NSFW filter',
 ];

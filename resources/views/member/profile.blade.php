@@ -103,7 +103,13 @@
                 if (response.code == 200) {
                     if (!response.last) {
                         response.data.forEach(function (elem, index) {
-                            let insertHtml = renderPost(elem);
+                            adminOrOwner = false;
+
+                            @auth
+                                adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                            @endauth
+
+                            let insertHtml = renderPost(elem, adminOrOwner, window.vue.getNsfwFlag());
 
                             document.getElementById('feed').innerHTML += insertHtml;
 

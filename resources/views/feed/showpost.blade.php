@@ -138,7 +138,13 @@
 
             window.vue.ajaxRequest('get', '{{ url('/fetch/post') }}?post={{ $post->id }}', {}, function(response){
                 if (response.code == 200) {
-                    let insertHtml = renderPost(response.elem);
+                    adminOrOwner = false;
+
+                    @auth
+                        adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                    @endauth
+
+                    let insertHtml = renderPost(response.elem, adminOrOwner, window.vue.getNsfwFlag());
                     document.getElementById('singlepost').innerHTML = insertHtml;
                 }
             });

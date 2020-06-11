@@ -377,6 +377,23 @@
                             <button type="button" class="button" onclick="window.setTheme(document.getElementById('themes').value);">{{ __('app.change_theme') }}</button>
                         </div>
 
+                        @if (env('APP_ENABLENSFWFILTER'))
+                            <hr/>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.nsfw_show') }}</label>
+                                <div class="control">
+                                    <input type="checkbox" value="1" id="checkbox_nsfw" data-role="checkbox" data-type="2" data-caption="{{ __('app.nsfw_show') }}">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type="button" onclick="window.vue.saveNsfwFlag(document.getElementById('checkbox_nsfw').checked);" value="{{ __('app.save') }}">
+                                </div>
+                            </div>
+                        @endif
+
                         <hr/>
 
                         <div class="field">
@@ -555,6 +572,7 @@
                 window.vue.handleWelcomeOverlay();
             @endif
 
+            document.getElementById('checkbox_nsfw').checked = (window.vue.getNsfwFlag()) ? true : false;
 
             window.menuVisible = false;
 

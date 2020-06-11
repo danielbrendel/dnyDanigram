@@ -1001,3 +1001,11 @@ input[type="submit"], button[class="button"], input[type="button"] {
     background-color: rgb(80, 80, 78) !important;
 }
 
+.is-center-width {
+    width: 65%;
+}
+
+img.show-post-image-nsfw {
+    filter: blur(1.5rem);
+    -webkit-filter: blur(1.5rem);
+}

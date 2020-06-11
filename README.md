@@ -20,6 +20,7 @@ feature list see below.
 + Comment on images
 + Heart images, comments, hashtags
 + See latest and top posts and comments
++ NSFW safety
 + Hashtag system
 + Favorites system
 + Notification system

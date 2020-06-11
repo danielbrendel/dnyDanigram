@@ -23,6 +23,7 @@ class CreatePostModelsTable extends Migration
             $table->integer('hearts')->default(0);
             $table->integer('reports')->default(0);
             $table->boolean('locked')->default(false);
+            $table->boolean('nsfw')->default(false);
             $table->timestamps();
         });
     }

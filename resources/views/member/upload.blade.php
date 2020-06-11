@@ -45,6 +45,14 @@
                         </div>
                     </div>
 
+                    @if (env('APP_ENABLENSFWFILTER'))
+                        <div class="field">
+                            <div class="control">
+                                <input type="checkbox" name="nsfw" data-role="checkbox" data-style="2" data-caption="{{ __('app.nsfw') }}" value="1">
+                            </div>
+                        </div>
+                    @endif
+
                     <div>
                         <hr/>
                     </div>

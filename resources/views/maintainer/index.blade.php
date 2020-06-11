@@ -269,7 +269,14 @@
                         <div class="field">
                             <label class="label">{{ __('app.project_public_feed') }}</label>
                             <div class="control">
-                                <input type="checkbox" value="1" data-role="checkbox" data-type="2" data-caption="{{ __('app.project_public_feed') }}" @if (env('APP_PUBLICFEED')) {{ 'selected' }} @endif>
+                                <input name="ENV_APP_PUBLICFEED" type="checkbox" value="1" data-role="checkbox" data-type="2" data-caption="{{ __('app.project_public_feed') }}" @if (env('APP_PUBLICFEED')) {{ 'selected' }} @endif>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.nsfw_enable_filter') }}</label>
+                            <div class="control">
+                                <input name="ENV_APP_ENABLENSFWFILTER" type="checkbox" value="1" data-role="checkbox" data-type="2" data-caption="{{ __('app.nsfw_enable_filter') }}" @if (env('APP_ENABLENSFWFILTER')) {{ 'selected' }} @endif>
                             </div>
                         </div>
 

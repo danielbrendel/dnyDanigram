@@ -124,6 +124,24 @@ let vue = new Vue({
             return 2;
         },
 
+        getNsfwFlag: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('nsfw') !== -1) {
+                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
+                }
+            }
+
+            return 0;
+        },
+
+        saveNsfwFlag: function(value) {
+            let curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'nsfw=' + ((value) ? '1' : '0') + '; expires=' + curDate.toUTCString() + '; path=/;';
+            alert('Setting has been saved');
+        },
+
         ajaxRequest: function (method, url, data = {}, successfunc = function(data){}, finalfunc = function(){})
         {
             //Perform ajax request
@@ -210,7 +228,7 @@ let vue = new Vue({
     }
 });
 
-window.renderPost = function(elem, adminOrOwner = false)
+window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0)
 {
     let hashTags = '';
     let hashArr = elem.hashtags.trim().split(' ');
@@ -276,11 +294,12 @@ window.renderPost = function(elem, adminOrOwner = false)
                             </div>
 
                             <div class="show-post-image">
-                                <img class="is-pointer is-stretched" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">
+                                <img id="post-image-` + elem.id + `" class="is-pointer is-stretched ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">
                             </div>
 
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">
                                 <div class="is-inline-block"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
+                                <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="document.getElementById('post-image-` + elem.id + `').classList.remove('show-post-image-nsfw'); this.remove();" class="is-color-grey">[NSFW] Show</a></center></div>
                                 <div class="is-inline-block is-right float-right"><a class="is-color-grey" href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 

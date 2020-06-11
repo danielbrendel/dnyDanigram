@@ -97,7 +97,7 @@
                                 adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
                             @endauth
 
-                            let insertHtml = renderPost(elem, adminOrOwner);
+                            let insertHtml = renderPost(elem, adminOrOwner, window.vue.getNsfwFlag());
 
                             document.getElementById('feed').innerHTML += insertHtml;
 

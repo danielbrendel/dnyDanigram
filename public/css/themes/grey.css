@@ -931,3 +931,11 @@ a:hover {
   }
 }
 
+.is-center-width {
+    width: 65%;
+}
+
+img.show-post-image-nsfw {
+    filter: blur(1.5rem);
+    -webkit-filter: blur(1.5rem);
+}

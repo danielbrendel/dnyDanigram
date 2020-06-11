@@ -196,14 +196,15 @@ class PostModel extends Model
             $attr = request()->validate([
                 'image' => 'file|required',
                 'description' => 'nullable|max:4096',
-                'hashtags' => 'nullable'
+                'hashtags' => 'nullable',
+                'nsfw' => 'nullable'
             ]);
 
             $user = User::where('id', '=', auth()->id())->first();
 
             $hashtagList = explode(' ', trim($attr['hashtags']));
             foreach ($hashtagList as $ht) {
-                if ($ht[0] === '#') {
+                if ((strlen($ht) > 1) && ($ht[0] === '#')) {
                     $ht = substr($ht, 1);
                 }
 
@@ -229,15 +230,22 @@ class PostModel extends Model
                     throw new Exception('createThumbFile failed', 500);
                 }
 
+                if (!isset($attr['nsfw'])) {
+                    $attr['nsfw'] = false;
+                }
+
                 $post = new PostModel();
                 $post->image_full = $fname . '.' . $fext;
                 $post->image_thumb = $fname . '_thumb.' . $fext;
                 $post->description = $attr['description'];
                 $post->hashtags = str_replace('#', '', trim($attr['hashtags']));
-                if ($post->hashtags[strlen($post->hashtags)-1] !== ' ') {
-                    $post->hashtags .= ' ';
+                if (strlen($post->hashtags > 0)) {
+                    if ($post->hashtags[strlen($post->hashtags) - 1] !== ' ') {
+                        $post->hashtags .= ' ';
+                    }
                 }
                 $post->userId = auth()->id();
+                $post->nsfw = (bool)$attr['nsfw'];
                 $post->save();
 
                 foreach ($hashtagList as $ht) {
