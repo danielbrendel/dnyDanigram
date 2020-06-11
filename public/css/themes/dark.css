@@ -59,7 +59,7 @@ a:hover {
   text-decoration: none;
 }
 
-.textarea, textarea, input[type="text"], input[type="email"], input[type="file"], select, label[class="label"] {
+.textarea, textarea, input[type="text"], input[type="email"], input[type="password"], input[type="file"], select, label[class="label"] {
     background-color: rgb(50, 50, 48) !important;
     color: rgb(240, 240, 240) !important;
 }
