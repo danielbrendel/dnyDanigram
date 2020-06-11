@@ -76,7 +76,7 @@ class UserModelTest extends TestCase
 
             $attr = array(
                 'username' => md5(random_bytes(55)),
-                'email' => md5(random_bytes(55)) . '@test.de',
+                'email' => md5(random_bytes(55)) . '@domain.tld',
                 'password' => 'password',
                 'password_confirmation' => 'password',
                 'captcha' => $captcha[0] + $captcha[1]
@@ -151,7 +151,7 @@ class UserModelTest extends TestCase
     public function testChangeEmail()
     {
         try {
-            $email = md5(random_bytes(55)) . '@test.de';
+            $email = md5(random_bytes(55)) . '@domain.tld';
 
             User::changeEMail(env('TEST_USERID2'), $email);
 

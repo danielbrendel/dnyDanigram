@@ -34,7 +34,7 @@
         <server name="TEST_USERID" value="1"/>
         <server name="TEST_USERID2" value="2"/>
         <server name="TEST_USERID_NONEXISTENT" value="1111111111"/>
-        <server name="TEST_USEREMAIL" value="test@test.de"/>
+        <server name="TEST_USEREMAIL" value="test@domain.tld"/>
         <server name="TEST_USERNAME" value="username"/>
         <server name="TEST_USERPW" value="test"/>
         <server name="TEST_ENTITY_HASHTAG" value="1"/>

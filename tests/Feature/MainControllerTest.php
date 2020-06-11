@@ -14,6 +14,7 @@
 
 namespace Tests\Feature;
 
+use App\CaptchaModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -77,12 +78,26 @@ class MainControllerTest extends TestCase
         $response->assertViewIs('home.news');
     }
 
-    public function testContact()
+    public function testViewContact()
     {
         $response = $this->get('/contact');
 
         $response->assertStatus(200);
         $response->assertViewIs('home.contact');
+    }
+
+    public function testContact()
+    {
+        $response = $this->post('/contact', [
+            'name' => md5(random_bytes(55)),
+            'email' => md5(random_bytes(55)) . '@domain.tld',
+            'subject' => md5(random_bytes(55)),
+            'content' => md5(random_bytes(55)),
+            'captcha' => CaptchaModel::querySum(session()->getId())
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
     }
 
     public function testLogout()
