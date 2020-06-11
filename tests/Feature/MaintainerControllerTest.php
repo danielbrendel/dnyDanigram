@@ -126,4 +126,15 @@ class MaintainerControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect();
     }
+
+    public function testAddTheme()
+    {
+        $response = $this->post('/maintainer/themes/add', [
+            'name' => md5(random_bytes(55)),
+            'code' => 'body { background-color: rgb(' . rand(0, 255) . ', ' . rand(0, 255) . ', ' . rand(0, 255) . '); }'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+    }
 }
