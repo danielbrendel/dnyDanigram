@@ -106,4 +106,14 @@ class MaintainerControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect();
     }
+
+    public function testSaveFormattedProjectName()
+    {
+        $response = $this->post('/maintainer/formattedprojectname', [
+            'content' => '<strong>' . md5(random_bytes(55)) . '</strong>'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+    }
 }
