@@ -73,7 +73,7 @@ class PostModel extends Model
         );
 
         for ($i = 0; $i < count($imagetypes); $i++) {
-            if ($ext == $imagetypes[$i][0]) {
+            if (strtolower($ext) == $imagetypes[$i][0]) {
                 if (exif_imagetype($file . '.' . $ext) == $imagetypes[$i][1])
                     return $imagetypes[$i][1];
             }

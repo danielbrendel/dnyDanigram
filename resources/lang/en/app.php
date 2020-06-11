@@ -262,5 +262,6 @@ return [
     'invalid_password' => 'Invalid password specified',
     'account_deleted' => 'Account has been deleted',
     'go_back' => 'Go back',
-    'more' => 'More'
+    'more' => 'More',
+    'post_invalid_image' => 'Invalid image file specified. The following images are allowed: PNG, JPG/JPEG and GIF'
 ];
