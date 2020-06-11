@@ -343,6 +343,10 @@ class MaintainerController extends Controller
                 'code' => 'required'
             ]);
 
+            if (pathinfo($attr['name'], PATHINFO_EXTENSION) !== 'css') {
+                $attr['name'] .= '.css';
+            }
+
             ThemeModel::editTheme($attr['name'], $attr['code']);
 
             return back()->with('flash.success', __('app.theme_edited'));
@@ -355,6 +359,10 @@ class MaintainerController extends Controller
     {
         try {
             $name = request('name');
+
+            if (pathinfo($name, PATHINFO_EXTENSION) !== 'css') {
+                $name .= '.css';
+            }
 
             ThemeModel::deleteTheme($name);
 

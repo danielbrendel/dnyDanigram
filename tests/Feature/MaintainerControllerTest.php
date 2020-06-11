@@ -119,9 +119,7 @@ class MaintainerControllerTest extends TestCase
 
     public function testSetDefaultTheme()
     {
-        $response = $this->get('/maintainer/themes/setdefault', [
-            'name' => '_default'
-        ]);
+        $response = $this->get('/maintainer/themes/setdefault?name=_default');
 
         $response->assertStatus(302);
         $response->assertRedirect();
@@ -145,6 +143,7 @@ class MaintainerControllerTest extends TestCase
     /**
      * @param $themeName
      * @depends testAddTheme
+     * @return string
      */
     public function testEditTheme($themeName)
     {
@@ -152,6 +151,20 @@ class MaintainerControllerTest extends TestCase
             'name' => $themeName,
             'code' => 'body { background-color: rgb(' . rand(0, 255) . ', ' . rand(0, 255) . ', ' . rand(0, 255) . '); }'
         ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+
+        return $themeName;
+    }
+
+    /**
+     * @param $themeName
+     * @depends testEditTheme
+     */
+    public function testDeleteTheme($themeName)
+    {
+        $response = $this->get('/maintainer/themes/delete?name=' . $themeName);
 
         $response->assertStatus(302);
         $response->assertRedirect();
