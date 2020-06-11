@@ -96,4 +96,14 @@ class MaintainerControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect();
     }
+
+    public function testWelcomeContent()
+    {
+        $response = $this->post('/maintainer/welcomecontent', [
+            'content' => md5(random_bytes(55))
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+    }
 }
