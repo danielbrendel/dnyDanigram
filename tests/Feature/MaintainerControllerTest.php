@@ -116,4 +116,14 @@ class MaintainerControllerTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect();
     }
+
+    public function testSetDefaultTheme()
+    {
+        $response = $this->get('/maintainer/themes/setdefault', [
+            'name' => '_default'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect();
+    }
 }
