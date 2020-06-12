@@ -206,7 +206,7 @@ a:hover {
 }
 
 .is-center-width {
-  width: 65%;
+  width: 61%;
 }
 
 .is-margin-right-15 {
@@ -395,6 +395,10 @@ a:hover {
 
 .show-post-image {
   margin-top: 14px;
+}
+
+.show-post-attributes {
+	margin-top: 10px;
 }
 
 img.show-post-image-nsfw {
