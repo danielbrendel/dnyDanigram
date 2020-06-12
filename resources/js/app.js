@@ -210,7 +210,7 @@ let vue = new Vue({
     }
 });
 
-window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0)
+window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunctionalityEnabled = false)
 {
     let hashTags = '';
     let hashArr = elem.hashtags.trim().split(' ');
@@ -218,13 +218,17 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0)
         hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
     });
 
+    let nsfwOption = `<a href="javascript:void(0)" onclick="toggleNsfw(\` + elem.id + \`); window.vue.togglePostOptions(document.getElementById('post-options-\` + elem.id + \`'));" class="dropdown-item">
+                Toggle NSFW
+            </a> `;
+
     let adminOptions = '';
     if (adminOrOwner) {
         adminOptions = `
             <a href="javascript:void(0)" onclick="lockPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
                 Lock
             </a>
-        `;
+            ` + ((nsfwFunctionalityEnabled) ? nsfwOption : '');
     }
 
     let html = `
@@ -564,6 +568,14 @@ window.lockPost = function (id) {
         });
     }
 };
+
+window.toggleNsfw = function (id) {
+    if (confirm('Do you want to toggle the nsfw flag for this post?')) {
+        window.vue.ajaxRequest('get', window.location.origin + '/p/' + id + '/togglensfw', {}, function (response) {
+            alert(response.msg);
+        });
+    }
+}
 
 window.lockHashtag = function (id) {
     if (confirm('Do you want to lock this hashtag?')) {

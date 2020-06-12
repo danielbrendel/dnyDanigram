@@ -123,7 +123,7 @@
                                 nsfwFlag = {{ (int)$user->nsfw }};
                             @endauth
 
-                            let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag);
+                            let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }});
 
                             document.getElementById('feed').innerHTML += insertHtml;
 

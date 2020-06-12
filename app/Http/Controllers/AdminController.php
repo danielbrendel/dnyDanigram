@@ -52,6 +52,34 @@ class AdminController extends Controller
     }
 
     /**
+     * Toggle nsfw flag
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleNsfw($id)
+    {
+        try {
+            $post = PostModel::getPost($id);
+            if (!$post) {
+                return response()->json(array('code' => 404, 'msg' => __('app.post_not_found')));
+            }
+
+            $user = User::get(auth()->id());
+            if ((!$user) || ((!$user->admin) && ($user->id !== $post->userId))) {
+                return response()->json(array('code' => 403, 'msg' => __('app.insufficient_permissions')));
+            }
+
+            $post->nsfw = !$post->nsfw;
+            $post->save();
+
+            return response()->json(array('code' => 200, 'msg' => __('app.post_nsfw_toggled')));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
      * Lock hashtag
      *
      * @param $id

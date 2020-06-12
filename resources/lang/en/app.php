@@ -267,4 +267,5 @@ return [
     'nsfw' => 'NSFW',
     'nsfw_show' => 'Show NSFW content',
     'nsfw_enable_filter' => 'Enable NSFW filter',
+    'post_nsfw_toggled' => 'NSFW flag toggled'
 ];
