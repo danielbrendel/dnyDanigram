@@ -942,10 +942,14 @@ a:hover {
 }
 
 .is-center-width {
-    width: 65%;
+    width: 61%;
 }
 
 img.show-post-image-nsfw {
     filter: blur(1.5rem);
     -webkit-filter: blur(1.5rem);
+}
+
+.show-post-attributes {
+	margin-top: 10px;
 }
