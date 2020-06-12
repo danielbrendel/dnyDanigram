@@ -41,6 +41,7 @@ class CreateUsersTable extends Migration
             $table->boolean('deactivated')->default(false);
             $table->boolean('admin')->default(false);
             $table->boolean('maintainer')->default(false);
+            $table->boolean('nsfw')->default(false);
             $table->timestamps();
         });
     }

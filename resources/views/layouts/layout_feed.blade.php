@@ -356,6 +356,14 @@
                                 </div>
                             </div>
 
+                            @if (env('APP_ENABLENSFWFILTER'))
+                                <div class="field">
+                                    <div class="control">
+                                        <input type="checkbox" name="nsfw" value="1" data-role="checkbox" data-style="2" data-caption="{{ __('app.nsfw_show') }}" @if ($user->nsfw) {{ 'checked' }} @endif>
+                                    </div>
+                                </div>
+                            @endif
+
                             <input type="submit" id="editprofilesubmit" class="is-hidden">
                         </form>
 
@@ -376,23 +384,6 @@
 
                             <button type="button" class="button" onclick="window.setTheme(document.getElementById('themes').value);">{{ __('app.change_theme') }}</button>
                         </div>
-
-                        @if (env('APP_ENABLENSFWFILTER'))
-                            <hr/>
-
-                            <div class="field">
-                                <label class="label">{{ __('app.nsfw_show') }}</label>
-                                <div class="control">
-                                    <input type="checkbox" value="1" id="checkbox_nsfw" data-role="checkbox" data-type="2" data-caption="{{ __('app.nsfw_show') }}">
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <div class="control">
-                                    <input type="button" onclick="window.vue.saveNsfwFlag(document.getElementById('checkbox_nsfw').checked);" value="{{ __('app.save') }}">
-                                </div>
-                            </div>
-                        @endif
 
                         <hr/>
 
@@ -571,8 +562,6 @@
             @if (strlen(\App\AppModel::getWelcomeContent()) > 0)
                 window.vue.handleWelcomeOverlay();
             @endif
-
-            document.getElementById('checkbox_nsfw').checked = (window.vue.getNsfwFlag()) ? true : false;
 
             window.menuVisible = false;
 

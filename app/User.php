@@ -409,6 +409,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Save nsfw flag
+     *
+     * @param $id
+     * @param $value
+     * @throws Exception
+     */
+    public static function saveNsfwFlag($id, $value)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->nsfw = $value;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Get user by ID, username or e-mail
      *
      * @param $ident

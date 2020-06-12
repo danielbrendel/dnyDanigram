@@ -80,7 +80,8 @@ class MemberController extends Controller
                'password_confirm' => 'nullable',
                'email' => 'nullable|email',
                 'email_on_message' => 'nullable|numeric',
-                'newsletter' => 'nullable|numeric'
+                'newsletter' => 'nullable|numeric',
+                'nsfw' => 'nullable'
             ]);
 
             if (isset($attr['username'])) {
@@ -111,8 +112,13 @@ class MemberController extends Controller
                 $attr['newsletter'] = false;
             }
 
+            if (!isset($attr['nsfw'])) {
+                $attr['nsfw'] = false;
+            }
+
             User::saveEmailOnMessageFlag(auth()->id(), (bool)$attr['email_on_message']);
             User::saveNewsletterFlag(auth()->id(), (bool)$attr['newsletter']);
+            User::saveNsfwFlag(auth()->id(), (bool)$attr['nsfw']);
 
             $av = request()->file('avatar');
             if ($av != null) {

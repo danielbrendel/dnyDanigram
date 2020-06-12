@@ -144,7 +144,13 @@
                         adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
                     @endauth
 
-                    let insertHtml = renderPost(response.elem, adminOrOwner, window.vue.getNsfwFlag());
+                    let nsfwFlag = 0;
+
+                    @auth
+                        nsfwFlag = {{ (int)$user->nsfw }};
+                    @endauth
+
+                    let insertHtml = renderPost(response.elem, adminOrOwner, nsfwFlag);
                     document.getElementById('singlepost').innerHTML = insertHtml;
                 }
             });

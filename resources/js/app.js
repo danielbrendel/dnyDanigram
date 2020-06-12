@@ -124,24 +124,6 @@ let vue = new Vue({
             return 2;
         },
 
-        getNsfwFlag: function () {
-            let cookies = document.cookie.split(';');
-
-            for (let i = 0; i < cookies.length; i++) {
-                if (cookies[i].indexOf('nsfw') !== -1) {
-                    return parseInt(cookies[i].substr(cookies[i].indexOf('=') + 1));
-                }
-            }
-
-            return 0;
-        },
-
-        saveNsfwFlag: function(value) {
-            let curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-            document.cookie = 'nsfw=' + ((value) ? '1' : '0') + '; expires=' + curDate.toUTCString() + '; path=/;';
-            alert('Setting has been saved');
-        },
-
         ajaxRequest: function (method, url, data = {}, successfunc = function(data){}, finalfunc = function(){})
         {
             //Perform ajax request
