@@ -75,7 +75,7 @@
                 <center>
                     <div class="field navbar-search is-margin-bottom-small-screen-size">
                         <p class="control has-icons-right">
-                            <input type="text" name="hashtag" placeholder="{{ __('app.search_jump_to_hashtag') }}" onkeypress="if (event.which === 13) location.href='{{ url('/t') }}/' + this.value;">
+                            <input type="text" name="hashtag" placeholder="{{ __('app.search_jump_to_hashtag') }}" onkeypress="if (event.which === 13) location.href='{{ url('/t') }}/' + this.value.replace('#', '');">
                             <span class="icon is-small is-right is-top-navbar">
                                 <i class="fas fa-search"></i>
                             </span>
