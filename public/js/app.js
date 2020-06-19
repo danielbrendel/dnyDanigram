@@ -118,7 +118,8 @@ var vue = new Vue({
     bShowLogin: false,
     bShowWelcomeOverlay: false,
     bShowCreateTheme: false,
-    bShowEditTheme: false
+    bShowEditTheme: false,
+    bShowReplyThread: false
   },
   methods: {
     invalidLoginEmail: function invalidLoginEmail() {
@@ -308,14 +309,72 @@ window.renderPost = function (elem) {
 
 window.renderThread = function (elem) {
   var adminOrOwner = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var isSubComment = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var parentId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
   var options = '';
 
   if (adminOrOwner) {
     options = "\n            <a onclick=\"showEditComment(" + elem.id + "); window.vue.toggleCommentOptions(document.getElementById('thread-options-" + elem.id + "'));\" href=\"javascript:void(0)\" class=\"dropdown-item\">\n                <i class=\"far fa-edit\"></i>&nbsp;Edit\n            </a>\n            <a onclick=\"lockComment(" + elem.id + "); window.vue.toggleCommentOptions(document.getElementById('thread-options-" + elem.id + "'));\" href=\"javascript:void(0)\" class=\"dropdown-item\">\n                <i class=\"fas fa-times\"></i>&nbsp;Lock\n            </a>\n            <hr class=\"dropdown-divider\">\n        ";
   }
 
-  var html = "\n        <div id=\"thread-" + elem.id + "\">\n            <a name=\"" + elem.id + "\"></a>\n\n            <div class=\"thread-header\">\n                <div class=\"thread-header-avatar is-inline-block\">\n                    <img width=\"24\" height=\"24\" src=\"" + window.location.origin + "/gfx/avatars/" + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href = '" + window.location.origin + "/u/" + elem.user.username + "';\" title=\"\">\n                </div>\n\n                <div class=\"thread-header-info is-inline-block\">\n                    <div><a href=\"" + window.location.origin + "/u/" + elem.user.username + "\" class=\"is-color-grey\">" + elem.user.username + "</a></div>\n                    <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                </div>\n\n                <div class=\"thread-header-options is-inline-block\">\n                    <div class=\"dropdown is-right\" id=\"thread-options-" + elem.id + "\">\n                        <div class=\"dropdown-trigger\">\n                            <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.togglePostOptions(document.getElementById('thread-options-" + elem.id + "'));\"></i>\n                        </div>\n                        <div class=\"dropdown-menu\" role=\"menu\">\n                            <div class=\"dropdown-content\">\n                                " + options + "\n\n                                <a href=\"javascript:void(0)\" onclick=\"reportComment(" + elem.id + "); window.vue.togglePostOptions(document.getElementById('thread-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                                    Report\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"thread-text is-color-grey\" id=\"thread-text-" + elem.id + "\">\n                " + elem.text + "\n            </div>\n\n            <div class=\"thread-footer\">\n                <div class=\"thread-footer-hearts\"><i id=\"heart-ent_comment-" + elem.id + "\" class=\"" + (elem.userHearted ? 'fas fa-heart is-hearted' : 'far fa-heart') + " is-pointer\" onclick=\"window.vue.toggleHeart(" + elem.id + ", 'ENT_COMMENT')\"></i>&nbsp;<span id=\"count-ent_comment-" + elem.id + "\">" + elem.hearts + "</span></div>\n            </div>\n        </div>\n    ";
+  var expandThread = '';
+
+  if (elem.subCount > 0) {
+    expandThread = "<div class=\"thread-footer-subthread is-inline-block is-centered\"><a class=\"is-color-grey\" href=\"javascript:void(0)\" onclick=\"fetchSubThreadPosts(" + elem.id + ")\">Expand thread</a></div>";
+  }
+
+  var replyThread = "<div class=\"is-inline-block float-right\"><a class=\"is-color-grey\" href=\"javascript:void(0)\" onclick=\"document.getElementById('thread-reply-parent').value = '" + (isSubComment ? parentId : elem.id) + "'; document.getElementById('thread-reply-textarea').value = '@" + elem.user.username + " '; window.vue.bShowReplyThread = true;\">Reply</a></div>";
+  var html = "\n        <div id=\"thread-" + elem.id + "\" " + (isSubComment ? 'class="is-sub-comment"' : '') + ">\n            <a name=\"" + elem.id + "\"></a>\n\n            <div class=\"thread-header\">\n                <div class=\"thread-header-avatar is-inline-block\">\n                    <img width=\"24\" height=\"24\" src=\"" + window.location.origin + "/gfx/avatars/" + elem.user.avatar + "\" class=\"is-pointer\" onclick=\"location.href = '" + window.location.origin + "/u/" + elem.user.username + "';\" title=\"\">\n                </div>\n\n                <div class=\"thread-header-info is-inline-block\">\n                    <div><a href=\"" + window.location.origin + "/u/" + elem.user.username + "\" class=\"is-color-grey\">" + elem.user.username + "</a></div>\n                    <div title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                </div>\n\n                <div class=\"thread-header-options is-inline-block\">\n                    <div class=\"dropdown is-right\" id=\"thread-options-" + elem.id + "\">\n                        <div class=\"dropdown-trigger\">\n                            <i class=\"fas fa-ellipsis-v is-pointer\" onclick=\"window.vue.togglePostOptions(document.getElementById('thread-options-" + elem.id + "'));\"></i>\n                        </div>\n                        <div class=\"dropdown-menu\" role=\"menu\">\n                            <div class=\"dropdown-content\">\n                                " + options + "\n\n                                <a href=\"javascript:void(0)\" onclick=\"reportComment(" + elem.id + "); window.vue.togglePostOptions(document.getElementById('thread-options-" + elem.id + "'));\" class=\"dropdown-item\">\n                                    Report\n                                </a>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"thread-text is-color-grey\" id=\"thread-text-" + elem.id + "\">\n                " + elem.text + "\n            </div>\n\n            <div class=\"thread-footer\">\n                <div class=\"thread-footer-hearts\"><i id=\"heart-ent_comment-" + elem.id + "\" class=\"" + (elem.userHearted ? 'fas fa-heart is-hearted' : 'far fa-heart') + " is-pointer\" onclick=\"window.vue.toggleHeart(" + elem.id + ", 'ENT_COMMENT')\"></i>&nbsp;<span id=\"count-ent_comment-" + elem.id + "\">" + elem.hearts + "</span></div>\n                " + expandThread + "\n                " + replyThread + "\n            </div>\n\n            <div id=\"sub-thread-" + elem.id + "\"></div>\n        </div>\n    ";
   return html;
+};
+
+window.fetchSubThreadPosts = function (parentId) {
+  if (typeof window.subPosts === 'undefined') {
+    window.subPosts = [];
+  }
+
+  if (typeof window.subPosts[parentId] === 'undefined') {
+    window.subPosts[parentId] = null;
+  }
+
+  document.getElementById('sub-thread-' + parentId).innerHTML += '<center><i class="fas fa-spinner fa-spin" id="spinner-sub-thread-' + parentId + '"></i></center>';
+  window.vue.ajaxRequest('get', window.location.origin + '/c/subthread?parent=' + parentId + (window.subPosts[parentId] !== null ? '&paginate=' + window.subPosts[parentId] : ''), {}, function (response) {
+    if (response.code == 200) {
+      document.getElementById('spinner-sub-thread-' + parentId).remove();
+      var html = '';
+      console.log(response.data);
+      response.data.forEach(function (elem, index) {
+        html += window.renderThread(elem, elem.adminOrOwner, true, parentId);
+      });
+      document.getElementById('sub-thread-' + parentId).innerHTML += html;
+
+      if (response.last === false) {
+        if (document.getElementById('sub-comment-more-' + parentId) !== null) {
+          document.getElementById('sub-comment-more-' + parentId).remove();
+        }
+
+        document.getElementById('sub-thread-' + parentId).innerHTML += "<center><div id=\"sub-comment-more-" + parentId + "\"><a href=\"javascript:void(0)\" onclick=\"fetchSubThreadPosts(" + parentId + ")\">View more</a></div></center>";
+      }
+
+      if (response.data.length === 0) {
+        if (document.getElementById('sub-comment-more-' + parentId) !== null) {
+          document.getElementById('sub-comment-more-' + parentId).remove();
+        }
+      } else {
+        window.subPosts[parentId] = response.data[response.data.length - 1].id;
+      }
+    }
+  });
+};
+
+window.replyThread = function (parentId, text) {
+  window.vue.ajaxRequest('post', window.location.origin + '/c/reply?parent=' + parentId, {
+    text: text
+  }, function (response) {
+    if (response.code === 200) {
+      location.href = window.location.origin + '/p/' + response.post.postId + '?c=' + response.post.id + '#' + response.post.id;
+    }
+  });
 };
 
 window.renderNotification = function (elem) {

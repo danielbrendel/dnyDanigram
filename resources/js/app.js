@@ -27,6 +27,7 @@ let vue = new Vue({
         bShowWelcomeOverlay: false,
         bShowCreateTheme: false,
         bShowEditTheme: false,
+        bShowReplyThread: false,
     },
 
     methods: {
@@ -299,7 +300,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
     return html;
 };
 
-window.renderThread = function(elem, adminOrOwner = false) {
+window.renderThread = function(elem, adminOrOwner = false, isSubComment = false, parentId = 0) {
     let options = '';
 
     if (adminOrOwner) {
@@ -314,8 +315,15 @@ window.renderThread = function(elem, adminOrOwner = false) {
         `;
     }
 
+    let expandThread = '';
+    if (elem.subCount > 0) {
+        expandThread = `<div class="thread-footer-subthread is-inline-block is-centered"><a class="is-color-grey" href="javascript:void(0)" onclick="fetchSubThreadPosts(` + elem.id + `)">Expand thread</a></div>`;
+    }
+
+    let replyThread = `<div class="is-inline-block float-right"><a class="is-color-grey" href="javascript:void(0)" onclick="document.getElementById('thread-reply-parent').value = '` + ((isSubComment) ? parentId : elem.id) + `'; document.getElementById('thread-reply-textarea').value = '@` + elem.user.username + ` '; window.vue.bShowReplyThread = true;">Reply</a></div>`;
+
     let html = `
-        <div id="thread-` + elem.id + `">
+        <div id="thread-` + elem.id + `" ` + ((isSubComment) ? 'class="is-sub-comment"': '') + `>
             <a name="` + elem.id + `"></a>
 
             <div class="thread-header">
@@ -352,11 +360,65 @@ window.renderThread = function(elem, adminOrOwner = false) {
 
             <div class="thread-footer">
                 <div class="thread-footer-hearts"><i id="heart-ent_comment-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_COMMENT')"></i>&nbsp;<span id="count-ent_comment-` + elem.id + `">` + elem.hearts + `</span></div>
+                ` + expandThread + `
+                ` + replyThread + `
             </div>
+
+            <div id="sub-thread-` + elem.id + `"></div>
         </div>
     `;
 
     return html;
+};
+
+window.fetchSubThreadPosts = function(parentId) {
+    if (typeof window.subPosts === 'undefined') {
+        window.subPosts = [];
+    }
+
+    if (typeof window.subPosts[parentId] === 'undefined') {
+        window.subPosts[parentId] = null;
+    }
+
+    document.getElementById('sub-thread-' + parentId).innerHTML += '<center><i class="fas fa-spinner fa-spin" id="spinner-sub-thread-' + parentId + '"></i></center>';
+
+    window.vue.ajaxRequest('get', window.location.origin + '/c/subthread?parent=' + parentId + ((window.subPosts[parentId] !== null) ? '&paginate=' + window.subPosts[parentId] : ''), {}, function(response){
+        if (response.code == 200) {
+            document.getElementById('spinner-sub-thread-' + parentId).remove();
+
+            let html = '';
+            console.log(response.data);
+            response.data.forEach(function(elem, index) {
+                html += window.renderThread(elem, elem.adminOrOwner, true, parentId)
+            });
+
+            document.getElementById('sub-thread-' + parentId).innerHTML += html;
+
+            if (response.last === false) {
+                if (document.getElementById('sub-comment-more-' + parentId) !== null) {
+                    document.getElementById('sub-comment-more-' + parentId).remove();
+                }
+
+                document.getElementById('sub-thread-' + parentId).innerHTML += `<center><div id="sub-comment-more-` + parentId + `"><a href="javascript:void(0)" onclick="fetchSubThreadPosts(` + parentId + `)">View more</a></div></center>`;
+            }
+
+            if (response.data.length === 0) {
+                if (document.getElementById('sub-comment-more-' + parentId) !== null) {
+                    document.getElementById('sub-comment-more-' + parentId).remove();
+                }
+            } else {
+                window.subPosts[parentId] = response.data[response.data.length - 1].id;
+            }
+        }
+    });
+};
+
+window.replyThread = function(parentId, text){
+  window.vue.ajaxRequest('post', window.location.origin + '/c/reply?parent=' + parentId, { text: text }, function(response){
+      if (response.code === 200) {
+          location.href = window.location.origin + '/p/' + response.post.postId + '?c=' + response.post.id + '#' + response.post.id;
+      }
+  });
 };
 
 window.renderNotification = function(elem, newItem = false) {

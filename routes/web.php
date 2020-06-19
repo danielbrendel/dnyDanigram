@@ -55,6 +55,9 @@ Route::post('/u/deleteownaccount', 'MemberController@deleteOwnAccount');
 Route::post('/f/add', 'FavoritesController@add');
 Route::post('/f/remove', 'FavoritesController@remove');
 
+Route::get('/c/subthread', 'PostsController@fetchSubThread');
+Route::post('/c/reply', 'PostsController@replyThread');
+
 Route::get('/notifications/list', 'NotificationController@list');
 Route::get('/notifications/fetch', 'NotificationController@fetch');
 

@@ -267,5 +267,9 @@ return [
     'nsfw' => 'NSFW',
     'nsfw_show' => 'Show NSFW content',
     'nsfw_enable_filter' => 'Enable NSFW filter',
-    'post_nsfw_toggled' => 'NSFW flag toggled'
+    'post_nsfw_toggled' => 'NSFW flag toggled',
+    'reply_thread' => 'Reply to post',
+    'please_login' => 'You must be logged in in order to perform this action',
+    'user_replied_comment_short' => 'User :name has replied to your comment',
+    'user_replied_comment' => 'User :name has replied to your <a href=":item">comment</a>: :msg'
 ];

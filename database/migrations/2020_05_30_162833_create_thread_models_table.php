@@ -29,6 +29,7 @@ class CreateThreadModelsTable extends Migration
             $table->id();
             $table->integer('userId');
             $table->integer('postId');
+            $table->integer('parentId')->default(0);
             $table->string('text', 4096);
             $table->integer('hearts')->default(0);
             $table->integer('reports')->default(0);

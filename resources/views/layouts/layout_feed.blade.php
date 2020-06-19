@@ -441,6 +441,42 @@
             </div>
             @endauth
 
+            <div class="modal" :class="{'is-active': bShowReplyThread}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.reply_thread') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowReplyThread = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        @auth
+                        <form id="formReplyThread">
+                            @csrf
+
+                            <input type="hidden" id="thread-reply-parent" name="parent">
+
+                            <div class="field">
+                                <label class="label">{{ __('app.text') }}</label>
+                                <div class="control">
+                                    <textarea name="text" id="thread-reply-textarea"></textarea>
+                                </div>
+                            </div>
+
+                            <input type="button" id="replythreadsubmit" onclick="replyThread(document.getElementById('thread-reply-parent').value, document.getElementById('thread-reply-textarea').value); vue.bShowReplyThread = false;" class="is-hidden">
+                        </form>
+                        @elseguest
+                            <b>{{ __('app.please_login') }}</b>
+                        @endauth
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        @auth
+                            <button class="button is-success" onclick="document.getElementById('replythreadsubmit').click();">{{ __('app.submit') }}</button>
+                        @endauth
+                        <button class="button" onclick="vue.bShowReplyThread = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
             @if (strlen(\App\AppModel::getWelcomeContent()) > 0)
                 <div class="modal" :class="{'is-active': bShowWelcomeOverlay}">
                     <div class="modal-background is-almost-not-transparent"></div>

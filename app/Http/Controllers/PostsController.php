@@ -273,6 +273,33 @@ class PostsController extends Controller
                 $thread->adminOrOwner = User::isAdmin(auth()->id()) || ($thread->userId === auth()->id());
                 $thread->userHearted = HeartModel::hasUserHearted(auth()->id(), $thread->id, 'ENT_COMMENT');
                 $thread->diffForHumans = $thread->created_at->diffForHumans();
+                $thread->subCount = ThreadModel::getSubCount($thread->id);
+            }
+
+            return response()->json(array('code' => 200, 'data' => $threads, 'last' => (count($threads) === 0)));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Fetch sub thread comment pack
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchSubThread()
+    {
+        try {
+            $parentId = request('parent');
+            $paginate = request('paginate', null);
+
+            $threads = ThreadModel::getSubPosts($parentId, $paginate);
+            foreach ($threads as &$thread) {
+                $thread->user = User::get($thread->userId);
+                $thread->hearts = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread->id)->count();
+                $thread->adminOrOwner = User::isAdmin(auth()->id()) || ($thread->userId === auth()->id());
+                $thread->userHearted = HeartModel::hasUserHearted(auth()->id(), $thread->id, 'ENT_COMMENT');
+                $thread->diffForHumans = $thread->created_at->diffForHumans();
             }
 
             return response()->json(array('code' => 200, 'data' => $threads, 'last' => (count($threads) === 0)));
@@ -299,6 +326,28 @@ class PostsController extends Controller
             return redirect('/p/' . $id . '#' . $threadId);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Reply to thread
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function replyThread()
+    {
+        try {
+            $parentId = request('parent');
+
+            $attr = request()->validate([
+               'text' => 'required|max:4096'
+            ]);
+
+            $reply = ThreadModel::reply(auth()->id(), $parentId, $attr['text']);
+
+            return response()->json(array('code' => 200, 'post' => $reply));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 

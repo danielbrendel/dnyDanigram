@@ -181,6 +181,9 @@ a:hover {
     border-radius: 15px;
     padding: 10px;
 }
+.is-sub-comment {
+    margin-left: 50px;
+}
 .avatar {
     border-radius: 50%;
 }
@@ -451,6 +454,10 @@ img.show-post-image-nsfw {
     font-size: 0.8em;
     float: right;
     display: inline-block;
+}
+.thread-footer-subthread {
+    width: 80%;
+    text-align: center;
 }
 .thread-header-options {
     position: relative;
