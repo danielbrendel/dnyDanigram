@@ -54,15 +54,13 @@
             </div>
 
             <div>
-                <span>
+                <div class="is-inline-block">
                     <button class="button is-success" onclick="vue.setclepFlag(); document.getElementById('loginform').submit();">{{ __('app.login') }}</button>
-                </span>
+                </div>
 
-                <span class="is-right clep-recover-top">
-                    <div class="recover-pw">
-                        <center><a href="javascript:void(0)" onclick="vue.bShowRecover = true;">{{ __('app.recover_password') }}</a></center>
-                    </div>
-                </span>
+                <div class="is-inline-block float-right clep-recover-top recover-pw">
+                    <a href="javascript:void(0)" onclick="vue.bShowRecover = true;">{{ __('app.recover_password') }}</a>
+                </div>
             </div>
 
             <div class="clep-border clep-signup">
