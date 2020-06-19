@@ -118,7 +118,7 @@ return [
     'no_messages' => 'No messages to display',
     'message_not_found' => 'Message could not be found',
     'message_thread' => 'Conversation with :name',
-    'new_message_short' => 'New message received',
+    'new_message_short' => ':name has sent you a message',
     'new_message' => ':name has sent you a message: :subject',
     'subject' => 'Subject',
     'send' => 'Send',

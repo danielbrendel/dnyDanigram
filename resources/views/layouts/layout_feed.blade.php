@@ -220,6 +220,7 @@
                             @endforeach
                         </div>
                     </article>
+                    <br/>
                 </div>
             @endif
 
@@ -234,6 +235,7 @@
                             {{ Session::get('error') }}
                         </div>
                     </article>
+                    <br/>
                 </div>
             @endif
 
@@ -264,8 +266,8 @@
                             {{ Session::get('notice') }}
                         </div>
                     </article>
+                    <br/>
                 </div>
-                <br/>
             @endif
 
             @if (Session::has('success'))
@@ -279,8 +281,8 @@
                             {{ Session::get('success') }}
                         </div>
                     </article>
+                    <br/>
                 </div>
-                <br/>
             @endif
 
             <div class="columns is-vcentered is-multiline">
@@ -504,6 +506,18 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('javascript')
     <script>
+        window.pushClientNotification = function(msg) {
+            Push.create('{{ env('APP_PROJECTNAME') }}', {
+                body: msg,
+                icon: '{{ asset('favicon.png') }}',
+                timeout: 4000,
+                onClick: function () {
+                    window.focus();
+                    this.close();
+                }
+            });
+        };
+
         window.fetchNotifications = function() {
             window.vue.ajaxRequest('get', '{{ url('/notifications/list') }}', {}, function(response){
                 if (response.code === 200) {
@@ -521,15 +535,7 @@
                         }
 
                         response.data.forEach(function(elem, index) {
-                            Push.create('{{ env('APP_PROJECTNAME') }}', {
-                                body: elem.shortMsg,
-                                icon: '{{ asset('favicon.png') }}',
-                                timeout: 4000,
-                                onClick: function () {
-                                    window.focus();
-                                    this.close();
-                                }
-                            });
+                            window.pushClientNotification(elem.shortMsg);
 
                             let html = renderNotification(elem, true);
                             document.getElementById('notification-content').innerHTML = html + document.getElementById('notification-content').innerHTML;

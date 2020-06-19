@@ -174,10 +174,10 @@ class PostsController extends Controller
             }
 
             $tag->stats = new stdClass();
-            $tag->stats->posts = Cache::remember('tag_stats_posts', 3600 * 24, function () use ($hashtag) {
+            $tag->stats->posts = Cache::remember('tag_stats_posts_' . $hashtag, 3600 * 24, function () use ($hashtag) {
                 return PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->count();
             });
-            $tag->stats->comments = Cache::remember('tag_stats_comments', 3600 * 24, function () use ($hashtag) {
+            $tag->stats->comments = Cache::remember('tag_stats_comments_' . $hashtag, 3600 * 24, function () use ($hashtag) {
                 $comments = 0;
                 $posts = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->get();
                 foreach ($posts as $post) {
@@ -185,7 +185,7 @@ class PostsController extends Controller
                 }
                 return $comments;
             });
-            $tag->stats->hearts = Cache::remember('tag_stats_hearts', 3600 * 24, function () use ($hashtag) {
+            $tag->stats->hearts = Cache::remember('tag_stats_hearts_' . $hashtag, 3600 * 24, function () use ($hashtag) {
                 $hearts = 0;
                 $posts = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->get();
                 foreach ($posts as $post) {
@@ -194,7 +194,7 @@ class PostsController extends Controller
                 return $hearts;
             });
 
-            $tag->top_image = Cache::remember('tag_top_image', 24, function() use ($hashtag) {
+            $tag->top_image = Cache::remember('tag_top_image_' . $hashtag, 24, function() use ($hashtag) {
                $post = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->orderBy('hearts', 'desc')->first();
                if ($post) {
                    return $post->image_thumb;

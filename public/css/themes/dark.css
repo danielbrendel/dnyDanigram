@@ -55,6 +55,12 @@ a:hover {
   }
 }
 
+@media screen and (max-width: 481px) {
+  .message-header {
+    margin-top: 67px;
+  }
+}
+
 a:hover {
   text-decoration: none;
 }
