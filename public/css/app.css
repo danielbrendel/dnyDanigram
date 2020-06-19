@@ -525,6 +525,10 @@ img.show-post-image-nsfw {
   margin-bottom: 45px;
 }
 
+.thread-elem {
+  margin-right: 15px;
+}
+
 .thread-header {
   margin-bottom: 25px;
   color: #787878;
@@ -562,7 +566,7 @@ img.show-post-image-nsfw {
 }
 
 .thread-footer-subthread {
-  width: 80%;
+  width: 75%;
   text-align: center;
 }
 

@@ -426,6 +426,9 @@ img.show-post-image-nsfw {
 .thread {
     margin-bottom: 45px;
 }
+.thread-elem {
+    margin-right: 15px;
+}
 .thread-header {
     margin-bottom: 25px;
     color: rgb(120, 120, 120);
@@ -456,7 +459,7 @@ img.show-post-image-nsfw {
     display: inline-block;
 }
 .thread-footer-subthread {
-    width: 80%;
+    width: 75%;
     text-align: center;
 }
 .thread-header-options {

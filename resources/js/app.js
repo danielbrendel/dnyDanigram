@@ -323,7 +323,7 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
     let replyThread = `<div class="is-inline-block float-right"><a class="is-color-grey" href="javascript:void(0)" onclick="document.getElementById('thread-reply-parent').value = '` + ((isSubComment) ? parentId : elem.id) + `'; document.getElementById('thread-reply-textarea').value = '@` + elem.user.username + ` '; window.vue.bShowReplyThread = true;">Reply</a></div>`;
 
     let html = `
-        <div id="thread-` + elem.id + `" ` + ((isSubComment) ? 'class="is-sub-comment"': '') + `>
+        <div id="thread-` + elem.id + `" class="thread-elem ` + ((isSubComment) ? 'is-sub-comment': '') + `">
             <a name="` + elem.id + `"></a>
 
             <div class="thread-header">

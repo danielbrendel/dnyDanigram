@@ -517,6 +517,10 @@ a:hover {
   margin-bottom: 45px;
 }
 
+.thread-elem {
+    margin-right: 15px;
+}
+
 .thread-header {
   margin-bottom: 25px;
   color: #787878;
@@ -551,6 +555,11 @@ a:hover {
   font-size: 0.8em;
   float: right;
   display: inline-block;
+}
+
+.thread-footer-subthread {
+    width: 75%;
+    text-align: center;
 }
 
 .thread-header-options {

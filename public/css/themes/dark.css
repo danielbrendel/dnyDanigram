@@ -566,6 +566,10 @@ input[type="submit"], button[class="button"], input[type="button"] {
   margin-bottom: 45px;
 }
 
+.thread-elem {
+    margin-right: 15px;
+}
+
 .thread-header {
   margin-bottom: 25px;
   color: #787878;
@@ -600,6 +604,11 @@ input[type="submit"], button[class="button"], input[type="button"] {
   font-size: 0.8em;
   float: right;
   display: inline-block;
+}
+
+.thread-footer-subthread {
+    width: 75%;
+    text-align: center;
 }
 
 .thread-header-options {

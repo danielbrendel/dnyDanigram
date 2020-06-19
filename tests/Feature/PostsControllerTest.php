@@ -83,6 +83,17 @@ class PostsControllerTest extends TestCase
         $this->assertTrue(isset($content->last));
     }
 
+    public function testFetchSubThread()
+    {
+        $response = $this->get('/c/subthread?parent=' . env('TEST_THREADID'));
+
+        $response->assertStatus(200);
+        $content = json_decode($response->getContent());
+        $this->assertEquals(200, $content->code);
+        $this->assertTrue(isset($content->data));
+        $this->assertTrue(isset($content->last));
+    }
+
     public function testAddThread()
     {
         $response = $this->post('/p/' . env('TEST_POSTID') . '/thread/add', [
@@ -91,6 +102,18 @@ class PostsControllerTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect();
+    }
+
+    public function testReplyThread()
+    {
+        $response = $this->post('/c/reply?parent=' . env('TEST_THREADID'), [
+            'text' => md5(random_bytes(55))
+        ]);
+
+        $response->assertStatus(200);
+        $content = json_decode($response->getContent());
+        $this->assertEquals(200, $content->code);
+        $this->assertTrue(isset($content->post));
     }
 
     public function testHeart()

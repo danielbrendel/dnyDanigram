@@ -181,7 +181,7 @@ class ThreadModel extends Model
         try {
             $parent = ThreadModel::where('id', '=', $parentId)->where('locked', '=', false)->where('parentId', '=', 0)->first();
             if (!$parent) {
-                throw new Exception('Parent item not found for ' . $parentId);
+                throw new \Exception('Parent item not found for ' . $parentId);
             }
 
             $thread = new ThreadModel();

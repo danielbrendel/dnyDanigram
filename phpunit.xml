@@ -43,6 +43,7 @@
         <server name="TEST_COMMENT" value="1"/>
         <server name="TEST_MESSAGEID" value="5"/>
         <server name="TEST_COMMENTID" value="1"/>
+        <server name="TEST_THREADID" value="5"/>
         <server name="TEST_FETCHLIMIT" value="10"/>
         <server name="TEST_FAQID" value="1"/>
     </php>

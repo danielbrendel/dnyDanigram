@@ -64,5 +64,6 @@ In order to run the tests successfully you need to ensure that the following tes
 + TEST_COMMENT: ID of an existing comment
 + TEST_MESSAGEID: ID of an existing message
 + TEST_COMMENTID: ID of an existing comment
++ TEST_THREADID: ID of an existing thread (parent)
 + TEST_FETCHLIMIT: The fetch limit
 + TEST_FAQID: ID of an existing FAQ item
