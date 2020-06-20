@@ -192,6 +192,11 @@
 
         <div id="main" class="container">
             <div class="notifications" id="notifications">
+                <div>
+                    <div class="is-inline-block"></div>
+                    <div class="is-inline-block float-right notification-close-icon"><i class="fas fa-times is-pointer" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"></i></div>
+                </div>
+
                 <div class="notifications-content" id="notification-content"></div>
             </div>
 

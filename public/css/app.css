@@ -760,6 +760,11 @@ img.show-post-image-nsfw {
   }
 }
 
+.notification-close-icon {
+  margin-top: 14px;
+  margin-right: 32px;
+}
+
 .notifications-content {
   margin: 25px;
   height: 78%;
