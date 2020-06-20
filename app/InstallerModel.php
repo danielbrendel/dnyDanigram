@@ -53,11 +53,12 @@ class InstallerModel extends Model
             $envcontent .= 'APP_TAGS=""' . PHP_EOL;
             $envcontent .= 'APP_TITLE="${APP_PROJECTNAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
             $envcontent .= 'APP_DIVISION=' . $divisor . PHP_EOL;
+			$envcontent .= 'APP_LANG=en' . PHP_EOL;
             $envcontent .= 'APP_POSTPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_THREADPACKLIMIT=25' . PHP_EOL;
             $envcontent .= 'APP_PUSHPACKLIMIT=25' . PHP_EOL;
 			$envcontent .= 'APP_MESSAGEPACKLIMIT=15' . PHP_EOL;
-            $envcontent .= 'APP_TOPNTAGS=10' . PHP_EOL;
+            $envcontent .= 'APP_TOPNTAGS=15' . PHP_EOL;
 			$envcontent .= 'APP_PUBLICFEED=false' . PHP_EOL;
             $envcontent .= 'APP_ENABLENSFWFILTER=false' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
@@ -73,6 +74,10 @@ class InstallerModel extends Model
             $envcontent .= 'SMTP_USERNAME="' . $attr['smtpuser'] . '"' . PHP_EOL;
             $envcontent .= 'SMTP_PASSWORD="' . $attr['smtppassword'] . '"' . PHP_EOL;
             $envcontent .= 'GA_TOKEN=null' . PHP_EOL;
+			$envcontent .= 'TWITTER_NEWS=null' . PHP_EOL;
+			$envcontent .= 'HELPREALM_WORKSPACE=null' . PHP_EOL;
+			$envcontent .= 'HELPREALM_TOKEN=null' . PHP_EOL;
+			$envcontent .= 'HELPREALM_TICKETTYPEID=' . PHP_EOL;
             $envcontent .= 'BROADCAST_DRIVER=log' . PHP_EOL;
             $envcontent .= 'CACHE_DRIVER=file' . PHP_EOL;
             $envcontent .= 'QUEUE_CONNECTION=sync' . PHP_EOL;
