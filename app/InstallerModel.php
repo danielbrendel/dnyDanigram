@@ -36,8 +36,6 @@ class InstallerModel extends Model
     public static function install($attr)
     {
         try {
-            $divisor = strlen($attr['project']) / 2;
-
             $envcontent = '#Danigram Environment configuration' . PHP_EOL;
             $envcontent .= 'APP_NAME=Danigram' . PHP_EOL;
             $envcontent .= 'APP_CODENAME=dnyDanigram' . PHP_EOL;
@@ -52,7 +50,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_DESCRIPTION="The lightweight image sharing community platform system"' . PHP_EOL;
             $envcontent .= 'APP_TAGS=""' . PHP_EOL;
             $envcontent .= 'APP_TITLE="${APP_PROJECTNAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
-            $envcontent .= 'APP_DIVISION=' . $divisor . PHP_EOL;
+            $envcontent .= 'APP_DIVISION=' . (strlen($attr['project']) / 2) . PHP_EOL;
 			$envcontent .= 'APP_LANG=en' . PHP_EOL;
             $envcontent .= 'APP_POSTPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_THREADPACKLIMIT=25' . PHP_EOL;
