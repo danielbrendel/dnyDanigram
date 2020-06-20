@@ -535,7 +535,11 @@
                         }
 
                         response.data.forEach(function(elem, index) {
-                            window.pushClientNotification(elem.shortMsg);
+                            @if (isset($_GET['clep_push_handler']))
+                                window['{{ $_GET['clep_push_handler'] }}'](elem.shortMsg, elem.longMsg);
+                            @else
+                                window.pushClientNotification(elem.shortMsg);
+                            @endif
 
                             let html = renderNotification(elem, true);
                             document.getElementById('notification-content').innerHTML = html + document.getElementById('notification-content').innerHTML;

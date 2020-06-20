@@ -78,7 +78,7 @@ class MainController extends Controller
         } else {
             session()->reflash();
 
-            return redirect('/feed');
+            return redirect('/feed' . ((isset($_GET['clep_push_handler'])) ? '?clep_push_handler=' . $_GET['clep_push_handler'] : ''));
         }
     }
 
