@@ -774,6 +774,11 @@ input[type="submit"], button[class="button"], input[type="button"] {
   display: none;
 }
 
+.notification-close-icon {
+    margin-top: 14px;
+    margin-right: 32px;
+}
+
 @media screen and (min-width: 769px) {
   .notifications {
     right: -151px;

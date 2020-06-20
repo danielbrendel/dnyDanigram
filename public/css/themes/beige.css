@@ -734,6 +734,11 @@ img.show-post-image-nsfw {
   display: none;
 }
 
+.notification-close-icon {
+    margin-top: 14px;
+    margin-right: 32px;
+}
+
 @media screen and (min-width: 769px) {
   .notifications {
     right: -151px;

@@ -774,6 +774,11 @@ a:hover {
   }
 }
 
+.notification-close-icon {
+    margin-top: 14px;
+    margin-right: 32px;
+}
+
 .notification-item {
   position: relative;
   width: 100%;
