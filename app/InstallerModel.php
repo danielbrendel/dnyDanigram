@@ -45,7 +45,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_ENV=local' . PHP_EOL;
             $envcontent .= 'APP_KEY=base64:fBr7/RVVAQlyln5NEVSGyrKmqV9AWEvhnvAcSUtSQzo=' . PHP_EOL;
             $envcontent .= 'APP_DEBUG=false' . PHP_EOL;
-            $envcontent .= 'APP_URL=http://localhost' . PHP_EOL;
+            $envcontent .= 'APP_URL=' . url('/') . PHP_EOL;
             $envcontent .= 'APP_PROJECTNAME="' . $attr['project'] . '"' . PHP_EOL;
             $envcontent .= 'APP_DESCRIPTION="The lightweight image sharing community platform system"' . PHP_EOL;
             $envcontent .= 'APP_TAGS=""' . PHP_EOL;
