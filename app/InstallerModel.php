@@ -126,6 +126,7 @@ class InstallerModel extends Model
             $user->avatar = 'default.png';
             $user->bio = 'Project administrator';
             $user->email_on_message = true;
+			$user->nsfw = true;
             $user->save();
 
             unlink(base_path() . '/do_install');
