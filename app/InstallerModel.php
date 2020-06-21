@@ -61,11 +61,11 @@ class InstallerModel extends Model
             $envcontent .= 'APP_ENABLENSFWFILTER=false' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
             $envcontent .= 'DB_CONNECTION=mysql' . PHP_EOL;
-            $envcontent .= 'DB_HOST=' . $attr['dbhost'] . PHP_EOL;
+            $envcontent .= 'DB_HOST="' . $attr['dbhost'] . '"' . PHP_EOL;
             $envcontent .= 'DB_PORT=' . $attr['dbport'] . PHP_EOL;
-            $envcontent .= 'DB_DATABASE=' . $attr['database'] . PHP_EOL;
-            $envcontent .= 'DB_USERNAME=' . $attr['dbuser'] . PHP_EOL;
-            $envcontent .= 'DB_PASSWORD=' . $attr['dbpassword'] . PHP_EOL;
+            $envcontent .= 'DB_DATABASE="' . $attr['database'] . '"' . PHP_EOL;
+            $envcontent .= 'DB_USERNAME="' . $attr['dbuser'] . '"' . PHP_EOL;
+            $envcontent .= 'DB_PASSWORD="' . $attr['dbpassword']. '"' . PHP_EOL;
             $envcontent .= 'SMTP_FROMADDRESS="' . $attr['smtpfromaddress'] . '"' . PHP_EOL;
             $envcontent .= 'SMTP_FROMNAME="${APP_PROJECTNAME}"' . PHP_EOL;
             $envcontent .= 'SMTP_HOST="' . $attr['smtphost'] . '"' . PHP_EOL;
