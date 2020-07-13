@@ -65,7 +65,7 @@ a:hover {
   text-decoration: none;
 }
 
-.textarea, textarea, input[type="text"], input[type="email"], input[type="password"], input[type="file"], select, label[class="label"] {
+.textarea, textarea, input[type="text"], input[type="email"], input[type="password"], input[type="file"], select, label[class="label"], .modal-card-title {
     background-color: rgb(50, 50, 48) !important;
     color: rgb(240, 240, 240) !important;
 }
@@ -293,7 +293,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
 
 @media screen and (min-width: 380px) {
   .home-userarea {
-    background-color: #fafafa;
+    background-color: unset;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
@@ -339,7 +339,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 
 .home-bottombar a {
-  color: #20507d;
+  color: #7f8a9d;
 }
 
 .home-go-back {
