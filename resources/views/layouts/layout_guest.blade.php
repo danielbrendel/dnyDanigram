@@ -120,8 +120,11 @@
 
                 <div class="field">
                     <label class="label">{{ __('app.password') }}</label>
-                    <div class="control">
+                    <div class="control has-icons-left">
                         <input class="input" type="password" name="password" placeholder="{{ __('app.password') }}" required>
+						<span class="icon is-small is-left">
+                            <i class="fas fa-unlock"></i>
+                        </span>
                     </div>
                 </div>
 
