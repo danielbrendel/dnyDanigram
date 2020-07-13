@@ -34,7 +34,7 @@
                 <div class="field">
                     <label class="label">{{ __('app.email') }}</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="email" name="email" placeholder="name@domain.tld" required>
+                        <input class="input" type="email" id="email" name="email" placeholder="name@domain.tld" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -79,13 +79,13 @@
     <div class="column is-2 is-sidespacing"></div>
 
     <div class="column is-2 is-sidespacing"></div>
-    <div class="column is-8 is-last-column">
+    <div class="column is-8 is-last-column mobile-margin-padding">
         <div class="tagcloud">
             <div class="tagcloud-title">{{ __('app.popular_tags') }}</div>
 
             <div class="tagcloud-content is-wordbreak">
                 @foreach ($taglist as $tag)
-                    <a href="#login">#{{ $tag->tag }}</a>
+                    <a href="javascript:void(0);" onclick="document.getElementById('email').focus();">#{{ $tag->tag }}</a>
                 @endforeach
             </div>
         </div>

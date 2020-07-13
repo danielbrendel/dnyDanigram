@@ -43,7 +43,7 @@ class PostsController extends Controller
     {
         $this->middleware(function ($request, $next) {
            if ((!env('APP_PUBLICFEED')) && (Auth::guest())) {
-               abort(403);
+               return redirect('/')->with('error', __('app.not_logged_in'));
            }
 
             return $next($request);
