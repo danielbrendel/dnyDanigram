@@ -66,6 +66,11 @@ h2 {
   }
 }
 
+.is-member-form-without-border-and-backgroundcolor {
+    border: unset !important;
+    background-color: unset !important;
+}
+
 .is-wordbreak {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
@@ -185,6 +190,10 @@ h2 {
 
 .is-top-negative-mobile-like {
   top: -15px !important;
+}
+
+.is-margin-bottom-last-fixed-frame {
+    margin-bottom: 200px !important;
 }
 
 @media screen and (max-width: 480px) {

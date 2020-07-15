@@ -193,7 +193,11 @@ h2 {
     margin-left: 50px;
 }
 .is-margin-bottom-last-fixed-frame {
-    margin-bottom: 200px;
+    margin-bottom: 200px !important;
+}
+.is-member-form-without-border-and-backgroundcolor {
+    border: unset !important;
+    background-color: unset !important;
 }
 .avatar {
     border-radius: 50%;

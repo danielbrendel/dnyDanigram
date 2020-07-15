@@ -80,6 +80,11 @@ h2 {
   }
 }
 
+.is-member-form-without-border-and-backgroundcolor {
+    border: unset !important;
+    background-color: unset !important;
+}
+
 .is-wordbreak {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
@@ -250,6 +255,10 @@ h2 {
 
 .is-sub-comment {
     margin-left: 50px;
+}
+
+.is-margin-bottom-last-fixed-frame {
+    margin-bottom: 200px !important;
 }
 
 .avatar {

@@ -56,7 +56,7 @@
                 @include('widgets.taginfo')
             </div>
 
-            <div class="member-form is-default-padding is-margin-bottom-last-fixed-frame">
+            <div class="member-form is-default-padding is-margin-bottom-last-fixed-frame is-member-form-without-border-and-backgroundcolor">
                 @include('widgets.company')
             </div>
         </div>

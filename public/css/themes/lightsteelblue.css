@@ -66,6 +66,11 @@ h2 {
   }
 }
 
+.is-member-form-without-border-and-backgroundcolor {
+    border: unset !important;
+    background-color: unset !important;
+}
+
 .is-wordbreak {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
@@ -103,6 +108,10 @@ h2 {
 
 .is-z-index-3 {
   z-index: 3;
+}
+
+.is-margin-bottom-last-fixed-frame {
+    margin-bottom: 200px !important;
 }
 
 .info-headline {

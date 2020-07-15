@@ -102,6 +102,11 @@ input[type="submit"], button[class="button"], input[type="button"] {
   }
 }
 
+.is-member-form-without-border-and-backgroundcolor {
+    border: unset !important;
+    background-color: unset !important;
+}
+
 .is-wordbreak {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
@@ -167,6 +172,10 @@ input[type="submit"], button[class="button"], input[type="button"] {
 
 .is-default-padding-right {
   padding-right: 18px;
+}
+
+.is-margin-bottom-last-fixed-frame {
+    margin-bottom: 200px !important;
 }
 
 .is-about-nav {
