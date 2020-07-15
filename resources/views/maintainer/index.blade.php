@@ -902,6 +902,10 @@
 
 @section('javascript')
     <script>
+		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('stories').remove();
+		});
+	
         function getUserDetails(ident)
         {
             window.vue.ajaxRequest('get', '{{ url('/maintainer/u/details') }}?ident=' + ident, {}, function(response) {
