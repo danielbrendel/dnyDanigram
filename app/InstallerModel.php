@@ -36,7 +36,7 @@ class InstallerModel extends Model
     public static function install($attr)
     {
         try {
-            $envcontent = '#Danigram Environment configuration' . PHP_EOL;
+            $envcontent = '# Danigram Environment configuration' . PHP_EOL;
             $envcontent .= 'APP_NAME=Danigram' . PHP_EOL;
             $envcontent .= 'APP_CODENAME=dnyDanigram' . PHP_EOL;
             $envcontent .= 'APP_AUTHOR="Daniel Brendel"' . PHP_EOL;
