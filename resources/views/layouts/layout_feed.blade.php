@@ -720,6 +720,12 @@
                 fetchStorySelection();
             @endauth
 
+            @guest
+                @if (env('APP_PUBLICFEED'))
+                    document.getElementsByClassName('fixed-frame')[0].style.top = '76px';
+                @endif
+            @endguest
+
             window.addStoryTabPage = 1;
 
             window.menuVisible = false;

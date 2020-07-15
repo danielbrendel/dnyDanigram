@@ -17,6 +17,7 @@ feature list see below.
 
 ## Features:
 + Share images
++ Share stories
 + Comment on images
 + Heart images, comments, hashtags
 + See latest and top posts and comments

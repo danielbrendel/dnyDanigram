@@ -434,10 +434,33 @@ a:hover {
   font-weight: bold;
 }
 
+@media screen and (max-width: 380px) {
+  #feed {
+    top: unset;
+  }
+}
+
+@media screen and (min-width: 381px) {
+  #feed {
+    top: -20px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  #feed {
+    top: -89px;
+    padding-left: unset;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  #feed-left {
+    top: -142px;
+  }
+}
+
 .feed-nav {
   margin-bottom: 45px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
 }
 
 @media screen and (max-width: 380px) {
@@ -446,22 +469,23 @@ a:hover {
   }
 }
 
-@media screen and (min-width: 482px) {
+@media screen and (min-width: 381px) {
   .feed-nav {
-    margin-top: -87px;
+    top: 79px;
   }
 }
 
 @media screen and (min-width: 769px) {
   .feed-nav {
-    margin-top: 20px;
+    top: unset;
+    padding-left: unset;
   }
 }
 
 .fixed-frame {
   position: fixed;
   z-index: 2;
-  top: 74px;
+  top: 196px;
   margin-left: 50px;
   margin-bottom: 50px;
   width: 367px;
@@ -1013,4 +1037,64 @@ img.show-post-image-nsfw {
 }
 .clep-continue-without-account {
     margin-top: 40px;
+}
+
+.stories-frame {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow-y: auto;
+  height: 97px;
+  width: 97%;
+}
+
+@media screen and (max-width: 480px) {
+  .stories-frame {
+    top: 64px;
+  }
+}
+
+.stories-item {
+  margin: 15px;
+  display: inline-block;
+}
+
+.stories-item-avatar {
+  width: 48px;
+  height: 48px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #f99d4b;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.stories-item-avatar img {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.stories-item-username {
+  color: #646464;
+  font-size: 0.7em;
+}
+
+#story-content,
+#add-story-content {
+  min-height: 360px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#story-message,
+#add-story-message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.stories-add-icon {
+  padding: 9px;
 }

@@ -14,6 +14,7 @@
 
 namespace App;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -151,7 +152,7 @@ class StoryModel extends Model
             foreach ($stories as $story) {
                 $dtNow = new DateTime('now');
                 $dtItem = new DateTime(date('Y-m-d H:i:s', strtotime($story->created_at)));
-                $dtItem->add(new \DateInterval('P' . env('APP_STORYDURATION', 24) . 'H'));
+                $dtItem->add(new \DateInterval('PT' . env('APP_STORYDURATION', 24) . 'H'));
                 if ($dtNow > $dtItem) {
                     $story->expired = true;
                     $story->save();

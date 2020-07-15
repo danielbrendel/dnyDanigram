@@ -194,4 +194,13 @@ class PostsControllerTest extends TestCase
         $content = json_decode($response->getContent());
         $this->assertEquals(200, $content->code);
     }
+
+    public function testExpireStories()
+    {
+        $response = $this->get('/stories/expire');
+
+        $response->assertStatus(200);
+        $content = json_decode($response->getContent());
+        $this->assertEquals(200, $content->code);
+    }
 }
