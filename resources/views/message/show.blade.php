@@ -92,6 +92,8 @@
 
 @section('javascript')
     <script>
-
+		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('stories').remove();
+		});
     </script>
 @endsection

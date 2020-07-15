@@ -68,3 +68,11 @@
 
     <div class="column is-2 is-sidespacing"></div>
 @endsection
+
+@section('javascript')
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('stories').remove();
+		});
+	</script>
+@endsection

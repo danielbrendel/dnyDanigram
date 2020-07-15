@@ -97,6 +97,8 @@
 
         document.addEventListener('DOMContentLoaded', function() {
            window.fetchMessageList();
+		   
+		   document.getElementById('stories').remove();
         });
     </script>
 @endsection
