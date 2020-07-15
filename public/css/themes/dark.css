@@ -65,6 +65,10 @@ a:hover {
   text-decoration: none;
 }
 
+h2 {
+    font-size: 1.0em;
+}
+
 .textarea, textarea, input[type="text"], input[type="email"], input[type="password"], input[type="file"], select, label[class="label"], .modal-card-title {
     background-color: rgb(50, 50, 48) !important;
     color: rgb(240, 240, 240) !important;
@@ -666,17 +670,27 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 
 .favorites-item {
-  margin-top: 5px;
-  margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
-
 .favorites-item-left a {
-  color: #6e6e6c;
-  font-weight: bold;
+    color: rgb(110, 110, 108);
+    font-weight: bold;
 }
-
+.favorites-item-left-avatar {
+    display: inline-block;
+    top: -9px;
+}
+.favorites-item-left-avatar img {
+    border-radius: 50%;
+}
+.favorites-item-left-info {
+    display: inline-block;
+    font-size: 0.75em;
+}
 .favorites-item-right {
-  float: right;
+    float: right;
+    top: 10px;
 }
 
 .userinfo-header {

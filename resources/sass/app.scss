@@ -44,6 +44,9 @@ body {
 a:hover {
     text-decoration: none;
 }
+h2 {
+    font-size: 1.0em;
+}
 
 //General useful classes
 .is-pointer {
@@ -189,6 +192,9 @@ a:hover {
 .is-sub-comment {
     margin-left: 50px;
 }
+.is-margin-bottom-last-fixed-frame {
+    margin-bottom: 200px;
+}
 .avatar {
     border-radius: 50%;
 }
@@ -297,13 +303,13 @@ a:hover {
 .member-form {
     position: relative;
     @media screen and (min-width: 380px) {
-        background-color: rgb(250, 250, 250);
         border: 1px solid #ccc;
         border-radius: 4px;
         top: 55px;
     }
     margin-top: 21px;
     margin-bottom: 25px;
+    background-color: rgb(255, 255, 255);
 }
 .member-form div h1 {
     margin-bottom: 70px;
@@ -511,8 +517,20 @@ img.show-post-image-nsfw {
     color: rgb(110, 110, 108);
     font-weight: bold;
 }
+.favorites-item-left-avatar {
+    display: inline-block;
+    top: -9px;
+}
+.favorites-item-left-avatar img {
+    border-radius: 50%;
+}
+.favorites-item-left-info {
+    display: inline-block;
+    font-size: 0.75em;
+}
 .favorites-item-right {
     float: right;
+    top: 10px;
 }
 
 //User info
@@ -859,6 +877,7 @@ img.show-post-image-nsfw {
     @media screen and (max-width: 480px) {
         top: 64px;
     }
+    background-color: rgb(255, 255, 255);
 }
 .stories-item {
     margin: 15px;

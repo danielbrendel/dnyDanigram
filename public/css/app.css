@@ -51,6 +51,10 @@ a:hover {
   text-decoration: none;
 }
 
+h2 {
+  font-size: 1em;
+}
+
 .is-pointer {
   cursor: pointer;
 }
@@ -237,6 +241,10 @@ a:hover {
   margin-left: 50px;
 }
 
+.is-margin-bottom-last-fixed-frame {
+  margin-bottom: 200px;
+}
+
 .avatar {
   border-radius: 50%;
 }
@@ -361,11 +369,11 @@ a:hover {
   position: relative;
   margin-top: 21px;
   margin-bottom: 25px;
+  background-color: white;
 }
 
 @media screen and (min-width: 380px) {
   .member-form {
-    background-color: #fafafa;
     border: 1px solid #ccc;
     border-radius: 4px;
     top: 55px;
@@ -630,8 +638,23 @@ img.show-post-image-nsfw {
   font-weight: bold;
 }
 
+.favorites-item-left-avatar {
+  display: inline-block;
+  top: -9px;
+}
+
+.favorites-item-left-avatar img {
+  border-radius: 50%;
+}
+
+.favorites-item-left-info {
+  display: inline-block;
+  font-size: 0.75em;
+}
+
 .favorites-item-right {
   float: right;
+  top: 10px;
 }
 
 .userinfo-header {
@@ -1053,6 +1076,7 @@ img.show-post-image-nsfw {
   overflow-y: auto;
   height: 97px;
   width: 97%;
+  background-color: white;
 }
 
 @media screen and (max-width: 480px) {

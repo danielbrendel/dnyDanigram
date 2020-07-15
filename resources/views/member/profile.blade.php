@@ -50,7 +50,7 @@
                 @endauth
             </div>
 
-            <div class="member-form is-default-padding">
+            <div class="member-form is-default-padding is-margin-bottom-last-fixed-frame">
                 @include('widgets.company')
             </div>
         </div>

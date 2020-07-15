@@ -22,11 +22,31 @@
         @foreach ($favorites as $favorite)
             <div class="favorites-item is-block favorite-item-{{ strtolower($favorite->type) }}-{{ $favorite->entityId }}">
                 <div class="favorites-item-left is-inline-block">
-                    @if ($favorite->type === 'ENT_HASHTAG')
-                        <a href="{{ url('/t/' . $favorite->name) }}">#{{ $favorite->short_name }}</a>
-                    @elseif ($favorite->type === 'ENT_USER')
-                        <a href="{{ url('/u/' . $favorite->name) }}">{{ '@' . $favorite->short_name }}</a>
-                    @endif
+                    <div class="favorites-item-left-avatar">
+                        @if ($favorite->type === 'ENT_HASHTAG')
+                            @if ($favorite->avatar !== null)
+                                <img src="{{ asset('gfx/posts/' . $favorite->avatar) }}" width="32" height="32"/>
+                            @else
+                                &nbsp;<i class="fas fa-hashtag fa-lg"></i>&nbsp;&nbsp;
+                            @endif
+                        @elseif ($favorite->type === 'ENT_USER')
+                            <img src="{{ asset('gfx/avatars/' . $favorite->avatar) }}" width="32" height="32"/>
+                        @endif
+                    </div>
+
+                    <div class="favorites-item-left-info">
+                        <div class="">
+                            @if ($favorite->type === 'ENT_HASHTAG')
+                                <a href="{{ url('/t/' . $favorite->name) }}">#{{ $favorite->short_name }}</a>
+                            @elseif ($favorite->type === 'ENT_USER')
+                                <a href="{{ url('/u/' . $favorite->name) }}">{{ '@' . $favorite->short_name }}</a>
+                            @endif
+                        </div>
+
+                        <div class="is-color-grey">
+                            {{ __('app.stats_posts', ['count' => $favorite->total_posts]) }}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="favorites-item-right is-inline-block"><i onclick="deleteFavorite({{ $favorite->id }}, {{ $favorite->entityId }}, '{{ $favorite->type }}')" class="fas fa-times is-pointer" title="{{ __('app.remove') }}"></i></div>

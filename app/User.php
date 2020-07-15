@@ -21,6 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use \App\ClientModel;
 use \App\AgentModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use stdClass;
 
 /**
@@ -263,8 +264,15 @@ class User extends Authenticatable
     {
         try {
             $stats = new stdClass();
-            $stats->posts = PostModel::where('userId', '=', $userId)->count();
-            $stats->comments = ThreadModel::where('userId', '=', $userId)->count();
+
+            $stats->posts = Cache::remember('user_stats_posts_' . $userId, 3600 * 24, function () use ($userId) {
+                return PostModel::where('userId', '=', $userId)->count();
+            });
+
+            $stats->comments = Cache::remember('user_stats_comments_' . $userId, 3600 * 24, function () use ($userId) {
+                ThreadModel::where('userId', '=', $userId)->count();
+            });
+
             return $stats;
         } catch (Exception $e) {
             throw $e;

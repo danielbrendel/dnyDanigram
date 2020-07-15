@@ -15,6 +15,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class FavoritesModel
@@ -151,10 +152,16 @@ class FavoritesModel extends Model
                     $hashtag = TagsModel::where('id', '=', $favorite->entityId)->first();
                     $favorite->name = $hashtag->tag;
                     $favorite->short_name = AppModel::getShortExpression($favorite->name);
+                    $favorite->avatar = $hashtag->top_image;
+                    $favorite->total_posts = Cache::remember('tag_stats_posts_' . $hashtag, 3600 * 24, function () use ($hashtag) {
+                        return PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->count();
+                    });
                 } else if ($favorite->type === 'ENT_USER') {
                     $user = User::get($favorite->entityId);
                     $favorite->name = $user->username;
                     $favorite->short_name = AppModel::getShortExpression($favorite->name);
+                    $favorite->avatar = $user->avatar;
+                    $favorite->total_posts = User::getStats($favorite->entityId)->posts;
                 }
             }
 
