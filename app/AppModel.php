@@ -408,10 +408,11 @@ class AppModel extends Model
             } else if ($type === 'ENT_USER') {
                 $item = User::where('id', '=', $id)->first();
                 if ($item) {
-                    $item->username = 'ghost';
+                    $item->username = '_deleted_' . md5(random_bytes(55));
                     $item->email = md5(random_bytes(55));
                     $item->avatar = 'default.png';
                     $item->password = '';
+					$item->deactivated = true;
                     $item->save();
                 }
             } else if ($type === 'ENT_POST') {
