@@ -271,5 +271,12 @@ return [
     'reply_thread' => 'Reply to post',
     'please_login' => 'You must be logged in in order to perform this action',
     'user_replied_comment_short' => 'User :name has replied to your comment',
-    'user_replied_comment' => 'User :name has replied to your <a href=":item">comment</a>: :msg'
+    'user_replied_comment' => 'User :name has replied to your <a href=":item">comment</a>: :msg',
+    'add_story' => 'Add story',
+    'story_image' => 'Image',
+    'story_text' => 'Text',
+    'story_message' => 'Message',
+    'story_text_color' => 'Text color',
+    'story_bg_color' => 'Background color',
+    'story_added' => 'Your story has been added'
 ];

@@ -291,6 +291,10 @@
             @endif
 
             <div class="columns is-vcentered is-multiline">
+                @auth
+                    @include('widgets.stories')
+                @endauth
+
                 @yield('body')
             </div>
 
@@ -484,6 +488,104 @@
                 </div>
             </div>
 
+            @auth
+                <div class="modal" :class="{'is-active': bShowAddStory}">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head is-stretched">
+                            <p class="modal-card-title">{{ __('app.add_story') }}</p>
+                            <button class="delete" aria-label="close" onclick="vue.bShowAddStory = false;"></button>
+                        </header>
+                        <section class="modal-card-body is-stretched">
+                            <ul data-role="tabs" data-expand="true">
+                                <li><a href="#tab-page-1" onclick="window.addStoryTabPage = 1">{{ __('app.story_image') }}</a></li>
+                                <li><a href="#tab-page-2" onclick="window.addStoryTabPage = 2">{{ __('app.story_text') }}</a></li>
+                            </ul>
+                            <div class="border bd-default no-border-top p-2">
+                                <div id="tab-page-1">
+                                    <div>
+                                        <div class="field">
+                                            <div class="control">
+                                                <input id="story-add-file-file" type="file" data-role="file" data-type="2" oninput="window.setStoryImage(this);">
+                                                <input type="hidden" id="story-add-file-name">
+                                            </div>
+                                        </div>
+
+                                        <div class="field">
+                                            <label class="label">{{ __('app.story_message') }}</label>
+                                            <div class="control">
+                                                <textarea id="story-add-file-text" oninput="document.getElementById('add-story-message').innerHTML = this.value;"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="field is-inline-block is-margin-right-15">
+                                            <label class="label">{{ __('app.story_text_color') }}</label>
+                                            <div class="control">
+                                                <input id="story-add-file-color" type="color" value="#000000" onchange="document.getElementById('add-story-message').style.color = this.value;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="tab-page-2">
+                                    <div>
+                                        <div class="field">
+                                            <label class="label">{{ __('app.story_message') }}</label>
+                                            <div class="control">
+                                                <textarea id="story-add-message-text" oninput="document.getElementById('add-story-message').innerHTML = this.value;"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="field is-inline-block is-margin-right-15">
+                                            <label class="label">{{ __('app.story_text_color') }}</label>
+                                            <div class="control">
+                                                <input id="story-add-message-color" type="color" value="#000000" onchange="document.getElementById('add-story-message').style.color = this.value;">
+                                            </div>
+                                        </div>
+
+                                        <div class="field is-inline-block">
+                                            <label class="label">{{ __('app.story_bg_color') }}</label>
+                                            <div class="control">
+                                                <input id="story-add-message-bgcolor" type="color" value="#ffffff" onchange="document.getElementById('add-story-content').style.backgroundColor = this.value;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="add-story-content">
+                                    <div id="add-story-message"></div>
+                                </div>
+                            </div>
+                        </section>
+                        <footer class="modal-card-foot is-stretched">
+                            <button class="button is-success" onclick="window.postStory();">{{ __('app.submit') }}</button>
+                            <button class="button" onclick="vue.bShowAddStory = false;">{{ __('app.cancel') }}</button>
+                        </footer>
+                    </div>
+                </div>
+
+                <div class="modal" :class="{'is-active': bShowViewStory}">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head is-stretched">
+                            <p class="modal-card-title" id="story-title"></p>
+                            <button class="delete" aria-label="close" onclick="vue.bShowViewStory = false;"></button>
+                        </header>
+                        <section class="modal-card-body is-stretched">
+                            <div>
+                                <div id="story-content"><div id="story-message"></div></div>
+                            </div>
+
+                            <div>
+                                <i class="fas fa-arrow-left is-pointer" onclick="if (window.currentStoryIndex > 0) window.currentStoryIndex--; showStoryPost(window.currentStoryIndex);"></i>&nbsp;&nbsp;
+                                <i class="fas fa-arrow-right is-pointer" onclick="if (window.currentStoryIndex < window.currentStoryData.length - 1) window.currentStoryIndex++; showStoryPost(window.currentStoryIndex);"></i>
+                            </div>
+                        </section>
+                        <footer></footer>
+                    </div>
+                </div>
+            @endauth
+
             @if (strlen(\App\AppModel::getWelcomeContent()) > 0)
                 <div class="modal" :class="{'is-active': bShowWelcomeOverlay}">
                     <div class="modal-background is-almost-not-transparent"></div>
@@ -613,6 +715,12 @@
             @if (strlen(\App\AppModel::getWelcomeContent()) > 0)
                 window.vue.handleWelcomeOverlay();
             @endif
+
+            @auth
+                fetchStorySelection();
+            @endauth
+
+            window.addStoryTabPage = 1;
 
             window.menuVisible = false;
 

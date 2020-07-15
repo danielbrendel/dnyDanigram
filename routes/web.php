@@ -95,3 +95,10 @@ Route::get('/maintainer/entity/delete', 'MaintainerController@deleteEntity');
 Route::get('/maintainer/entity/safe', 'MaintainerController@setSafeEntity');
 Route::post('/maintainer/welcomecontent', 'MaintainerController@welcomeContent');
 Route::post('/maintainer/formattedprojectname', 'MaintainerController@saveFormattedProjectName');
+
+Route::get('/stories/selection', 'PostsController@selection');
+Route::get('/stories/view/{userId}', 'PostsController@story');
+Route::post('/stories/add/image', 'PostsController@addStoryImage');
+Route::post('/stories/add/text', 'PostsController@addStoryText');
+Route::post('/stories/image/upload', 'PostsController@setStoryImage');
+Route::get('/stories/expire', 'PostsController@expireStories');

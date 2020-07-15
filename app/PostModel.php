@@ -35,7 +35,7 @@ class PostModel extends Model
      * @param string $imgFile
      * @return boolean
      */
-    private static function isValidImage($imgFile)
+    public static function isValidImage($imgFile)
     {
         $imagetypes = array(
             IMAGETYPE_PNG,
@@ -63,7 +63,7 @@ class PostModel extends Model
      * @param $file
      * @return mixed|null
      */
-    private static function getImageType($ext, $file)
+    public static function getImageType($ext, $file)
     {
         $imagetypes = array(
             array('png', IMAGETYPE_PNG),
@@ -120,7 +120,7 @@ class PostModel extends Model
      * @param $fileext
      * @return bool
      */
-    private static function createThumbFile($srcfile, $imgtype, $basefile, $fileext)
+    public static function createThumbFile($srcfile, $imgtype, $basefile, $fileext)
     {
         list($width, $height) = getimagesize($srcfile);
 

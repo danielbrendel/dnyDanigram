@@ -20,6 +20,7 @@ use App\FavoritesModel;
 use App\HeartModel;
 use App\PostModel;
 use App\ReportModel;
+use App\StoryModel;
 use App\TagsModel;
 use App\ThreadModel;
 use Exception;
@@ -526,6 +527,137 @@ class PostsController extends Controller
             }
 
             $comment->delete();
+
+            return response()->json(array('code' => 200));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Get selection of stories
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function selection()
+    {
+        try {
+            $data = StoryModel::randomSelection(auth()->id(), env('APP_STORYPACK'));
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * View story list
+     *
+     * @param $userId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function story($userId)
+    {
+        try {
+            $data = StoryModel::view(auth()->id(), $userId);
+
+            return response()->json(array('code' => 200, 'data' => $data, 'user' => User::get($userId)));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Add image to story
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addStoryImage()
+    {
+        try {
+            $attr = request()->validate([
+                'image' => 'required',
+                'message' => 'nullable',
+                'color' => 'required'
+            ]);
+
+            if (!isset($attr['message'])) {
+                $attr['message'] = '';
+            }
+
+            StoryModel::add(auth()->id(), $attr['message'], $attr['image'], $attr['color'], 1);
+
+            return response()->json(array('code' => 200, 'msg' => __('app.story_added')));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Add message to story
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addStoryText()
+    {
+        try {
+            $attr = request()->validate([
+               'message' => 'required',
+               'color' => 'required',
+               'bgcolor' => 'required'
+            ]);
+
+            StoryModel::add(auth()->id(), $attr['message'], $attr['bgcolor'], $attr['color'], 2);
+
+            return response()->json(array('code' => 200, 'msg' => __('app.story_added')));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Set story image
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setStoryImage()
+    {
+        try {
+            $att = request()->file('image');
+
+            $fname = $att->getClientOriginalName() . '_' . uniqid('', true) . '_' . md5($att->getClientOriginalName()) . '_' . strval(auth()->id()) . '_';
+            $fext = $att->getClientOriginalExtension();
+            $att->move(public_path() . '/gfx/stories/', $fname . '.' . $fext);
+            if (!PostModel::isValidImage(public_path() . '/gfx/stories/' . $fname . '.' . $fext)) {
+                unlink(public_path() . '/gfx/stories/', $fname . '.' . $fext);
+                throw new Exception(__('app.post_invalid_image'));
+            }
+
+            $baseFile = public_path() . '/gfx/stories/' . $fname;
+            $fullFile = $baseFile . '.' . $fext;
+
+            if (!PostModel::createThumbFile($fullFile, PostModel::getImageType($fext, $baseFile), $baseFile, $fext)) {
+                throw new Exception('createThumbFile failed', 500);
+            }
+
+            $imageName = $fname . '_thumb.' . $fext;
+            unlink($fullFile);
+
+            return response()->json(array('code' => 200, 'name' => $imageName));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Expire the stories
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function expireStories()
+    {
+        try {
+            StoryModel::expireStory();
 
             return response()->json(array('code' => 200));
         } catch (Exception $e) {

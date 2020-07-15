@@ -363,26 +363,42 @@ img.show-post-image-nsfw {
 }
 
 //Feed
+#feed {
+    @media screen and (max-width: 380px) {
+        top: unset;
+    }
+    @media screen and (min-width: 381px) {
+        top: -20px;
+    }
+    @media screen and (min-width: 769px) {
+        top: -89px;
+        padding-left: unset;
+    }
+}
+#feed-left {
+    @media screen and (min-width: 481px) and (max-width: 768px) {
+        top: -142px;
+    }
+}
 .feed-nav {
     margin-bottom: 45px;
     @media screen and (max-width: 380px) {
         top: 58px;
     }
-    @media screen and (min-width: 482px) {
-        margin-top: -87px;
+    @media screen and (min-width: 381px) {
+        top: 79px;
     }
     @media screen and (min-width: 769px) {
-        margin-top: 20px;
+        top: unset;
+        padding-left: unset;
     }
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
 }
 
 //Fixed frame
 .fixed-frame {
     position: fixed;
     z-index: 2;
-    top: 74px;
+    top: 196px;
     margin-left: 50px;
     margin-bottom: 50px;
     width: 367px;
@@ -831,4 +847,54 @@ img.show-post-image-nsfw {
 }
 .clep-continue-without-account {
     margin-top: 40px;
+}
+
+//Stories
+.stories-frame {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow-y: auto;
+    height: 97px;
+    width: 97%;
+    @media screen and (max-width: 480px) {
+        top: 64px;
+    }
+}
+.stories-item {
+    margin: 15px;
+    display: inline-block;
+}
+.stories-item-avatar {
+    width: 48px;
+    height: 48px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(249, 157, 75);
+    border-radius: 50%;
+    padding: 5px;
+}
+.stories-item-avatar img {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+.stories-item-username {
+    color: rgb(100, 100, 100);
+    font-size: 0.7em;
+}
+#story-content, #add-story-content {
+    min-height: 360px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#story-message, #add-story-message {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.stories-add-icon {
+    padding: 9px;
 }
