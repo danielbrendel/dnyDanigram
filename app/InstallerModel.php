@@ -60,7 +60,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_STORYPACK=50' . PHP_EOL;
             $envcontent .= 'APP_STORYDURATION=24' . PHP_EOL;
 			$envcontent .= 'APP_PUBLICFEED=false' . PHP_EOL;
-            $envcontent .= 'APP_ENABLENSFWFILTER=false' . PHP_EOL;
+            $envcontent .= 'APP_ENABLENSFWFILTER=true' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
             $envcontent .= 'DB_CONNECTION=mysql' . PHP_EOL;
             $envcontent .= 'DB_HOST="' . $attr['dbhost'] . '"' . PHP_EOL;
