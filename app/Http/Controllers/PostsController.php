@@ -140,12 +140,9 @@ class PostsController extends Controller
                 $user->stats = User::getStats($user->id);
             }
 
-            $favorites = FavoritesModel::getDetailedForUser(auth()->id());
-
             return view('feed.index', [
                 'user' => $user,
                 'taglist' => TagsModel::getPopularTags(),
-                'favorites' => $favorites,
                 'captcha' => CaptchaModel::createSum(session()->getId()),
                 'cookie_consent' => AppModel::getCookieConsentText()
             ]);

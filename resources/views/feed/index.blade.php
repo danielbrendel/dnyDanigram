@@ -15,27 +15,28 @@
 @section('title', env('APP_PROJECTNAME'))
 
 @section('body')
-    <div class="column is-2 is-sidespacing"></div>
-
-    <div class="column is-4" id="feed-left">
+    <div class="column is-5" id="feed-left">
         <div class="feed-nav is-default-padding">
-            <span><a id="linkFetchTop" href="javascript:void(0)" onclick="window.vue.setPostFetchType(1); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();" class="is-color-grey">{{ __('app.top') }}</a></span>&nbsp;&#x25CF;&nbsp;<span><a id="linkFetchLatest" href="javascript:void(0)" onclick="window.vue.setPostFetchType(2); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();" class="is-color-grey">{{ __('app.latest') }}</a></span>
+            <div class="tabs is-member-form-without-border-and-backgroundcolor is-foreground">
+                <ul>
+                    <li id="linkFetchTop">
+                        <a href="javascript:void(0)" onclick="window.vue.setPostFetchType(1); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();" class="is-color-grey">{{ __('app.top') }}</a>
+                    </li>
+                    <li id="linkFetchLatest">
+                        <a href="javascript:void(0)" onclick="window.vue.setPostFetchType(2); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();" class="is-color-grey">{{ __('app.latest') }}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div id="feed"></div>
         <div id="loading" style="display: none;"><br/><br/><center><i class="fas fa-spinner fa-spin"></i></center></div>
     </div>
 
-    <div class="column is-4 fixed-frame-parent">
+    <div class="column is-3 fixed-frame-parent">
         <div class="fixed-frame">
-            @auth
             <div class="member-form is-default-padding">
-                @include('widgets.favorites')
-            </div>
-            @endauth
-
-            <div class="member-form is-default-padding">
-                @include('widgets.populartags')
+                @include('widgets.news')
             </div>
 
             <div class="member-form is-default-padding is-margin-bottom-last-fixed-frame is-member-form-without-border-and-backgroundcolor">
@@ -44,7 +45,7 @@
         </div>
     </div>
 
-    <div class="column is-2 is-sidespacing fa-3x"></div>
+    <div class="column is-5 is-sidespacing fa-3x"></div>
 @endsection
 
 @section('javascript')
@@ -80,11 +81,11 @@
             document.getElementById('loading').style.display = 'block';
 
             if (window.vue.getPostFetchType() == 1) {
-                document.getElementById('linkFetchTop').style.textDecoration = 'underline';
-                document.getElementById('linkFetchLatest').style.textDecoration = 'none';
+                document.getElementById('linkFetchTop').classList.add('is-active');
+                document.getElementById('linkFetchLatest').classList.remove('is-active');
             } else if (window.vue.getPostFetchType() == 2) {
-                document.getElementById('linkFetchTop').style.textDecoration = 'none';
-                document.getElementById('linkFetchLatest').style.textDecoration = 'underline';
+                document.getElementById('linkFetchTop').classList.remove('is-active');
+                document.getElementById('linkFetchLatest').classList.add('is-active');
             }
 
             window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){

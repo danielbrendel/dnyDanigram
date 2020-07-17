@@ -514,7 +514,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
 
 @media screen and (min-width: 769px) {
   #feed {
-    top: -89px;
+    top: -139px;
     padding-left: unset;
   }
 }
@@ -537,13 +537,13 @@ input[type="submit"], button[class="button"], input[type="button"] {
 
 @media screen and (min-width: 381px) {
   .feed-nav {
-    top: 79px;
+    top: 65px;
   }
 }
 
 @media screen and (min-width: 769px) {
   .feed-nav {
-    top: unset;
+    top: -23px;
     padding-left: unset;
   }
 }
@@ -551,10 +551,10 @@ input[type="submit"], button[class="button"], input[type="button"] {
 .fixed-frame {
   position: fixed;
   z-index: 2;
-  top: 196px;
-  margin-left: 50px;
+  top: 195px;
+  margin-left: 30px;
   margin-bottom: 50px;
-  width: 367px;
+  width: 291px;
   height: 90%;
   max-height: 901px;
   overflow-y: auto;
@@ -678,6 +678,28 @@ input[type="submit"], button[class="button"], input[type="button"] {
   float: right;
 }
 
+.favorites-nav {
+  position: fixed;
+  z-index: 2;
+  top: 73px;
+  left: -25px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  width: 295px;
+  height: 90%;
+  max-height: 901px;
+  overflow-y: auto;
+  background-color: unset;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 1454px) {
+  .favorites-nav {
+    display: none;
+  }
+}
+
 .favorites-item {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -700,6 +722,28 @@ input[type="submit"], button[class="button"], input[type="button"] {
 .favorites-item-right {
     float: right;
     top: 10px;
+}
+
+.populartags-nav {
+  position: fixed;
+  z-index: 2;
+  top: 73px;
+  right: 22px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  width: 295px;
+  height: 90%;
+  max-height: 901px;
+  overflow-y: auto;
+  background-color: unset;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 1454px) {
+  .populartags-nav {
+    display: none;
+  }
 }
 
 .userinfo-header {
@@ -1076,6 +1120,10 @@ input[type="submit"], button[class="button"], input[type="button"] {
     background-color: rgb(80, 80, 78) !important;
 }
 
+.is-foreground {
+  z-index: 2;
+}
+
 .is-center-width {
     width: 61%;
 }
@@ -1141,7 +1189,7 @@ img.show-post-image-nsfw {
   border-radius: 4px;
   overflow-y: auto;
   height: 97px;
-  width: 97%;
+  width: 89%;
 }
 
 @media screen and (max-width: 480px) {

@@ -67,7 +67,7 @@ a:hover {
 }
 
 h2 {
-    font-size: 1.0em;
+  font-size: 1em;
 }
 
 .is-pointer {
@@ -78,11 +78,6 @@ h2 {
   .is-sidespacing {
     display: none;
   }
-}
-
-.is-member-form-without-border-and-backgroundcolor {
-    border: unset !important;
-    background-color: unset !important;
 }
 
 .is-wordbreak {
@@ -235,6 +230,14 @@ h2 {
   font-size: 0.8em;
 }
 
+.is-center-width {
+  width: 61%;
+}
+
+.is-foreground {
+  z-index: 2;
+}
+
 .is-margin-right-15 {
   margin-right: 15px;
 }
@@ -254,11 +257,16 @@ h2 {
 }
 
 .is-sub-comment {
-    margin-left: 50px;
+  margin-left: 50px;
 }
 
 .is-margin-bottom-last-fixed-frame {
-    margin-bottom: 200px !important;
+  margin-bottom: 200px !important;
+}
+
+.is-member-form-without-border-and-backgroundcolor {
+  border: unset !important;
+  background-color: unset !important;
 }
 
 .avatar {
@@ -385,11 +393,11 @@ h2 {
   position: relative;
   margin-top: 21px;
   margin-bottom: 25px;
+  background-color: white;
 }
 
 @media screen and (min-width: 380px) {
   .member-form {
-    background-color: #fafafa;
     border: 1px solid #ccc;
     border-radius: 4px;
     top: 55px;
@@ -429,6 +437,15 @@ h2 {
 
 .show-post-image {
   margin-top: 14px;
+}
+
+.show-post-attributes {
+  margin-top: 10px;
+}
+
+img.show-post-image-nsfw {
+  filter: blur(1.5rem);
+  -webkit-filter: blur(1.5rem);
 }
 
 .show-post-description {
@@ -471,7 +488,7 @@ h2 {
 
 @media screen and (min-width: 769px) {
   #feed {
-    top: -89px;
+    top: -139px;
     padding-left: unset;
   }
 }
@@ -494,13 +511,13 @@ h2 {
 
 @media screen and (min-width: 381px) {
   .feed-nav {
-    top: 79px;
+    top: 65px;
   }
 }
 
 @media screen and (min-width: 769px) {
   .feed-nav {
-    top: unset;
+    top: -23px;
     padding-left: unset;
   }
 }
@@ -508,10 +525,10 @@ h2 {
 .fixed-frame {
   position: fixed;
   z-index: 2;
-  top: 196px;
-  margin-left: 50px;
+  top: 195px;
+  margin-left: 30px;
   margin-bottom: 50px;
-  width: 367px;
+  width: 291px;
   height: 90%;
   max-height: 901px;
   overflow-y: auto;
@@ -571,7 +588,7 @@ h2 {
 }
 
 .thread-elem {
-    margin-right: 15px;
+  margin-right: 15px;
 }
 
 .thread-header {
@@ -604,15 +621,15 @@ h2 {
   display: inline-block;
 }
 
-.thread-footer-subthread {
-    width: 75%;
-    text-align: center;
-}
-
 .thread-footer-options {
   font-size: 0.8em;
   float: right;
   display: inline-block;
+}
+
+.thread-footer-subthread {
+  width: 75%;
+  text-align: center;
 }
 
 .thread-header-options {
@@ -635,28 +652,77 @@ h2 {
   float: right;
 }
 
+.favorites-nav {
+  position: fixed;
+  z-index: 2;
+  top: 73px;
+  left: -25px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  width: 295px;
+  height: 90%;
+  max-height: 901px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 1454px) {
+  .favorites-nav {
+    display: none;
+  }
+}
+
 .favorites-item {
-    margin-top: 5px;
-    margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
+
 .favorites-item-left a {
-    color: rgb(110, 110, 108);
-    font-weight: bold;
+  color: #6e6e6c;
+  font-weight: bold;
 }
+
 .favorites-item-left-avatar {
-    display: inline-block;
-    top: -9px;
+  display: inline-block;
+  top: -9px;
 }
+
 .favorites-item-left-avatar img {
-    border-radius: 50%;
+  border-radius: 50%;
 }
+
 .favorites-item-left-info {
-    display: inline-block;
-    font-size: 0.75em;
+  display: inline-block;
+  font-size: 0.75em;
 }
+
 .favorites-item-right {
-    float: right;
-    top: 10px;
+  float: right;
+  top: 10px;
+}
+
+.populartags-nav {
+  position: fixed;
+  z-index: 2;
+  top: 73px;
+  right: 22px;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  width: 295px;
+  height: 90%;
+  max-height: 901px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: 1454px) {
+  .populartags-nav {
+    display: none;
+  }
 }
 
 .userinfo-header {
@@ -809,6 +875,11 @@ h2 {
   }
 }
 
+.notification-close-icon {
+  margin-top: 14px;
+  margin-right: 32px;
+}
+
 .notifications-content {
   margin: 25px;
   height: 78%;
@@ -819,11 +890,6 @@ h2 {
   .notifications-content {
     height: 95%;
   }
-}
-
-.notification-close-icon {
-    margin-top: 14px;
-    margin-right: 32px;
 }
 
 .notification-item {
@@ -849,6 +915,10 @@ h2 {
 
 .is-new-notification {
   background-color: #80ff80;
+}
+
+.is-new-notification:hover {
+  background-color: #80c880;
 }
 
 .messages {
@@ -1012,64 +1082,60 @@ h2 {
   }
 }
 
-.is-center-width {
-    width: 61%;
-}
-
-img.show-post-image-nsfw {
-    filter: blur(1.5rem);
-    -webkit-filter: blur(1.5rem);
-}
-
-.show-post-attributes {
-	margin-top: 10px;
-}
-
 #clep {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
+
 .clep-outer {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0 auto;
 }
+
 .clep-content {
-    margin: 0;
-    position: absolute;
-    width: 90%;
-    height: 80%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+  margin: 0;
+  position: absolute;
+  width: 90%;
+  height: 80%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
+
 .clep-headline {
-    font-size: 1.5em;
-    margin-bottom: 45px;
+  font-size: 1.5em;
+  margin-bottom: 45px;
 }
+
 .clep-headline h1 {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
+
 .clep-recover-top {
-    position: relative;
-    top: 8px;
+  position: relative;
+  top: 8px;
 }
+
 .clep-welcome-content {
-    font-size: 0.7em;
-    margin-bottom: 22px;
+  font-size: 0.7em;
+  margin-bottom: 22px;
 }
+
 .clep-border {
-    border-top: 1px solid #ccc;
-    margin-top: 18px;
-    padding-top: 12px;
+  border-top: 1px solid #ccc;
+  margin-top: 18px;
+  padding-top: 12px;
 }
+
 .clep-signup {
-    font-size: 1.4em;
+  font-size: 1.4em;
 }
+
 .clep-continue-without-account {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .stories-frame {
@@ -1077,12 +1143,19 @@ img.show-post-image-nsfw {
   border-radius: 4px;
   overflow-y: auto;
   height: 97px;
-  width: 97%;
+  width: 89%;
+  background-color: white;
 }
 
 @media screen and (max-width: 480px) {
   .stories-frame {
     top: 64px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .stories-frame {
+    width: 100%;
   }
 }
 
@@ -1131,3 +1204,4 @@ img.show-post-image-nsfw {
 .stories-add-icon {
   padding: 9px;
 }
+

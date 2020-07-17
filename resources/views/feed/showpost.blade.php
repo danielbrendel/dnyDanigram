@@ -15,9 +15,7 @@
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.view_post'))
 
 @section('body')
-    <div class="column is-2 is-sidespacing"></div>
-
-    <div class="column is-4">
+    <div class="column is-5">
         <div id="singlepost" class="is-fix-single-post-position"><center><i class="fas fa-spinner fa-spin"></i></center></div>
 
         <div class="member-form is-default-padding">
@@ -103,23 +101,15 @@
         </div>
     </div>
 
-    <div class="column is-4 fixed-frame-parent">
+    <div class="column is-3 fixed-frame-parent">
         <div class="fixed-frame">
-            <div class="member-form is-default-padding">
-                @include('widgets.favorites')
-            </div>
-
-            <div class="member-form is-default-padding">
-                @include('widgets.populartags')
-            </div>
-
             <div class="member-form is-default-padding is-margin-bottom-last-fixed-frame is-member-form-without-border-and-backgroundcolor">
                 @include('widgets.company')
             </div>
         </div>
     </div>
 
-    <div class="column is-2 is-sidespacing"></div>
+    <div class="column is-5 is-sidespacing"></div>
 @endsection
 
 @section('javascript')

@@ -10,18 +10,22 @@
     Released under the MIT license
 --}}
 
-<div class="is-block">
-    <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.popular_tags') }}</h2></div>
-    @if ((isset($inoverlay)) && ($inoverlay))
-        <div class="is-inline-block float-right is-margin-top-25 is-margin-right-15"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('popular-tags')"></i></div>
-    @endif
-</div>
-
-<div>
-    @foreach ($taglist as $tag)
-        <div class="taglist-item is-block">
-            <div class="taglist-item-left is-inline-block"><a href="{{ url('/t/' . $tag->tag) }}">#{{ \App\AppModel::getShortExpression($tag->tag) }}</a></div>
-            <div class="taglist-item-right is-inline-block"><i class="far fa-heart"></i>&nbsp;{{ $tag->hearts }}</div>
+<div class="column is-2 is-sidespacing">
+    <div class="populartags-nav is-default-padding">
+        <div class="is-block">
+            <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.popular_tags') }}</h2></div>
+            @if ((isset($inoverlay)) && ($inoverlay))
+                <div class="is-inline-block float-right is-margin-top-25 is-margin-right-15"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('popular-tags')"></i></div>
+            @endif
         </div>
-    @endforeach
+
+        <div>
+            @foreach ($taglist as $tag)
+                <div class="taglist-item is-block">
+                    <div class="taglist-item-left is-inline-block"><a href="{{ url('/t/' . $tag->tag) }}">#{{ \App\AppModel::getShortExpression($tag->tag) }}</a></div>
+                    <div class="taglist-item-right is-inline-block"><i class="far fa-heart"></i>&nbsp;{{ $tag->hearts }}</div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 </div>

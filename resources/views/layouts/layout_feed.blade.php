@@ -292,7 +292,9 @@
 
             <div class="columns is-vcentered is-multiline">
                 @auth
+                    @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
                     @include('widgets.stories')
+                    @include('widgets.populartags')
                 @endauth
 
                 @yield('body')

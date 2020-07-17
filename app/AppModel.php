@@ -28,7 +28,7 @@ class AppModel extends Model
 {
     const ONE_HOUR = 3600;
     const ONE_DAY = self::ONE_HOUR * 24;
-    const MAX_EXPRESSION_LENGTH = 25;
+    const MAX_EXPRESSION_LENGTH = 15;
 
     /**
      * Get name parts

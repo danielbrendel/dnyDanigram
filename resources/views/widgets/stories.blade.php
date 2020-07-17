@@ -10,9 +10,7 @@
     Released under the MIT license
 --}}
 
-<div class="column is-2 is-sidespacing"></div>
-
-<div class="column is-8">
+<div class="column is-9">
     <div class="stories-frame" id="stories">
         <div class="stories-item">
             <div class="stories-item-avatar">
@@ -25,4 +23,4 @@
     </div>
 </div>
 
-<div class="column is-2 is-sidespacing"></div>
+<div class="column is-1 is-sidespacing"></div>
