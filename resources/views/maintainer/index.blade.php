@@ -15,10 +15,8 @@
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.maintainer_area'))
 
 @section('body')
-    <div class="column is-2 is-sidespacing"></div>
-
     <div class="column is-8">
-        <div class="member-form is-default-padding">
+        <div class="member-form is-default-padding member-form-fixed-top">
             <div>
                 <h1>{{ __('app.maintainer_area') }}</h1>
             </div>
@@ -902,10 +900,6 @@
 
 @section('javascript')
     <script>
-		document.addEventListener('DOMContentLoaded', function() {
-			document.getElementById('stories').remove();
-		});
-	
         function getUserDetails(ident)
         {
             window.vue.ajaxRequest('get', '{{ url('/maintainer/u/details') }}?ident=' + ident, {}, function(response) {

@@ -15,12 +15,10 @@
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.messages'))
 
 @section('body')
-    <div class="column is-2 is-sidespacing"></div>
-
     <div class="column is-8">
         <h1>{{ __('app.message_create') }}</h1>
 
-        <div class="member-form is-default-padding">
+        <div class="member-form is-default-padding member-form-fixed-top">
             <form method="POST" action="{{ url('/messages/send') }}">
                 @csrf
 
@@ -57,10 +55,3 @@
     <div class="column is-2 is-sidespacing"></div>
 @endsection
 
-@section('javascript')
-    <script>
-		document.addEventListener('DOMContentLoaded', function() {
-			document.getElementById('stories').remove();
-		});
-    </script>
-@endsection

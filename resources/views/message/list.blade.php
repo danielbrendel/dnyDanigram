@@ -15,14 +15,12 @@
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.messages'))
 
 @section('body')
-    <div class="column is-2 is-sidespacing"></div>
-
     <div class="column is-8">
-        <div class="member-form is-default-padding">
+        <div class="member-form is-default-padding member-form-fixed-top">
             <div>
                 <h1>{{ __('app.messages') }}</h1>
             </div>
-			
+
 			<div>
 				<button type="button" class="button" onclick="location.href = '{{ url('/messages/create') }}';">{{ __('app.create') }}</button><br/><br/>
 			</div>
@@ -97,8 +95,6 @@
 
         document.addEventListener('DOMContentLoaded', function() {
            window.fetchMessageList();
-		   
-		   document.getElementById('stories').remove();
         });
     </script>
 @endsection

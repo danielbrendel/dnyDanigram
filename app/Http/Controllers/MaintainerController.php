@@ -79,6 +79,7 @@ class MaintainerController extends Controller
             'themes' => $themes,
             'langs' => AppModel::getLanguageList(),
 			'cookie_consent' => AppModel::getCookieConsentText(),
+            'taglist' => TagsModel::getPopularTags(),
             'reports' => $reports
         ]);
     }

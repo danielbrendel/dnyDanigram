@@ -15,10 +15,8 @@
 @section('title', env('APP_PROJECTNAME') . ' - ' . __('app.post_title'))
 
 @section('body')
-    <div class="column is-2 is-sidespacing"></div>
-
     <div class="column is-8">
-        <div class="member-form is-default-padding">
+        <div class="member-form is-default-padding member-form-fixed-top">
             <div class="is-margin-top-25">
                 <h1>{{ __('app.post_title') }}</h1>
             </div>
@@ -69,10 +67,3 @@
     <div class="column is-2 is-sidespacing"></div>
 @endsection
 
-@section('javascript')
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			document.getElementById('stories').remove();
-		});
-	</script>
-@endsection

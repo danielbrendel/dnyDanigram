@@ -321,6 +321,11 @@ h2 {
 .member-form div h1 {
     margin-bottom: 70px;
 }
+.member-form-fixed-top {
+    @media screen and (min-width: 380px) {
+        top: -10px !important;
+    }
+}
 
 //Posts
 .show-post {

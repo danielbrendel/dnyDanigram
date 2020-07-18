@@ -63,6 +63,7 @@ class PostsController extends Controller
         return view('member.upload', [
             'user' => User::getByAuthId(),
             'cookie_consent' => AppModel::getCookieConsentText(),
+            'taglist' => TagsModel::getPopularTags(),
             'captcha' => CaptchaModel::createSum(session()->getId()),
         ]);
     }
