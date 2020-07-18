@@ -157,7 +157,7 @@ class FavoritesModel extends Model
                     $hashtag = TagsModel::where('id', '=', $favorite->entityId)->first();
                     $favorite->name = $hashtag->tag;
                     $favorite->short_name = AppModel::getShortExpression($favorite->name);
-                    $favorite->avatar = $hashtag->top_image;
+                    $favorite->avatar = TagsModel::getTopImage($hashtag->tag);
                     $favorite->total_posts = Cache::remember('tag_stats_posts_' . $hashtag->tag, 3600 * 24, function () use ($hashtag) {
                         return PostModel::where('hashtags', 'LIKE', '%' . $hashtag->tag . ' %')->count();
                     });

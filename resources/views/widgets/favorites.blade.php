@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-<div class="column is-2 is-sidespacing">
+<div class="column is-2">
     <div class="@if ((!isset($inoverlay)) || (!$inoverlay)) favorites-nav @endif is-default-padding">
         <div>
             <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.favorites') }}</h2></div>

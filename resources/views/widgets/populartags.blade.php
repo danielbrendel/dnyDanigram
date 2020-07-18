@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-<div class="column is-2 is-sidespacing">
+<div class="column is-2">
     <div class="@if ((!isset($inoverlay)) || (!$inoverlay)) populartags-nav @endif is-default-padding">
         <div class="is-block">
             <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.popular_tags') }}</h2></div>
@@ -25,9 +25,9 @@
                     <div class="taglist-item-left is-inline-block">
                         <div class="taglist-item-left-image is-inline-block">
                             @if ($tag->top_image !== null)
-                                <img src="{{ asset('gfx/posts/' . $tag->top_image) }}" width="32" height="32"/>
+                                <img src="{{ asset('gfx/posts/' . $tag->top_image) }}" width="32" height="32"/>&nbsp;&nbsp;
                             @else
-                                &nbsp;<i class="fas fa-hashtag fa-lg"></i>&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;<i class="fas fa-hashtag fa-lg"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             @endif
                         </div>
 

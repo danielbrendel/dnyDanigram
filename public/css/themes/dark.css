@@ -228,8 +228,10 @@ input[type="submit"], button[class="button"], input[type="button"] {
   }
 }
 
-.is-top-negative-mobile-like {
-  top: -15px !important;
+@media screen and (min-width: 769px) {
+  .is-top-negative-mobile-like {
+    top: -15px !important;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -689,6 +691,12 @@ input[type="submit"], button[class="button"], input[type="button"] {
   top: -9px;
 }
 
+.taglist-item-left-image img {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
 .taglist-item-left a {
   color: #6e6e6c;
   font-weight: bold;
@@ -703,7 +711,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
   position: fixed;
   z-index: 2;
   top: 73px;
-  left: -25px;
+  right: 22px;
   margin-left: 50px;
   margin-bottom: 50px;
   width: 295px;
@@ -735,6 +743,8 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 .favorites-item-left-avatar img {
     border-radius: 50%;
+	width: 32px;
+	height: 32px;
 }
 .favorites-item-left-info {
     display: inline-block;
@@ -749,7 +759,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
   position: fixed;
   z-index: 2;
   top: 73px;
-  right: 22px;
+  left: -25px;
   margin-left: 50px;
   margin-bottom: 50px;
   width: 295px;
@@ -775,6 +785,8 @@ input[type="submit"], button[class="button"], input[type="button"] {
 
 .userinfo-image {
   margin-right: 15px;
+  width: 32px;
+  height: 32px;
 }
 
 .userinfo-image img {

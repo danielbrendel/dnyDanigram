@@ -121,10 +121,37 @@ class TagsModel extends Model
                 $tag->total_posts = Cache::remember('tag_stats_posts_' . $tag->tag, 3600 * 24, function () use ($tag) {
                     return PostModel::where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->count();
                 });
+
+                $tag->top_image = Cache::remember('tag_top_image_' . $tag->tag, 24, function() use ($tag) {
+                    $post = PostModel::where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->orderBy('hearts', 'desc')->first();
+                    if ($post) {
+                        return $post->image_thumb;
+                    }
+
+                    return null;
+                });
             }
             return $tagList;
         } catch (\Exception $e) {
             throw $e;
         }
+    }
+
+    /**
+     * Get top image for hashtag
+     *
+     * @param $hashtag
+     * @return mixed
+     */
+    public static function getTopImage($hashtag)
+    {
+        return Cache::remember('tag_top_image_' . $hashtag, 24, function() use ($hashtag) {
+            $post = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->orderBy('hearts', 'desc')->first();
+            if ($post) {
+                return $post->image_thumb;
+            }
+
+            return null;
+        });
     }
 }

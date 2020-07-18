@@ -193,14 +193,7 @@ class PostsController extends Controller
                 return $hearts;
             });
 
-            $tag->top_image = Cache::remember('tag_top_image_' . $hashtag, 24, function() use ($hashtag) {
-               $post = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->orderBy('hearts', 'desc')->first();
-               if ($post) {
-                   return $post->image_thumb;
-               }
-
-               return null;
-            });
+            $tag->top_image = TagsModel::getTopImage($hashtag);
 
             $user = User::getByAuthId();
             if ($user) {

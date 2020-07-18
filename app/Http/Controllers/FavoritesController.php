@@ -38,7 +38,7 @@ class FavoritesController extends Controller
 
             if ($result->type === 'ENT_HASHTAG') {
                 $hashtag = TagsModel::where('id', '=', $result->entityId)->first();
-                $result->avatar = $hashtag->top_image;
+                $result->avatar = TagsModel::getTopImage($hashtag->tag);
                 $result->total_posts = Cache::remember('tag_stats_posts_' . $hashtag->tag, 3600 * 24, function () use ($hashtag) {
                     return PostModel::where('hashtags', 'LIKE', '%' . $hashtag->tag . ' %')->count();
                 });

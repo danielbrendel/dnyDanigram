@@ -548,7 +548,7 @@ window.addFavorite = function(entityId, type, entityName = '') {
               if (response.avatar !== null) {
                   avatar = '<img src = "' + window.location.origin + '/gfx/posts/' + response.fav.avatar + '" width = "32" height = "32"/>';
               } else {
-                  avatar = '&nbsp;<i class="fas fa-hashtag fa-lg" > < /i>&nbsp;&nbsp;';
+                  avatar = '&nbsp;<i class="fas fa-hashtag fa-lg" ></i>&nbsp;&nbsp;';
               }
           } else if (type === 'ENT_USER') {
             avatar = '<img src = "' + window.location.origin + '/gfx/avatars/' + response.fav.avatar + '" width = "32" height = "32"/>';
@@ -572,7 +572,7 @@ window.addFavorite = function(entityId, type, entityName = '') {
                     </div>
                 </div>
 
-                <div class="favorites-item-right is-inline-block"><i onclick="deleteFavorite(` + response.fav.id + `, ` + entityId + `, ` + type + `)" class="fas fa-times is-pointer" title="Remove"></i></div>
+                <div class="favorites-item-right is-inline-block"><i onclick="deleteFavorite(` + response.fav.id + `, ` + entityId + `, '` + type + `')" class="fas fa-times is-pointer" title="Remove"></i></div>
             </div>
           `;
 
