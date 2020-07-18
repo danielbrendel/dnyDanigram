@@ -22,7 +22,21 @@
         <div>
             @foreach ($taglist as $tag)
                 <div class="taglist-item is-block">
-                    <div class="taglist-item-left is-inline-block"><a href="{{ url('/t/' . $tag->tag) }}">#{{ \App\AppModel::getShortExpression($tag->tag) }}</a></div>
+                    <div class="taglist-item-left is-inline-block">
+                        <div class="taglist-item-left-image is-inline-block">
+                            @if ($tag->top_image !== null)
+                                <img src="{{ asset('gfx/posts/' . $tag->top_image) }}" width="32" height="32"/>
+                            @else
+                                &nbsp;<i class="fas fa-hashtag fa-lg"></i>&nbsp;&nbsp;
+                            @endif
+                        </div>
+
+                        <div class="is-inline-block">
+                            <div><a href="{{ url('/t/' . $tag->tag) }}">#{{ \App\AppModel::getShortExpression($tag->tag) }}</a></div>
+                            <div>{{ __('app.stats_posts', ['count' => $tag->total_posts]) }}</div>
+                        </div>
+                    </div>
+
                     <div class="taglist-item-right is-inline-block"><i class="far fa-heart"></i>&nbsp;{{ $tag->hearts }}</div>
                 </div>
             @endforeach

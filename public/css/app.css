@@ -634,6 +634,14 @@ img.show-post-image-nsfw {
   margin-bottom: 5px;
 }
 
+.taglist-item-left {
+  font-size: 0.75em;
+}
+
+.taglist-item-left-image {
+  top: -9px;
+}
+
 .taglist-item-left a {
   color: #6e6e6c;
   font-weight: bold;
@@ -641,6 +649,7 @@ img.show-post-image-nsfw {
 
 .taglist-item-right {
   float: right;
+  top: 5px;
 }
 
 .favorites-nav {

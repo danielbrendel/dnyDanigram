@@ -512,12 +512,19 @@ img.show-post-image-nsfw {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+.taglist-item-left {
+    font-size: 0.75em;
+}
+.taglist-item-left-image {
+    top: -9px;
+}
 .taglist-item-left a {
     color: rgb(110, 110, 108);
     font-weight: bold;
 }
 .taglist-item-right {
     float: right;
+    top: 5px;
 }
 
 //Favorites list

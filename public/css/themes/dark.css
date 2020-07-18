@@ -675,6 +675,14 @@ input[type="submit"], button[class="button"], input[type="button"] {
   margin-bottom: 5px;
 }
 
+.taglist-item-left {
+  font-size: 0.75em;
+}
+
+.taglist-item-left-image {
+  top: -9px;
+}
+
 .taglist-item-left a {
   color: #6e6e6c;
   font-weight: bold;
@@ -682,6 +690,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
 
 .taglist-item-right {
   float: right;
+  top: 5px;
 }
 
 .favorites-nav {

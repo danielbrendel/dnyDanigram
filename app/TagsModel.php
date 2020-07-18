@@ -117,6 +117,11 @@ class TagsModel extends Model
             $tagList = Cache::remember('popular_tags', 60, function() {
                 return TagsModel::where('locked', '=', false)->orderBy('hearts', 'desc')->limit(env('APP_TOPNTAGS'))->get();
             });
+            foreach ($tagList as &$tag) {
+                $tag->total_posts = Cache::remember('tag_stats_posts_' . $tag->tag, 3600 * 24, function () use ($tag) {
+                    return PostModel::where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->count();
+                });
+            }
             return $tagList;
         } catch (\Exception $e) {
             throw $e;
