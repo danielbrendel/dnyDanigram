@@ -343,7 +343,7 @@ class User extends Authenticatable
                 $user->password = password_hash($password, PASSWORD_BCRYPT);
                 $user->save();
 
-                $html = view('mail.pw_changed', ['name' => $user->name])->render();
+                $html = view('mail.pw_changed', ['name' => $user->username])->render();
                 MailerModel::sendMail($user->email, __('app.password_changed'), $html);
             }
         } catch (Exception $e) {
@@ -367,7 +367,7 @@ class User extends Authenticatable
                 $user->email = $email;
                 $user->save();
 
-                $html = view('mail.email_changed', ['name' => $user->name, 'email' => $email])->render();
+                $html = view('mail.email_changed', ['name' => $user->username, 'email' => $email])->render();
                 MailerModel::sendMail($user->email, __('app.email_changed'), $html);
                 MailerModel::sendMail($oldMail, __('app.email_changed'), $html);
             }

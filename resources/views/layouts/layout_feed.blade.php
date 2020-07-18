@@ -337,14 +337,14 @@
                             <div class="field">
                                 <label class="label">{{ __('app.password') }}</label>
                                 <div class="control">
-                                    <input type="text" name="password">
+                                    <input type="password" name="password">
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label">{{ __('app.password_confirm') }}</label>
                                 <div class="control">
-                                    <input type="text" name="password_confirm">
+                                    <input type="password" name="password_confirm">
                                 </div>
                             </div>
 
