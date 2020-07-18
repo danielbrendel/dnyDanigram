@@ -431,6 +431,12 @@ input[type="submit"], button[class="button"], input[type="button"] {
   margin-bottom: 70px;
 }
 
+@media screen and (min-width: 380px) {
+  .member-form-fixed-top {
+    top: -10px !important;
+  }
+}
+
 @media screen and (max-width: 769px) {
   .show-post {
     border-bottom: 1px solid #ccc;
