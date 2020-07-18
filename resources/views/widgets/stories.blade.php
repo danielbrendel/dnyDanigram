@@ -12,9 +12,9 @@
 
 <div class="column is-9">
     <div class="stories-frame" id="stories">
-        <div class="stories-item">
+        <div class="stories-item is-pointer" onclick="window.vue.bShowAddStory = true; window.clearStoryInput();">
             <div class="stories-item-avatar">
-                <i class="fas fa-plus is-color-grey stories-add-icon is-pointer" onclick="window.vue.bShowAddStory = true; window.clearStoryInput();"></i>
+                <i class="fas fa-plus is-color-grey stories-add-icon"></i>
             </div>
             <div class="stories-item-username">
                 {{ __('app.add_story') }}

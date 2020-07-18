@@ -11,11 +11,11 @@
 --}}
 
 <div class="column is-2 is-sidespacing">
-    <div class="favorites-nav is-default-padding">
+    <div class="@if ((!isset($inoverlay)) || (!$inoverlay)) favorites-nav @endif is-default-padding">
         <div>
             <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.favorites') }}</h2></div>
             @if ((isset($inoverlay)) && ($inoverlay))
-                <div class="is-inline-block float-right is-margin-top-25"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('favorites')"></i></div>
+                <div class="is-inline-block float-right is-margin-top-15" onclick="window.toggleOverlay('favorites')"><i class="fas fa-times is-pointer"></i></div>
             @endif
         </div>
 

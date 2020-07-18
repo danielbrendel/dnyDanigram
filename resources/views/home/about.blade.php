@@ -24,9 +24,11 @@
             {!! $about_content !!}
         </div>
 
+        @if ((!isset($_GET['ngb'])) || ($_GET['ngb'] == 0))
         <div class="home-go-back">
             <a href="javascript:window.history.back();">{{ __('app.go_back') }}</a>
         </div>
+        @endif
     </div>
 
     <div class="column is-2 is-sidespacing"></div>

@@ -17,7 +17,7 @@
 @section('body')
     <div class="column is-8">
         <div class="member-form is-default-padding member-form-fixed-top">
-            <div class="is-margin-top-25">
+            <div class="is-margin-top-15">
                 <h1>{{ __('app.post_title') }}</h1>
             </div>
 

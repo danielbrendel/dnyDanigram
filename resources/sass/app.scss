@@ -124,8 +124,8 @@ h2 {
     position: fixed;
     z-index: 5;
 }
-.is-margin-top-25 {
-    margin-top: 25px
+.is-margin-top-15 {
+    margin-top: 15px
 }
 .is-top-53 {
     top: 53px;
@@ -256,6 +256,9 @@ h2 {
     color: rgb(127, 138, 157);
     font-size: 0.9em;
     margin-top: 15px;
+    @media screen and (max-width: 768px) {
+        margin-bottom: 23px;
+    }
 }
 .home-bottombar a {
     color: rgb(32, 80, 125);
@@ -322,8 +325,11 @@ h2 {
     margin-bottom: 70px;
 }
 .member-form-fixed-top {
-    @media screen and (min-width: 380px) {
+    @media screen and (min-width: 481px) {
         top: -10px !important;
+    }
+    @media screen and (max-width: 379px) {
+        top: 14px !important;
     }
 }
 
@@ -716,7 +722,7 @@ img.show-post-image-nsfw {
     display: none;
 }
 .notification-close-icon {
-    margin-top: 14px;
+    margin-top: 22px;
     margin-right: 32px;
 }
 .notifications-content {
@@ -931,6 +937,7 @@ img.show-post-image-nsfw {
     overflow-y: auto;
     height: 97px;
     width: 89%;
+    z-index: 2;
     @media screen and (max-width: 480px) {
         top: 64px;
     }

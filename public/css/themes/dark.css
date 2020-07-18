@@ -431,9 +431,15 @@ input[type="submit"], button[class="button"], input[type="button"] {
   margin-bottom: 70px;
 }
 
-@media screen and (min-width: 380px) {
+@media screen and (min-width: 481px) {
   .member-form-fixed-top {
     top: -10px !important;
+  }
+}
+
+@media screen and (max-width: 379px) {
+  .member-form-fixed-top {
+    top: 14px !important;
   }
 }
 
@@ -885,7 +891,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 
 .notification-close-icon {
-    margin-top: 14px;
+    margin-top: 22px;
     margin-right: 32px;
 }
 
@@ -1205,6 +1211,7 @@ img.show-post-image-nsfw {
   overflow-y: auto;
   height: 97px;
   width: 89%;
+  z-index: 2;
 }
 
 @media screen and (max-width: 480px) {

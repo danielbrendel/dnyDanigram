@@ -248,8 +248,8 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
 
                                 <div class="show-post-options is-inline-block">
                                     <div class="dropdown is-right" id="post-options-` + elem.id + `">
-                                        <div class="dropdown-trigger">
-                                            <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));"></i>
+                                        <div class="dropdown-trigger" onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));">
+                                            <i class="fas fa-ellipsis-v is-pointer"></i>
                                         </div>
                                         <div class="dropdown-menu" role="menu">
                                             <div class="dropdown-content">
@@ -287,7 +287,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                             </div>
 
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">
-                                <div class="is-inline-block"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
+                                <div class="is-inline-block"><span onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i></span> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
                                 <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="document.getElementById('post-image-` + elem.id + `').classList.remove('show-post-image-nsfw'); this.remove();" class="is-color-grey">[NSFW] Show</a></center></div>
                                 <div class="is-inline-block is-right float-right"><a class="is-color-grey" href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
@@ -340,8 +340,8 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
 
                 <div class="thread-header-options is-inline-block">
                     <div class="dropdown is-right" id="thread-options-` + elem.id + `">
-                        <div class="dropdown-trigger">
-                            <i class="fas fa-ellipsis-v is-pointer" onclick="window.vue.togglePostOptions(document.getElementById('thread-options-` + elem.id + `'));"></i>
+                        <div class="dropdown-trigger" onclick="window.vue.togglePostOptions(document.getElementById('thread-options-` + elem.id + `'));">
+                            <i class="fas fa-ellipsis-v is-pointer"></i>
                         </div>
                         <div class="dropdown-menu" role="menu">
                             <div class="dropdown-content">

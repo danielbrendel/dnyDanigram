@@ -46,7 +46,7 @@
             </div>
 
             <div class="cookie-consent-button">
-                <i class="fas fa-times is-pointer" title="{{ __('app.cookie_consent_close') }}" onclick="vue.clickedCookieConsentButton()"></i>
+                <div onclick="vue.clickedCookieConsentButton()"><i class="fas fa-times is-pointer" title="{{ __('app.cookie_consent_close') }}"></i></div>
             </div>
         </div>
 

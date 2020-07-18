@@ -11,11 +11,11 @@
 --}}
 
 <div class="column is-2 is-sidespacing">
-    <div class="populartags-nav is-default-padding">
+    <div class="@if ((!isset($inoverlay)) || (!$inoverlay)) populartags-nav @endif is-default-padding">
         <div class="is-block">
             <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.popular_tags') }}</h2></div>
             @if ((isset($inoverlay)) && ($inoverlay))
-                <div class="is-inline-block float-right is-margin-top-25 is-margin-right-15"><i class="fas fa-times is-pointer" onclick="window.toggleOverlay('popular-tags')"></i></div>
+                <div class="is-inline-block float-right is-margin-top-15 is-margin-right-15" onclick="window.toggleOverlay('popular-tags')"><i class="fas fa-times is-pointer"></i></div>
             @endif
         </div>
 
