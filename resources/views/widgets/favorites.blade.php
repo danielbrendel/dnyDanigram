@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        <div class="favorites-item-right is-inline-block"><i onclick="deleteFavorite({{ $favorite->id }}, {{ $favorite->entityId }}, '{{ $favorite->type }}')" class="fas fa-times is-pointer" title="{{ __('app.remove') }}"></i></div>
+                        <div class="favorites-item-right is-inline-block" onclick="deleteFavorite({{ $favorite->id }}, {{ $favorite->entityId }}, '{{ $favorite->type }}')"><i class="fas fa-times is-pointer" title="{{ __('app.remove') }}"></i></div>
                     </div>
                 @endforeach
             @else
