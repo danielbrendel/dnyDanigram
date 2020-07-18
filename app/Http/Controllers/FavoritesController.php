@@ -42,13 +42,13 @@ class FavoritesController extends Controller
                 $result->total_posts = Cache::remember('tag_stats_posts_' . $hashtag->tag, 3600 * 24, function () use ($hashtag) {
                     return PostModel::where('hashtags', 'LIKE', '%' . $hashtag->tag . ' %')->count();
                 });
+                $result->short_name = AppModel::getShortExpression($hashtag->tag);
             } else if ($result->type === 'ENT_USER') {
                 $user = User::get($result->entityId);
                 $result->avatar = $user->avatar;
                 $result->total_posts = User::getStats($result->entityId)->posts;
+                $result->short_name = AppModel::getShortExpression($user->username);
             }
-
-            $result->short_name = AppModel::getShortExpression($result->name);
 
             return response()->json(array('code' => 200, 'fav' => $result, 'msg' => __('app.favorite_added')));
         } catch (\Exception $e) {
