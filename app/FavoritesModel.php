@@ -51,6 +51,7 @@ class FavoritesModel extends Model
      * @param $userId
      * @param $entityId
      * @param $entType
+     * @return FavoritesModel
      * @throws \Exception
      */
     public static function add($userId, $entityId, $entType)
@@ -72,7 +73,11 @@ class FavoritesModel extends Model
                         PushModel::addNotification(__('app.added_to_favorites_short'), __('app.added_to_favorites', ['name' => $user->username]), 'PUSH_FAVORITED', $entityId);
                     }
                 }
+
+                return $entry;
             }
+
+            return $exists;
         } catch (\Exception $e) {
             throw $e;
         }

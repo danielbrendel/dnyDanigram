@@ -538,15 +538,41 @@ window.addFavorite = function(entityId, type, entityName = '') {
 
           let link = '';
           if (type === 'ENT_HASHTAG') {
-              link = '<a href="' + window.location.origin + '/t/' + entityName + '">#' + entityName + '</a>';
+              link = '<a href="' + window.location.origin + '/t/' + entityName + '">#' + response.fav.short_name + '</a>';
           } else if (type === 'ENT_USER') {
-              link = '<a href="' + window.location.origin + '/u/' + entityName + '">@' + entityName + '</a>';
+              link = '<a href="' + window.location.origin + '/u/' + entityName + '">@' + response.fav.short_name + '</a>';
           }
+
+          let avatar = '';
+          if (type === 'ENT_HASHTAG') {
+              if (response.avatar !== null) {
+                  avatar = '<img src = "' + window.location.origin + '/gfx/posts/' + response.fav.avatar + '" width = "32" height = "32"/>';
+              } else {
+                  avatar = '&nbsp;<i class="fas fa-hashtag fa-lg" > < /i>&nbsp;&nbsp;';
+              }
+          } else if (type === 'ENT_USER') {
+            avatar = '<img src = "' + window.location.origin + '/gfx/avatars/' + response.fav.avatar + '" width = "32" height = "32"/>';
+          }
+
           let html = `
-          <div class="favorites-item is-block favorite-item-` + type.toLowerCase() + `-` + entityId + `">
+            <div class="favorites-item is-block favorite-item-` + type.toLowerCase() + `-` + entityId + `">
                 <div class="favorites-item-left is-inline-block">
-                    ` + link + `
+                    <div class="favorites-item-left-avatar">
+                        ` + avatar + `
+                    </div>
+
+                    <div class="favorites-item-left-info">
+                        <div class="">
+                            ` + link + `
+                        </div>
+
+                        <div class="is-color-grey">
+                            ` + response.fav.total_posts + ` total posts
+                        </div>
+                    </div>
                 </div>
+
+                <div class="favorites-item-right is-inline-block"><i onclick="deleteFavorite(` + response.fav.id + `, ` + entityId + `, ` + type + `)" class="fas fa-times is-pointer" title="Remove"></i></div>
             </div>
           `;
 
