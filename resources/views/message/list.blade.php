@@ -31,17 +31,15 @@
                 </div>
             </div>
 
-                <div class="messages-footer">
-                    <div class="messages-footer-count" id="msg-count"></div>
+            <div class="messages-footer">
+                <div class="messages-footer-count" id="msg-count"></div>
 
-                    <div class="messages-footer-nav">
-                        <span><i id="browse-left" class="fas fa-arrow-left is-pointer" onclick="if (window.paginateList < window.maxMsgId) window.paginateList = window.previousMsgId+1; window.msgListCounter -= {{ env('APP_MESSAGEPACKLIMIT') }}; fetchMessageList()"></i></span>
-                        <span><i id="browse-right" class="fas fa-arrow-right is-pointer" onclick="if (window.paginateList > window.minMsgId) fetchMessageList(); window.msgListCounter += {{ env('APP_MESSAGEPACKLIMIT') }};"></i></span>
-                    </div>
+                <div class="messages-footer-nav">
+                    <span><i id="browse-left" class="fas fa-arrow-left is-pointer" onclick="if (window.paginateList < window.maxMsgId) window.paginateList = window.previousMsgId+1; window.msgListCounter -= {{ env('APP_MESSAGEPACKLIMIT') }}; fetchMessageList()"></i></span>
+                    <span><i id="browse-right" class="fas fa-arrow-right is-pointer" onclick="if (window.paginateList > window.minMsgId) fetchMessageList(); window.msgListCounter += {{ env('APP_MESSAGEPACKLIMIT') }};"></i></span>
                 </div>
             </div>
         </div>
-        <br/><br/>
     </div>
 
     <div class="column is-2 is-sidespacing"></div>

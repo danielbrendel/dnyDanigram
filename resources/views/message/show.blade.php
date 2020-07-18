@@ -83,8 +83,6 @@
         </div>
     </div>
 
-    </div>
-
     <div class="column is-2 is-sidespacing"></div>
 @endsection
 
