@@ -51,6 +51,8 @@ Route::get('/u/{id}/report', 'MemberController@report');
 Route::get('/profile', 'MemberController@profile');
 Route::post('/profile/edit', 'MemberController@save');
 Route::post('/u/deleteownaccount', 'MemberController@deleteOwnAccount');
+Route::any('/u/{id}/ignore/add', 'MemberController@addToIgnore');
+Route::any('/u/{id}/ignore/remove', 'MemberController@removeFromIgnore');
 
 Route::post('/f/add', 'FavoritesController@add');
 Route::post('/f/remove', 'FavoritesController@remove');

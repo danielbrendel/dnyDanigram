@@ -45,14 +45,18 @@ class ThreadModel extends Model
 
             $user = User::get($post->userId);
             if (($user) && ($userId !== $post->userId)) {
-                PushModel::addNotification(__('app.user_posted_comment_short', ['name' => $user->username]), __('app.user_posted_comment', ['name' => $user->username, 'msg' => ((strlen($text) > self::MAX_PREVIEW_MSG) ? substr($text, 0, self::MAX_PREVIEW_MSG) . '...' : $text), 'item' => url('/p/' . $postId . '?c=' . $thread->id . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
+                if (!IgnoreModel::hasIgnored($post->userId, $userId)) {
+                    PushModel::addNotification(__('app.user_posted_comment_short', ['name' => $user->username]), __('app.user_posted_comment', ['name' => $user->username, 'msg' => ((strlen($text) > self::MAX_PREVIEW_MSG) ? substr($text, 0, self::MAX_PREVIEW_MSG) . '...' : $text), 'item' => url('/p/' . $postId . '?c=' . $thread->id . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
+                }
             }
 
             $mentionedNames = AppModel::getMentionList($text);
             foreach ($mentionedNames as $name) {
                 $curUser = User::getByUsername($name);
                 if ($curUser) {
-                    PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id . '#' . $thread->id)]), 'PUSH_MENTIONED', $curUser->id);
+                    if (!IgnoreModel::hasIgnored($curUser->id, $userId)) {
+                        PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id . '#' . $thread->id)]), 'PUSH_MENTIONED', $curUser->id);
+                    }
                 }
             }
 
@@ -124,7 +128,7 @@ class ThreadModel extends Model
                 $threads->where('id', '<', $paginate);
             }
 
-            return $threads->orderBy('id', 'desc')->limit(env('APP_THREADPACKLIMIT'))->get();
+            return $threads->orderBy('id', 'desc')->limit(env('APP_THREADPACKLIMIT'))->get()->toArray();
         } catch (\Exception $e) {
             throw $e;
         }
@@ -161,7 +165,7 @@ class ThreadModel extends Model
                 $threads->where('id', '>', $paginate);
             }
 
-            return $threads->orderBy('id', 'asc')->limit(env('APP_THREADPACKLIMIT'))->get();
+            return $threads->orderBy('id', 'asc')->limit(env('APP_THREADPACKLIMIT'))->get()->toArray();
         } catch (\Exception $e) {
             throw $e;
         }
@@ -193,14 +197,18 @@ class ThreadModel extends Model
 
             $user = User::get($parent->userId);
             if (($user) && ($userId !== $parent->userId)) {
-                PushModel::addNotification(__('app.user_replied_comment_short', ['name' => $user->username]), __('app.user_replied_comment', ['name' => $user->username, 'msg' => ((strlen($text) > self::MAX_PREVIEW_MSG) ? substr($text, 0, self::MAX_PREVIEW_MSG) . '...' : $text), 'item' => url('/p/' . $parent->postId . '?c=' . $thread->id . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
+                if (!IgnoreModel::hasIgnored($parent->userId, $userId)) {
+                    PushModel::addNotification(__('app.user_replied_comment_short', ['name' => $user->username]), __('app.user_replied_comment', ['name' => $user->username, 'msg' => ((strlen($text) > self::MAX_PREVIEW_MSG) ? substr($text, 0, self::MAX_PREVIEW_MSG) . '...' : $text), 'item' => url('/p/' . $parent->postId . '?c=' . $thread->id . '#' . $thread->id)]), 'PUSH_COMMENTED', $user->id);
+                }
             }
 
             $mentionedNames = AppModel::getMentionList($text);
             foreach ($mentionedNames as $name) {
                 $curUser = User::getByUsername($name);
                 if ($curUser) {
-                    PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $parent->postId . '#' . $thread->id)]), 'PUSH_MENTIONED', $curUser->id);
+                    if (!IgnoreModel::hasIgnored($curUser->id, $userId)) {
+                        PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $parent->postId . '#' . $thread->id)]), 'PUSH_MENTIONED', $curUser->id);
+                    }
                 }
             }
 

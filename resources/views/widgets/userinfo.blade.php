@@ -67,6 +67,14 @@
             <a href="javascript:void(0)" onclick="reportProfile({{ $user->id }})">{{ __('app.report_profile') }}</a>
         </div>
         @endif
+
+        <div>
+            @if ($user->ignored)
+                <a href="javascript:void(0)" onclick="location.href = '{{ url('/u/' . $user->id . '/ignore/remove') }}';">{{ __('app.remove_from_ignore') }}</a>
+            @else
+                <a href="javascript:void(0)" onclick="location.href = '{{ url('/u/' . $user->id . '/ignore/add') }}';">{{ __('app.add_to_ignore') }}</a>
+            @endif
+        </div>
     @endif
 
     @if (($admin) && ($user->id !== auth()->id()))

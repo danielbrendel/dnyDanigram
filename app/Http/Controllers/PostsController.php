@@ -18,6 +18,7 @@ use App\AppModel;
 use App\CaptchaModel;
 use App\FavoritesModel;
 use App\HeartModel;
+use App\IgnoreModel;
 use App\PostModel;
 use App\ReportModel;
 use App\StoryModel;
@@ -26,6 +27,7 @@ use App\ThreadModel;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -233,15 +235,20 @@ class PostsController extends Controller
             $user = request('user', null);
 
             $posts = PostModel::getPostPack($type, $this->postPackLimit, $hashtag, $user, $paginate);
-            foreach ($posts as &$post) {
-                $post->diffForHumans = $post->created_at->diffForHumans();
-                $post->user = User::get($post->userId);
-                $post->comment_count = ThreadModel::where('postId', '=', $post->id)->where('locked', '=', false)->count();
-                $post->userHearted = HeartModel::hasUserHearted(auth()->id(), $post->id, 'ENT_POST');
-                $post->hearts = HeartModel::where('entityId', '=', $post->id)->where('type', '=', 'ENT_POST')->count();
+            foreach ($posts as $key => &$post) {
+                if (IgnoreModel::hasIgnored(auth()->id(), $post['userId'])) {
+                    unset($posts[$key]);
+                    continue;
+                }
+
+                $post['diffForHumans'] = Carbon::createFromDate($post['created_at'])->diffForHumans();
+                $post['user'] = User::get($post['userId']);
+                $post['comment_count'] = ThreadModel::where('postId', '=', $post['id'])->where('locked', '=', false)->count();
+                $post['userHearted'] = HeartModel::hasUserHearted(auth()->id(), $post['id'], 'ENT_POST');
+                $post['hearts'] = HeartModel::where('entityId', '=', $post['id'])->where('type', '=', 'ENT_POST')->count();
             }
 
-            return response()->json(array('code' => 200, 'data' => $posts, 'last' => (count($posts) === 0)));
+            return response()->json(array('code' => 200, 'data' => array_values($posts), 'last' => (count($posts) === 0)));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
@@ -259,16 +266,21 @@ class PostsController extends Controller
             $paginate = request('paginate', null);
 
             $threads = ThreadModel::getFromPost($post, $paginate);
-            foreach ($threads as &$thread) {
-                $thread->user = User::get($thread->userId);
-                $thread->hearts = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread->id)->count();
-                $thread->adminOrOwner = User::isAdmin(auth()->id()) || ($thread->userId === auth()->id());
-                $thread->userHearted = HeartModel::hasUserHearted(auth()->id(), $thread->id, 'ENT_COMMENT');
-                $thread->diffForHumans = $thread->created_at->diffForHumans();
-                $thread->subCount = ThreadModel::getSubCount($thread->id);
+            foreach ($threads as $key => &$thread) {
+                if (IgnoreModel::hasIgnored(auth()->id(), $thread['userId'])) {
+                    unset($threads[$key]);
+                    continue;
+                }
+
+                $thread['user'] = User::get($thread['userId']);
+                $thread['hearts'] = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread['id'])->count();
+                $thread['adminOrOwner'] = User::isAdmin(auth()->id()) || ($thread['userId'] === auth()->id());
+                $thread['userHearted'] = HeartModel::hasUserHearted(auth()->id(), $thread['id'], 'ENT_COMMENT');
+                $thread['diffForHumans'] = Carbon::createFromDate($thread['created_at'])->diffForHumans();
+                $thread['subCount'] = ThreadModel::getSubCount($thread['id']);
             }
 
-            return response()->json(array('code' => 200, 'data' => $threads, 'last' => (count($threads) === 0)));
+            return response()->json(array('code' => 200, 'data' => array_values($threads), 'last' => (count($threads) === 0)));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
@@ -286,12 +298,17 @@ class PostsController extends Controller
             $paginate = request('paginate', null);
 
             $threads = ThreadModel::getSubPosts($parentId, $paginate);
-            foreach ($threads as &$thread) {
-                $thread->user = User::get($thread->userId);
-                $thread->hearts = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread->id)->count();
-                $thread->adminOrOwner = User::isAdmin(auth()->id()) || ($thread->userId === auth()->id());
-                $thread->userHearted = HeartModel::hasUserHearted(auth()->id(), $thread->id, 'ENT_COMMENT');
-                $thread->diffForHumans = $thread->created_at->diffForHumans();
+            foreach ($threads as $key => &$thread) {
+                if (IgnoreModel::hasIgnored(auth()->id(), $thread['userId'])) {
+                    unset($threads[$key]);
+                    continue;
+                }
+
+                $thread['user'] = User::get($thread['userId']);
+                $thread['hearts'] = HeartModel::where('type', '=', 'ENT_COMMENT')->where('entityId', '=', $thread['id'])->count();
+                $thread['adminOrOwner'] = User::isAdmin(auth()->id()) || ($thread['userId'] === auth()->id());
+                $thread['userHearted'] = HeartModel::hasUserHearted(auth()->id(), $thread['id'], 'ENT_COMMENT');
+                $thread['diffForHumans'] = Carbon::createFromDate($thread['created_at'])->diffForHumans();
             }
 
             return response()->json(array('code' => 200, 'data' => $threads, 'last' => (count($threads) === 0)));

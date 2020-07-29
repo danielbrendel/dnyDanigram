@@ -278,5 +278,10 @@ return [
     'story_message' => 'Message',
     'story_text_color' => 'Text color',
     'story_bg_color' => 'Background color',
-    'story_added' => 'Your story has been added'
+    'story_added' => 'Your story has been added',
+    'remove_from_ignore' => 'Remove from ignore list',
+    'add_to_ignore' => 'Add to ignore list',
+    'user_not_receiving_messages' => 'The user does not receive messages',
+    'added_to_ignore' => 'Added to ignore list',
+    'removed_from_ignore' => 'Removed from ignore list'
 ];

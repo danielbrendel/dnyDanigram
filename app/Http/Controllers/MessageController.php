@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 
 use App\AppModel;
 use App\CaptchaModel;
+use App\IgnoreModel;
 use App\MessageModel;
 use App\TagsModel;
 use App\User;
@@ -133,6 +134,10 @@ class MessageController extends Controller
             $receiver = User::getByUsername($attr['username']);
             if (!$receiver) {
                 throw new \Exception(__('app.user_not_found'));
+            }
+
+            if (IgnoreModel::hasIgnored($receiver->id, $sender->id)) {
+                throw new \Exception(__('app.user_not_receiving_messages'));
             }
 
             $id = MessageModel::add($receiver->id, $sender->id, $attr['subject'], $attr['text']);

@@ -336,7 +336,7 @@ class PostModel extends Model
                 $posts->where('userId', '=', $user);
             }
 
-            return $posts->limit($limit)->get();
+            return $posts->limit($limit)->get()->toArray();
         } catch (\Exception $e) {
             throw $e;
         }

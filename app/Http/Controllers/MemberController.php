@@ -17,6 +17,7 @@ namespace App\Http\Controllers;
 use App\AppModel;
 use App\CaptchaModel;
 use App\FavoritesModel;
+use App\IgnoreModel;
 use App\PostModel;
 use App\ReportModel;
 use App\TagsModel;
@@ -45,6 +46,7 @@ class MemberController extends Controller
             }
 
             $user->stats = User::getStats($user->id);
+            $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
 
             return view('member.profile', [
                 'user' => User::getByAuthId(),
@@ -208,6 +210,41 @@ class MemberController extends Controller
             return response()->json(array('code' => 200, 'msg' => __('app.account_deleted')));
         } catch (\Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Add to ignore list
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addToIgnore($id)
+    {
+        try {
+            IgnoreModel::add(auth()->id(), $id);
+            FavoritesModel::remove(auth()->id(), $id, 'ENT_USER');
+
+            return back()->with('flash.success', __('app.added_to_ignore'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Remove from ignore list
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function removeFromIgnore($id)
+    {
+        try {
+            IgnoreModel::remove(auth()->id(), $id);
+
+            return back()->with('flash.success', __('app.removed_from_ignore'));
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
         }
     }
 }
