@@ -217,7 +217,7 @@ return [
     'report_delete' => 'Delete',
     'report_safe' => 'Safe',
     'report_confirm_lock' => 'Do you want to lock this entity?',
-    'report_confirm_delete' => 'DO you want to delete this entity?',
+    'report_confirm_delete' => 'Do you want to delete this entity?',
     'report_confirm_safe' => 'Do you want to set this entity safe?',
     'reports' => 'Reports',
     'entity_deleted' => 'Entity has been deleted',
