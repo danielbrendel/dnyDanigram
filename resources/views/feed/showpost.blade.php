@@ -103,6 +103,10 @@
 
     <div class="column is-3 fixed-frame-parent">
         <div class="fixed-frame">
+            <div class="member-form is-default-padding">
+                @include('widgets.news')
+            </div>
+
             <div class="member-form is-default-padding is-margin-bottom-last-fixed-frame is-member-form-without-border-and-backgroundcolor">
                 @include('widgets.company')
             </div>
