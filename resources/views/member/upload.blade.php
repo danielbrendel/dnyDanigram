@@ -53,7 +53,7 @@
 
                     <div class="field">
                         <div id="toggle-attribution">
-                            <a href="javascript:void(0);" onclick="document.getElementById('attribution-settings').classList.remove('is-hidden');document.getElementById('toggle-attribution').classList.add('is-hidden');">{{ __('app.attribute_original_author') }}</a>
+                            <a href="javascript:void(0);" onclick="document.getElementById('attribution-settings').classList.remove('is-hidden');document.getElementById('toggle-attribution').classList.add('is-hidden');">{{ __('app.make_attribution') }}</a>
                         </div>
 
                         <div id="attribution-settings" class="is-hidden">

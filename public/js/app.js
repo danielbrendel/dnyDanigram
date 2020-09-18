@@ -313,26 +313,26 @@ window.renderPost = function (elem) {
   var twitter = '';
   var homepage = '';
 
-  if (elem.orig_author_instagram.length > 0) {
-    instagram = '<div><a href="https://www.instagram.com/' + elem.orig_author_instagram + '"><i class="fab fa-instagram"></i>&nbsp;' + elem.orig_author_instagram + '</a>';
+  if (elem.attribution_instagram.length > 0) {
+    instagram = '<div><a href="https://www.instagram.com/' + elem.attribution_instagram + '"><i class="fab fa-instagram"></i>&nbsp;' + elem.attribution_instagram + '</a>';
   }
 
-  if (elem.orig_author_twitter.length > 0) {
-    twitter = '<div><a href="https://twitter.com/' + elem.orig_author_twitter + '"><i class="fab fa-twitter"></i>&nbsp;' + elem.orig_author_twitter + '</a>';
+  if (elem.attribution_twitter.length > 0) {
+    twitter = '<div><a href="https://twitter.com/' + elem.attribution_twitter + '"><i class="fab fa-twitter"></i>&nbsp;' + elem.attribution_twitter + '</a>';
   }
 
-  if (elem.orig_author_homepage.length > 0) {
-    if (!elem.orig_author_homepage.startsWith('http://') && !elem.orig_author_homepage.startsWith('https://')) {
-      elem.orig_author_homepage = 'http://' + elem.orig_author_homepage;
+  if (elem.attribution_homepage.length > 0) {
+    if (!elem.attribution_homepage.startsWith('http://') && !elem.attribution_homepage.startsWith('https://')) {
+      elem.attribution_homepage = 'http://' + elem.attribution_homepage;
     }
 
-    homepage = '<div><a href="' + elem.orig_author_homepage + '"><i class="fas fa-external-link-alt"></i>&nbsp;' + elem.orig_author_homepage + '</a>';
+    homepage = '<div><a href="' + elem.attribution_homepage + '"><i class="fas fa-external-link-alt"></i>&nbsp;' + elem.attribution_homepage + '</a>';
   }
 
   var credits = '';
 
   if (instagram.length > 0 || twitter.length > 0 || homepage.length > 0) {
-    credits = "\n            <div><b>Credits:</b></div>\n            " + instagram + twitter + homepage;
+    credits = instagram + twitter + homepage;
   }
 
   var adminOptions = '';

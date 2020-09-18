@@ -36,9 +36,9 @@ class CreatePostModelsTable extends Migration
             $table->integer('reports')->default(0);
             $table->boolean('locked')->default(false);
             $table->boolean('nsfw')->default(false);
-            $table->string('orig_author_instagram')->default('');
-            $table->string('orig_author_twitter')->default('');
-            $table->string('orig_author_homepage')->default('');
+            $table->string('attribution_instagram')->default('');
+            $table->string('attribution_twitter')->default('');
+            $table->string('attribution_homepage')->default('');
             $table->timestamps();
         });
     }

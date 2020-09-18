@@ -288,7 +288,7 @@ return [
     'header_code_description' => 'Enter here code which shall be put in the head tag.',
     'adcode' => 'Ad code',
     'adcode_description' => 'Put here your Ad code which will then be used for showing Ads.',
-    'attribute_original_author' => 'Attribute original author',
+    'make_attribution' => 'Make attribution',
     'instagram_name' => 'Instagram name',
     'twitter_name' => 'Twitter name',
     'homepage_url' => 'Homepage link'

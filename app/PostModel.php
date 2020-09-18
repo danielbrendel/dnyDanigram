@@ -261,9 +261,9 @@ class PostModel extends Model
                 }
                 $post->userId = auth()->id();
                 $post->nsfw = (bool)$attr['nsfw'];
-                $post->orig_author_instagram = $attr['ig_name'];
-                $post->orig_author_twitter = $attr['twitter_name'];
-                $post->orig_author_homepage = $attr['homepage_url'];
+                $post->attribution_instagram = $attr['ig_name'];
+                $post->attribution_twitter = $attr['twitter_name'];
+                $post->attribution_homepage = $attr['homepage_url'];
                 $post->save();
 
                 foreach ($hashtagList as $ht) {
