@@ -46,6 +46,8 @@
                 <li><a href="#tab-page-13">{{ __('app.reports') }}</a></li>
                 <li><a href="#tab-page-14">{{ __('app.welcome_content') }}</a></li>
                 <li><a href="#tab-page-15">{{ __('app.project_name_formatted') }}</a></li>
+                <li><a href="#tab-page-16">{{ __('app.header_code') }}</a></li>
+                <li><a href="#tab-page-17">{{ __('app.adcode') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
                 <div id="tab-page-1">
@@ -751,6 +753,48 @@
                             <label class="label">{{ __('app.project_name_formatted_description') }}</label>
                             <div class="control">
                                 <textarea class="textarea" name="code">{{ $settings->formatted_project_name }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" value="{{ __('app.save') }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="tab-page-16">
+                    <form method="POST" action="{{ url('/maintainer/save') }}">
+                        @csrf
+
+                        <input type="hidden" name="attribute" value="header_code">
+
+                        <div class="field">
+                            <label class="label">{{ __('app.header_code_description') }}</label>
+                            <div class="control">
+                                <textarea class="textarea" name="content">{{ $settings->header_code }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" value="{{ __('app.save') }}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="tab-page-17">
+                    <form method="POST" action="{{ url('/maintainer/save') }}">
+                        @csrf
+
+                        <input type="hidden" name="attribute" value="adcode">
+
+                        <div class="field">
+                            <label class="label">{{ __('app.adcode_description') }}</label>
+                            <div class="control">
+                                <textarea class="textarea" name="content">{{ $settings->adcode }}</textarea>
                             </div>
                         </div>
 

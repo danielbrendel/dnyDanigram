@@ -1,4 +1,4 @@
-/*
+@import url(https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap);/*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
         (C) 2019 - 2020 by Daniel Brendel
@@ -117,7 +117,8 @@ h2 {
 }
 
 .is-app-title {
-  font-family: "Segoe Script", "Nunito", sans-serif;
+  font-family: "Dancing Script", "Nunito", sans-serif;
+  font-size: 1.5em;
 }
 
 .is-default-padding {
@@ -477,6 +478,14 @@ img.show-post-image-nsfw {
 .show-post-hashtags a {
   color: #6e6e6c;
   font-weight: bold;
+}
+
+.show-post-credits a {
+  color: #6e6e6c;
+}
+
+.show-post-credits i {
+  color: #323230;
 }
 
 @media screen and (max-width: 380px) {

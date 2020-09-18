@@ -10,6 +10,8 @@
     Released under the MIT license
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
 //General layout
 html, body {
     width: 100%;
@@ -99,7 +101,8 @@ h2 {
     border-bottom: 1px solid #ccc;
 }
 .is-app-title {
-    font-family: 'Segoe Script', 'Nunito', sans-serif;
+    font-family: 'Dancing Script', 'Nunito', sans-serif;
+    font-size: 1.5em;
 }
 .is-default-padding {
     padding: 21px;
@@ -386,6 +389,13 @@ img.show-post-image-nsfw {
 .show-post-hashtags a {
     color: rgb(110, 110, 108);
     font-weight: bold;
+}
+.show-post-credits a {
+    color: rgb(110, 110, 108);
+}
+
+.show-post-credits i {
+    color: rgb(50, 50, 48);
 }
 
 //Feed

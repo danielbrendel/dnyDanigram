@@ -197,8 +197,23 @@ class PostModel extends Model
                 'image' => 'file|required',
                 'description' => 'nullable|max:4096',
                 'hashtags' => 'nullable',
-                'nsfw' => 'nullable'
+                'nsfw' => 'nullable',
+                'ig_name' => 'nullable',
+                'twitter_name' => 'nullable',
+                'homepage_url' => 'nullable'
             ]);
+
+            if (!isset($attr['ig_name'])) {
+                $attr['ig_name'] = '';
+            }
+
+            if (!isset($attr['twitter_name'])) {
+                $attr['twitter_name'] = '';
+            }
+
+            if (!isset($attr['homepage_url'])) {
+                $attr['homepage_url'] = '';
+            }
 
             $user = User::where('id', '=', auth()->id())->first();
 
@@ -246,6 +261,9 @@ class PostModel extends Model
                 }
                 $post->userId = auth()->id();
                 $post->nsfw = (bool)$attr['nsfw'];
+                $post->orig_author_instagram = $attr['ig_name'];
+                $post->orig_author_twitter = $attr['twitter_name'];
+                $post->orig_author_homepage = $attr['homepage_url'];
                 $post->save();
 
                 foreach ($hashtagList as $ht) {

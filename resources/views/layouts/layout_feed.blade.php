@@ -49,6 +49,10 @@
         <script src="{{ asset('js/axios.min.js') }}"></script>
 
         <title>@yield('title')</title>
+
+        @if (strlen(\App\AppModel::getHeaderCode()) > 0)
+            {!! \App\AppModel::getHeaderCode() !!}
+        @endif
     </head>
 
     <body class="is-member-background">

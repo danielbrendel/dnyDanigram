@@ -215,15 +215,48 @@ let vue = new Vue({
 
 window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunctionalityEnabled = false)
 {
+    if (elem._type === 'ad') {
+        let html = unescape(elem.code);
+
+        return html;
+    }
+
     let hashTags = '';
     let hashArr = elem.hashtags.trim().split(' ');
     hashArr.forEach(function (elem, index) {
-        hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
+        if (elem.length > 0) {
+            hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
+        }
     });
 
     let nsfwOption = `<a href="javascript:void(0)" onclick="toggleNsfw(\` + elem.id + \`); window.vue.togglePostOptions(document.getElementById('post-options-\` + elem.id + \`'));" class="dropdown-item">
                 Toggle NSFW
             </a> `;
+
+    let instagram = '';
+    let twitter = '';
+    let homepage = '';
+
+    if (elem.orig_author_instagram.length > 0) {
+        instagram = '<div><a href="https://www.instagram.com/' + elem.orig_author_instagram + '"><i class="fab fa-instagram"></i>&nbsp;' + elem.orig_author_instagram + '</a>';
+    }
+    if (elem.orig_author_twitter.length > 0) {
+        twitter = '<div><a href="https://twitter.com/' + elem.orig_author_twitter + '"><i class="fab fa-twitter"></i>&nbsp;' + elem.orig_author_twitter + '</a>';
+    }
+    if (elem.orig_author_homepage.length > 0) {
+        if ((!elem.orig_author_homepage.startsWith('http://')) && (!elem.orig_author_homepage.startsWith('https://'))) {
+            elem.orig_author_homepage = 'http://' + elem.orig_author_homepage;
+        }
+
+        homepage = '<div><a href="' + elem.orig_author_homepage + '"><i class="fas fa-external-link-alt"></i>&nbsp;' + elem.orig_author_homepage + '</a>';
+    }
+
+    let credits = '';
+    if ((instagram.length > 0) || (twitter.length > 0) || (homepage.length > 0)) {
+        credits = `
+            <div><b>Credits:</b></div>
+            ` + instagram + twitter + homepage;
+    }
 
     let adminOptions = '';
     if (adminOrOwner) {
@@ -297,6 +330,10 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                                        </div>
 
                                        <div class="show-post-hashtags is-default-padding is-wordbreak">` + hashTags + `</div>
+
+                                       <div class="show-post-credits is-default-padding">
+                                            ` + credits + `
+                                        </div>
                                    </div>
                         `;
     return html;

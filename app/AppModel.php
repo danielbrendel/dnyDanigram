@@ -142,6 +142,28 @@ class AppModel extends Model
     }
 
     /**
+     * Get header code content
+     * @return mixed
+     */
+    public static function getHeaderCode()
+    {
+        return Cache::remember('header_code', AppModel::ONE_DAY, function() {
+            return DB::table('app_settings')->first()->header_code;
+        });
+    }
+
+    /**
+     * Get ad code content
+     * @return mixed
+     */
+    public static function getAdCode()
+    {
+        return Cache::remember('adcode', AppModel::ONE_DAY, function() {
+            return DB::table('app_settings')->first()->adcode;
+        });
+    }
+
+    /**
      * Return if string is a valid identifier for usernames and tags
      * @param $ident
      * @return false|int

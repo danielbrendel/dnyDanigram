@@ -283,5 +283,13 @@ return [
     'add_to_ignore' => 'Add to ignore list',
     'user_not_receiving_messages' => 'The user does not receive messages',
     'added_to_ignore' => 'Added to ignore list',
-    'removed_from_ignore' => 'Removed from ignore list'
+    'removed_from_ignore' => 'Removed from ignore list',
+    'header_code' => 'Header code',
+    'header_code_description' => 'Enter here code which shall be put in the head tag.',
+    'adcode' => 'Ad code',
+    'adcode_description' => 'Put here your Ad code which will then be used for showing Ads.',
+    'attribute_original_author' => 'Attribute original author',
+    'instagram_name' => 'Instagram name',
+    'twitter_name' => 'Twitter name',
+    'homepage_url' => 'Homepage link'
 ];
