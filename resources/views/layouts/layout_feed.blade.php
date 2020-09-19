@@ -295,8 +295,9 @@
             @endif
 
             <div class="columns is-vcentered is-multiline">
+				@include('widgets.populartags')
+			
                 @auth
-                    @include('widgets.populartags')
                     @include('widgets.stories')
                     @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
                 @endauth
