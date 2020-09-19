@@ -172,6 +172,8 @@
                             document.getElementById('loading').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_more_comments')  }}</i></center>';
                         }
                     } else {
+                        document.getElementById('loading').style.display = 'none';
+
                         if (window.paginate === null) {
                             document.getElementById('loading').innerHTML = '<br/><br/><center><i class="is-color-grey">{{ __('app.no_comments_yet')  }}</i></center>';
                         } else {

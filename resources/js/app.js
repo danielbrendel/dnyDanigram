@@ -29,7 +29,34 @@ let vue = new Vue({
         bShowEditTheme: false,
         bShowReplyThread: false,
         bShowViewStory: false,
-        bShowAddStory: false
+        bShowAddStory: false,
+        translationTable: {
+            copiedToClipboard: 'Text has been copyied to clipboard!',
+            toggleNsfw: 'Toggle NSFW',
+            toggleNsfw2: '[NSFW] Toggle',
+            lock: 'Lock',
+            edit: 'Edit',
+            shareWhatsApp: 'Share via WhatsApp',
+            shareTwitter: 'Share via Twitter',
+            shareFacebook: 'Share via Facebook',
+            shareEMail: 'Share via E-Mail',
+            shareSms: 'Share via SMS',
+            copyLink: 'Copy link',
+            report: 'Report',
+            expandThread: 'Expand thread',
+            reply: 'Reply',
+            viewMore: 'View more',
+            reportPost: 'The post has been reported!',
+            removeFav: 'Remove favorite',
+            addFav: 'Add favorite',
+            noFavsYet: 'You don\'t have set any favorites yet',
+            confirmLockPost: 'Do you want to lock this post?',
+            confirmToggleNsfw: 'Do you want to toggle the nsfw flag for this post?',
+            confirmLockHashtag: 'Do you want to lock this hashtag?',
+            confirmLockUser: 'Do you want to deactivate this profile?',
+            confirmDeleteOwnAccount: 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
+            confirmLockComment: 'Do you want to lock this comment?'
+        }
     },
 
     methods: {
@@ -196,7 +223,7 @@ let vue = new Vue({
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            alert('Text has been copyied to clipboard!');
+            alert(window.vue.translationTable.copiedToClipboard);
         },
 
         showError: function ()
@@ -229,8 +256,8 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
         }
     });
 
-    let nsfwOption = `<a href="javascript:void(0)" onclick="toggleNsfw(\` + elem.id + \`); window.vue.togglePostOptions(document.getElementById('post-options-\` + elem.id + \`'));" class="dropdown-item">
-                Toggle NSFW
+    let nsfwOption = `<a href="javascript:void(0)" onclick="toggleNsfw(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
+                ` + window.vue.translationTable.toggleNsfw + `
             </a> `;
 
     let instagram = '';
@@ -260,7 +287,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
     if (adminOrOwner) {
         adminOptions = `
             <a href="javascript:void(0)" onclick="lockPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
-                Lock
+                ` + window.vue.translationTable.lock + `
             </a>
             ` + ((nsfwFunctionalityEnabled) ? nsfwOption : '');
     }
@@ -285,26 +312,26 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                                         <div class="dropdown-menu" role="menu">
                                             <div class="dropdown-content">
                                                 <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="whatsapp://send?text=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
-                                                    <i class="far fa-copy"></i>&nbsp;Share via WhatsApp
+                                                    <i class="far fa-copy"></i>&nbsp;` + window.vue.translationTable.shareWhatsApp + `
                                                 </a>
                                                 <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="https://twitter.com/share?url=` + encodeURIComponent(window.location.origin + '/p/' + elem.id) + `&text=` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
-                                                    <i class="fab fa-twitter"></i>&nbsp;Share via Twitter
+                                                    <i class="fab fa-twitter"></i>&nbsp;` + window.vue.translationTable.shareTwitter + `
                                                 </a>
                                                 <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="https://www.facebook.com/sharer/sharer.php?u=` + window.location.origin + `/p/` + elem.id + `" class="dropdown-item">
-                                                    <i class="fab fa-facebook"></i>&nbsp;Share via Facebook
+                                                    <i class="fab fa-facebook"></i>&nbsp;` + window.vue.translationTable.shareFacebook + `
                                                 </a>
                                                 <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="mailto:name@domain.com?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
-                                                    <i class="far fa-envelope"></i>&nbsp;Share via E-Mail
+                                                    <i class="far fa-envelope"></i>&nbsp;` + window.vue.translationTable.shareEMail + `
                                                 </a>
                                                 <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="sms:000000000?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
-                                                    <i class="fas fa-sms"></i>&nbsp;Share via SMS
+                                                    <i class="fas fa-sms"></i>&nbsp;` + window.vue.translationTable.shareSms + `
                                                 </a>
                                                 <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `'); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
-                                                    <i class="far fa-copy"></i>&nbsp;Copy link
+                                                    <i class="far fa-copy"></i>&nbsp;` + window.vue.translationTable.copyLink + `
                                                 </a>
                                                 <hr class="dropdown-divider">
                                                 <a href="javascript:void(0)" onclick="reportPost(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
-                                                    Report
+                                                    ` + window.vue.translationTable.report + `
                                                 </a>
                                                 ` + adminOptions + `
                                             </div>
@@ -319,7 +346,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
 
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">
                                 <div class="is-inline-block"><span onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i></span> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
-                                <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="let oPostImage = document.getElementById('post-image-` + elem.id + `'); if (oPostImage.classList.contains('show-post-image-nsfw')) { oPostImage.classList.remove('show-post-image-nsfw'); } else { oPostImage.classList.add('show-post-image-nsfw'); }" class="is-color-grey">[NSFW] Toggle</a></center></div>
+                                <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="let oPostImage = document.getElementById('post-image-` + elem.id + `'); if (oPostImage.classList.contains('show-post-image-nsfw')) { oPostImage.classList.remove('show-post-image-nsfw'); } else { oPostImage.classList.add('show-post-image-nsfw'); }" class="is-color-grey">` + window.vue.translationTable.toggleNsfw2 + `</a></center></div>
                                 <div class="is-inline-block is-right float-right"><a class="is-color-grey" href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 
@@ -343,10 +370,10 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
     if (adminOrOwner) {
         options = `
             <a onclick="showEditComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" href="javascript:void(0)" class="dropdown-item">
-                <i class="far fa-edit"></i>&nbsp;Edit
+                <i class="far fa-edit"></i>&nbsp;` + window.vue.translationTable.edit + `
             </a>
             <a onclick="lockComment(` + elem.id + `); window.vue.toggleCommentOptions(document.getElementById('thread-options-` + elem.id + `'));" href="javascript:void(0)" class="dropdown-item">
-                <i class="fas fa-times"></i>&nbsp;Lock
+                <i class="fas fa-times"></i>&nbsp;` + window.vue.translationTable.lock + `
             </a>
             <hr class="dropdown-divider">
         `;
@@ -354,10 +381,10 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
 
     let expandThread = '';
     if (elem.subCount > 0) {
-        expandThread = `<div class="thread-footer-subthread is-inline-block is-centered"><a class="is-color-grey" href="javascript:void(0)" onclick="fetchSubThreadPosts(` + elem.id + `)">Expand thread</a></div>`;
+        expandThread = `<div class="thread-footer-subthread is-inline-block is-centered"><a class="is-color-grey" href="javascript:void(0)" onclick="fetchSubThreadPosts(` + elem.id + `)">` + window.vue.translationTable.expandThread + `</a></div>`;
     }
 
-    let replyThread = `<div class="is-inline-block float-right"><a class="is-color-grey" href="javascript:void(0)" onclick="document.getElementById('thread-reply-parent').value = '` + ((isSubComment) ? parentId : elem.id) + `'; document.getElementById('thread-reply-textarea').value = '@` + elem.user.username + ` '; window.vue.bShowReplyThread = true;">Reply</a></div>`;
+    let replyThread = `<div class="is-inline-block float-right"><a class="is-color-grey" href="javascript:void(0)" onclick="document.getElementById('thread-reply-parent').value = '` + ((isSubComment) ? parentId : elem.id) + `'; document.getElementById('thread-reply-textarea').value = '@` + elem.user.username + ` '; window.vue.bShowReplyThread = true;">` + window.vue.translationTable.reply + `</a></div>`;
 
     let html = `
         <div id="thread-` + elem.id + `" class="thread-elem ` + ((isSubComment) ? 'is-sub-comment': '') + `">
@@ -365,7 +392,7 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
 
             <div class="thread-header">
                 <div class="thread-header-avatar is-inline-block">
-                    <img width="24" height="24" src="` + window.location.origin + `/gfx/avatars/` + elem.user.avatar + `" class="is-pointer" onclick="location.href = '` + window.location.origin + `/u/` + elem.user.username + `';" title="">
+                    <img width="24" height="24" src="` + window.location.origin + `/gfx/avatars/` + elem.user.avatar + `" class="is-pointer" onclick="location.href = '` + window.location.origin + `/u/` + elem.user.username + `';">
                 </div>
 
                 <div class="thread-header-info is-inline-block">
@@ -383,7 +410,7 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
                                 ` + options + `
 
                                 <a href="javascript:void(0)" onclick="reportComment(` + elem.id + `); window.vue.togglePostOptions(document.getElementById('thread-options-` + elem.id + `'));" class="dropdown-item">
-                                    Report
+                                    ` + window.vue.translationTable.report + `
                                 </a>
                             </div>
                         </div>
@@ -436,7 +463,7 @@ window.fetchSubThreadPosts = function(parentId) {
                     document.getElementById('sub-comment-more-' + parentId).remove();
                 }
 
-                document.getElementById('sub-thread-' + parentId).innerHTML += `<center><div id="sub-comment-more-` + parentId + `"><a href="javascript:void(0)" onclick="fetchSubThreadPosts(` + parentId + `)">View more</a></div></center>`;
+                document.getElementById('sub-thread-' + parentId).innerHTML += `<center><div id="sub-comment-more-` + parentId + `"><a href="javascript:void(0)" onclick="fetchSubThreadPosts(` + parentId + `)">` + window.vue.translationTable.viewMore + `</a></div></center>`;
             }
 
             if (response.data.length === 0) {
@@ -509,7 +536,7 @@ window.renderMessageListItem = function(item) {
 window.reportPost = function(id) {
   window.vue.ajaxRequest('post', window.location.origin + '/p/' + id + '/report', {}, function(response) {
     if (response.code === 200) {
-        alert('The post has been reported!');
+        alert(window.vue.translationTable.postReported);
     }
   });
 };
@@ -568,7 +595,7 @@ window.addFavorite = function(entityId, type, entityName = '') {
       if (response.code === 200) {
           let elems = document.getElementsByClassName('favorite-' + type.toLowerCase());
           for (let i = 0; i < elems.length; i++) {
-              elems[i].innerHTML = '<a href="javascript:void(0)" onclick="removeFavorite(' + entityId + ', \'' + type + '\', \'' + entityName + '\')">Remove favorite</a>';
+              elems[i].innerHTML = '<a href="javascript:void(0)" onclick="removeFavorite(' + entityId + ', \'' + type + '\', \'' + entityName + '\')">' + window.vue.translationTable.removeFav + '</a>';
           }
 
           let link = '';
@@ -629,7 +656,7 @@ window.removeFavorite = function(entityId, type, entityName = '') {
         if (response.code === 200) {
             let elems = document.getElementsByClassName('favorite-' + type.toLowerCase());
             for (let i = 0; i < elems.length; i++) {
-                elems[i].innerHTML = '<a href="javascript:void(0)" onclick="addFavorite(' + entityId + ', \'' + type + '\', \'' + entityName + '\')">Add favorite</a>';
+                elems[i].innerHTML = '<a href="javascript:void(0)" onclick="addFavorite(' + entityId + ', \'' + type + '\', \'' + entityName + '\')">' + window.vue.translationTable.addFav + '</a>';
             }
 
             elems = document.getElementsByClassName('favorite-item-' + type.toLowerCase() + '-' + entityId);
@@ -641,7 +668,7 @@ window.removeFavorite = function(entityId, type, entityName = '') {
             if (elems.length === 0) {
                 elems = document.getElementsByClassName('favorites-list');
                 for (let i = 0; i < elems.length; i++) {
-                    elems[i].innerHTML += '<i class="has-no-favorites-yet">You don\'t have set any favorites yet</i>';
+                    elems[i].innerHTML += '<i class="has-no-favorites-yet">' + window.vue.translationTable.noFavsYet + '</i>';
                 }
             }
         }
@@ -687,7 +714,7 @@ window.toggleNotifications = function(ident) {
 }
 
 window.lockPost = function (id) {
-    if (confirm('Do you want to lock this post?')) {
+    if (confirm(window.vue.translationTable.confirmLockPost)) {
         window.vue.ajaxRequest('get', window.location.origin + '/p/' + id + '/lock', {}, function (response) {
             alert(response.msg);
         });
@@ -695,7 +722,7 @@ window.lockPost = function (id) {
 };
 
 window.toggleNsfw = function (id) {
-    if (confirm('Do you want to toggle the nsfw flag for this post?')) {
+    if (confirm(window.vue.translationTable.confirmToggleNsfw)) {
         window.vue.ajaxRequest('get', window.location.origin + '/p/' + id + '/togglensfw', {}, function (response) {
             alert(response.msg);
         });
@@ -703,7 +730,7 @@ window.toggleNsfw = function (id) {
 }
 
 window.lockHashtag = function (id) {
-    if (confirm('Do you want to lock this hashtag?')) {
+    if (confirm(window.vue.translationTable.confirmLockHashtag)) {
         window.vue.ajaxRequest('get', window.location.origin + '/t/' + id + '/lock', {}, function (response) {
             alert(response.msg);
         });
@@ -711,7 +738,7 @@ window.lockHashtag = function (id) {
 };
 
 window.lockUser = function (id, self = false) {
-    if (confirm('Do you want to deactivate this profile?')) {
+    if (confirm(window.vue.translationTable.confirmLockUser)) {
         window.vue.ajaxRequest('get', window.location.origin + '/u/' + id + '/deactivate', {}, function (response) {
             alert(response.msg);
 
@@ -723,7 +750,7 @@ window.lockUser = function (id, self = false) {
 };
 
 window.deleteUserAccount = function () {
-    let pw = prompt("Do you really want to delete your profile? If yes then please enter your password in order to proceed.");
+    let pw = prompt(window.vue.translationTable.confirmDeleteOwnAccount);
     if (pw.length > 0) {
         window.vue.ajaxRequest('post', window.location.origin + '/u/deleteownaccount', { password: pw }, function (response) {
             alert(response.msg);
@@ -736,7 +763,7 @@ window.deleteUserAccount = function () {
 };
 
 window.lockComment = function (id) {
-    if (confirm('Do you want to lock this comment?')) {
+    if (confirm(window.vue.translationTable.confirmLockComment)) {
         window.vue.ajaxRequest('get', window.location.origin + '/c/' + id + '/lock', {}, function (response) {
             alert(response.msg);
         });

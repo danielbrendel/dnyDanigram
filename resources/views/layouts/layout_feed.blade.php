@@ -296,7 +296,7 @@
 
             <div class="columns is-vcentered is-multiline">
 				@include('widgets.populartags')
-			
+
                 @auth
                     @include('widgets.stories')
                     @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
@@ -716,6 +716,32 @@
             setTimeout('fetchNotifications()', 5000);
             setTimeout('fetchNotificationList()', 100);
             @endauth
+
+            window.vue.translationTable.copiedToClipboard = '{{ __('app.copiedToClipboard') }}';
+            window.vue.translationTable.toggleNsfw = '{{ __('app.toggleNsfw') }}';
+            window.vue.translationTable.toggleNsfw2 = '{{ __('app.toggleNsfw2') }}';
+            window.vue.translationTable.lock = '{{ __('app.lock') }}';
+            window.vue.translationTable.edit = '{{ __('app.edit') }}';
+            window.vue.translationTable.shareWhatsApp = '{{ __('app.shareWhatsApp') }}';
+            window.vue.translationTable.shareTwitter = '{{ __('app.shareTwitter') }}';
+            window.vue.translationTable.shareFacebook = '{{ __('app.shareFacebook') }}';
+            window.vue.translationTable.shareEMail = '{{ __('app.shareEMail') }}';
+            window.vue.translationTable.shareSms = '{{ __('app.shareSms') }}';
+            window.vue.translationTable.copyLink = '{{ __('app.copyLink') }}';
+            window.vue.translationTable.report = '{{ __('app.report') }}';
+            window.vue.translationTable.expandThread = '{{ __('app.expandThread') }}';
+            window.vue.translationTable.reply = '{{ __('app.reply') }}';
+            window.vue.translationTable.viewMore = '{{ __('app.viewMore') }}';
+            window.vue.translationTable.reportPost = '{{ __('app.reportPost') }}';
+            window.vue.translationTable.removeFav = '{{ __('app.removeFav') }}';
+            window.vue.translationTable.addFav = '{{ __('app.addFav') }}';
+            window.vue.translationTable.noFavsYet = '{{ __('app.noFavsYet') }}';
+            window.vue.translationTable.confirmLockPost = '{{ __('app.confirmLockPost') }}';
+            window.vue.translationTable.confirmToggleNsfw = '{{ __('app.confirmToggleNsfw') }}';
+            window.vue.translationTable.confirmLockHashtag = '{{ __('app.confirmLockHashtag') }}';
+            window.vue.translationTable.confirmLockUser = '{{ __('app.confirmLockUser') }}';
+            window.vue.translationTable.confirmDeleteOwnAccount = '{{ __('app.confirmDeleteOwnAccount') }}';
+            window.vue.translationTable.confirmLockComment = '{{ __('app.confirmLockComment') }}';
 
             window.vue.handleCookieConsent();
 
