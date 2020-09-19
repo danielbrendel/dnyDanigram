@@ -319,7 +319,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
 
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">
                                 <div class="is-inline-block"><span onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i></span> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
-                                <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="document.getElementById('post-image-` + elem.id + `').classList.remove('show-post-image-nsfw'); this.remove();" class="is-color-grey">[NSFW] Show</a></center></div>
+                                <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="let oPostImage = document.getElementById('post-image-` + elem.id + `'); if (oPostImage.classList.contains('show-post-image-nsfw')) { oPostImage.classList.remove('show-post-image-nsfw'); } else { oPostImage.classList.add('show-post-image-nsfw'); }" class="is-color-grey">[NSFW] Toggle</a></center></div>
                                 <div class="is-inline-block is-right float-right"><a class="is-color-grey" href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 
