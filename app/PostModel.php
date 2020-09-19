@@ -254,7 +254,7 @@ class PostModel extends Model
                 $post->image_thumb = $fname . '_thumb.' . $fext;
                 $post->description = $attr['description'];
                 $post->hashtags = str_replace('#', '', trim($attr['hashtags']));
-                if (strlen($post->hashtags > 0)) {
+                if (strlen($post->hashtags) > 0) {
                     if ($post->hashtags[strlen($post->hashtags) - 1] !== ' ') {
                         $post->hashtags .= ' ';
                     }
