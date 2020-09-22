@@ -43,7 +43,7 @@ return [
     'profile' => 'Profile',
     'account_not_yet_confirmed' => 'Please confirm your account before logging in',
     'account_deactivated' => 'Your account has been deactivated',
-    'login_welcome_back' => 'Welcome back!',
+    'login_successful' => 'You are now logged in!',
     'login_failed' => 'Failed logging in',
     'login_already_logged_in' => 'You are already logged in',
     'logout_success' => 'You have been logged out',
