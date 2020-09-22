@@ -1157,6 +1157,11 @@ input[type="submit"], button[class="button"], input[type="button"] {
     color: rgb(250, 250, 250) !important;
 }
 
+.tabs a:hover {
+	color: #4b4b4b !important;
+	border-bottom-color: #dbdbdb !important;
+}
+
 .dropdown-menu, .dropdown-content {
     background-color: rgb(50, 50, 48) !important;
     color: rgb(240, 240, 240) !important;
