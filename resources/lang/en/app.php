@@ -316,5 +316,6 @@ return [
     'confirmLockHashtag' => 'Do you want to lock this hashtag?',
     'confirmLockUser' => 'Do you want to deactivate this profile?',
     'confirmDeleteOwnAccount' => 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
-    'confirmLockComment' => 'Do you want to lock this comment?'
+    'confirmLockComment' => 'Do you want to lock this comment?',
+    'register_username_invalid_chars ' => 'Invalid characters. Your name must contain at least one character (a-z, lowercase) and may contain numbers and the characters \'-\' and \'_\'.'
 ];
