@@ -35,6 +35,7 @@ feature list see below.
 + HelpRealm integration
 + Client endpoint
 + Advertising
++ Purchasable pro mode
 + Installer
 + Security
 + Responsive design
