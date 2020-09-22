@@ -805,7 +805,7 @@ img.show-post-image-nsfw {
 }
 
 .userinfo-lock {
-  margin-top: 15px;
+  top: 14px;
   display: inline-block;
 }
 

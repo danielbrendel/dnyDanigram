@@ -826,7 +826,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 
 .userinfo-lock {
-  margin-top: 15px;
+  top: 15px;
   display: inline-block;
 }
 
