@@ -134,7 +134,8 @@ h2 {
 }
 
 .is-app-title {
-  font-family: "Dancing Script", "Segoe Script", "Nunito", sans-serif;
+  font-family: "Dancing Script", "Nunito", sans-serif;
+  font-size: 1.5em;
 }
 
 .is-default-padding {
