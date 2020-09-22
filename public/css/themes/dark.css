@@ -179,6 +179,8 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 
 .is-about-nav {
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
   color: #787878;
 }
 
