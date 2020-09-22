@@ -134,6 +134,8 @@ h2 {
 }
 
 .is-about-nav {
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
   color: #787878;
 }
 
