@@ -250,12 +250,14 @@ class PostsController extends Controller
                 $post['hearts'] = HeartModel::where('entityId', '=', $post['id'])->where('type', '=', 'ENT_POST')->count();
             }
 
-            $adCode = AppModel::getAdCode();
-            if ((strlen($adCode) > 0) && (count($posts) > 0)) {
-                $ad = array();
-                $ad['_type'] = 'ad';
-                $ad['code'] = $adCode;
-                $posts[] = $ad;
+            if ((Auth::guest()) || (!User::get(auth()->id())->pro)) {
+                $adCode = AppModel::getAdCode();
+                if ((strlen($adCode) > 0) && (count($posts) > 0)) {
+                    $ad = array();
+                    $ad['_type'] = 'ad';
+                    $ad['code'] = $adCode;
+                    $posts[] = $ad;
+                }
             }
 
             return response()->json(array('code' => 200, 'data' => array_values($posts), 'last' => (count($posts) === 0)));

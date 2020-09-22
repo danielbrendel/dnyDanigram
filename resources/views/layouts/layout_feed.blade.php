@@ -47,6 +47,7 @@
             <script src="{{ asset('js/vue.min.js') }}"></script>
         @endif
         <script src="{{ asset('js/axios.min.js') }}"></script>
+        <script src="https://js.stripe.com/v3/"></script>
 
         <title>@yield('title')</title>
 
@@ -403,6 +404,16 @@
                             <button type="button" class="button" onclick="window.setTheme(document.getElementById('themes').value);">{{ __('app.change_theme') }}</button>
                         </div>
 
+                        @if ((!Auth::guest()) && (!\App\User::get(auth()->id())->pro))
+                            <hr/>
+
+                            <div class="field">
+                                <div class="control">
+                                    <a href="javascript:void(0)" onclick="window.vue.bShowBuyProMode = true; window.vue.bShowEditProfile = false;" class="button is-success">{{ __('app.purchase_pro_mode') }}</a>
+                                </div>
+                            </div>
+                        @endif
+
                         <hr/>
 
                         <div class="field">
@@ -457,6 +468,42 @@
                     </footer>
                 </div>
             </div>
+
+            <div class="modal" :class="{'is-active': bShowBuyProMode}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.buy_pro_mode_title') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowBuyProMode = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <div class="field">
+                            {!! __('app.buy_pro_mode_info', ['costs' => env('STRIPE_COSTS_LABEL')]) !!}
+                        </div>
+
+                        <form action="{{ url('/payment/charge') }}" method="post" id="payment-form" class="stripe">
+                            @csrf
+
+                            <div class="form-row">
+                                <label for="card-element">
+                                    {{ __('app.credit_or_debit_card') }}
+                                </label>
+                                <div id="card-element"></div>
+
+                                <div id="card-errors" role="alert"></div>
+                            </div>
+
+                            <br/>
+
+                            <button class="button is-link">{{ __('app.submit_payment') }}</button>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button" onclick="vue.bShowBuyProMode = false;">{{ __('app.close') }}</button>
+                    </footer>
+                </div>
+            </div>
+
             @endauth
 
             <div class="modal" :class="{'is-active': bShowReplyThread}">
@@ -711,6 +758,16 @@
             });
         };
 
+        const stripeTokenHandler = (token) => {
+            const form = document.getElementById('payment-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+            form.submit();
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             @auth
             setTimeout('fetchNotifications()', 5000);
@@ -785,6 +842,33 @@
             @if (Session::has('flash.success'))
                 setTimeout('window.vue.showSuccess()', 500);
             @endif
+
+            var stripe = Stripe('{{ env('STRIPE_TOKEN_PUBLIC') }}');
+            var elements = stripe.elements();
+
+            const style = {
+                base: {
+                    fontSize: '16px',
+                    color: '#32325d',
+                },
+            };
+
+            const card = elements.create('card', {style});
+            card.mount('#card-element');
+
+            const form = document.getElementById('payment-form');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const {token, error} = await stripe.createToken(card);
+
+                if (error) {
+                    const errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = error.message;
+                } else {
+                    stripeTokenHandler(token);
+                }
+            });
         });
     </script>
 </html>

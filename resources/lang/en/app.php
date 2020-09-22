@@ -317,5 +317,14 @@ return [
     'confirmLockUser' => 'Do you want to deactivate this profile?',
     'confirmDeleteOwnAccount' => 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
     'confirmLockComment' => 'Do you want to lock this comment?',
-    'register_username_invalid_chars ' => 'Invalid characters. Your name must contain at least one character (a-z, lowercase) and may contain numbers and the characters \'-\' and \'_\'.'
+    'register_username_invalid_chars ' => 'Invalid characters. Your name must contain at least one character (a-z, lowercase) and may contain numbers and the characters \'-\' and \'_\'.',
+    'payment_failed' => 'Payment has failed. Please try again later or contact us',
+    'payment_succeeded' => 'Payment succeeded. You now have pro mode enabled',
+    'purchase_pro_mode' => 'Purchase pro mode!',
+    'buy_pro_mode_title' => 'Buy pro mode',
+    'buy_pro_mode_info' => 'Here you can buy pro mode. This will result in the following actions:<br/><ul><li>Ads won\'t be shown to you</li><li>You get a badge</li><li>You support our service</li></ul><br/>It will cost you only <strong>:costs</strong> and pro mode will be enabled permanently for your account.',
+    'credit_or_debit_card' => 'Credit card or debit card',
+    'submit_payment' => 'Submit payment',
+    'close' => 'Close',
+    'pro' => 'Pro'
 ];

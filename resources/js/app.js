@@ -30,6 +30,7 @@ let vue = new Vue({
         bShowReplyThread: false,
         bShowViewStory: false,
         bShowAddStory: false,
+        bShowBuyProMode: false,
         translationTable: {
             copiedToClipboard: 'Text has been copyied to clipboard!',
             toggleNsfw: 'Toggle NSFW',
@@ -55,7 +56,8 @@ let vue = new Vue({
             confirmLockHashtag: 'Do you want to lock this hashtag?',
             confirmLockUser: 'Do you want to deactivate this profile?',
             confirmDeleteOwnAccount: 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
-            confirmLockComment: 'Do you want to lock this comment?'
+            confirmLockComment: 'Do you want to lock this comment?',
+            pro: 'Pro'
         }
     },
 
@@ -292,6 +294,11 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
             ` + ((nsfwFunctionalityEnabled) ? nsfwOption : '');
     }
 
+    let pro = '';
+    if (elem.user.pro) {
+        pro = '<i class="fas fa-certificate is-color-pro" title="' + window.vue.translationTable.pro + '"></i>'
+    }
+
     let html = `
                             <div class="show-post member-form">
                             <div class="show-post-header is-default-padding">
@@ -300,7 +307,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                                 </div>
 
                                 <div class="show-post-userinfo">
-                                    <div><a href="` + window.location.origin + `/u/` + elem.user.username + `" class="is-color-grey">` + elem.user.username + `</a></div>
+                                    <div><a href="` + window.location.origin + `/u/` + elem.user.username + `" class="is-color-grey">` + elem.user.username + `</a>&nbsp;` + pro + `</div>
                                     <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
                                 </div>
 
@@ -386,6 +393,11 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
 
     let replyThread = `<div class="is-inline-block float-right"><a class="is-color-grey" href="javascript:void(0)" onclick="document.getElementById('thread-reply-parent').value = '` + ((isSubComment) ? parentId : elem.id) + `'; document.getElementById('thread-reply-textarea').value = '@` + elem.user.username + ` '; window.vue.bShowReplyThread = true;">` + window.vue.translationTable.reply + `</a></div>`;
 
+    let pro = '';
+    if (elem.user.pro) {
+        pro = '<i class="fas fa-certificate is-color-pro" title="' + window.vue.translationTable.pro + '"></i>'
+    }
+
     let html = `
         <div id="thread-` + elem.id + `" class="thread-elem ` + ((isSubComment) ? 'is-sub-comment': '') + `">
             <a name="` + elem.id + `"></a>
@@ -396,7 +408,7 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
                 </div>
 
                 <div class="thread-header-info is-inline-block">
-                    <div><a href="` + window.location.origin + `/u/` + elem.user.username + `" class="is-color-grey">` + elem.user.username + `</a></div>
+                    <div><a href="` + window.location.origin + `/u/` + elem.user.username + `" class="is-color-grey">` + elem.user.username + `</a>&nbsp;` + pro + `</div>
                     <div title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
                 </div>
 

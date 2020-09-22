@@ -856,6 +856,16 @@ input[type="submit"], button[class="button"], input[type="button"] {
   border: 1px solid red;
 }
 
+.member-badge-pro {
+    color: rgb(255, 255, 255);
+    background-color: rgb(128, 220, 128);
+    border: 1px solid rgb(0, 255, 0);
+}
+
+.is-color-pro {
+    color: rgb(128, 220, 128);
+}
+
 .settings-avatar-image {
   display: inline-block;
 }

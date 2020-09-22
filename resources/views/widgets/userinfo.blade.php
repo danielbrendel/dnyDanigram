@@ -40,6 +40,12 @@
         </div>
     @endif
 
+    @if ($user->pro)
+        <div class="is-inline-block">
+            <div class="member-badge member-badge-pro"><p>{{ __('app.pro') }}</p></div>
+        </div>
+    @endif
+
 </div>
 
 <div class="userinfo-stats">

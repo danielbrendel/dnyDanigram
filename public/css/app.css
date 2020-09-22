@@ -832,6 +832,16 @@ img.show-post-image-nsfw {
   border: 1px solid red;
 }
 
+.member-badge-pro {
+  color: white;
+  background-color: #80dc80;
+  border: 1px solid lime;
+}
+
+.is-color-pro {
+  color: #80dc80;
+}
+
 .settings-avatar-image {
   display: inline-block;
 }
