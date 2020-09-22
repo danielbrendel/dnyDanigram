@@ -161,7 +161,8 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 
 .is-app-title {
-  font-family: "Dancing Script", "Segoe Script", "Nunito", sans-serif;
+  font-family: "Dancing Script", "Nunito", sans-serif;
+  font-size: 1.5em;
 }
 
 .is-default-padding {
