@@ -203,6 +203,10 @@ class PostModel extends Model
                 'homepage_url' => 'nullable'
             ]);
 
+            if (!isset($attr['description'])) {
+                $attr['description'] = '';
+            }
+
             if (!isset($attr['ig_name'])) {
                 $attr['ig_name'] = '';
             }
