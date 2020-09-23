@@ -186,7 +186,7 @@
         @if (env('APP_PUBLICFEED'))
             <div id="cookie-consent" class="cookie-consent has-text-centered is-top-53">
                 <div class="cookie-consent-inner">
-                    {{ $cookie_consent }}
+                    {!! $cookie_consent !!}
                 </div>
 
                 <div class="cookie-consent-button">
