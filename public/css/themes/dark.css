@@ -310,6 +310,12 @@ input[type="submit"], button[class="button"], input[type="button"] {
   border-radius: 25px;
 }
 
+pre.is-post-background {
+    background-color: rgb(50, 50, 48) !important;
+	color: rgb(120, 120, 120);
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
+}
+
 .home-userarea {
   position: relative;
   margin-top: 21px;
