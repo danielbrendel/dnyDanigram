@@ -38,8 +38,8 @@
 
         <title>@yield('title')</title>
 
-        @if (strlen(\App\AppModel::getHeaderCode()) > 0)
-            {!! \App\AppModel::getHeaderCode() !!}
+        @if (strlen(\App\AppModel::getHeadCode()) > 0)
+            {!! \App\AppModel::getHeadCode() !!}
         @endif
     </head>
 

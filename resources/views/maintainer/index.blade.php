@@ -46,7 +46,7 @@
                 <li><a href="#tab-page-13">{{ __('app.reports') }}</a></li>
                 <li><a href="#tab-page-14">{{ __('app.welcome_content') }}</a></li>
                 <li><a href="#tab-page-15">{{ __('app.project_name_formatted') }}</a></li>
-                <li><a href="#tab-page-16">{{ __('app.header_code') }}</a></li>
+                <li><a href="#tab-page-16">{{ __('app.head_code') }}</a></li>
                 <li><a href="#tab-page-17">{{ __('app.adcode') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
@@ -803,12 +803,12 @@
                     <form method="POST" action="{{ url('/maintainer/save') }}">
                         @csrf
 
-                        <input type="hidden" name="attribute" value="header_code">
+                        <input type="hidden" name="attribute" value="head_code">
 
                         <div class="field">
-                            <label class="label">{{ __('app.header_code_description') }}</label>
+                            <label class="label">{{ __('app.head_code_description') }}</label>
                             <div class="control">
-                                <textarea class="textarea" name="content">{{ $settings->header_code }}</textarea>
+                                <textarea class="textarea" name="content">{{ $settings->head_code }}</textarea>
                             </div>
                         </div>
 

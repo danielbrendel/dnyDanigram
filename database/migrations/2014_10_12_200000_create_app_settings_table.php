@@ -36,7 +36,7 @@ class CreateAppSettingsTable extends Migration
             $table->text('welcome_content');
             $table->text('project_name_formatted');
             $table->string('default_theme')->default('_default');
-            $table->text('header_code');
+            $table->text('head_code');
             $table->text('adcode');
             $table->timestamps();
         });

@@ -142,13 +142,13 @@ class AppModel extends Model
     }
 
     /**
-     * Get header code content
+     * Get head code content
      * @return mixed
      */
-    public static function getHeaderCode()
+    public static function getHeadCode()
     {
-        return Cache::remember('header_code', AppModel::ONE_DAY, function() {
-            return DB::table('app_settings')->first()->header_code;
+        return Cache::remember('head_code', AppModel::ONE_DAY, function() {
+            return DB::table('app_settings')->first()->head_code;
         });
     }
 
