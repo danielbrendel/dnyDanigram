@@ -833,13 +833,13 @@ img.show-post-image-nsfw {
 }
 
 .member-badge-pro {
-  color: white;
-  background-color: #80dc80;
-  border: 1px solid lime;
+  color: #969694;
+  background-color: gold;
+  border: 1px solid #ccc;
 }
 
 .is-color-pro {
-  color: #80dc80;
+  color: #cfb53b;
 }
 
 .settings-avatar-image {

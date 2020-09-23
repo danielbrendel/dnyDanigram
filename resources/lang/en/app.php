@@ -52,7 +52,6 @@ return [
     'password_reset_ok' => 'The password reset operation has been processed successfully. You can now login with your new password.',
     'app_register_confirm_email' => 'You have been registered! Please confirm your E-Mail address before logging in',
     'register_confirmed_ok' => 'Your account has been confirmed. Have fun using our service!',
-    'edit' => 'Edit',
     'edit_profile' => 'Edit profile',
     'bio' => 'Bio',
     'save' => 'Save',
@@ -326,5 +325,11 @@ return [
     'credit_or_debit_card' => 'Credit card or debit card',
     'submit_payment' => 'Submit payment',
     'close' => 'Close',
-    'pro' => 'Pro'
+    'pro' => 'Pro',
+	'payment_service_deactivated' => 'The payment service is currently deactivated',
+    'project_stripe_enable' => 'Enable Stripe for Pro mode purchasing',
+    'project_stripe_secret' => 'Stripe secret token',
+    'project_stripe_public' => 'Stripe public token',
+    'project_stripe_costs_value' => 'Costs value in hundreth cents, e.g. 100 = 1.00$',
+    'project_stripe_costs_label' => 'Label text for the above value, e.g. 1.00$ for 100'
 ];

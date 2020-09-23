@@ -857,13 +857,13 @@ input[type="submit"], button[class="button"], input[type="button"] {
 }
 
 .member-badge-pro {
-    color: rgb(255, 255, 255);
-    background-color: rgb(128, 220, 128);
-    border: 1px solid rgb(0, 255, 0);
+  color: #969694;
+  background-color: gold;
+  border: 1px solid #ccc;
 }
 
 .is-color-pro {
-    color: rgb(128, 220, 128);
+  color: #cfb53b;
 }
 
 .settings-avatar-image {

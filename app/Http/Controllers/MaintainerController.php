@@ -196,6 +196,10 @@ class MaintainerController extends Controller
                 $_POST['ENV_APP_ENABLENSFWFILTER'] = false;
             }
 
+            if (!isset($_POST['ENV_STRIPE_ENABLE'])) {
+                $_POST['ENV_STRIPE_ENABLE'] = false;
+            }
+
             foreach ($_POST as $key => $value) {
                 if (substr($key, 0, 4) === 'ENV_') {
                     $_ENV[substr($key, 4)] = $value;

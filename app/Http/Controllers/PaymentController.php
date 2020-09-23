@@ -49,6 +49,10 @@ class PaymentController extends Controller
     public function charge()
     {
         try {
+			if (!env('STRIPE_ENABLE')) {
+				throw new Exception(__('app.payment_service_deactivated'));
+			}
+			
             $attr = request()->validate([
                'stripeToken' => 'required'
             ]);

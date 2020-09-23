@@ -404,15 +404,17 @@
                             <button type="button" class="button" onclick="window.setTheme(document.getElementById('themes').value);">{{ __('app.change_theme') }}</button>
                         </div>
 
-                        @if ((!Auth::guest()) && (!\App\User::get(auth()->id())->pro))
-                            <hr/>
+						@if (env('STRIPE_ENABLE') === true)
+							@if ((!Auth::guest()) && (!\App\User::get(auth()->id())->pro))
+								<hr/>
 
-                            <div class="field">
-                                <div class="control">
-                                    <a href="javascript:void(0)" onclick="window.vue.bShowBuyProMode = true; window.vue.bShowEditProfile = false;" class="button is-success">{{ __('app.purchase_pro_mode') }}</a>
-                                </div>
-                            </div>
-                        @endif
+								<div class="field">
+									<div class="control">
+										<a href="javascript:void(0)" onclick="window.vue.bShowBuyProMode = true; window.vue.bShowEditProfile = false;" class="button is-success">{{ __('app.purchase_pro_mode') }}</a>
+									</div>
+								</div>
+							@endif
+						@endif
 
                         <hr/>
 
@@ -469,6 +471,7 @@
                 </div>
             </div>
 
+			@if (env('STRIPE_ENABLE') == true)
             <div class="modal" :class="{'is-active': bShowBuyProMode}">
                 <div class="modal-background"></div>
                 <div class="modal-card">
@@ -503,6 +506,7 @@
                     </footer>
                 </div>
             </div>
+			@endif
 
             @endauth
 
@@ -843,32 +847,34 @@
                 setTimeout('window.vue.showSuccess()', 500);
             @endif
 
-            var stripe = Stripe('{{ env('STRIPE_TOKEN_PUBLIC') }}');
-            var elements = stripe.elements();
+			@if (env('STRIPE_ENABLE') == true)
+				var stripe = Stripe('{{ env('STRIPE_TOKEN_PUBLIC') }}');
+				var elements = stripe.elements();
 
-            const style = {
-                base: {
-                    fontSize: '16px',
-                    color: '#32325d',
-                },
-            };
+				const style = {
+					base: {
+						fontSize: '16px',
+						color: '#32325d',
+					},
+				};
 
-            const card = elements.create('card', {style});
-            card.mount('#card-element');
+				const card = elements.create('card', {style});
+				card.mount('#card-element');
 
-            const form = document.getElementById('payment-form');
-            form.addEventListener('submit', async (event) => {
-                event.preventDefault();
+				const form = document.getElementById('payment-form');
+				form.addEventListener('submit', async (event) => {
+					event.preventDefault();
 
-                const {token, error} = await stripe.createToken(card);
+					const {token, error} = await stripe.createToken(card);
 
-                if (error) {
-                    const errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = error.message;
-                } else {
-                    stripeTokenHandler(token);
-                }
-            });
+					if (error) {
+						const errorElement = document.getElementById('card-errors');
+						errorElement.textContent = error.message;
+					} else {
+						stripeTokenHandler(token);
+					}
+				});
+			@endif
         });
     </script>
 </html>

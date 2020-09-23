@@ -351,6 +351,41 @@
                         </div>
 
                         <div class="field">
+                            <label class="label">{{ __('app.project_stripe_enable') }}</label>
+                            <div class="control">
+                                <input name="ENV_STRIPE_ENABLE" type="checkbox" value="1" data-role="checkbox" data-type="2" data-caption="{{ __('app.project_stripe_enable') }}" @if (env('STRIPE_ENABLE')) {{ 'checked' }} @endif>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_stripe_secret') }}</label>
+                            <div class="control">
+                                <input type="text" name="ENV_STRIPE_TOKEN_SECRET" value="{{ env('STRIPE_TOKEN_SECRET') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_stripe_public') }}</label>
+                            <div class="control">
+                                <input type="text" name="ENV_STRIPE_TOKEN_PUBLIC" value="{{ env('STRIPE_TOKEN_PUBLIC') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_stripe_costs_value') }}</label>
+                            <div class="control">
+                                <input type="number" name="ENV_STRIPE_COSTS_VALUE" value="{{ env('STRIPE_COSTS_VALUE') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">{{ __('app.project_stripe_costs_label') }}</label>
+                            <div class="control">
+                                <input type="text" name="ENV_STRIPE_COSTS_LABEL" value="{{ env('STRIPE_COSTS_LABEL') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
                             <div class="control">
                                 <input type="submit" value="{{ __('app.save') }}">
                             </div>
