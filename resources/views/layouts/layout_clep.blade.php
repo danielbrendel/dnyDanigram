@@ -238,13 +238,13 @@
                 },
 
                 setclepFlag: function() {
-                    var curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-                    document.cookie = 'clep=1; expires=' + curDate.toUTCString() + '; path=/;';
+                    var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+                    document.cookie = 'clep=1; expires=' + expDate.toUTCString() + '; path=/;';
                 },
 
                 setWelcomeContentFlag: function() {
-                    var curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-                    document.cookie = 'welcome_content=1; expires=' + curDate.toUTCString() + '; path=/;';
+                    var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+                    document.cookie = 'welcome_content=1; expires=' + expDate.toUTCString() + '; path=/;';
                 }
             }
         });

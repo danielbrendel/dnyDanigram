@@ -221,8 +221,8 @@ var vue = new Vue({
       this.bShowWelcomeOverlay = true;
     },
     setPostFetchType: function setPostFetchType(type) {
-      var curDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-      document.cookie = 'fetch_type=' + type + '; expires=' + curDate.toUTCString() + ';';
+      var expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+      document.cookie = 'fetch_type=' + type + '; expires=' + expDate.toUTCString() + ';';
     },
     getPostFetchType: function getPostFetchType() {
       var cookies = document.cookie.split(';');
