@@ -221,6 +221,10 @@ h2 {
 .navbar-search input[type=text] {
     border-radius: 25px;
 }
+pre.is-post-background {
+    background-color: rgb(255, 255, 255) !important;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
+}
 
 //Home styles
 .home-userarea {

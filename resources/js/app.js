@@ -358,7 +358,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                             </div>
 
                             <div class="show-post-description is-default-padding is-color-grey">
-                                <pre>` + elem.description + `</pre>
+                                <pre class="is-post-background">` + elem.description + `</pre>
                                        </div>
 
                                        <div class="show-post-hashtags is-default-padding is-wordbreak">` + hashTags + `</div>
