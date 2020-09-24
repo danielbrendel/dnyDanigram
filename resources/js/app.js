@@ -431,7 +431,7 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
             </div>
 
             <div class="thread-text is-color-grey" id="thread-text-` + elem.id + `">
-                ` + elem.text + `
+                <pre class="is-post-background">` + elem.text + `</pre>
             </div>
 
             <div class="thread-footer">
