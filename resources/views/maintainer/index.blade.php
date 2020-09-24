@@ -42,7 +42,7 @@
                 <li><a href="#tab-page-9">{{ __('app.users') }}</a></li>
                 <li><a href="#tab-page-10">{{ __('app.newsletter') }}</a></li>
                 <li><a href="#tab-page-11">{{ __('app.themes') }}</a></li>
-                <li><a href="#tab-page-12">{{ __('app.favicon') }}</a></li>
+                <li><a href="#tab-page-12">{{ __('app.logo') }}</a></li>
                 <li><a href="#tab-page-13">{{ __('app.reports') }}</a></li>
                 <li><a href="#tab-page-14">{{ __('app.welcome_content') }}</a></li>
                 <li><a href="#tab-page-15">{{ __('app.project_name_formatted') }}</a></li>
@@ -536,14 +536,14 @@
                 </div>
 
                 <div id="tab-page-12">
-                    <form method="POST" action="{{ url('/maintainer/favicon/save') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ url('/maintainer/logo/save') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="field">
-                            <label class="label">{{ __('app.favicon_info') }}</label>
+                            <label class="label">{{ __('app.logo_info') }}</label>
                             <div class="control">
-                                <div><img src="{{ url('/favicon.png') }}" alt="favicon"></div>
-                                <div><input type="file" name="favicon" data-role="file"></div>
+                                <div><img src="{{ url('/logo.png') }}" alt="logo"></div>
+                                <div><input type="file" name="logo" data-role="file"></div>
                             </div>
                         </div>
 

@@ -382,18 +382,18 @@ class MaintainerController extends Controller
     }
 
     /**
-     * Save favicon
+     * Save logo
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveFavicon()
+    public function saveLogo()
     {
         try {
             $attr = request()->validate([
-               'favicon' => 'required|file'
+               'logo' => 'required|file'
             ]);
 
-            $av = request()->file('favicon');
+            $av = request()->file('logo');
             if ($av != null) {
                 if ($av->getClientOriginalExtension() !== 'png') {
                     return back()->with('error', __('app.not_a_png_file'));
@@ -410,7 +410,7 @@ class MaintainerController extends Controller
                     throw new \Exception('imagecreatetruecolor() failed');
 
                 $srcimage = null;
-                $newname =  'favicon.' . $av->getClientOriginalExtension();
+                $newname =  'logo.' . $av->getClientOriginalExtension();
                 switch (AppModel::getImageType(base_path() . '/public/' . $tmpName . '.' . $av->getClientOriginalExtension())) {
                     case IMAGETYPE_PNG:
                         $srcimage = imagecreatefrompng(base_path() . '/public/' . $tmpName . '.' . $av->getClientOriginalExtension());

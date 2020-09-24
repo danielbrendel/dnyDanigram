@@ -25,7 +25,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ \App\ThemeModel::getThemeToInclude() }}">
 
-        <link rel="shortcut icon" type="image/png" href="{{ asset('/favicon.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('/logo.png') }}">
 
         <script src="{{ asset('js/fontawesome.js') }}"></script>
         <script src="{{ asset('js/metro.min.js') }}"></script>
