@@ -325,7 +325,7 @@ window.renderPost = function (elem) {
   var nsfwFunctionalityEnabled = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
   if (elem._type === 'ad') {
-    var _html = unescape(elem.code);
+    var _html = '<div class="show-post member-form is-advertisement">' + elem.code + '</div>';
 
     return _html;
   }

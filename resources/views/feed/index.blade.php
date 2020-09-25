@@ -109,13 +109,41 @@
                             document.getElementById('feed').innerHTML += insertHtml;
 
                             if (window.vue.getPostFetchType() == 1) {
-                                window.paginate = response.data[response.data.length - 1].hearts;
+                                if (response.data[response.data.length - 1]._type === 'ad') {
+                                    window.paginate = response.data[response.data.length - 2].hearts;
+                                } else {
+                                    window.paginate = response.data[response.data.length - 1].hearts;
+                                }
                             } else if (window.vue.getPostFetchType() == 2) {
-                                window.paginate = response.data[response.data.length - 1].id;
+                                if (response.data[response.data.length - 1]._type === 'ad') {
+                                    window.paginate = response.data[response.data.length - 2].id;
+                                } else {
+                                    window.paginate = response.data[response.data.length - 1].id;
+                                }
                             }
 
                             document.getElementById('loading').style.display = 'none';
                         });
+
+                        let tagElems = [];
+                        let adsNodes = document.getElementsByClassName('is-advertisement');
+                        if (adsNodes.length > 0) {
+                            let childNodes = adsNodes[adsNodes.length - 1].childNodes;
+                            for (let i = 0; i < childNodes.length; i++) {
+                                if (typeof childNodes[i].tagName !== 'undefined') {
+                                    let childTag = document.createElement(childNodes[i].tagName);
+                                    let tagCode = document.createTextNode(childNodes[i].innerHTML);
+                                    childTag.appendChild(tagCode);
+                                    tagElems.push(childTag);
+                                }
+                            }
+
+                            adsNodes[adsNodes.length - 1].innerHTML = '';
+
+                            for (let i = 0; i < tagElems.length; i++) {
+                                adsNodes[adsNodes.length - 1].appendChild(tagElems[i]);
+                            }
+                        }
                     } else {
                         if (document.getElementById('no-more-posts') == null) {
                             document.getElementById('feed').innerHTML += '<div id="no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';

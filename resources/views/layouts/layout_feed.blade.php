@@ -674,7 +674,7 @@
         window.pushClientNotification = function(msg) {
             Push.create('{{ env('APP_PROJECTNAME') }}', {
                 body: msg,
-                icon: '{{ asset('favicon.png') }}',
+                icon: '{{ asset('logo.png') }}',
                 timeout: 4000,
                 onClick: function () {
                     window.focus();

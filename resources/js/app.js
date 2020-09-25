@@ -245,7 +245,7 @@ let vue = new Vue({
 window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunctionalityEnabled = false)
 {
     if (elem._type === 'ad') {
-        let html = unescape(elem.code);
+        let html = '<div class="show-post member-form is-advertisement">' + elem.code + '</div>';
 
         return html;
     }
