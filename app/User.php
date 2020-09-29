@@ -133,6 +133,7 @@ class User extends Authenticatable
      * Perform registration
      *
      * @param $attr
+     * @return int
      * @throws Exception
      */
     public static function register($attr)
@@ -172,6 +173,23 @@ class User extends Authenticatable
             $user->avatar = 'default.png';
             $user->account_confirm = md5($attr['email'] . $attr['username'] . random_bytes(55));
             $user->save();
+
+            $html = view('mail.registered', ['username' => $user->username, 'hash' => $user->account_confirm])->render();
+            MailerModel::sendMail($user->email, __('app.mail_subject_register'), $html);
+
+            return $user->id;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public static function resend($id)
+    {
+        try {
+            $user = User::where('id', '=', $id)->where('account_confirm', '<>', '_confirmed')->first();
+            if (!$user) {
+                throw new Exception(__('app.user_id_not_found_or_already_confirmed', ['id' => $id]));
+            }
 
             $html = view('mail.registered', ['username' => $user->username, 'hash' => $user->account_confirm])->render();
             MailerModel::sendMail($user->email, __('app.mail_subject_register'), $html);

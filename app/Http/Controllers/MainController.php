@@ -297,10 +297,27 @@ class MainController extends Controller
         ]);
 
         try {
-            User::register($attr);
+            $id = User::register($attr);
 
-            return back()->with('success', __('app.register_confirm_email'));
+            return back()->with('success', __('app.register_confirm_email', ['id' => $id]));
         } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Resend confirmation link
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function resend($id)
+    {
+        try {
+            User::resend($id);
+
+            return back()->with('success', __('app.resend_ok', ['id' => $id]));
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }

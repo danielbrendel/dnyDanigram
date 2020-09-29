@@ -19,6 +19,7 @@ Route::post('/register', 'MainController@register');
 Route::get('/confirm', 'MainController@confirm');
 Route::get('/reset', 'MainController@viewReset');
 Route::post('/recover', 'MainController@recover');
+Route::get('/resend/{id}', 'MainController@resend');
 Route::post('/reset', 'MainController@reset');
 Route::post('/login', 'MainController@login');
 Route::any('/logout', 'MainController@logout');
