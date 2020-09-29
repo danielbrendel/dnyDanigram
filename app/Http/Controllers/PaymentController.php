@@ -64,7 +64,7 @@ class PaymentController extends Controller
 
             $charge = \Stripe\Charge::create([
                 'amount' => env('STRIPE_COSTS_VALUE'),
-                'currency' => 'usd',
+                'currency' => env('STRIPE_CURRENCY'),
                 'description' => 'Purchasing of pro mode for ' . $user->username . '/' . $user->id . ' (' . $user->email . ')',
                 'source' => $attr['stripeToken'],
                 'receipt_email' => $user->email

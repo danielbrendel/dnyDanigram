@@ -80,7 +80,8 @@ class InstallerModel extends Model
 			$envcontent .= 'HELPREALM_TICKETTYPEID=' . PHP_EOL;
 			$envcontent .= 'STRIPE_ENABLE=false' . PHP_EOL;
 			$envcontent .= 'STRIPE_TOKEN_SECRET=' . PHP_EOL;
-			$envcontent .= 'STRIPE_TOKEN_PUBLIC=' . PHP_EOL;
+            $envcontent .= 'STRIPE_TOKEN_PUBLIC=' . PHP_EOL;
+            $envcontent .= 'STRIPE_CURRENCY="usd"' . PHP_EOL;
 			$envcontent .= 'STRIPE_COSTS_VALUE=1000' . PHP_EOL;
 			$envcontent .= 'STRIPE_COSTS_LABEL="10.00$"' . PHP_EOL;
             $envcontent .= 'BROADCAST_DRIVER=log' . PHP_EOL;
