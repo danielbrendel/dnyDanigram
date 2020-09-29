@@ -242,7 +242,7 @@
                             <button class="delete" aria-label="delete" onclick="document.getElementById('error-message-2').style.display = 'none';"></button>
                         </div>
                         <div class="message-body">
-                            {{ Session::get('error') }}
+                            {!! Session::get('error') !!}
                         </div>
                     </article>
                     <br/>
@@ -252,7 +252,7 @@
             <div class="flash is-flash-error" id="flash-error">
                 <p id="flash-error-content">
                     @if (Session::has('flash.error'))
-                        {{ Session::get('flash.error') }}
+                        {!! Session::get('flash.error') !!}
                     @endif
                 </p>
             </div>
@@ -260,7 +260,7 @@
             <div class="flash is-flash-success" id="flash-success">
                 <p id="flash-success-content">
                     @if (Session::has('flash.success'))
-                        {{ Session::get('flash.success') }}
+                        {!! Session::get('flash.success') !!}
                     @endif
                 </p>
             </div>
@@ -273,7 +273,7 @@
                             <button class="delete" aria-label="delete" onclick="document.getElementById('notice-message').style.display = 'none';"></button>
                         </div>
                         <div class="message-body">
-                            {{ Session::get('notice') }}
+                            {!! Session::get('notice') !!}
                         </div>
                     </article>
                     <br/>
@@ -288,7 +288,7 @@
                             <button class="delete" aria-label="delete" onclick="document.getElementById('success-message').style.display = 'none';"></button>
                         </div>
                         <div class="message-body">
-                            {{ Session::get('success') }}
+                            {!! Session::get('success') !!}
                         </div>
                     </article>
                     <br/>

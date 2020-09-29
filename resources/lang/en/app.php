@@ -44,7 +44,7 @@ return [
     'account_not_yet_confirmed' => 'Please confirm your account before logging in',
     'account_deactivated' => 'Your account has been deactivated',
     'login_successful' => 'You are now logged in!',
-    'login_failed' => 'Failed logging in',
+    'login_failed' => 'Failed logging in. <a href="javascript:void(0);" onclick="window.vue.bShowRecover = true;">Reset password?</a>',
     'login_already_logged_in' => 'You are already logged in',
     'logout_success' => 'You have been logged out',
     'not_logged_in' => 'You are not logged in',
