@@ -34,8 +34,8 @@
     </div>
 
     <div class="column is-3 fixed-frame-parent">
-        <div class="fixed-frame">
-            <div class="member-form is-default-padding">
+        <div class="fixed-frame is-news-outter">
+            <div class="member-form is-default-padding is-news-inner">
                 @include('widgets.news')
             </div>
 

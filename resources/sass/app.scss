@@ -456,6 +456,20 @@ img.show-post-image-nsfw {
         display: none;
     }
 }
+.is-news-outter {
+    height: 87%;
+    overflow-y: hidden;
+    @media screen and (max-height: 863px) {
+        height: 100%;
+    }
+}
+.is-news-inner {
+    height: 64%;
+    overflow-y: auto;
+    @media screen and (max-height: 863px) {
+        height: 27%;
+    }
+}
 
 //Thread
 .thread-input-header {
