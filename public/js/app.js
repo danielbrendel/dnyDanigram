@@ -651,12 +651,14 @@ window.deleteFavorite = function (id, eid, type) {
   });
 };
 
-window.clearPushIndicator = function (obj) {
-  if (obj.classList.contains('is-hearted')) {
-    obj.classList.remove('fas', 'is-hearted');
-    obj.classList.add('far');
-    obj.setAttribute('title', 'Notifications');
+window.clearPushIndicator = function (obj1, obj2) {
+  if (obj1.classList.contains('is-hearted')) {
+    obj1.classList.remove('fas', 'is-hearted');
+    obj1.classList.add('far');
+    obj1.setAttribute('title', 'Notifications');
   }
+
+  obj2.style.display = 'none';
 };
 
 window.toggleNotifications = function (ident) {

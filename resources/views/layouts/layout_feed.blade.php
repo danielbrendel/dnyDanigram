@@ -71,6 +71,7 @@
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
+                    <span id="burger-notification"></span>
                 </a>
             </div>
 
@@ -131,7 +132,7 @@
 
                     <div class="navbar-item">
                         <div>
-                            <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.notifications') }}</a></span>
+                            <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.notifications') }}</a></span>
                         </div>
                     </div>
 
@@ -199,7 +200,7 @@
             <div class="notifications" id="notifications">
                 <div>
                     <div class="is-inline-block"></div>
-                    <div class="is-inline-block float-right notification-close-icon" onclick="clearPushIndicator(this); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"><i class="fas fa-times is-pointer"></i></div>
+                    <div class="is-inline-block float-right notification-close-icon" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"><i class="fas fa-times is-pointer"></i></div>
                 </div>
 
                 <div class="notifications-content" id="notification-content"></div>
@@ -697,6 +698,11 @@
                             indicator.classList.remove('far');
                             indicator.classList.add('fas', 'is-hearted');
                             indicator.setAttribute('title', response.data.length + ' new notifications');
+                        }
+
+                        let burgerSpan = document.getElementById('burger-notification');
+                        if (burgerSpan) {
+                            burgerSpan.style.display = 'unset';
                         }
 
                         response.data.forEach(function(elem, index) {

@@ -791,6 +791,18 @@ img.show-post-image-nsfw {
 .is-new-notification:hover {
     background-color: rgb(128, 200, 128);
 }
+#burger-notification {
+    position: absolute;
+    background-color: rgb(255, 0, 0);
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    z-index: 4;
+    top: 17px;
+    left: 30px;
+    display: none;
+}
 
 //Messages
 .messages {
@@ -939,8 +951,9 @@ img.show-post-image-nsfw {
     transform: translate(-50%, -50%);
 }
 .clep-headline {
-    font-size: 1.5em;
+    font-size: 2.0em;
     margin-bottom: 45px;
+    font-family: 'Dancing Script', 'Nunito', sans-serif;
 }
 .clep-headline h1 {
     font-size: 0.8em;

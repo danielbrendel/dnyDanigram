@@ -92,6 +92,24 @@ class PushModel extends Model
     }
 
     /**
+     * Indicate if there are unseen notifications
+     * 
+     * @param $userId
+     * @return bool
+     * @throws \Exception
+     */
+    public static function hasUnseenNotifications($userId)
+    {
+        try {
+            $count = PushModel::where('userId', '=', $userId)->where('seen', '=', false)->count();
+
+            return $count > 0;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Get notifications of user
      *
      * @param $userId

@@ -971,6 +971,19 @@ img.show-post-image-nsfw {
   background-color: #80c880;
 }
 
+#burger-notification {
+  position: absolute;
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  z-index: 4;
+  top: 17px;
+  left: 30px;
+  display: none;
+}
+
 .messages {
   padding: 21px;
   background-color: #e6e6e6;
@@ -1156,8 +1169,9 @@ img.show-post-image-nsfw {
 }
 
 .clep-headline {
-  font-size: 1.5em;
+  font-size: 2em;
   margin-bottom: 45px;
+  font-family: "Dancing Script", "Nunito", sans-serif;
 }
 
 .clep-headline h1 {
