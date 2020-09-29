@@ -79,7 +79,7 @@
                     </div>
 
                     <div>
-                        <input type="submit" value="{{ __('app.post_button') }}"/>
+                        <input type="submit" onclick="document.getElementById('posting-spinner').classList.remove('is-hidden')" value="{{ __('app.post_button') }}"/>&nbsp;&nbsp;<i id="posting-spinner" class="fas fa-spinner fa-spin is-hidden"></i>
                     </div>
                 </form>
             </div>
