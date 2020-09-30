@@ -597,6 +597,28 @@ pre.is-post-background {
   }
 }
 
+.is-news-outter {
+  height: 87%;
+  overflow-y: hidden;
+}
+
+@media screen and (max-height: 863px) {
+  .is-news-outter {
+    height: 100%;
+  }
+}
+
+.is-news-inner {
+  height: 64%;
+  overflow-y: auto;
+}
+
+@media screen and (max-height: 863px) {
+  .is-news-inner {
+    height: 27%;
+  }
+}
+
 .thread-input-header {
   height: 150px;
   width: 100%;
@@ -992,6 +1014,19 @@ pre.is-post-background {
   background-color: #80ff80;
 }
 
+#burger-notification {
+  position: absolute;
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  z-index: 4;
+  top: 17px;
+  left: 30px;
+  display: none;
+}
+
 .messages {
   padding: 21px;
   background-color: rgb(150, 150, 150) !important;
@@ -1217,11 +1252,9 @@ img.show-post-image-nsfw {
     transform: translate(-50%, -50%);
 }
 .clep-headline {
-    font-size: 1.5em;
-    margin-bottom: 45px;
-}
-.clep-headline h1 {
-    font-size: 0.8em;
+  font-size: 2em;
+  margin-bottom: 45px;
+  font-family: "Dancing Script", "Nunito", sans-serif;
 }
 .clep-recover-top {
     position: relative;

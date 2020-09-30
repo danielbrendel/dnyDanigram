@@ -319,6 +319,18 @@
                         <form method="POST" action="{{ url('/profile/edit') }}" id="formEditProfile" enctype="multipart/form-data">
                             @csrf
 
+                            @if (env('STRIPE_ENABLE') === true)
+                                @if ((!Auth::guest()) && (!\App\User::get(auth()->id())->pro))
+                                    <div class="field">
+                                        <div class="control">
+                                            <a href="javascript:void(0)" onclick="window.vue.bShowBuyProMode = true; window.vue.bShowEditProfile = false;" class="button is-success">{{ __('app.purchase_pro_mode') }}</a>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+                                @endif
+						    @endif
+
                             <div class="field is-stretched">
                                 <label class="label">{{ __('app.avatar') }}</label>
                                 <div class="settings-avatar-image"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}"></div>
@@ -404,18 +416,6 @@
 
                             <button type="button" class="button" onclick="window.setTheme(document.getElementById('themes').value);">{{ __('app.change_theme') }}</button>
                         </div>
-
-						@if (env('STRIPE_ENABLE') === true)
-							@if ((!Auth::guest()) && (!\App\User::get(auth()->id())->pro))
-								<hr/>
-
-								<div class="field">
-									<div class="control">
-										<a href="javascript:void(0)" onclick="window.vue.bShowBuyProMode = true; window.vue.bShowEditProfile = false;" class="button is-success">{{ __('app.purchase_pro_mode') }}</a>
-									</div>
-								</div>
-							@endif
-						@endif
 
                         <hr/>
 

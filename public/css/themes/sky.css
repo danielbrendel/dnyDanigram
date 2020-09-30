@@ -570,6 +570,28 @@ img.show-post-image-nsfw {
   }
 }
 
+.is-news-outter {
+  height: 87%;
+  overflow-y: hidden;
+}
+
+@media screen and (max-height: 863px) {
+  .is-news-outter {
+    height: 100%;
+  }
+}
+
+.is-news-inner {
+  height: 64%;
+  overflow-y: auto;
+}
+
+@media screen and (max-height: 863px) {
+  .is-news-inner {
+    height: 27%;
+  }
+}
+
 .thread-input-header {
   height: 150px;
   width: 100%;
@@ -974,6 +996,19 @@ img.show-post-image-nsfw {
   background-color: #80c880;
 }
 
+#burger-notification {
+  position: absolute;
+  background-color: red;
+  border: 1px solid red;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  z-index: 4;
+  top: 17px;
+  left: 30px;
+  display: none;
+}
+
 .messages {
   padding: 21px;
   background-color: #e6e6e6;
@@ -1159,12 +1194,9 @@ img.show-post-image-nsfw {
 }
 
 .clep-headline {
-  font-size: 1.5em;
+  font-size: 2em;
   margin-bottom: 45px;
-}
-
-.clep-headline h1 {
-  font-size: 0.8em;
+  font-family: "Dancing Script", "Nunito", sans-serif;
 }
 
 .clep-recover-top {
