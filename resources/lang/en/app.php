@@ -28,7 +28,7 @@ return [
     'stats_posts' => ':count total posts',
     'stats_comments' => ':count total comments',
     'stats_hearts' => ':count total hearts',
-    'member_upload' => 'Upload an image',
+    'member_upload' => 'Upload',
     'type_something' => 'Type something',
     'comment_count' => ':count comments',
     'hashtag_not_yet_used' => 'This hashtag has not yet been used. You can be first and use it in a new post!',
