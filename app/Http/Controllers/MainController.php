@@ -263,7 +263,7 @@ class MainController extends Controller
 
             return redirect('/')->with('success', __('app.password_reset_ok'));
         } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+            return redirect('/')->with('error', $e->getMessage());
         }
     }
 
@@ -336,7 +336,7 @@ class MainController extends Controller
 
             return redirect('/')->with('success', __('app.register_confirmed_ok'));
         } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
+            return redirect('/')->with('error', $e->getMessage());
         }
     }
 }
