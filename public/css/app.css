@@ -466,6 +466,10 @@ img.show-post-image-nsfw {
   margin-bottom: 5px;
 }
 
+.show-post-description pre {
+  white-space: break-spaces;
+}
+
 .show-post-options {
   position: relative;
   float: right;

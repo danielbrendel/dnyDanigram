@@ -381,6 +381,9 @@ img.show-post-image-nsfw {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+.show-post-description pre {
+    white-space: break-spaces;
+}
 .show-post-options {
     position: relative;
     float: right;
