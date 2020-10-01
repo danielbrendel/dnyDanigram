@@ -886,8 +886,8 @@ window.vue = vue;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\Projects\Danigram_push\dnyDanigram\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! E:\Projects\Danigram_push\dnyDanigram\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Projects\dnyDanigram\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Projects\dnyDanigram\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

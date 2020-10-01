@@ -1223,7 +1223,8 @@ img.show-post-image-nsfw {
 .stories-frame {
   border: 1px solid #ccc;
   border-radius: 4px;
-  overflow-y: auto;
+  overflow-x: auto;
+  display: flex;
   height: 97px;
   width: 89%;
   z-index: 2;
