@@ -373,7 +373,7 @@ window.renderPost = function (elem) {
   var gfx_resource = '';
 
   if (elem.video) {
-    gfx_resource = "<video id=\"post-image-" + elem.id + "\" controls><source src=\"" + window.location.origin + '/gfx/posts/' + elem.image_full + "\"/></video>";
+    gfx_resource = "<video id=\"post-image-" + elem.id + "\" class=\"is-stretched " + (elem.nsfw && showNsfw === 0 ? 'show-post-image-nsfw' : '') + "\" controls><source src=\"" + window.location.origin + '/gfx/posts/' + elem.image_full + "\"/></video>";
   } else {
     gfx_resource = "<img id=\"post-image-" + elem.id + "\" class=\"is-pointer is-stretched " + (elem.nsfw && showNsfw === 0 ? 'show-post-image-nsfw' : '') + "\" src=\"" + window.location.origin + "/gfx/posts/" + elem.image_thumb + "\" onclick=\"location.href='" + window.location.origin + '/p/' + elem.id + "'\">";
   }

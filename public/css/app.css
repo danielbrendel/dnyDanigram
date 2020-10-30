@@ -456,7 +456,8 @@ pre.is-post-background {
   margin-top: 10px;
 }
 
-img.show-post-image-nsfw {
+img.show-post-image-nsfw,
+video.show-post-image-nsfw {
   filter: blur(1.5rem);
   -webkit-filter: blur(1.5rem);
 }
