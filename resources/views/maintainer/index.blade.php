@@ -386,6 +386,13 @@
                         </div>
 
                         <div class="field">
+                            <label class="label">{{ __('app.project_upload_file_size_label') }}</label>
+                            <div class="control">
+                                <input type="number" name="ENV_APP_MAXUPLOADSIZE" value="{{ env('APP_MAXUPLOADSIZE') }}">
+                            </div>
+                        </div>
+
+                        <div class="field">
                             <div class="control">
                                 <input type="submit" value="{{ __('app.save') }}">
                             </div>

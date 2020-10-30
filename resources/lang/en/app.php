@@ -265,6 +265,7 @@ return [
     'more' => 'More',
     'post_invalid_file_type' => 'Invalid file specified. The following files are allowed: PNG, JPG/JPEG, GIF, MP4 and OGG.',
     'post_upload_size_exceeded' => 'The file size is too big.',
+    'project_upload_file_size_label' => 'Maximum uploaded file size in bytes',
     'nsfw' => 'NSFW',
     'nsfw_show' => 'Show NSFW content',
     'nsfw_enable_filter' => 'Enable NSFW filter',
