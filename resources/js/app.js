@@ -294,6 +294,13 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
             ` + ((nsfwFunctionalityEnabled) ? nsfwOption : '');
     }
 
+    let gfx_resource = '';
+    if (elem.video) {
+        gfx_resource = `<video id="post-image-` + elem.id + `" controls><source src="` + window.location.origin + '/gfx/posts/' + elem.image_full + `"/></video>`;
+    } else {
+        gfx_resource = `<img id="post-image-` + elem.id + `" class="is-pointer is-stretched ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">`;
+    }
+
     let pro = '';
     if (elem.user.pro) {
         pro = '<i class="fas fa-certificate is-color-pro" title="' + window.vue.translationTable.pro + '"></i>'
@@ -348,7 +355,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                             </div>
 
                             <div class="show-post-image">
-                                <img id="post-image-` + elem.id + `" class="is-pointer is-stretched ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">
+                                ` + gfx_resource + `
                             </div>
 
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">

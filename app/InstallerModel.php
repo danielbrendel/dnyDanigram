@@ -47,8 +47,8 @@ class InstallerModel extends Model
             $envcontent .= 'APP_DEBUG=false' . PHP_EOL;
             $envcontent .= 'APP_URL="' . url('/') . '"' . PHP_EOL;
             $envcontent .= 'APP_PROJECTNAME="' . $attr['project'] . '"' . PHP_EOL;
-            $envcontent .= 'APP_DESCRIPTION="The lightweight image sharing community platform system"' . PHP_EOL;
-            $envcontent .= 'APP_TAGS="danigram, daniel brendel, image sharing, community, opensource, freeware"' . PHP_EOL;
+            $envcontent .= 'APP_DESCRIPTION="The lightweight image and video sharing community platform system"' . PHP_EOL;
+            $envcontent .= 'APP_TAGS="danigram, daniel brendel, image sharing, video sharing, community, opensource, freeware"' . PHP_EOL;
             $envcontent .= 'APP_TITLE="${APP_PROJECTNAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
             $envcontent .= 'APP_DIVISION=' . (strlen($attr['project']) / 2) . PHP_EOL;
 			$envcontent .= 'APP_LANG=en' . PHP_EOL;
@@ -61,6 +61,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_STORYDURATION=24' . PHP_EOL;
 			$envcontent .= 'APP_PUBLICFEED=false' . PHP_EOL;
             $envcontent .= 'APP_ENABLENSFWFILTER=true' . PHP_EOL;
+            $envcontent .= 'APP_MAXUPLOADSIZE=30000000' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
             $envcontent .= 'DB_CONNECTION=mysql' . PHP_EOL;
             $envcontent .= 'DB_HOST="' . $attr['dbhost'] . '"' . PHP_EOL;

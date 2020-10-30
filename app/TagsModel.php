@@ -123,12 +123,12 @@ class TagsModel extends Model
                 });
 
                 $tag->top_image = Cache::remember('tag_top_image_' . $tag->tag, 24, function() use ($tag) {
-                    $post = PostModel::where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->orderBy('hearts', 'desc')->first();
+                    $post = PostModel::where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->where('video', '=', false)->orderBy('hearts', 'desc')->first();
                     if ($post) {
                         return $post->image_thumb;
                     }
 
-                    return null;
+                    return '_hashtag_preview.png';
                 });
             }
             return $tagList;
@@ -146,12 +146,12 @@ class TagsModel extends Model
     public static function getTopImage($hashtag)
     {
         return Cache::remember('tag_top_image_' . $hashtag, 24, function() use ($hashtag) {
-            $post = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->orderBy('hearts', 'desc')->first();
+            $post = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->where('video', '=', false)->orderBy('hearts', 'desc')->first();
             if ($post) {
                 return $post->image_thumb;
             }
 
-            return null;
+            return '_hashtag_preview.png';
         });
     }
 }

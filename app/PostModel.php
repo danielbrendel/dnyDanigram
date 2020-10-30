@@ -57,6 +57,22 @@ class PostModel extends Model
     }
 
     /**
+     * Check if file is of valid video type
+     * 
+     * @param string $ext
+     * @return boolean
+     */
+    public static function isValidVideoType($ext)
+    {
+        $videotypes = array(
+            'mp4',
+            'ogg'
+        );
+
+        return in_array($ext, $videotypes);
+    }
+
+    /**
      * Get image type
      *
      * @param $ext
@@ -234,19 +250,28 @@ class PostModel extends Model
 
             $att = request()->file('image');
             if ($att != null) {
-                $fname = $att->getClientOriginalName() . '_' . uniqid('', true) . '_' . md5($att->getClientOriginalName());
-                $fext = $att->getClientOriginalExtension();
-                $att->move(public_path() . '/gfx/posts/', $fname . '.' . $fext);
-                if (!PostModel::isValidImage(public_path() . '/gfx/posts/' . $fname . '.' . $fext)) {
-                    unlink(public_path() . '/gfx/posts/', $fname . '.' . $fext);
-                    throw new Exception(__('app.post_invalid_image'));
+                if ($att->getSize() > env('APP_MAXUPLOADSIZE')) {
+                    throw new \Exception(__('app.post_upload_size_exceeded'));
                 }
 
+                $fname = $att->getClientOriginalName() . '_' . uniqid('', true) . '_' . md5($att->getClientOriginalName());
+                $fext = $att->getClientOriginalExtension();
+                
+                $att->move(public_path() . '/gfx/posts/', $fname . '.' . $fext);
+                
                 $baseFile = public_path() . '/gfx/posts/' . $fname;
                 $fullFile = $baseFile . '.' . $fext;
-
-                if (!static::createThumbFile($fullFile, static::getImageType($fext, $baseFile), $baseFile, $fext)) {
-                    throw new Exception('createThumbFile failed', 500);
+                
+                if (PostModel::isValidImage(public_path() . '/gfx/posts/' . $fname . '.' . $fext)) {
+                    if (!static::createThumbFile($fullFile, static::getImageType($fext, $baseFile), $baseFile, $fext)) {
+                        throw new \Exception('createThumbFile failed', 500);
+                    }
+                    $video = false;
+                } else if (PostModel::isValidVideoType($att->getClientOriginalExtension())) {
+                    $video = true;
+                } else {
+                    unlink(public_path() . '/gfx/posts/' . $fname . '.' . $fext);
+                    throw new \Exception(__('app.post_invalid_file_type'));
                 }
 
                 if (!isset($attr['nsfw'])) {
@@ -256,6 +281,7 @@ class PostModel extends Model
                 $post = new PostModel();
                 $post->image_full = $fname . '.' . $fext;
                 $post->image_thumb = $fname . '_thumb.' . $fext;
+                $post->video = $video;
                 $post->description = $attr['description'];
                 $post->hashtags = str_replace('#', '', trim($attr['hashtags']));
                 if (strlen($post->hashtags) > 0) {

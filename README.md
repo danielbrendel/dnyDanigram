@@ -9,14 +9,15 @@
 Released under the MIT license
 
 ## Description:
-Danigram is a lightweight image sharing community platform system. Users can register and share 
-images using hashtags. Users can comment on posts, like posts, comments and hashtags and 
+Danigram is a lightweight image and video sharing community platform system. Users can register and 
+share images/videos using hashtags. Users can comment on posts, like posts, comments and hashtags and 
 mention users. Users can add favorites for hashtags and users. There is also profile management,
 notification system and e-mail system. The system comes with a friendly installer. For a full
 feature list see below.
 
 ## Features:
 + Share images
++ Share videos
 + Share stories
 + Comment on images
 + Heart images, comments, hashtags
