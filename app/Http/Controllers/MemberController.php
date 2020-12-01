@@ -22,6 +22,8 @@ use App\PostModel;
 use App\ReportModel;
 use App\TagsModel;
 use App\User;
+use App\ProfileModel;
+use App\ProfileDataModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -56,6 +58,7 @@ class MemberController extends Controller
                 'captcha' => CaptchaModel::createSum(session()->getId()),
                 'cookie_consent' => AppModel::getCookieConsentText(),
                 'meta_description' => str_replace(PHP_EOL, ' ', $user->bio),
+                'profile_data' => ProfileDataModel::queryAll(auth()->id())
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -121,6 +124,12 @@ class MemberController extends Controller
             User::saveEmailOnMessageFlag(auth()->id(), (bool)$attr['email_on_message']);
             User::saveNewsletterFlag(auth()->id(), (bool)$attr['newsletter']);
             User::saveNsfwFlag(auth()->id(), (bool)$attr['nsfw']);
+
+            $profileItemList = ProfileModel::getList();
+            foreach ($profileItemList as $listItem) {
+                $curRequestData = request($listItem->name, '');
+                ProfileDataModel::addOrEdit(auth()->id(), $listItem->name, $curRequestData);
+            }
 
             $av = request()->file('avatar');
             if ($av != null) {

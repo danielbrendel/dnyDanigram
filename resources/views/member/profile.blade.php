@@ -18,9 +18,9 @@
     <div class="column is-5" id="feed-left">
         <div class="member-form is-default-padding is-mobile-like-screen-width is-top-negative-mobile-like">
             @auth
-                @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
+                @include('widgets.userinfo', ['user' => $profile, 'profile' => $profile_data, 'admin' => $user->admin])
             @elseguest
-                @include('widgets.userinfo', ['user' => $profile, 'admin' => false])
+                @include('widgets.userinfo', ['user' => $profile, 'profile' => $profile_data, 'admin' => false])
             @endauth
         </div>
 
@@ -45,9 +45,9 @@
         <div class="fixed-frame">
             <div class="member-form is-default-padding">
                 @auth
-                    @include('widgets.userinfo', ['user' => $profile, 'admin' => $user->admin])
+                    @include('widgets.userinfo', ['user' => $profile, 'profile' => $profile_data, 'admin' => $user->admin])
                 @elseguest
-                    @include('widgets.userinfo', ['user' => $profile, 'admin' => false])
+                    @include('widgets.userinfo', ['user' => $profile, 'profile' => $profile_data, 'admin' => false])
                 @endauth
             </div>
 

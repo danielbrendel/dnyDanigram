@@ -54,6 +54,14 @@
     <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_comments', ['count' => $user->stats->comments]) }}<br/>
 </div>
 
+<div class="userinfo-profile-data">
+    @foreach ($profile as $key => $item)
+        <div class="userinfo-profile-data-item">
+            {{ $key }}: {{ $item['content'] }}
+        </div>
+    @endforeach
+</div>
+
 @auth
     @if ($user->id === auth()->id())
         <div class="userinfo-edit">

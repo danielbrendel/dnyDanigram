@@ -351,6 +351,15 @@
                                 </div>
                             </div>
 
+                            @foreach (\App\ProfileDataModel::queryAll(auth()->id()) as $key => $item)
+                                <div class="field">
+                                    <label class="label">{{ $item['translation'] }}</label>
+                                    <div class="control">
+                                        <textarea name="{{ $key }}">{{ $item['content'] }}</textarea>
+                                    </div>
+                                </div>
+                            @endforeach
+
                             <hr/>
 
                             <div class="field">
