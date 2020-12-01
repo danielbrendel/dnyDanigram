@@ -94,15 +94,21 @@
             if (window.vue.getPostFetchType() == 1) {
                 document.getElementById('linkFetchTop').classList.add('is-active');
                 document.getElementById('linkFetchLatest').classList.remove('is-active');
-                document.getElementById('linkFetchFavs').classList.remove('is-active');
+                @auth
+                    document.getElementById('linkFetchFavs').classList.remove('is-active');
+                @endauth
             } else if (window.vue.getPostFetchType() == 2) {
                 document.getElementById('linkFetchTop').classList.remove('is-active');
                 document.getElementById('linkFetchLatest').classList.add('is-active');
-                document.getElementById('linkFetchFavs').classList.remove('is-active');
+                @auth
+                    document.getElementById('linkFetchFavs').classList.remove('is-active');
+                @endauth
             } else if (window.vue.getPostFetchType() == 3) {
                 document.getElementById('linkFetchTop').classList.remove('is-active');
                 document.getElementById('linkFetchLatest').classList.remove('is-active');
-                document.getElementById('linkFetchFavs').classList.add('is-active');
+                @auth
+                    document.getElementById('linkFetchFavs').classList.add('is-active');
+                @endauth
             }
 
             window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){

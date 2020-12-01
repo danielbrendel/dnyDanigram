@@ -47,8 +47,8 @@ class InstallerModel extends Model
             $envcontent .= 'APP_DEBUG=false' . PHP_EOL;
             $envcontent .= 'APP_URL="' . url('/') . '"' . PHP_EOL;
             $envcontent .= 'APP_PROJECTNAME="' . $attr['project'] . '"' . PHP_EOL;
-            $envcontent .= 'APP_DESCRIPTION="The lightweight image and video sharing community platform system"' . PHP_EOL;
-            $envcontent .= 'APP_TAGS="danigram, daniel brendel, image sharing, video sharing, community, opensource, freeware"' . PHP_EOL;
+            $envcontent .= 'APP_DESCRIPTION="The lightweight social blogging system"' . PHP_EOL;
+            $envcontent .= 'APP_TAGS="danigram, daniel brendel, social blogging, image sharing, video sharing, community, opensource, freeware"' . PHP_EOL;
             $envcontent .= 'APP_TITLE="${APP_PROJECTNAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
             $envcontent .= 'APP_DIVISION=' . (strlen($attr['project']) / 2) . PHP_EOL;
 			$envcontent .= 'APP_LANG=en' . PHP_EOL;

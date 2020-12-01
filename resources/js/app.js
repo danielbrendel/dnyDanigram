@@ -301,9 +301,33 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
         gfx_resource = `<img id="post-image-` + elem.id + `" class="is-pointer is-stretched ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">`;
     }
 
+    let post_desc = '';
+
+    if (elem.image_full === '_none') {
+        gfx_resource = `<pre id="post-image-` + elem.id + `" class="show-post-description is-default-padding is-color-grey is-post-background is-pointer ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">` + elem.description + `</pre>`;
+
+        post_desc = '';
+    } else {
+        post_desc = `<pre class="is-post-background">` + elem.description + `</pre>`;
+    }
+
     let pro = '';
     if (elem.user.pro) {
         pro = '<i class="fas fa-certificate is-color-pro" title="' + window.vue.translationTable.pro + '"></i>'
+    }
+
+    let post_hashtags = '';
+    if (hashTags.length > 0) {
+        post_hashtags = `<div class="show-post-hashtags is-default-padding is-wordbreak">` + hashTags + `</div>`;
+    } else {
+        post_hashtags = '';
+    }
+
+    let post_credits = '';
+    if (credits.length > 0) {
+        post_credits = `<div class="show-post-credits is-default-padding">` + credits + `</div>`;
+    } else {
+        post_credits = '';
     }
 
     let html = `
@@ -365,14 +389,12 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                             </div>
 
                             <div class="show-post-description is-default-padding is-color-grey">
-                                <pre class="is-post-background">` + elem.description + `</pre>
+                                ` + post_desc + `
                                        </div>
 
-                                       <div class="show-post-hashtags is-default-padding is-wordbreak">` + hashTags + `</div>
+                                       ` + post_hashtags + `
 
-                                       <div class="show-post-credits is-default-padding">
-                                            ` + credits + `
-                                        </div>
+                                       ` + post_credits + `
                                    </div>
                         `;
     return html;

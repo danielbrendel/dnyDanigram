@@ -24,16 +24,15 @@
             <div>
                 <form method="POST" action="{{ url('/upload') }}" enctype="multipart/form-data">
                     @csrf
-
                     <div class="field">
-                        <input type="file" data-role="file" data-mode="drop" name="image">
+                        <label class="label">{{ __('app.text') }}</label>
+                        <div class="control">
+                            <textarea class="textarea" name="description" placeholder="{{ __('app.post_text') }}"></textarea>
+                        </div>
                     </div>
 
                     <div class="field">
-                        <label class="label">{{ __('app.description') }}</label>
-                        <div class="control">
-                            <textarea class="textarea" name="description" placeholder="{{ __('app.post_description') }}"></textarea>
-                        </div>
+                        <input type="file" data-role="file" data-button-title="{{ __('app.select_file') }}" name="image">
                     </div>
 
                     <div class="field">

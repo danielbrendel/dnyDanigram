@@ -334,5 +334,9 @@ return [
     'project_stripe_secret' => 'Stripe secret token',
     'project_stripe_public' => 'Stripe public token',
     'project_stripe_costs_value' => 'Costs value in hundreth cents, e.g. 100 = 1.00$',
-    'project_stripe_costs_label' => 'Label text for the above value, e.g. 1.00$ for 100'
+    'project_stripe_costs_label' => 'Label text for the above value, e.g. 1.00$ for 100',
+    'imagevideo' => 'Image/Video',
+    'select_file' => 'Select file',
+    'text' => 'Text',
+    'post_text' => 'Enter your text. Use @name to mention users'
 ];

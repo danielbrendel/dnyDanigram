@@ -211,7 +211,7 @@ class PostModel extends Model
     {
         try {
             $attr = request()->validate([
-                'image' => 'file|required',
+                'image' => 'file|nullable',
                 'description' => 'nullable|max:4096',
                 'hashtags' => 'nullable',
                 'nsfw' => 'nullable',
@@ -234,6 +234,10 @@ class PostModel extends Model
 
             if (!isset($attr['homepage_url'])) {
                 $attr['homepage_url'] = '';
+            }
+
+            if (!isset($attr['nsfw'])) {
+                $attr['nsfw'] = false;
             }
 
             $user = User::where('id', '=', auth()->id())->first();
@@ -275,10 +279,6 @@ class PostModel extends Model
                     throw new \Exception(__('app.post_invalid_file_type'));
                 }
 
-                if (!isset($attr['nsfw'])) {
-                    $attr['nsfw'] = false;
-                }
-
                 $post = new PostModel();
                 $post->image_full = $fname . '.' . $fext;
                 $post->image_thumb = $fname . '_thumb.' . $fext;
@@ -308,6 +308,26 @@ class PostModel extends Model
                         PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id)]), 'PUSH_MENTIONED', $curUser->id);
                     }
                 }
+
+                return $post->id;
+            } else {
+                $post = new PostModel();
+                $post->image_full = '_none';
+                $post->image_thumb = '_none';
+                $post->video = false;
+                $post->description = $attr['description'];
+                $post->hashtags = str_replace('#', '', trim($attr['hashtags']));
+                if (strlen($post->hashtags) > 0) {
+                    if ($post->hashtags[strlen($post->hashtags) - 1] !== ' ') {
+                        $post->hashtags .= ' ';
+                    }
+                }
+                $post->userId = auth()->id();
+                $post->nsfw = (bool)$attr['nsfw'];
+                $post->attribution_instagram = $attr['ig_name'];
+                $post->attribution_twitter = $attr['twitter_name'];
+                $post->attribution_homepage = $attr['homepage_url'];
+                $post->save();
 
                 return $post->id;
             }

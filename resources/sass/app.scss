@@ -377,6 +377,10 @@ img.show-post-image-nsfw, video.show-post-image-nsfw {
     filter: blur(1.5rem);
     -webkit-filter: blur(1.5rem);
 }
+pre.show-post-image-nsfw {
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
 .show-post-description {
     margin-top: 5px;
     margin-bottom: 5px;
