@@ -28,6 +28,7 @@ class PostModel extends Model
      */
     const FETCH_TOP = 1;
     const FETCH_LATEST = 2;
+    const FETCH_FAVS = 3;
 
     /**
      * Check if file is a valid image
@@ -372,6 +373,22 @@ class PostModel extends Model
                 } else {
                     $posts = PostModel::where('locked', '=', false)->orderBy('id', 'desc');
                 }
+            } else if ($type == self::FETCH_FAVS) {
+                $posts = PostModel::where('locked', '=', false)->where('userId',
+                    function($query) {
+                        $query->select('entityId')
+                            ->from(with(new FavoritesModel)->getTable())
+                            ->where('userId', '=', auth()->id())
+                            ->whereRaw('favorites_models.entityId = post_models.userId')
+                            ->where('type', '=', 'ENT_USER');
+                    }
+                );
+                
+                if ($paginateFrom !== null) {
+                    $posts->where('id', '<', $paginateFrom);
+                }
+
+                $posts->orderBy('id', 'desc');
             } else {
                 throw new \Exception('Invalid type: ' . $type);
             }

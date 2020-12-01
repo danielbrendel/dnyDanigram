@@ -37,6 +37,11 @@
                     <li id="linkFetchLatest">
                         <a href="javascript:void(0)" onclick="window.vue.setPostFetchType(2); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();" class="is-color-grey">{{ __('app.latest') }}</a>
                     </li>
+                    @auth
+                        <li id="linkFetchFavs">
+                            <a href="javascript:void(0)" onclick="window.vue.setPostFetchType(3); document.getElementById('feed').innerHTML = ''; window.paginate = null; fetchPosts();" class="is-color-grey">{{ __('app.favorites') }}</a>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -100,12 +105,24 @@
 
             document.getElementById('loading').style.display = 'block';
 
+            @guest
+                if (window.vue.getPostFetchType() == 3) {
+                    window.vue.setPostFetchType(2);
+                }
+            @endguest
+
             if (window.vue.getPostFetchType() == 1) {
                 document.getElementById('linkFetchTop').classList.add('is-active');
                 document.getElementById('linkFetchLatest').classList.remove('is-active');
+                document.getElementById('linkFetchFavs').classList.remove('is-active');
             } else if (window.vue.getPostFetchType() == 2) {
                 document.getElementById('linkFetchTop').classList.remove('is-active');
                 document.getElementById('linkFetchLatest').classList.add('is-active');
+                document.getElementById('linkFetchFavs').classList.remove('is-active');
+            } else if (window.vue.getPostFetchType() == 3) {
+                document.getElementById('linkFetchTop').classList.remove('is-active');
+                document.getElementById('linkFetchLatest').classList.remove('is-active');
+                document.getElementById('linkFetchFavs').classList.add('is-active');
             }
 
             window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + '&hashtag=' + window.hashtag + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
@@ -130,7 +147,7 @@
 
                             if (window.vue.getPostFetchType() == 1) {
                                 window.paginate = response.data[response.data.length - 1].hearts;
-                            } else if (window.vue.getPostFetchType() == 2) {
+                            } else if ((window.vue.getPostFetchType() == 2) || (window.vue.getPostFetchType() == 3)) {
                                 window.paginate = response.data[response.data.length - 1].id;
                             }
 
