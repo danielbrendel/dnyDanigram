@@ -532,6 +532,9 @@ class User extends Authenticatable
     {
         try {
             $user = User::getByAuthId();
+            if ($user->geo_exclude) {
+                return array();
+            }
 
             $query = \DB::table(with(new User)->getTable())
                 ->select(\DB::raw('id, username, avatar, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))

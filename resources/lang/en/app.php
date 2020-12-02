@@ -357,5 +357,7 @@ return [
     'geosearch_title' => 'Find members nearby',
     'geosearch_subtitle' => 'Here you can get a list of all nearby members',
     'geo_exclude' => 'Hide me from being found by geo locations',
-    'send_message' => 'Send message'
+    'send_message' => 'Send message',
+    'geo_exclude_hint' => 'In order to see other members nearby you first have to disable geo exclusion in your settings.',
+    'geosearch_no_users_found' => 'No users found nearby.'
 ];

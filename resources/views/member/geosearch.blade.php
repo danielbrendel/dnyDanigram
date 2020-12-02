@@ -23,10 +23,14 @@
         </div>
 
         <div class="geo-slider">
-            <input id="geo-slider" data-on-change="window.maxrange = arguments[0]; document.getElementById('userlist').innerHTML = '<center><i class=\'fas fa-spinner fa-spin\'></i></center>'; window.queryMemberList();" data-role="slider" data-return-type="value" data-hint="true" data-hint-position="top" data-min="5" data-max="{{ env('APP_GEOMAX', 150) }}">
+            <input id="geo-slider" data-on-change="@if (!$user->geo_exclude) window.maxrange = arguments[0]; document.getElementById('userlist').innerHTML = '<center><i class=\'fas fa-spinner fa-spin\'></i></center>'; window.queryMemberList(); @endif" data-role="slider" data-return-type="value" data-hint="true" data-hint-position="top" data-min="5" data-max="{{ env('APP_GEOMAX', 150) }}">
         </div>
 
-        <div id="userlist"><center><i class="fas fa-spinner fa-spin"></i></center></div>
+        <div id="userlist"></div>
+
+        @if ($user->geo_exclude)
+            <div>{{ __('app.geo_exclude_hint') }}</div>
+        @endif
     </div>
 
     <div class="column is-3 fixed-frame-parent">
@@ -51,17 +55,25 @@
         document.getElementById('geo-slider').setAttribute('data-value', window.maxrange);
 
         window.queryMemberList = function() {
-            window.vue.ajaxRequest('post', '{{ url('/geosearch') }}', { distance: window.maxrange}, function(response){
-                if (response.code == 200) {
-                    document.getElementById('userlist').innerHTML = '';
+            @if (!$user->geo_exclude)
+                document.getElementById('userlist').innerHTML = '<center><i class="fas fa-spinner fa-spin"></i></center>';
 
-                    response.data.forEach(function(elem, index) {
-                        let html = window.renderUserItem(elem);
+                window.vue.ajaxRequest('post', '{{ url('/geosearch') }}', { distance: window.maxrange}, function(response){
+                    if (response.code == 200) {
+                        if (response.data.length > 0) {
+                            document.getElementById('userlist').innerHTML = '';
 
-                        document.getElementById('userlist').innerHTML += html;
-                    });  
-                }
-            });
+                            response.data.forEach(function(elem, index) {
+                                let html = window.renderUserItem(elem);
+
+                                document.getElementById('userlist').innerHTML += html;
+                            });  
+                        } else {
+                            document.getElementById('userlist').innerHTML = '{{ __('app.geosearch_no_users_found') }}';
+                        }
+                    }
+                });
+            @endif
         }
 
         document.addEventListener('DOMContentLoaded', function() {
