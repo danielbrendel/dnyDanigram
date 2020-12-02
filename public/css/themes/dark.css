@@ -316,6 +316,14 @@ pre.is-post-background {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
 }
 
+.is-fixed-margins h1,
+.is-fixed-margins h2,
+.is-fixed-margins h3,
+.is-fixed-margins p {
+  margin-top: 1px !important;
+  margin-bottom: -1px !important;
+}
+
 .home-userarea {
   position: relative;
   margin-top: 21px;
@@ -1351,4 +1359,42 @@ img.show-post-image-nsfw, video.show-post-image-nsfw {
 
 .stories-add-icon {
   padding: 9px;
+}
+
+.geo-slider {
+  margin-top: 22px;
+  margin-bottom: 25px;
+}
+
+.geo-user {
+  position: relative;
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+
+.geo-user-avatar {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+}
+
+.geo-user-avatar img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.geo-user-info {
+  display: inline-block;
+  position: relative;
+  top: 15px;
+}
+
+.geo-user-info-name a {
+  color: #969696;
+}
+
+.geo-user-info-distance {
+  color: #c8c8c8;
 }
