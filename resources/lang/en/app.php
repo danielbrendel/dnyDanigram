@@ -352,5 +352,9 @@ return [
     'inactive' => 'Inactive',
     'profile_item_created' => 'Profile item has been created',
     'profile_item_edited' => 'Profile item has been updated',
-    'profile_item_removed' => 'Profile item has been removed'
+    'profile_item_removed' => 'Profile item has been removed',
+    'geosearch' => 'Geosearch',
+    'geosearch_title' => 'Find members nearby',
+    'geosearch_subtitle' => 'Here you can get a list of all nearby members',
+    'geo_exclude' => 'Hide me from being found by geo locations'
 ];

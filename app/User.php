@@ -496,4 +496,74 @@ class User extends Authenticatable
             throw $e;
         }
     }
+
+    /**
+     * Save geo position of user
+     * 
+     * @param $latitude
+     * @param $longitude
+     * @return void
+     * @throws Exception
+     */
+    public static function storeGeoLocation($latitude, $longitude)
+    {
+        try {
+            $item = User::where('deactivated', '=', false)->where('id', '=', auth()->id())->first();
+            if (!$item) {
+                throw new Exception(__('app.user_not_found_or_deactivated'));
+            }
+
+            $item->latitude = $latitude;
+            $item->longitude = $longitude;
+            $item->save();
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Find members within geo range
+     * 
+     * @param $max_distance
+     * @return mixed
+     * @throws Exception
+     */
+    public static function findWithinRange($max_distance)
+    {
+        try {
+            $user = User::getByAuthId();
+
+            $query = \DB::table(with(new User)->getTable())
+                ->select(\DB::raw('id, username, avatar, latitude, longitude, SQRT(POW(69.1 * (latitude - ' . $user->latitude . '), 2) + POW(69.1 * (' . $user->longitude . ' - longitude) * COS(latitude / 57.3), 2)) AS distance'))
+                ->where('deactivated', '=', false)
+                ->where('geo_exclude', '=', false)
+                ->where('id', '<>', $user->id)
+                ->havingRaw('distance <= ?', [$max_distance])
+                ->orderBy('distance', 'asc');
+
+            return $query->get()->toArray();
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save geo_exclude flag
+     *
+     * @param $id
+     * @param $value
+     * @throws Exception
+     */
+    public static function saveGeoExcludeFlag($id, $value)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->geo_exclude = $value;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

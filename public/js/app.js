@@ -516,6 +516,11 @@ window.renderMessageListItem = function (item) {
   return html;
 };
 
+window.renderUserItem = function (item) {
+  var html = "\n    <div class=\"geo-user\">\n        <div class=\"geo-user-avatar\">\n            <a href=\"" + window.location.origin + "/u/" + item.id + "\"><img src=\"" + window.location.origin + "/gfx/avatars/" + item.avatar + "\" alt=\"avatar\"/></a>\n        </div>\n\n        <div class=\"geo-user-info\">\n            <div class=\"geo-user-info-name\"><a href=\"" + window.location.origin + "/u/" + item.id + "\">" + item.username + "</a></div>\n            <div class=\"geo-user-info-distance\">~" + Math.round(item.distance) + " KM</div>\n        </div>\n    </div>\n    ";
+  return html;
+};
+
 window.reportPost = function (id) {
   window.vue.ajaxRequest('post', window.location.origin + '/p/' + id + '/report', {}, function (response) {
     if (response.code === 200) {

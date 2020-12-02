@@ -126,6 +126,12 @@
 
                     <div class="navbar-item">
                         <div>
+                            <i class="fas fa-globe fa-lg is-pointer" title="{{ __('app.geosearch') }}" onclick="location.href='{{ url('/geosearch') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/geosearch') }}';">{{ __('app.geosearch') }}</a></span>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <div>
                             <i class="far fa-comment fa-lg is-pointer" title="{{ __('app.messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/messages') }}';">{{ __('app.messages') }}</a></span>
                         </div>
                     </div>
@@ -404,6 +410,12 @@
                                     </div>
                                 </div>
                             @endif
+
+                            <div class="field">
+                                <div class="control">
+                                    <input type="checkbox" name="geo_exclude" value="1" data-role="checkbox" data-style="2" data-caption="{{ __('app.geo_exclude') }}" @if ($user->geo_exclude) {{ 'checked' }} @endif>
+                                </div>
+                            </div>
 
                             <input type="submit" id="editprofilesubmit" class="is-hidden">
                         </form>
@@ -693,6 +705,23 @@
             });
         };
 
+        window.transferGeolocation = function(geodata) {
+            let latitude = geodata.coords.latitude;
+            let longitude = geodata.coords.longitude;
+
+            window.vue.ajaxRequest('post', '{{ url('/profile/geo') }}', { latitude: latitude, longitude: longitude }, function(response) { 
+                if (response.code == 500) {
+                    console.log(response.msg);
+                }
+            });
+        };
+
+        window.queryGeoLocation = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(window.transferGeolocation);
+            }
+        };
+
         window.fetchNotifications = function() {
             window.vue.ajaxRequest('get', '{{ url('/notifications/list') }}', {}, function(response){
                 if (response.code === 200) {
@@ -827,6 +856,18 @@
 
             @auth
                 fetchStorySelection();
+            @endauth
+
+            @auth
+                window.geoLoopTransmission = function() {
+                    window.queryGeoLocation();
+
+                    setTimeout('window.geoLoopTransmission()', 1000 * 150)
+                }
+
+                @if ((!isset($_GET['clep_geo'])) || ($_GET['clep_geo'] == 0))
+                    setTimeout('window.geoLoopTransmission()', 2500);
+                @endif
             @endauth
 
             @guest

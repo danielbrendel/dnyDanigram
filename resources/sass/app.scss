@@ -1061,3 +1061,35 @@ pre.show-post-image-nsfw {
     padding: 9px;
 }
 
+//Geo
+.geo-slider {
+    margin-top: 22px;
+    margin-bottom: 25px;
+}
+.geo-user {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+.geo-user-avatar {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+}
+.geo-user-avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+.geo-user-info {
+    display: inline-block;
+    position: relative;
+    top: 15px;
+}
+.geo-user-info-name a {
+    color: rgb(150, 150, 150);
+}
+.geo-user-info-distance {
+    color: rgb(200, 200, 200);
+}

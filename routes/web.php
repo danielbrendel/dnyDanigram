@@ -51,9 +51,12 @@ Route::get('/u/{id}', 'MemberController@show');
 Route::get('/u/{id}/report', 'MemberController@report');
 Route::get('/profile', 'MemberController@profile');
 Route::post('/profile/edit', 'MemberController@save');
+Route::post('/profile/geo', 'MemberController@saveGeoLocation');
 Route::post('/u/deleteownaccount', 'MemberController@deleteOwnAccount');
 Route::any('/u/{id}/ignore/add', 'MemberController@addToIgnore');
 Route::any('/u/{id}/ignore/remove', 'MemberController@removeFromIgnore');
+Route::get('/geosearch', 'MemberController@viewGeosearch');
+Route::post('/geosearch', 'MemberController@geosearch');
 
 Route::post('/f/add', 'FavoritesController@add');
 Route::post('/f/remove', 'FavoritesController@remove');

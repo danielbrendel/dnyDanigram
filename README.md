@@ -31,6 +31,7 @@ feature list see below.
 + Messaging system
 + E-Mail system
 + Mention system
++ Member finder with geo position
 + Administration
 + Maintainer system
 + Theme system

@@ -86,7 +86,8 @@ class MemberController extends Controller
                'email' => 'nullable|email',
                 'email_on_message' => 'nullable|numeric',
                 'newsletter' => 'nullable|numeric',
-                'nsfw' => 'nullable'
+                'nsfw' => 'nullable',
+                'geo_exclude' => 'nullable'
             ]);
 
             if (isset($attr['username'])) {
@@ -121,9 +122,14 @@ class MemberController extends Controller
                 $attr['nsfw'] = false;
             }
 
+            if (!isset($attr['geo_exclude'])) {
+                $attr['geo_exclude'] = false;
+            }
+
             User::saveEmailOnMessageFlag(auth()->id(), (bool)$attr['email_on_message']);
             User::saveNewsletterFlag(auth()->id(), (bool)$attr['newsletter']);
             User::saveNsfwFlag(auth()->id(), (bool)$attr['nsfw']);
+            User::saveGeoExcludeFlag(auth()->id(), (bool)$attr['geo_exclude']);
 
             $profileItemList = ProfileModel::getList();
             foreach ($profileItemList as $listItem) {
@@ -254,6 +260,67 @@ class MemberController extends Controller
             return back()->with('flash.success', __('app.removed_from_ignore'));
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Store member geo position
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveGeoLocation()
+    {
+        try {
+            $latitude = request('latitude', null);
+            $longitude = request('longitude', null);
+
+            User::storeGeoLocation($latitude, $longitude);
+
+            return response()->json(array('code' => 200));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * View geosearch page
+     * 
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function viewGeosearch()
+    {
+        if (Auth::guest()) {
+            return redirect('/');
+        }
+
+        $user = User::getByAuthId();
+        if ($user) {
+            $user->stats = User::getStats($user->id);
+        }
+
+        return view('member.geosearch', [
+            'user' => $user,
+            'taglist' => TagsModel::getPopularTags(),
+            'captcha' => CaptchaModel::createSum(session()->getId()),
+            'cookie_consent' => AppModel::getCookieConsentText()
+        ]);
+    }
+
+    /**
+     * Perform geosearch and return user list if found any
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function geosearch()
+    {
+        try {
+            $distance = request('distance', env('APP_GEOMAX', 150));
+
+            $data = User::findWithinRange($distance);
+
+            return response()->json(array('code' => 200, 'data' => $data, 'max_distance' => $distance));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 }
