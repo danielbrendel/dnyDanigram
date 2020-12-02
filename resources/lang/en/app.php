@@ -338,5 +338,19 @@ return [
     'imagevideo' => 'Image/Video',
     'select_file' => 'Select file',
     'text' => 'Text',
-    'post_text' => 'Enter your text. Use @name to mention users'
+    'post_text' => 'Enter your text. Use @name to mention users',
+    'profile_items' => 'Profile items',
+    'profile_item_id' => 'ID',
+    'profile_item_name' => 'Identifier',
+    'profile_item_translation' => 'Translation',
+    'profile_item_locale' => 'Locale',
+    'profile_item_active' => 'Active',
+    'profile_item_edit' => 'Edit',
+    'profile_item_remove_confirm' => 'Are you sure you want to remove this item?',
+    'profile_item_remove' => 'Remove',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'profile_item_created' => 'Profile item has been created',
+    'profile_item_edited' => 'Profile item has been updated',
+    'profile_item_removed' => 'Profile item has been removed'
 ];

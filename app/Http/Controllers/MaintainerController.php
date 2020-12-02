@@ -22,6 +22,7 @@ use App\ReportModel;
 use App\TagsModel;
 use App\ThemeModel;
 use App\ThreadModel;
+use App\ProfileModel;
 use App\User;
 use Dotenv\Dotenv;
 use Illuminate\Http\Request;
@@ -534,6 +535,72 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.formatted_project_name_saved'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Create new profile item
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createProfileItem()
+    {
+        try {
+            $attr = request()->validate([
+                'name' => 'required',
+                'translation' => 'required',
+                'locale' => 'required'
+            ]);
+
+            ProfileModel::add($attr['name'], $attr['translation'], $attr['locale']);
+
+            return back()->with('flash.success', __('app.profile_item_created'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Edit existing profile item
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editProfileItem()
+    {
+        try {
+            $attr = request()->validate([
+                'name' => 'required',
+                'translation' => 'required',
+                'locale' => 'required',
+                'active' => 'nullable|numeric',
+                'id' => 'required|numeric'
+            ]);
+
+            if (!isset($attr['active'])) {
+                $attr['active'] = false;
+            }
+
+            ProfileModel::edit($attr['id'], $attr['name'], $attr['translation'], $attr['locale'], (bool)$attr['active']);
+
+            return back()->with('flash.success', __('app.profile_item_edited'));
+        } catch (\Exception $e) {
+            return back()->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Remove existing profile item
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function removeProfileItem($id)
+    {
+        try {
+            ProfileModel::remove($id);
+
+            return back()->with('flash.success', __('app.profile_item_removed'));
         } catch (\Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }

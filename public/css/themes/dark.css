@@ -865,6 +865,16 @@ pre.is-post-background {
   display: inline-block;
 }
 
+.userinfo-profile-data {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.userinfo-profile-data-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: rgb(100, 100, 100);
+}
+
 .member-badge {
   border-radius: 4px;
   font-size: 0.6em;

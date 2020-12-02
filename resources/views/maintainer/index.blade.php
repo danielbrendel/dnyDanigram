@@ -48,6 +48,7 @@
                 <li><a href="#tab-page-15">{{ __('app.project_name_formatted') }}</a></li>
                 <li><a href="#tab-page-16">{{ __('app.head_code') }}</a></li>
                 <li><a href="#tab-page-17">{{ __('app.adcode') }}</a></li>
+                <li><a href="#tab-page-18">{{ __('app.profile_items') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
                 <div id="tab-page-1">
@@ -847,6 +848,56 @@
                         </div>
                     </form>
                 </div>
+
+                <div id="tab-page-18">
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.profile_item_id') }}</th>
+                            <th class="text-left">{{ __('app.profile_item_name') }}</th>
+                            <th class="text-left">{{ __('app.profile_item_translation') }}</th>
+                            <th class="text-left">{{ __('app.profile_item_locale') }}</th>
+                            <th class="text-left">{{ __('app.profile_item_active') }}</th>
+                            <th class="text-right">{{ __('app.remove') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach (\App\ProfileModel::all() as $pi)
+                            <tr>
+                                <td>
+                                    #{{ $pi->id }}
+                                </td>
+
+                                <td class="right">
+                                    <a href="javascript:void(0)" onclick="document.getElementById('profile-item-id').value = {{ $pi->id }}; document.getElementById('profile-item-name').value = '{{ $pi->name }}'; document.getElementById('profile-item-translation').value = '{{ $pi->translation }}'; document.getElementById('profile-item-locale').value = '{{ $pi->locale }}'; document.getElementById('profile-item-active').checked = {{ ($pi->active) ? 'true' : 'false' }}; vue.bShowEditProfileItem = true;" title="{{ __('app.profile_item_edit') }}">{{ $pi->name }}</a>
+                                </td>
+
+                                <td>
+                                    {{ $pi->translation }}
+                                </td>
+
+                                <td>{{ $pi->locale }}</td>
+
+                                <td>{{ ($pi->active) ? __('app.active') : __('app.inactive') }}</td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.profile_item_remove_confirm') }}')) location.href = '{{ url('/maintainer/profileitem/' . $pi->id . '/remove') }}';">{{ __('app.profile_item_remove') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <br/>
+
+                    <center><a class="button is-success" onclick="vue.bShowCreateProfileItem = true;">{{ __('app.create') }}</a></center><br/>
+                </div>
             </div>
 
             <div class="modal" :class="{'is-active': bShowCreateFaq}">
@@ -974,6 +1025,92 @@
                     <footer class="modal-card-foot is-stretched">
                         <button class="button is-success" onclick="document.getElementById('formEditTheme').submit();">{{ __('app.save') }}</button>
                         <button class="button" onclick="vue.bShowEditTheme = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowCreateProfileItem}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.profile_item_create') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowCreateProfileItem = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/profileitem/create') }}" id="formCreateProfileItem">
+                            @csrf
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.profile_item_name') }}</label>
+                                <div class="control">
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.profile_item_translation') }}</label>
+                                <div class="control">
+                                    <input type="text" name="translation">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.profile_item_locale') }}</label>
+                                <div class="control">
+                                    <input type="text" name="locale" value="{{ \App::getLocale() }}">
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formCreateProfileItem').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowCreateProfileItem = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowEditProfileItem}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.edit_faq') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowEditProfileItem = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/profileitem/edit') }}" id="formEditProfileItem">
+                            @csrf
+
+                            <input type="hidden" name="id" id="profile-item-id">
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.profile_item_name') }}</label>
+                                <div class="control">
+                                    <input type="text" name="name" id="profile-item-name">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.profile_item_translation') }}</label>
+                                <div class="control">
+                                    <input type="text" name="translation" id="profile-item-translation">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.profile_item_locale') }}</label>
+                                <div class="control">
+                                    <input type="text" name="locale" id="profile-item-locale">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <input id="profile-item-active" type="checkbox" name="active" data-role="checkbox" data-style="2" data-caption="{{ __('app.profile_item_active') }}" value="1">
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formEditProfileItem').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowEditProfileItem = false;">{{ __('app.cancel') }}</button>
                     </footer>
                 </div>
             </div>

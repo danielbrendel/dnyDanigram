@@ -98,6 +98,9 @@ Route::get('/maintainer/entity/delete', 'MaintainerController@deleteEntity');
 Route::get('/maintainer/entity/safe', 'MaintainerController@setSafeEntity');
 Route::post('/maintainer/welcomecontent', 'MaintainerController@welcomeContent');
 Route::post('/maintainer/formattedprojectname', 'MaintainerController@saveFormattedProjectName');
+Route::post('/maintainer/profileitem/create', 'MaintainerController@createProfileItem');
+Route::Post('/maintainer/profileitem/edit', 'MaintainerController@editProfileItem');
+Route::any('/maintainer/profileitem/{id}/remove', 'MaintainerController@removeProfileItem');
 
 Route::get('/stories/selection', 'PostsController@selection');
 Route::get('/stories/view/{userId}', 'PostsController@story');
