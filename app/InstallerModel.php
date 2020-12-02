@@ -123,7 +123,7 @@ class InstallerModel extends Model
             \Artisan::call('migrate:install');
             \Artisan::call('migrate:refresh', array('--path' => 'database/migrations', '--force' => true));
 
-            \DB::insert("INSERT INTO app_settings (home_index_content, cookie_consent, about, imprint, tos, reg_info) VALUES('home_index_content', 'cookie_consent', 'about', 'imprint', 'tos', 'reg_info')");
+            \DB::insert("INSERT INTO app_settings (home_index_content, cookie_consent, about, imprint, tos, reg_info, welcome_content, project_name_formatted, head_code, adcode) VALUES('home_index_content', 'cookie_consent', 'about', 'imprint', 'tos', 'reg_info', '', '', '', '')");
 
             $user = new User();
             $user->username = 'admin';
