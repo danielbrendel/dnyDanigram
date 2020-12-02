@@ -29,6 +29,7 @@ class CreateMessageModelsTable extends Migration
             $table->id();
             $table->integer('userId');
             $table->integer('senderId');
+            $table->string('channel');
             $table->string('subject');
             $table->text('message');
             $table->boolean('seen')->default(false);

@@ -225,6 +225,10 @@ pre.is-post-background {
     background-color: rgb(255, 255, 255) !important;
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica Neue", sans-serif;
 }
+.is-fixed-margins h1, .is-fixed-margins h2, .is-fixed-margins h3, .is-fixed-margins p {
+    margin-top: 1px !important;
+    margin-bottom: -1px !important;
+}
 
 //Home styles
 .home-userarea {
@@ -486,7 +490,7 @@ pre.show-post-image-nsfw {
 .thread-input-header-avatar {
     margin-right: 15px;
     width: 28px;
-    top: -110px;
+    top: -152px;
 }
 .thread-input-header-avatar img {
     border-radius: 50%;
@@ -504,6 +508,7 @@ pre.show-post-image-nsfw {
 }
 .thread-input-submit {
     width: 100%;
+    margin-top: 40px;
     margin-bottom: 55px;
     margin-left: 46px;
 }

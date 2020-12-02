@@ -10,6 +10,8 @@
     Released under the MIT license
 */
 
+require('./bootstrap.js');
+
 const MAX_SHARE_TEXT_LENGTH = 15;
 
 //Make Vue instance
@@ -306,11 +308,11 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
     let post_desc = '';
 
     if (elem.image_full === '_none') {
-        gfx_resource = `<pre id="post-image-` + elem.id + `" class="show-post-description is-default-padding is-color-grey is-post-background is-pointer ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">` + elem.description + `</pre>`;
+        gfx_resource = `<div id="post-image-` + elem.id + `" class="show-post-description is-default-padding is-color-grey is-post-background is-breakall is-pointer ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">` + elem.description + `</div>`;
 
         post_desc = '';
     } else {
-        post_desc = `<pre class="is-post-background">` + elem.description + `</pre>`;
+        post_desc = elem.description;
     }
 
     let pro = '';
@@ -390,7 +392,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                                 <div class="is-inline-block is-right float-right"><a class="is-color-grey" href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>
 
-                            <div class="show-post-description is-default-padding is-color-grey">
+                            <div class="show-post-description is-default-padding is-color-grey is-post-background is-breakall">
                                 ` + post_desc + `
                                        </div>
 
@@ -461,8 +463,8 @@ window.renderThread = function(elem, adminOrOwner = false, isSubComment = false,
                 </div>
             </div>
 
-            <div class="thread-text is-color-grey" id="thread-text-` + elem.id + `">
-                <pre class="is-post-background">` + elem.text + `</pre>
+            <div class="thread-text is-color-grey is-post-background is-fixed-margins is-breakall" id="thread-text-` + elem.id + `">
+                ` + elem.text + `
             </div>
 
             <div class="thread-footer">

@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-@extends('layouts.layout_mail')
+@extends('layouts.layout_email')
 
 @section('title')
     {{ __('app.mail_message_received_title') }}

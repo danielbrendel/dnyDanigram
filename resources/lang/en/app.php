@@ -356,5 +356,6 @@ return [
     'geosearch' => 'Geosearch',
     'geosearch_title' => 'Find members nearby',
     'geosearch_subtitle' => 'Here you can get a list of all nearby members',
-    'geo_exclude' => 'Hide me from being found by geo locations'
+    'geo_exclude' => 'Hide me from being found by geo locations',
+    'send_message' => 'Send message'
 ];

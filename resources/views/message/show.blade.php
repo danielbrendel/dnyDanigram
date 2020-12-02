@@ -16,13 +16,13 @@
 
 @section('body')
     <div class="column is-8">
-        <h1>{{ __('app.message_thread', ['name' => $thread['msg']->sender->username]) }}</h1>
+        <h1>{{ __('app.message_thread', ['name' => $thread['message_partner']]) }}</h1>
 
         <div class="member-form is-default-padding member-form-fixed-top">
             <form method="POST" action="{{ url('/messages/send') }}">
                 @csrf
 
-                <input type="hidden" name="username" value="{{ $thread['msg']->user->username }}">
+                <input type="hidden" name="username" value="{{ $thread['message_partner'] }}">
 
                 <div class="field">
                     <label class="label">{{ __('app.subject') }}</label>
@@ -34,7 +34,8 @@
                 <div class="field">
                     <label class="label">{{ __('app.text') }}</label>
                     <div class="control">
-                        <textarea name="text" placeholder="{{ __('app.type_something') }}"></textarea>
+                        <div id="input-text"></div>
+                        <textarea name="text" id="post-text" class="is-hidden" placeholder="{{ __('app.type_something') }}"></textarea>
                     </div>
                 </div>
 
@@ -59,7 +60,7 @@
                     <div class="message-thread-header-subject">{{ $thread['msg']->subject }}</div>
                 </div>
 
-                <div class="message-thread-text">{{ $thread['msg']->message }}</div>
+                <div class="message-thread-text">{!! $thread['msg']->message !!}</div>
             </div>
 
             @foreach ($thread['previous'] as $msg)
@@ -77,7 +78,7 @@
                         <div class="message-thread-header-subject">{{ $msg->subject }}</div>
                     </div>
 
-                    <div class="message-thread-text">{{ $msg->message }}</div>
+                    <div class="message-thread-text">{!! $msg->message !!}</div>
                 </div>
             @endforeach
         </div>
@@ -86,3 +87,15 @@
     <div class="column is-2 is-sidespacing"></div>
 @endsection
 
+@section('javascript')
+    <script>
+        var quillEditor = new Quill('#input-text', {
+            theme: 'snow',
+            placeholder: '{{ __('app.type_something') }}',
+        });
+
+        quillEditor.on('editor-change', function(eventName, ...args) {
+            document.getElementById('post-text').value = quillEditor.root.innerHTML;
+        });
+    </script>
+@endsection

@@ -27,7 +27,8 @@
                     <div class="field">
                         <label class="label">{{ __('app.text') }}</label>
                         <div class="control">
-                            <textarea class="textarea" name="description" placeholder="{{ __('app.post_text') }}"></textarea>
+                            <div id="input-text"></div>
+                            <textarea class="textarea is-hidden" id="post-text" name="description" placeholder="{{ __('app.post_text') }}"></textarea>
                         </div>
                     </div>
 
@@ -87,5 +88,18 @@
     </div>
 
     <div class="column is-2 is-sidespacing"></div>
+@endsection
+
+@section('javascript')
+    <script>
+        var quillEditor = new Quill('#input-text', {
+            theme: 'snow',
+            placeholder: '{{ __('app.post_text') }}',
+        });
+
+        quillEditor.on('editor-change', function(eventName, ...args) {
+            document.getElementById('post-text').value = quillEditor.root.innerHTML;
+        });
+    </script>
 @endsection
 

@@ -33,8 +33,9 @@
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/metro-all.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/quill.core.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/quill.snow.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ \App\ThemeModel::getThemeToInclude() }}">
-
 
         <link rel="icon" type="image/png" href="{{ asset('/logo.png') }}">
 
@@ -47,6 +48,7 @@
             <script src="{{ asset('js/vue.min.js') }}"></script>
         @endif
         <script src="{{ asset('js/axios.min.js') }}"></script>
+        <script src="{{ asset('js/quill.min.js') }}"></script>
         <script src="https://js.stripe.com/v3/"></script>
 
         <title>@yield('title')</title>

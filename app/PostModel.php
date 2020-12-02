@@ -253,6 +253,8 @@ class PostModel extends Model
                 }
             }
 
+            $attr['description'] = \Purifier::clean($attr['description']);
+
             $att = request()->file('image');
             if ($att != null) {
                 if ($att->getSize() > env('APP_MAXUPLOADSIZE')) {

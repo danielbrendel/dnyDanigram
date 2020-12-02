@@ -63,6 +63,10 @@
 </div>
 
 @auth
+    <div class="userinfo-message">
+        <a href="{{ url('/messages/create?u=' . $user->username) }}">{{ __('app.send_message') }}</a>
+    </div>
+
     @if ($user->id === auth()->id())
         <div class="userinfo-edit">
             <a href="javascript:void(0)" onclick="window.vue.bShowEditProfile = true;">{{ __('app.edit_profile') }}</a>

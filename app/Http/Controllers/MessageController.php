@@ -48,9 +48,14 @@ class MessageController extends Controller
         try {
             $paginate = request('paginate', null);
 
-            $data = MessageModel::fetch(auth()->id(), env('APP_MESSAGEPACKLIMIT'), $paginate);
+            $data = MessageModel::fetch(auth()->id(), env('APP_MESSAGEPACKLIMIT'), $paginate)->unique('channel')->values()->all();
             foreach ($data as &$item) {
-                $item->user = User::get($item->senderId);
+                if ($item->senderId === auth()->id()) {
+                    $item->user = User::get($item->userId);
+                } else {
+                    $item->user = User::get($item->senderId);
+                }
+
                 $item->diffForHumans = $item->created_at->diffForHumans();
             }
 
@@ -80,6 +85,12 @@ class MessageController extends Controller
             foreach($thread['previous'] as &$item) {
                 $item->user = User::get($item->userId);
                 $item->sender = User::get($item->senderId);
+            }
+
+            if ($thread['msg']->senderId == auth()->id()) {
+                $thread['message_partner'] = $thread['msg']->user->username;
+            } else {
+                $thread['message_partner'] = $thread['msg']->sender->username;
             }
 
             return view('message.show', [

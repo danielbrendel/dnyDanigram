@@ -30,7 +30,8 @@
                         </div>
 
                         <div class="thread-input-header-text is-inline-block">
-                            <textarea name="text" placeholder="{{ __('app.type_something') }}"></textarea>
+                            <div id="input-text"></div>
+                            <textarea name="text" id="post-text" class="is-hidden" placeholder="{{ __('app.type_something') }}"></textarea>
                         </div>
                     </div>
 
@@ -120,6 +121,15 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.paginate = null;
+
+            var quillEditor = new Quill('#input-text', {
+                theme: 'snow',
+                placeholder: '{{ __('app.type_something') }}',
+            });
+
+            quillEditor.on('editor-change', function(eventName, ...args) {
+                document.getElementById('post-text').value = quillEditor.root.innerHTML;
+            });
 
             fetchSinglePost();
             fetchThread();

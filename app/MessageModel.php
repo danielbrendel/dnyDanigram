@@ -45,17 +45,30 @@ class MessageModel extends Model
                 throw new \Exception('Sender not found: ' . $senderId);
             }
 
+            $channel = MessageModel::select('channel')->where('userId', '=', $userId)->where('senderId', '=', $senderId)->first();
+            if (!$channel) {
+                $channel = MessageModel::select('channel')->where('senderId', '=', $userId)->where('userId', '=', $senderId)->first();
+                if (!$channel) {
+                    $channel = md5(strval($userId) . strval($senderId) . random_bytes(55));
+                } else {
+                    $channel = $channel->channel;
+                }
+            } else {
+                $channel = $channel->channel;
+            }
+
             $msg = new MessageModel();
             $msg->userId = $userId;
             $msg->senderId = $senderId;
+            $msg->channel = $channel;
             $msg->subject = $subject;
-            $msg->message = $message;
+            $msg->message = \Purifier::clean($message);
             $msg->save();
 
             PushModel::addNotification(__('app.new_message_short', ['name' => $sender->username]), __('app.new_message', ['name' => $sender->username, 'subject' => $subject]), 'PUSH_MESSAGED', $userId);
 
             if ($user->email_on_message) {
-                $html = view('mail.message', ['name' => $user->username, 'sender' => $sender->username, 'message' => $message])->render();
+                $html = view('mail.message', ['name' => $user->username, 'sender' => $sender->username, 'message' => $message, 'msgid' => $msg->id])->render();
                 MailerModel::sendMail($user->email, __('app.message_received'), $html);
             }
 
@@ -79,7 +92,7 @@ class MessageModel extends Model
     public static function fetch($userId, $limit, $paginate = null)
     {
         try {
-            $rowset = MessageModel::where('userId', '=', $userId);
+            $rowset = MessageModel::where('userId', '=', $userId)->orWhere('senderId', '=', $userId);
 
             if ($paginate !== null) {
                 $rowset->where('id', '<', $paginate);

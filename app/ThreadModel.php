@@ -40,7 +40,7 @@ class ThreadModel extends Model
             $thread = new ThreadModel();
             $thread->userId = $userId;
             $thread->postId = $postId;
-            $thread->text = $text;
+            $thread->text = \Purifier::clean($text);
             $thread->save();
 
             $user = User::get($post->userId);
