@@ -158,4 +158,20 @@ class MessageController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
+    /**
+     * Get amount of unread messages
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function unreadCount()
+    {
+        try {
+            $count = MessageModel::unreadCount(auth()->id());
+
+            return response()->json(array('code' => 200, 'count' => $count));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
 }

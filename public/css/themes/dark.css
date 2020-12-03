@@ -76,6 +76,10 @@ h2 {
     color: rgb(240, 240, 240) !important;
 }
 
+.ql-editing {
+    z-index: 3;
+}
+
 strong {
     color: rgb(240, 240, 240) !important;
 }
@@ -219,7 +223,7 @@ input[type="submit"], button[class="button"], input[type="button"] {
   color: #787878;
 }
 
-.is-hearted {
+.is-hearted, .is-new-message {
   color: #d20000 !important;
 }
 

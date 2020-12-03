@@ -49,6 +49,9 @@ a:hover {
 h2 {
     font-size: 1.0em;
 }
+.ql-editing {
+    z-index: 3;
+}
 
 //General useful classes
 .is-pointer {
@@ -143,7 +146,7 @@ h2 {
 .is-color-grey {
     color: rgb(120, 120, 120);
 }
-.is-hearted {
+.is-hearted, .is-new-message {
     color: rgb(210, 0, 0) !important;
 }
 .is-stretched {

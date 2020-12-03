@@ -74,6 +74,7 @@ Route::get('/messages/list', 'MessageController@fetchList');
 Route::get('/messages/show/{id}', 'MessageController@show');
 Route::get('/messages/create', 'MessageController@create');
 Route::post('/messages/send', 'MessageController@send');
+Route::any('/messages/unread/count', 'MessageController@unreadCount');
 
 Route::get('/p/{id}/lock', 'AdminController@lockPost');
 Route::get('/p/{id}/togglensfw', 'AdminController@toggleNsfw');

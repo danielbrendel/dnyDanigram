@@ -359,7 +359,7 @@ return [
     'geo_exclude' => 'Hide me from being found by geo locations',
     'send_message' => 'Send message',
     'geo_exclude_hint' => 'In order to see other members nearby you first have to disable geo exclusion in your settings.',
-    'geosearch_no_users_found' => 'No users found nearby.',
+    'geosearch_no_users_found' => 'No more users found nearby.',
     'gender' => 'Gender',
     'birthday' => 'Birthday',
     'location' => 'Location',

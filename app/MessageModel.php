@@ -145,4 +145,20 @@ class MessageModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Get amount of unread messages
+     * 
+     * @param $userId
+     * @return int
+     * @throws Exception
+     */
+    public static function unreadCount($userId)
+    {
+        try {
+            return MessageModel::where('userId', '=', $userId)->where('seen', '=', false)->count();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }

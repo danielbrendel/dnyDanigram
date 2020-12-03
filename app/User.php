@@ -586,10 +586,11 @@ class User extends Authenticatable
      * Find members within geo range
      * 
      * @param $max_distance
+     * @param $paginate
      * @return mixed
      * @throws Exception
      */
-    public static function findWithinRange($max_distance)
+    public static function findWithinRange($max_distance, $paginate = null)
     {
         try {
             $user = User::getByAuthId();
@@ -602,10 +603,13 @@ class User extends Authenticatable
                 ->where('deactivated', '=', false)
                 ->where('geo_exclude', '=', false)
                 ->where('id', '<>', $user->id)
-                ->havingRaw('distance <= ?', [$max_distance])
-                ->orderBy('distance', 'asc');
+                ->havingRaw('distance <= ?', [$max_distance]);
 
-            return $query->get()->toArray();
+            if ($paginate !== null) {
+                $query->where('id', '>', $paginate);
+            }
+
+            return $query->limit(env('APP_PROFILEPACKLIMIT'))->get()->toArray();
         } catch (Exception $e) {
             throw $e;
         }

@@ -140,7 +140,7 @@
 
                     <div class="navbar-item">
                         <div>
-                            <i class="far fa-comment fa-lg is-pointer" title="{{ __('app.messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/messages') }}';">{{ __('app.messages') }}</a></span>
+                            <i id="icon-messages" class="far fa-comment fa-lg is-pointer" title="{{ __('app.messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/messages') }}';">{{ __('app.messages') }}</a></span>
                         </div>
                     </div>
 
@@ -850,10 +850,33 @@
             form.submit();
         }
 
+        @auth
+        window.indicateMessageCount = function() {
+            window.vue.ajaxRequest('get', '{{ url('/messages/unread/count') }}', {}, function(response){
+                if (response.code == 200) {
+                    let msgicon = document.getElementById('icon-messages');
+
+                    if (response.count > 0) {
+                        msgicon.classList.remove('far');
+                        msgicon.classList.add('fas');
+                        msgicon.classList.add('is-new-message');
+                    } else {
+                        msgicon.classList.add('far');
+                        msgicon.classList.remove('fas');
+                        msgicon.classList.remove('is-new-message');
+                    }
+                }
+            });
+
+            setTimeout('window.indicateMessageCount()', 5000)
+        }
+        @endauth
+
         document.addEventListener('DOMContentLoaded', () => {
             @auth
             setTimeout('fetchNotifications()', 5000);
             setTimeout('fetchNotificationList()', 100);
+            setTimeout('indicateMessageCount()', 1000);
             @endauth
 
             window.vue.translationTable.copiedToClipboard = '{{ __('app.copiedToClipboard') }}';

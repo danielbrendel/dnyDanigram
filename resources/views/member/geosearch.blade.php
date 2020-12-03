@@ -23,7 +23,13 @@
         </div>
 
         <div class="geo-slider">
-            <input id="geo-slider" data-on-change="@if (!$user->geo_exclude) window.maxrange = arguments[0]; document.getElementById('userlist').innerHTML = '<center><i class=\'fas fa-spinner fa-spin\'></i></center>'; window.queryMemberList(); @endif" data-role="slider" data-return-type="value" data-hint="true" data-hint-position="top" data-min="5" data-max="{{ env('APP_GEOMAX', 150) }}">
+            <input id="geo-slider" data-on-change="window.maxrange = arguments[0];" data-role="slider" data-return-type="value" data-hint="true" data-hint-position="top" data-min="5" data-max="{{ env('APP_GEOMAX', 150) }}">
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button" onclick="document.getElementById('userlist').innerHTML = ''; window.queryMemberList();">{{ __('app.geosearch') }}</button>
+            </div>
         </div>
 
         <div id="userlist"></div>
@@ -51,25 +57,40 @@
 @section('javascript')
     <script>
         window.maxrange = {{ env('APP_GEOMAX', 150) }};
+        window.paginate = null;
 
         document.getElementById('geo-slider').setAttribute('data-value', window.maxrange);
 
         window.queryMemberList = function() {
             @if (!$user->geo_exclude)
-                document.getElementById('userlist').innerHTML = '<center><i class="fas fa-spinner fa-spin"></i></center>';
+                if (window.paginate === null) {
+                    document.getElementById('userlist').innerHTML = '<div id="spinner"><center><i class="fas fa-spinner fa-spin"></i></center></div>';
+                } else {
+                    document.getElementById('userlist').innerHTML += '<div id="spinner"><center><i class="fas fa-spinner fa-spin"></i></center></div>';
+                }
 
-                window.vue.ajaxRequest('post', '{{ url('/geosearch') }}', { distance: window.maxrange}, function(response){
+                if (document.getElementById('loadmore')) {
+                    document.getElementById('loadmore').remove();
+                }
+
+                window.vue.ajaxRequest('post', '{{ url('/geosearch') }}', { distance: window.maxrange, paginate: window.paginate }, function(response){
                     if (response.code == 200) {
-                        if (response.data.length > 0) {
-                            document.getElementById('userlist').innerHTML = '';
+                        if (document.getElementById('spinner')) {
+                            document.getElementById('spinner').remove();
+                        }
 
+                        if (response.data.length > 0) {
                             response.data.forEach(function(elem, index) {
                                 let html = window.renderUserItem(elem);
 
                                 document.getElementById('userlist').innerHTML += html;
-                            });  
+                            });
+
+                            window.paginate = response.data[response.data.length - 1].id;
+
+                            document.getElementById('userlist').innerHTML += '<div id="loadmore"><center><a href="javascript:void(0);" onclick="window.queryMemberList();">{{ __('app.load_more') }}</a></center></div>';
                         } else {
-                            document.getElementById('userlist').innerHTML = '{{ __('app.geosearch_no_users_found') }}';
+                            document.getElementById('userlist').innerHTML += '{{ __('app.geosearch_no_users_found') }}';
                         }
                     }
                 });

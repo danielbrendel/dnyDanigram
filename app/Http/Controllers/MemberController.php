@@ -342,8 +342,9 @@ class MemberController extends Controller
     {
         try {
             $distance = request('distance', env('APP_GEOMAX', 150));
+            $paginate = request('paginate', null);
 
-            $data = User::findWithinRange($distance);
+            $data = User::findWithinRange($distance, $paginate);
 
             return response()->json(array('code' => 200, 'data' => $data, 'max_distance' => $distance));
         } catch (Exception $e) {

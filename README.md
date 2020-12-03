@@ -9,7 +9,7 @@
 Released under the MIT license
 
 ## Description:
-Danigram is a lightweight social blogging system. Users can register and share posts consisting of text  
+Danigram is a social network system. Users can register and share posts consisting of text  
 and/or images/videos using hashtags. Users can comment on posts, like posts, comments and hashtags and 
 mention users. Users can add favorites for hashtags and users. There is also profile management,
 notification system and e-mail system. The system comes with a friendly installer. For a full

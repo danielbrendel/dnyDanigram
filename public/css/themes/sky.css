@@ -39,6 +39,10 @@ body {
 	}
 }
 
+.ql-editing {
+    z-index: 3;
+}
+
 .container {
   margin-top: 74px;
   z-index: 1;
@@ -188,7 +192,7 @@ h2 {
   color: #787878;
 }
 
-.is-hearted {
+.is-hearted, .is-new-message {
   color: #d20000 !important;
 }
 
