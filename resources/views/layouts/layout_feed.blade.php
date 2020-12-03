@@ -140,6 +140,12 @@
 
                     <div class="navbar-item">
                         <div>
+                            <i class="fas fa-landmark fa-lg is-pointer" title="{{ __('app.forum') }}" onclick="location.href='{{ url('/forum') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/forum') }}';">{{ __('app.forum') }}</a></span>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <div>
                             <i id="icon-messages" class="far fa-comment fa-lg is-pointer" title="{{ __('app.messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/messages') }}';">{{ __('app.messages') }}</a></span>
                         </div>
                     </div>

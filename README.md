@@ -29,6 +29,7 @@ feature list see below.
 + Favorites system
 + Notification system
 + Messaging system
++ Forum system
 + E-Mail system
 + Mention system
 + Member finder with geo position

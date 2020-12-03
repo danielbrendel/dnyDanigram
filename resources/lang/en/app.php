@@ -376,5 +376,16 @@ return [
     'age_from' => 'Age from',
     'age_till' => 'Age till',
     'profilesearch_no_users_found' => 'No more users found',
-    'load_more' => 'Load more'
+    'load_more' => 'Load more',
+    'forum' => 'Forum',
+    'forum_title' => 'Forum',
+    'forum_subtitle' => 'Take part in discussions. Every discussion if subject to a topic',
+    'search_for_name' => 'Search for name',
+    'search' => 'Search',
+    'forums_no_forums_found' => 'No more forums found',
+    'forum_not_found_or_locked' => 'The specified forum could not be found or is locked',
+    'forums_no_threads_found' => 'No more threads found',
+    'thread_not_found_or_locked' => 'The specified thread could not be found or is locked',
+    'thread' => 'Thread',
+    'forums_no_posts_found' => 'No more postings found'
 ];

@@ -76,6 +76,13 @@ Route::get('/messages/create', 'MessageController@create');
 Route::post('/messages/send', 'MessageController@send');
 Route::any('/messages/unread/count', 'MessageController@unreadCount');
 
+Route::get('/forum', 'ForumController@index');
+Route::post('/forum/list', 'ForumController@list');
+Route::get('/forum/{id}/show', 'ForumController@show');
+Route::post('/forum/{id}/list', 'ForumController@threadList');
+Route::get('/forum/thread/{id}/show', 'ForumController@showThread');
+Route::post('/forum/thread/{id}/posts', 'ForumController@threadPostings');
+
 Route::get('/p/{id}/lock', 'AdminController@lockPost');
 Route::get('/p/{id}/togglensfw', 'AdminController@toggleNsfw');
 Route::get('/t/{id}/lock', 'AdminController@lockHashtag');

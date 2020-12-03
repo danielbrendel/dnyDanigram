@@ -32,6 +32,24 @@ use Illuminate\Support\Carbon;
 class MemberController extends Controller
 {
     /**
+     * Validate permissions
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware(function ($request, $next) {
+            if ((!env('APP_PUBLICFEED')) && (Auth::guest())) {
+                return redirect('/');
+            }
+
+            return $next($request);
+        });
+    }
+
+    /**
      * Show profile
      *
      * @param $id

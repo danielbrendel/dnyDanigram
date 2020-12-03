@@ -612,6 +612,62 @@ window.renderProfileItem = function(item) {
     return html;
 };
 
+window.renderForumItem = function(item) {
+    let html = `
+        <div class="forum-item is-pointer" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">
+            <div class="forum-title">` + item.name + `</div>
+            <div class="forum-description">` + item.description + `</div>
+        </div>
+    `;
+
+    return html;
+};
+
+window.renderForumThreadItem = function(item) {
+    let html = `
+        <div class="forum-thread">
+            <div class="forum-thread-infos">
+                <div class="forum-thread-info-id">#` + item.id + `</div>
+                <div class="forum-thread-info-title is-pointer" onclick="location.href = '` + window.location.origin + '/forum/thread/' + item.id + `/show';">` + item.title + `</div>
+                <div class="forum-thread-info-owner">
+                    <div class="forum-thread-info-owner-avatar"><a href="` + window.location.origin + '/u/' + item.user.id + `"><img src="` + window.location.origin + '/gfx/avatars/' + item.user.avatar + `" alt="avatar"/></a></div>
+                    <div class="forum-thread-info-owner-username"><a href="` + window.location.origin + '/u/' + item.user.id + `">` + item.user.username + `</a></div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    return html;
+};
+
+window.renderForumPostingItem = function(item, admin = false) {
+    let adminCode = '';
+    if (admin) {
+        adminCode = ` | <a href="javascript:void(0);" onclick="">` + window.vue.translationTable.lock + `</a>`;
+    }
+    
+    let html = `
+        <div class="forum-posting">
+            <div class="forum-posting-userinfo">
+                <div class="forum-posting-userinfo-avatar"><a href="` + window.location.origin + '/u/' + item.user.id + `"><img src="` + window.location.origin + '/gfx/avatars/' + item.user.avatar + `" alt="avatar"/></a></div>
+                <div class="forum-posting-userinfo-name"><a href="` + window.location.origin + '/u/' + item.user.id + `">` + item.user.username + `</a></div>
+            </div>
+
+            <div class="forum-posting-message">
+                <div class="forum-posting-message-content is-breakall">
+                    ` + item.message + `
+                </div>
+
+                <div class="forum-posting-message-footer">
+                    <span class="is-color-grey" title="` + item.created_at + `">` + item.diffForHumans + `</span> | <a href="javascript:void(0);" onclick="">` + window.vue.translationTable.report + `</a>` + adminCode + `
+                </div>
+            </div>
+        </div>
+    `;
+
+    return html;
+};
+
 window.reportPost = function(id) {
   window.vue.ajaxRequest('post', window.location.origin + '/p/' + id + '/report', {}, function(response) {
     if (response.code === 200) {
