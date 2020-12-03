@@ -71,7 +71,7 @@ h2 {
     font-size: 1.0em;
 }
 
-.textarea, textarea, input[type="text"], input[type="email"], input[type="password"], input[type="file"], select, label[class="label"], .modal-card-title {
+.textarea, textarea, input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="number"], input[type="file"], select, label[class="label"], .modal-card-title {
     background-color: rgb(50, 50, 48) !important;
     color: rgb(240, 240, 240) !important;
 }

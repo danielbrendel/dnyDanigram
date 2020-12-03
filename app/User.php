@@ -23,6 +23,7 @@ use \App\AgentModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use stdClass;
+use Illuminate\Support\Carbon;
 
 /**
  * Class User
@@ -347,6 +348,66 @@ class User extends Authenticatable
     }
 
     /**
+     * Save gender
+     *
+     * @param $id
+     * @param $gender
+     * @throws Exception
+     */
+    public static function saveGender($id, $gender)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->gender = $gender;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save birthday
+     *
+     * @param $id
+     * @param $birthday
+     * @throws Exception
+     */
+    public static function saveBirthday($id, $birthday)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->birthday = $birthday;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Save location
+     *
+     * @param $id
+     * @param $location
+     * @throws Exception
+     */
+    public static function saveLocation($id, $location)
+    {
+        try {
+            $user = User::get($id);
+            if (($user) && (!$user->deactivated)) {
+                $user->location = $location;
+                $user->save();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Change password
      *
      * @param $id
@@ -565,6 +626,73 @@ class User extends Authenticatable
                 $user->geo_exclude = $value;
                 $user->save();
             }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Find profiles by given criteria
+     * 
+     * @param $username
+     * @param $bio
+     * @param $age_from
+     * @param $age_till
+     * @param $gender
+     * @param $location
+     * @param $paginate
+     * @return mixed
+     * @throws Exception
+     */
+    public static function findProfiles($username, $bio, $age_from, $age_till, $gender, $location, $paginate)
+    {
+        try {
+            $query = User::where('deactivated', '=', false);
+
+            if ((is_string($username)) && (strlen($username) > 0)) {
+                $query->whereRaw('LOWER(username) LIKE ?', ['%' . trim(strtolower($username)) . '%']);
+            }
+
+            if ((is_string($bio)) && (strlen($bio) > 0)) {
+                $query->whereRaw('LOWER(bio) LIKE ?', ['%' . trim(strtolower($bio)) . '%']);
+            }
+
+            if ((is_string($location)) && (strlen($location) > 0)) {
+                $query->whereRaw('LOWER(location) LIKE ?', ['%' . trim(strtolower($location)) . '%']);
+            }
+
+            if ($gender !== 0) {
+                $query->where('gender', '=', $gender);
+            }
+
+            if (($age_from !== null) && (is_numeric($age_from))) {
+                $query->whereRaw('TIMESTAMPDIFF(YEAR, birthday, CURDATE()) >= ?', [(int)$age_from]);
+            }
+
+            if (($age_till !== null) && (is_numeric($age_till))) {
+                $query->whereRaw('TIMESTAMPDIFF(YEAR, birthday, CURDATE()) <= ?', [(int)$age_till]);
+            }
+
+            if ($paginate !== null) {
+                $query->where('id', '>', $paginate);
+            }
+
+            $collection = $query->limit(env('APP_PROFILEPACKLIMIT'))->get();
+
+            foreach ($collection as &$item) {
+                $item->genderStr = __('app.gender_unspecified');
+                if ($item->gender == 1) {
+                    $item->genderStr = __('app.gender_male');
+                } else if ($item->gender == 2) {
+                    $item->genderStr = __('app.gender_female');
+                } else if ($item->gender == 3) {
+                    $item->genderStr = __('app.gender_diverse');
+                }
+
+                $item->age = Carbon::parse($item->birthday)->age;
+            }
+
+            return $collection->toArray();
         } catch (Exception $e) {
             throw $e;
         }

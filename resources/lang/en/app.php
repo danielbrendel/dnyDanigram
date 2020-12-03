@@ -359,5 +359,22 @@ return [
     'geo_exclude' => 'Hide me from being found by geo locations',
     'send_message' => 'Send message',
     'geo_exclude_hint' => 'In order to see other members nearby you first have to disable geo exclusion in your settings.',
-    'geosearch_no_users_found' => 'No users found nearby.'
+    'geosearch_no_users_found' => 'No users found nearby.',
+    'gender' => 'Gender',
+    'birthday' => 'Birthday',
+    'location' => 'Location',
+    'gender_unspecified' => 'Unspecified',
+    'gender_male' => 'Male',
+    'gender_female' => 'Female',
+    'gender_diverse' => 'Diverse',
+    'age' => 'Age',
+    'age_info' => 'Age: :value',
+    'profile_search' => 'Profile search',
+    'profilesearch_title' => 'Search profiles',
+    'profilesearch_subtitle' => 'Here you can search profiles that match the specified criteria',
+    'search_all' => '- All -',
+    'age_from' => 'Age from',
+    'age_till' => 'Age till',
+    'profilesearch_no_users_found' => 'No more users found',
+    'load_more' => 'Load more'
 ];

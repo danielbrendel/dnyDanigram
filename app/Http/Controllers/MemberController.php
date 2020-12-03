@@ -27,6 +27,7 @@ use App\ProfileDataModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 
 class MemberController extends Controller
 {
@@ -49,6 +50,17 @@ class MemberController extends Controller
 
             $user->stats = User::getStats($user->id);
             $user->ignored = IgnoreModel::hasIgnored(auth()->id(), $user->id);
+
+            $user->genderStr = __('app.gender_unspecified');
+            if ($user->gender === 1) {
+                $user->genderStr = __('app.gender_male');
+            } else if ($user->gender === 2) {
+                $user->genderStr = __('app.gender_female');
+            } else if ($user->gender === 3) {
+                $user->genderStr = __('app.gender_diverse');
+            }
+
+            $user->age = Carbon::parse($user->birthday)->age;
 
             return view('member.profile', [
                 'user' => User::getByAuthId(),
@@ -81,6 +93,9 @@ class MemberController extends Controller
             $attr = request()->validate([
                'username' => 'nullable',
                'bio' => 'nullable',
+               'gender' => 'required|numeric|min:0|max:3',
+               'birthday' => 'nullable|date',
+               'location' => 'nullable',
                'password' => 'nullable',
                'password_confirm' => 'nullable',
                'email' => 'nullable|email',
@@ -96,6 +111,18 @@ class MemberController extends Controller
 
             if (isset($attr['bio'])) {
                 User::changeBio(auth()->id(), $attr['bio']);
+            }
+
+            if (isset($attr['gender'])) {
+                User::saveGender(auth()->id(), $attr['gender']);
+            }
+
+            if (isset($attr['birthday'])) {
+                User::saveBirthday(auth()->id(), $attr['birthday']);
+            }
+
+            if (isset($attr['location'])) {
+                User::saveLocation(auth()->id(), $attr['location']);
             }
 
             if (isset($attr['password'])) {
@@ -319,6 +346,62 @@ class MemberController extends Controller
             $data = User::findWithinRange($distance);
 
             return response()->json(array('code' => 200, 'data' => $data, 'max_distance' => $distance));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * View profile search page
+     * 
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function viewProfileSearch()
+    {
+        if (Auth::guest()) {
+            return redirect('/');
+        }
+
+        $user = User::getByAuthId();
+        if ($user) {
+            $user->stats = User::getStats($user->id);
+        }
+
+        return view('member.profilesearch', [
+            'user' => $user,
+            'taglist' => TagsModel::getPopularTags(),
+            'captcha' => CaptchaModel::createSum(session()->getId()),
+            'cookie_consent' => AppModel::getCookieConsentText()
+        ]);
+    }
+
+     /**
+     * Perform profile search and return user list if found any
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function profilesearch()
+    {
+        try {
+            $username = request('username', '');
+            $bio = request('bio', '');
+            $age_from = request('age_from', null);
+            $age_till = request('age_till', null);
+            $gender = request('gender', 0);
+            $location = request('location', '');
+            $paginate = request('paginate', null);
+
+            if ($age_from === '') {
+                $age_from = null;
+            }
+
+            if ($age_till === '') {
+                $age_till = null;
+            }
+
+            $data = User::findProfiles($username, $bio, $age_from, $age_till, $gender, $location, $paginate);
+
+            return response()->json(array('code' => 200, 'data' => $data));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

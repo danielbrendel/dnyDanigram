@@ -36,6 +36,9 @@ class CreateUsersTable extends Migration
             $table->string('password_reset')->nullable();
             $table->string('avatar');
             $table->string('bio', 1024)->default('');
+            $table->integer('gender')->default(0); //0 = unspecified, 1 = male, 2 = female, 3 = diverse
+            $table->dateTime('birthday')->nullable();
+            $table->string('location')->default('');
             $table->boolean('email_on_message')->default(true);
             $table->boolean('newsletter')->default(false);
             $table->boolean('deactivated')->default(false);

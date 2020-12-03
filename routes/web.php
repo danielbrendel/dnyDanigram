@@ -57,6 +57,8 @@ Route::any('/u/{id}/ignore/add', 'MemberController@addToIgnore');
 Route::any('/u/{id}/ignore/remove', 'MemberController@removeFromIgnore');
 Route::get('/geosearch', 'MemberController@viewGeosearch');
 Route::post('/geosearch', 'MemberController@geosearch');
+Route::get('/profilesearch', 'MemberController@viewProfileSearch');
+Route::post('/profilesearch', 'MemberController@profilesearch');
 
 Route::post('/f/add', 'FavoritesController@add');
 Route::post('/f/remove', 'FavoritesController@remove');

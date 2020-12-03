@@ -134,6 +134,12 @@
 
                     <div class="navbar-item">
                         <div>
+                            <i class="fas fa-users fa-lg is-pointer" title="{{ __('app.profile_search') }}" onclick="location.href='{{ url('/profilesearch') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/profilesearch') }}';">{{ __('app.profile_search') }}</a></span>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <div>
                             <i class="far fa-comment fa-lg is-pointer" title="{{ __('app.messages') }}" onclick="location.href='{{ url('/messages') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/messages') }}';">{{ __('app.messages') }}</a></span>
                         </div>
                     </div>
@@ -356,6 +362,32 @@
                                 <label class="label">{{ __('app.bio') }}</label>
                                 <div class="control">
                                     <textarea name="bio">{{ $user->bio }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.gender') }}</label>
+                                <div class="control">
+                                    <select name="gender">
+                                        <option value="0" @if ($user->gender === 0) {{ 'selected' }} @endif>{{ __('app.gender_unspecified') }}</option>
+                                        <option value="1" @if ($user->gender === 1) {{ 'selected' }} @endif>{{ __('app.gender_male') }}</option>
+                                        <option value="2" @if ($user->gender === 2) {{ 'selected' }} @endif>{{ __('app.gender_female') }}</option>
+                                        <option value="3" @if ($user->gender === 3) {{ 'selected' }} @endif>{{ __('app.gender_diverse') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.birthday') }}</label>
+                                <div class="control">
+                                    <input type="date" class="input" name="birthday" value="{{ date('Y-m-d', strtotime($user->birthday)) }}">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">{{ __('app.location') }}</label>
+                                <div class="control">
+                                    <input type="text" name="location" value="{{ $user->location }}">
                                 </div>
                             </div>
 
