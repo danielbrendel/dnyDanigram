@@ -23,6 +23,7 @@ use App\AppModel;
 use App\ForumModel;
 use App\ForumThreadModel;
 use App\ForumPostModel;
+use App\ReportModel;
 
 class ForumController extends Controller
 {
@@ -288,6 +289,113 @@ class ForumController extends Controller
             $id = ForumThreadModel::edit($attr['id'], $attr['title'], (bool)$attr['sticky'], (bool)$attr['locked']);
 
             return back()->with('flash.success', __('app.thread_edited'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Show single forum post
+     * 
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function showPost($id)
+    {
+        try {
+            if (Auth::guest()) {
+                return redirect('/');
+            }
+    
+            $user = User::getByAuthId();
+            if ($user) {
+                $user->stats = User::getStats($user->id);
+            }
+    
+            $post = ForumPostModel::where('id', '=', $id);
+
+            if ((!$user->maintainer) && (!$user->admin)) {
+                $post->where('locked', '=', false);
+            }
+
+            $post = $post->first();
+    
+            if (!$post) {
+                return redirect('/forum')->with('flash.error', __('app.forum_post_not_found_or_locked'));
+            }
+    
+            $post->user = User::get($post->userId);
+            $post->thread = ForumThreadModel::where('id', '=', $post->threadId)->first();
+    
+            return view('forum.single', [
+                'user' => $user,
+                'post' => $post,
+                'taglist' => TagsModel::getPopularTags(),
+                'captcha' => CaptchaModel::createSum(session()->getId()),
+                'cookie_consent' => AppModel::getCookieConsentText()
+            ]);
+        } catch (Exception $e) {
+            return redirect('/forum')->with('flash.error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Report a forum post
+     * 
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reportPost($id)
+    {
+        try {
+            ReportModel::addReport(auth()->id(), $id, 'ENT_FORUMPOST');
+
+            return response()->json(array('code' => 200, 'msg' => __('app.forum_post_reported')));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Lock a forum post
+     * 
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function lockPost($id)
+    {
+        try {
+            ForumPostModel::lock($id);
+
+            return response()->json(array('code' => 200, 'msg' => __('app.forum_post_locked_ok')));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Edit forum post
+     * 
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function editPost()
+    {
+        try {
+            $attr = request()->validate([
+                'id' => 'required|numeric',
+                'message' => 'required'
+            ]);
+
+            $post = ForumPostModel::where('id', '=', $attr['id'])->first();
+
+            $user = User::getByAuthId();
+            if (!(($user) && (($post->userId === $user->id) || (($user->maintainer) || (!$user->admin))))) {
+                throw new Exception(__('app.insufficient_permissions'));
+            }
+
+            ForumPostModel::edit($attr['id'], $attr['message']);
+
+            return back()->with('flash.success', __('app.forum_post_edited'));
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }

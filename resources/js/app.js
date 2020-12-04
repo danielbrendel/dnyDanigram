@@ -38,6 +38,7 @@ let vue = new Vue({
         bShowCreateThread: false,
         bShowReplyForumThread: false,
         bShowEditForumThread: false,
+        bShowEditForumPost: false,
         translationTable: {
             copiedToClipboard: 'Text has been copyied to clipboard!',
             toggleNsfw: 'Toggle NSFW',
@@ -62,9 +63,11 @@ let vue = new Vue({
             confirmToggleNsfw: 'Do you want to toggle the nsfw flag for this post?',
             confirmLockHashtag: 'Do you want to lock this hashtag?',
             confirmLockUser: 'Do you want to deactivate this profile?',
+            confirmLockForumPost: 'Do you want to lock this forum post?',
             confirmDeleteOwnAccount: 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
             confirmLockComment: 'Do you want to lock this comment?',
-            pro: 'Pro'
+            pro: 'Pro',
+            forumPostEdited: 'Edited'
         }
     },
 
@@ -683,10 +686,28 @@ window.renderForumThreadItem = function(item) {
     return html;
 };
 
-window.renderForumPostingItem = function(item, admin = false) {
+window.renderForumPostingItem = function(item, admin = false, owner = false) {
     let adminCode = '';
     if (admin) {
-        adminCode = ` | <a href="javascript:void(0);" onclick="">` + window.vue.translationTable.lock + `</a>`;
+        adminCode = ` | <a href="javascript:void(0);" onclick="window.lockForumPost(` + item.id + `);">` + window.vue.translationTable.lock + `</a>`;
+    }
+
+    if ((admin) && (!owner)) {
+        owner = true;
+    }
+
+    let ownerCode = '';
+    if (owner) {
+        ownerCode = ` | <a href="javascript:void(0);" onclick="document.getElementById('forum-post-id').value = '` + item.id + `'; document.getElementById('forum-post-message').value = '` + item.message + `'; window.vue.bShowEditForumPost = true;">` + window.vue.translationTable.edit + `</a>`;
+    }
+
+    if (item.locked) {
+        item.message = '<i class="is-color-grey">' + item.message + '</i>';
+    }
+
+    let editedInfo = '';
+    if ((item.created_at !== item.updated_at) && (!item.locked)) {
+        editedInfo = '<br/><br/><i class="is-color-grey is-font-small">' + window.vue.translationTable.forumPostEdited + ' ' + item.updatedAtDiff + '</i>';
     }
     
     let html = `
@@ -698,11 +719,11 @@ window.renderForumPostingItem = function(item, admin = false) {
 
             <div class="forum-posting-message">
                 <div class="forum-posting-message-content is-breakall">
-                    ` + item.message + `
+                    ` + item.message + ` ` + editedInfo + `
                 </div>
 
                 <div class="forum-posting-message-footer">
-                    <span class="is-color-grey" title="` + item.created_at + `">` + item.diffForHumans + `</span> | <a href="javascript:void(0);" onclick="">` + window.vue.translationTable.report + `</a>` + adminCode + `
+                    <span class="is-color-grey" title="` + item.created_at + `">` + item.diffForHumans + `</span> | <a href="javascript:void(0);" onclick="window.reportForumPost(` + item.id + `)">` + window.vue.translationTable.report + `</a>` + adminCode + ` ` + ownerCode + `
                 </div>
             </div>
         </div>
@@ -764,6 +785,12 @@ window.reportProfile = function(elemId) {
 
 window.reportTag = function(elemId) {
     window.vue.ajaxRequest('get', window.location.origin + '/t/' + elemId + '/report', {}, function(response) {
+        alert(response.msg);
+    });
+};
+
+window.reportForumPost = function(elemId) {
+    window.vue.ajaxRequest('get', window.location.origin + '/forum/thread/post/' + elemId + '/report', {}, function(response) {
         alert(response.msg);
     });
 };
@@ -925,6 +952,14 @@ window.lockUser = function (id, self = false) {
             if ((typeof response.logout !== 'undefined') && (response.logout)) {
                 location.reload();
             }
+        });
+    }
+};
+
+window.lockForumPost = function(id) {
+    if (confirm(window.vue.translationTable.confirmLockForumPost)) {
+        window.vue.ajaxRequest('get', window.location.origin + '/forum/thread/post/' + id + '/lock', {}, function (response) {
+            alert(response.msg);
         });
     }
 };

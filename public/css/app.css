@@ -338,6 +338,10 @@ pre.is-post-background {
   }
 }
 
+.is-font-small {
+  font-size: 0.8em;
+}
+
 .home-userarea {
   position: relative;
   margin-top: 21px;

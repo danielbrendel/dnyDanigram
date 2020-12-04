@@ -400,6 +400,12 @@ class AppModel extends Model
                     $item->locked = true;
                     $item->save();
                 }
+            } else if ($type === 'ENT_FORUMPOST') {
+                $item = ForumPostModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->locked = true;
+                    $item->save();
+                }
             } else {
                 throw new Exception('Invalid type: ' . $type, 500);
             }
@@ -454,6 +460,13 @@ class AppModel extends Model
                 if ($item) {
                     $item->locked = true;
                     $item->text = '';
+                    $item->save();
+                }
+            } else if ($type === 'ENT_FORUMPOST') {
+                $item = ForumPostModel::where('id', '=', $id)->first();
+                if ($item) {
+                    $item->locked = true;
+                    $item->message = '';
                     $item->save();
                 }
             } else {

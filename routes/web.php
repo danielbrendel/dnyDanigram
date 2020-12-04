@@ -85,6 +85,10 @@ Route::post('/forum/thread/{id}/posts', 'ForumController@threadPostings');
 Route::post('/forum/thread/create', 'ForumController@createThread');
 Route::post('/forum/thread/reply', 'ForumController@replyThread');
 Route::post('/forum/thread/edit', 'ForumController@editThread');
+Route::get('/forum/thread/post/{id}/show', 'ForumController@showPost');
+Route::any('/forum/thread/post/{id}/report', 'ForumController@reportPost');
+Route::any('/forum/thread/post/{id}/lock', 'ForumController@lockPost');
+Route::post('/forum/thread/post/edit', 'ForumController@editPost');
 
 Route::get('/p/{id}/lock', 'AdminController@lockPost');
 Route::get('/p/{id}/togglensfw', 'AdminController@toggleNsfw');

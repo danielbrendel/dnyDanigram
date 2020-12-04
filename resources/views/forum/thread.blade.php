@@ -100,7 +100,7 @@
                     <input type="hidden" id="threadId" name="id" value="{{ $thread->id }}">
 
                     <div class="field">
-                        <label class="label">{{ __('app.message') }}</label>
+                        <label class="label">{{ __('app.title') }}</label>
                         <div class="control">
                             <input type="text" name="title" value="{{ $thread->title }}">
                         </div>
@@ -124,6 +124,36 @@
             <footer class="modal-card-foot is-stretched">
                 <button class="button is-success" onclick="document.getElementById('editthreadsubmit').click();">{{ __('app.save') }}</button>
                 <button class="button" onclick="vue.bShowEditForumThread = false;">{{ __('app.cancel') }}</button>
+            </footer>
+        </div>
+    </div>
+
+    <div class="modal" :class="{'is-active': bShowEditForumPost}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head is-stretched">
+                <p class="modal-card-title">{{ __('app.edit_thread') }}</p>
+                <button class="delete" aria-label="close" onclick="vue.bShowEditForumPost = false;"></button>
+            </header>
+            <section class="modal-card-body is-stretched">
+                <form id="formEditForumPost" method="POST" action="{{ url('/forum/thread/post/edit') }}">
+                    @csrf
+
+                    <input type="hidden" id="forum-post-id" name="id">
+
+                    <div class="field">
+                        <label class="label">{{ __('app.message') }}</label>
+                        <div class="control">
+                            <textarea name="message" id="forum-post-message"></textarea>
+                        </div>
+                    </div>
+
+                    <input type="button" id="editforumpostsubmit" onclick="document.getElementById('formEditForumPost').submit();" class="is-hidden">
+                </form>
+            </section>
+            <footer class="modal-card-foot is-stretched">
+                <button class="button is-success" onclick="document.getElementById('editforumpostsubmit').click();">{{ __('app.save') }}</button>
+                <button class="button" onclick="vue.bShowEditForumPost = false;">{{ __('app.cancel') }}</button>
             </footer>
         </div>
     </div>

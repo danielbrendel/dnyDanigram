@@ -19367,6 +19367,7 @@ var vue = new Vue({
     bShowCreateThread: false,
     bShowReplyForumThread: false,
     bShowEditForumThread: false,
+    bShowEditForumPost: false,
     translationTable: {
       copiedToClipboard: 'Text has been copyied to clipboard!',
       toggleNsfw: 'Toggle NSFW',
@@ -19391,9 +19392,11 @@ var vue = new Vue({
       confirmToggleNsfw: 'Do you want to toggle the nsfw flag for this post?',
       confirmLockHashtag: 'Do you want to lock this hashtag?',
       confirmLockUser: 'Do you want to deactivate this profile?',
+      confirmLockForumPost: 'Do you want to lock this forum post?',
       confirmDeleteOwnAccount: 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
       confirmLockComment: 'Do you want to lock this comment?',
-      pro: 'Pro'
+      pro: 'Pro',
+      forumPostEdited: 'Edited'
     }
   },
   methods: {
@@ -19810,13 +19813,34 @@ window.renderForumThreadItem = function (item) {
 
 window.renderForumPostingItem = function (item) {
   var admin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var owner = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
   var adminCode = '';
 
   if (admin) {
-    adminCode = " | <a href=\"javascript:void(0);\" onclick=\"\">" + window.vue.translationTable.lock + "</a>";
+    adminCode = " | <a href=\"javascript:void(0);\" onclick=\"window.lockForumPost(" + item.id + ");\">" + window.vue.translationTable.lock + "</a>";
   }
 
-  var html = "\n        <div class=\"forum-posting\">\n            <div class=\"forum-posting-userinfo\">\n                <div class=\"forum-posting-userinfo-avatar\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                <div class=\"forum-posting-userinfo-name\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\">" + item.user.username + "</a></div>\n            </div>\n\n            <div class=\"forum-posting-message\">\n                <div class=\"forum-posting-message-content is-breakall\">\n                    " + item.message + "\n                </div>\n\n                <div class=\"forum-posting-message-footer\">\n                    <span class=\"is-color-grey\" title=\"" + item.created_at + "\">" + item.diffForHumans + "</span> | <a href=\"javascript:void(0);\" onclick=\"\">" + window.vue.translationTable.report + "</a>" + adminCode + "\n                </div>\n            </div>\n        </div>\n    ";
+  if (admin && !owner) {
+    owner = true;
+  }
+
+  var ownerCode = '';
+
+  if (owner) {
+    ownerCode = " | <a href=\"javascript:void(0);\" onclick=\"document.getElementById('forum-post-id').value = '" + item.id + "'; document.getElementById('forum-post-message').value = '" + item.message + "'; window.vue.bShowEditForumPost = true;\">" + window.vue.translationTable.edit + "</a>";
+  }
+
+  if (item.locked) {
+    item.message = '<i class="is-color-grey">' + item.message + '</i>';
+  }
+
+  var editedInfo = '';
+
+  if (item.created_at !== item.updated_at && !item.locked) {
+    editedInfo = '<br/><br/><i class="is-color-grey is-font-small">' + window.vue.translationTable.forumPostEdited + ' ' + item.updatedAtDiff + '</i>';
+  }
+
+  var html = "\n        <div class=\"forum-posting\">\n            <div class=\"forum-posting-userinfo\">\n                <div class=\"forum-posting-userinfo-avatar\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                <div class=\"forum-posting-userinfo-name\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\">" + item.user.username + "</a></div>\n            </div>\n\n            <div class=\"forum-posting-message\">\n                <div class=\"forum-posting-message-content is-breakall\">\n                    " + item.message + " " + editedInfo + "\n                </div>\n\n                <div class=\"forum-posting-message-footer\">\n                    <span class=\"is-color-grey\" title=\"" + item.created_at + "\">" + item.diffForHumans + "</span> | <a href=\"javascript:void(0);\" onclick=\"window.reportForumPost(" + item.id + ")\">" + window.vue.translationTable.report + "</a>" + adminCode + " " + ownerCode + "\n                </div>\n            </div>\n        </div>\n    ";
   return html;
 };
 
@@ -19880,6 +19904,12 @@ window.reportProfile = function (elemId) {
 
 window.reportTag = function (elemId) {
   window.vue.ajaxRequest('get', window.location.origin + '/t/' + elemId + '/report', {}, function (response) {
+    alert(response.msg);
+  });
+};
+
+window.reportForumPost = function (elemId) {
+  window.vue.ajaxRequest('get', window.location.origin + '/forum/thread/post/' + elemId + '/report', {}, function (response) {
     alert(response.msg);
   });
 };
@@ -20046,6 +20076,14 @@ window.lockUser = function (id) {
       if (typeof response.logout !== 'undefined' && response.logout) {
         location.reload();
       }
+    });
+  }
+};
+
+window.lockForumPost = function (id) {
+  if (confirm(window.vue.translationTable.confirmLockForumPost)) {
+    window.vue.ajaxRequest('get', window.location.origin + '/forum/thread/post/' + id + '/lock', {}, function (response) {
+      alert(response.msg);
     });
   }
 };

@@ -908,8 +908,10 @@
             window.vue.translationTable.confirmToggleNsfw = '{{ __('app.confirmToggleNsfw') }}';
             window.vue.translationTable.confirmLockHashtag = '{{ __('app.confirmLockHashtag') }}';
             window.vue.translationTable.confirmLockUser = '{{ __('app.confirmLockUser') }}';
+            window.vue.translationTable.confirmLockForumPost = '{{ __('app.confirmLockForumPost') }}';
             window.vue.translationTable.confirmDeleteOwnAccount = '{{ __('app.confirmDeleteOwnAccount') }}';
             window.vue.translationTable.confirmLockComment = '{{ __('app.confirmLockComment') }}';
+            window.vue.translationTable.forumPostEdited = '{{ __('app.forum_post_edited_info') }}';
 
             window.vue.handleCookieConsent();
 

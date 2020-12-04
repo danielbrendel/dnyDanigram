@@ -401,5 +401,13 @@ return [
     'set_thread_locked' => 'Set thread locked',
     'thread_not_found_or_locked' => 'Thread could not be found or is locked',
     'no_reply_to_locked_thread' => 'This thread has been locked',
-    'search_for_thread' => 'Search for thread'
+    'search_for_thread' => 'Search for thread',
+    'forum_post_reported' => 'Forum post has been reported',
+    'forum_post_not_found_or_locked' => 'Forum post not found or locked',
+    'single_post' => 'View single post',
+    'confirmLockForumPost' => 'Do you want to lock this forum post?',
+    'forum_post_locked' => 'This post has been locked',
+    'forum_post_locked_ok' => 'The post has been locked',
+    'forum_post_edited' => 'Forum post has been edited',
+    'forum_post_edited_info' => 'Edited'
 ];
