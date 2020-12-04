@@ -16,23 +16,23 @@
 
 @section('body')
     <div class="column is-5" id="feed-left">
-        <div>
+        <div class="is-default-padding-mobile is-mobile-fixed-top">
             <h1>{{ __('app.geosearch_title') }}</h1>
 
             <h2>{{ __('app.geosearch_subtitle') }}</h2>
         </div>
 
-        <div class="geo-slider">
+        <div class="geo-slider is-default-padding-mobile">
             <input id="geo-slider" data-on-change="window.maxrange = arguments[0];" data-role="slider" data-return-type="value" data-hint="true" data-hint-position="top" data-min="5" data-max="{{ env('APP_GEOMAX', 150) }}">
         </div>
 
-        <div class="field">
+        <div class="field is-default-padding-mobile">
             <div class="control">
                 <button class="button" onclick="document.getElementById('userlist').innerHTML = ''; window.queryMemberList();">{{ __('app.geosearch') }}</button>
             </div>
         </div>
 
-        <div id="userlist"></div>
+        <div class="is-default-padding-mobile" id="userlist"></div>
 
         @if ($user->geo_exclude)
             <div>{{ __('app.geo_exclude_hint') }}</div>

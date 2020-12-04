@@ -16,13 +16,13 @@
 
 @section('body')
     <div class="column is-5" id="feed-left">
-        <div>
+        <div class="is-default-padding-mobile is-mobile-fixed-top">
             <h1>{{ __('app.profilesearch_title') }}</h1>
 
             <h2>{{ __('app.profilesearch_subtitle') }}</h2>
         </div>
 
-        <div class="geo-slider">
+        <div class="is-default-padding-mobile">
             <div class="field">
                 <label class="label">{{ __('app.username') }}</label>
                 <div class="control">
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div id="profilelist"></div>
+        <div class="is-default-padding-mobile" id="profilelist"></div>
     </div>
 
     <div class="column is-3 fixed-frame-parent">
