@@ -77,6 +77,10 @@
             </div>
         </div>
 
+        <div>
+            <br/><br/>
+        </div>
+
         <div class="is-default-padding-mobile" id="profilelist"></div>
     </div>
 

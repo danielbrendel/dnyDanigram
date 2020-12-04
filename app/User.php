@@ -665,7 +665,7 @@ class User extends Authenticatable
                 $query->whereRaw('LOWER(location) LIKE ?', ['%' . trim(strtolower($location)) . '%']);
             }
 
-            if ($gender !== 0) {
+            if ($gender != 0) {
                 $query->where('gender', '=', $gender);
             }
 
