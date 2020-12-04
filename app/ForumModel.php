@@ -95,6 +95,35 @@ class ForumModel extends Model
     }
 
     /**
+     * Remove forum and its content
+     * 
+     * @param $id
+     * @return void
+     * @throws Exception
+     */
+    public static function remove($id)
+    {
+        try {
+            $forum = ForumModel::where('id', '=', $id)->first();
+            if ($forum) {
+                $threads = ForumThreadModel::where('forumId', '=', $forum->id)->get();
+                foreach ($threads as $thread) {
+                    $posts = ForumPostModel::where('threadId', '=', $thread->id)->get();
+                    foreach ($posts as $post) {
+                        $post->delete();
+                    }
+
+                    $thread->delete();
+                }
+
+                $forum->delete();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Query forum list
      * 
      * @param $paginate

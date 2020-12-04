@@ -19368,6 +19368,8 @@ var vue = new Vue({
     bShowReplyForumThread: false,
     bShowEditForumThread: false,
     bShowEditForumPost: false,
+    bShowCreateForum: false,
+    bShowEditForum: false,
     translationTable: {
       copiedToClipboard: 'Text has been copyied to clipboard!',
       toggleNsfw: 'Toggle NSFW',

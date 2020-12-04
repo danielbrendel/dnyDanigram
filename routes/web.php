@@ -121,6 +121,10 @@ Route::post('/maintainer/formattedprojectname', 'MaintainerController@saveFormat
 Route::post('/maintainer/profileitem/create', 'MaintainerController@createProfileItem');
 Route::Post('/maintainer/profileitem/edit', 'MaintainerController@editProfileItem');
 Route::any('/maintainer/profileitem/{id}/remove', 'MaintainerController@removeProfileItem');
+Route::post('/maintainer/forum/create', 'MaintainerController@createForum');
+Route::post('/maintainer/forum/edit', 'MaintainerController@editForum');
+Route::any('/maintainer/forum/{id}/lock', 'MaintainerController@lockForum');
+Route::any('/maintainer/forum/{id}/remove', 'MaintainerController@removeForum');
 
 Route::get('/stories/selection', 'PostsController@selection');
 Route::get('/stories/view/{userId}', 'PostsController@story');

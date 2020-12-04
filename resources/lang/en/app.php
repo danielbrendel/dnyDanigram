@@ -409,5 +409,17 @@ return [
     'forum_post_locked' => 'This post has been locked',
     'forum_post_locked_ok' => 'The post has been locked',
     'forum_post_edited' => 'Forum post has been edited',
-    'forum_post_edited_info' => 'Edited'
+    'forum_post_edited_info' => 'Edited',
+    'forums' => 'Forums',
+    'forum_id' => 'ID',
+    'forum_name' => 'Name',
+    'forum_description' => 'Description',
+    'forum_lock' => 'Lock',
+    'forum_remove' => 'Remove',
+    'forum_created' => 'Forum has been created',
+    'forum_create' => 'Create forum',
+    'forum_edited' => 'Forum has been edited',
+    'forum_locked' => 'Forum has been locked',
+    'forum_removed' => 'Forum has been removed',
+    'forum_edit' => 'Edit forum'
 ];

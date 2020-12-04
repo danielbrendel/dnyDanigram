@@ -49,6 +49,7 @@
                 <li><a href="#tab-page-16">{{ __('app.head_code') }}</a></li>
                 <li><a href="#tab-page-17">{{ __('app.adcode') }}</a></li>
                 <li><a href="#tab-page-18">{{ __('app.profile_items') }}</a></li>
+                <li><a href="#tab-page-19">{{ __('app.forums') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
                 <div id="tab-page-1">
@@ -949,6 +950,49 @@
 
                     <center><a class="button is-success" onclick="vue.bShowCreateProfileItem = true;">{{ __('app.create') }}</a></center><br/>
                 </div>
+
+                <div id="tab-page-19">
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.forum_id') }}</th>
+                            <th class="text-left">{{ __('app.forum_name') }}</th>
+                            <th class="text-left">{{ __('app.forum_lock') }}</th>
+                            <th class="text-right">{{ __('app.remove') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($forums as $forum)
+                            <tr>
+                                <td>
+                                    #{{ $forum->id }}
+                                </td>
+
+                                <td class="right">
+                                    <a href="javascript:void(0)" onclick="document.getElementById('forum-edit-id').value = {{ $forum->id }}; document.getElementById('forum-edit-name').value = '{{ $forum->name }}'; document.getElementById('forum-edit-description').value = '{{ $forum->description }}'; vue.bShowEditForum = true;" title="{{ __('app.forum_edit') }}">{{ $forum->name }}</a>
+                                </td>
+
+                                <td><a href="javascript:void(0);" onclick="location.href = '{{ url('/maintainer/forum/' . $forum->id . '/lock') }}';">{{ __('app.lock') }}</a></td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.forum_remove_confirm') }}')) location.href = '{{ url('/maintainer/forum/' . $forum->id . '/remove') }}';">{{ __('app.forum_remove') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <br/>
+
+                    <center><a class="button" href="javascript:void(0)" onclick="location.reload();">{{ __('app.refresh') }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="button is-success" onclick="vue.bShowCreateForum = true;">{{ __('app.create') }}</a></center><br/>
+                </div>
             </div>
 
             <div class="modal" :class="{'is-active': bShowCreateFaq}">
@@ -1162,6 +1206,74 @@
                     <footer class="modal-card-foot is-stretched">
                         <button class="button is-success" onclick="document.getElementById('formEditProfileItem').submit();">{{ __('app.save') }}</button>
                         <button class="button" onclick="vue.bShowEditProfileItem = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowCreateForum}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.forum_create') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowCreateForum = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/forum/create') }}" id="formCreateForum">
+                            @csrf
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.forum_name') }}</label>
+                                <div class="control">
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.forum_description') }}</label>
+                                <div class="control">
+                                    <textarea name="description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formCreateForum').submit();">{{ __('app.create') }}</button>
+                        <button class="button" onclick="vue.bShowCreateForum = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowEditForum}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.forum_edit') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowEditForum = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/forum/edit') }}" id="formEditForum">
+                            @csrf
+
+                            <input type="hidden" name="id" id="forum-edit-id">
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.forum_name') }}</label>
+                                <div class="control">
+                                    <input type="text" name="name" id="forum-edit-name">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.forum_description') }}</label>
+                                <div class="control">
+                                    <textarea name="description" id="forum-edit-description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formEditForum').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowEditForum = false;">{{ __('app.cancel') }}</button>
                     </footer>
                 </div>
             </div>
