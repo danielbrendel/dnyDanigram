@@ -191,7 +191,7 @@ return [
     'env_saved' => 'Environment configuration saved',
     'saved' => 'Data saved',
     'maintainer' => 'Maintainer',
-    'auser_not_found' => 'User not found',
+    'user_not_found' => 'User not found',
     'get_user_details' => 'Get user details',
     'users' => 'Users',
     'newsletter' => 'Newsletter',
