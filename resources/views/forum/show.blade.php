@@ -24,7 +24,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" onclick="document.getElementById('forumId').value = '{{ $forum->id }}'; window.vue.bShowCreateThread = true;">{{ __('app.create') }}</button>&nbsp;<button class="button float-right">{{ __('app.go_back') }}</button>
+                <button class="button is-link" onclick="document.getElementById('forumId').value = '{{ $forum->id }}'; window.vue.bShowCreateThread = true;">{{ __('app.create') }}</button>&nbsp;<button class="button float-right" onclick="location.href = '{{ url('/forum') }}';">{{ __('app.go_back') }}</button>
             </div>
         </div>
 
