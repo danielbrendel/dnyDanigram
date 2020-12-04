@@ -46,7 +46,7 @@ class ForumPostModel extends Model
             $item = new ForumPostModel;
             $item->threadId = $threadId;
             $item->userId = $userId;
-            $item->message = $message;
+            $item->message = \Purifier::clean($message);
             $item->save();
         } catch (Exception $e) {
             throw $e;
@@ -74,7 +74,7 @@ class ForumPostModel extends Model
                 throw new Exception(__('app.insufficient_permissions'));
             }
 
-            $post->message = $message;
+            $post->message = \Purifier::clean($message);
             $post->save();
         } catch (Exception $e) {
             throw $e;

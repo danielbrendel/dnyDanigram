@@ -34,7 +34,7 @@
 
                 <div class="forum-posting-message">
                     <div class="forum-posting-message-content is-breakall">
-                        @if ($post->locked) <i class="is-color-grey"> @endif {{ $post->message }} @if ($post->locked) </i> @endif
+                        @if ($post->locked) <i class="is-color-grey"> @endif <div id="forum-thread-post-message-{{ $post->id }}">{!! $post->message !!}</div> @if ($post->locked) </i> @endif
                         @if ((!$post->locked) && ($post->created_at !== $post->updated_at)) <br/><br/><i class="is-color-grey is-font-small">{{ __('app.forum_post_edited_info') }} {{ $post->updated_at->diffForHumans() }}</i> @endif
                     </div>
 
@@ -46,7 +46,7 @@
                         @endif
 
                         @if (($post->userId == $user->id) || (($user->admin) || ($user->maintainer)))
-                        | <a href="javascript:void(0);" onclick="window.vue.bShowEditForumPost = true;">{{ __('app.edit') }}</a>
+                        | <a href="javascript:void(0);" onclick="window.quillEditorPostEdit.setContents(window.quillEditorPostEdit.clipboard.convert(document.getElementById('forum-thread-post-message-{{ $post->id }}').innerHTML)); window.vue.bShowEditForumPost = true;">{{ __('app.edit') }}</a>
                         @endif
                     </div>
                 </div>
@@ -84,7 +84,8 @@
                     <div class="field">
                         <label class="label">{{ __('app.message') }}</label>
                         <div class="control">
-                            <textarea name="message">{{ $post->message }}</textarea>
+                            <div id="input-forum-post-single">{{ $post->message }}</div>
+                            <textarea class="is-hidden" id="edit-forum-post-single-post" name="message"></textarea>
                         </div>
                     </div>
 
@@ -97,4 +98,16 @@
             </footer>
         </div>
     </div>
+@endsection
+
+@section('javascript')
+    <script>
+        window.quillEditorPostEdit = new Quill('#input-forum-post-single', {
+            theme: 'snow',
+        });
+
+        window.quillEditorPostEdit.on('editor-change', function(eventName, ...args) {
+            document.getElementById('edit-forum-post-single-post').value = window.quillEditorPostEdit.root.innerHTML;
+        });
+    </script>
 @endsection

@@ -700,7 +700,7 @@ window.renderForumPostingItem = function(item, admin = false, owner = false) {
 
     let ownerCode = '';
     if (owner) {
-        ownerCode = ` | <a href="javascript:void(0);" onclick="document.getElementById('forum-post-id').value = '` + item.id + `'; document.getElementById('forum-post-message').value = '` + item.message + `'; window.vue.bShowEditForumPost = true;">` + window.vue.translationTable.edit + `</a>`;
+        ownerCode = ` | <a href="javascript:void(0);" onclick="document.getElementById('forum-post-id').value = '` + item.id + `'; window.quillEditorPostEdit.setContents(window.quillEditorPostEdit.clipboard.convert(document.getElementById('forum-posting-message-` + item.id + `').innerHTML)); window.vue.bShowEditForumPost = true;">` + window.vue.translationTable.edit + `</a>`;
     }
 
     if (item.locked) {
@@ -709,7 +709,7 @@ window.renderForumPostingItem = function(item, admin = false, owner = false) {
 
     let editedInfo = '';
     if ((item.created_at !== item.updated_at) && (!item.locked)) {
-        editedInfo = '<br/><br/><i class="is-color-grey is-font-small">' + window.vue.translationTable.forumPostEdited + ' ' + item.updatedAtDiff + '</i>';
+        editedInfo = '<br/><i class="is-color-grey is-font-small">' + window.vue.translationTable.forumPostEdited + ' ' + item.updatedAtDiff + '</i>';
     }
     
     let html = `
@@ -721,7 +721,7 @@ window.renderForumPostingItem = function(item, admin = false, owner = false) {
 
             <div class="forum-posting-message">
                 <div class="forum-posting-message-content is-breakall">
-                    ` + item.message + ` ` + editedInfo + `
+                    <div id="forum-posting-message-` + item.id + `">` + item.message + `</div> ` + editedInfo + `
                 </div>
 
                 <div class="forum-posting-message-footer">

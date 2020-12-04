@@ -19829,7 +19829,7 @@ window.renderForumPostingItem = function (item) {
   var ownerCode = '';
 
   if (owner) {
-    ownerCode = " | <a href=\"javascript:void(0);\" onclick=\"document.getElementById('forum-post-id').value = '" + item.id + "'; document.getElementById('forum-post-message').value = '" + item.message + "'; window.vue.bShowEditForumPost = true;\">" + window.vue.translationTable.edit + "</a>";
+    ownerCode = " | <a href=\"javascript:void(0);\" onclick=\"document.getElementById('forum-post-id').value = '" + item.id + "'; window.quillEditorPostEdit.setContents(window.quillEditorPostEdit.clipboard.convert(document.getElementById('forum-posting-message-" + item.id + "').innerHTML)); window.vue.bShowEditForumPost = true;\">" + window.vue.translationTable.edit + "</a>";
   }
 
   if (item.locked) {
@@ -19839,10 +19839,10 @@ window.renderForumPostingItem = function (item) {
   var editedInfo = '';
 
   if (item.created_at !== item.updated_at && !item.locked) {
-    editedInfo = '<br/><br/><i class="is-color-grey is-font-small">' + window.vue.translationTable.forumPostEdited + ' ' + item.updatedAtDiff + '</i>';
+    editedInfo = '<br/><i class="is-color-grey is-font-small">' + window.vue.translationTable.forumPostEdited + ' ' + item.updatedAtDiff + '</i>';
   }
 
-  var html = "\n        <div class=\"forum-posting\">\n            <div class=\"forum-posting-userinfo\">\n                <div class=\"forum-posting-userinfo-avatar\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                <div class=\"forum-posting-userinfo-name\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\">" + item.user.username + "</a></div>\n            </div>\n\n            <div class=\"forum-posting-message\">\n                <div class=\"forum-posting-message-content is-breakall\">\n                    " + item.message + " " + editedInfo + "\n                </div>\n\n                <div class=\"forum-posting-message-footer\">\n                    <span class=\"is-color-grey\" title=\"" + item.created_at + "\">" + item.diffForHumans + "</span> | <a href=\"javascript:void(0);\" onclick=\"window.reportForumPost(" + item.id + ")\">" + window.vue.translationTable.report + "</a>" + adminCode + " " + ownerCode + "\n                </div>\n            </div>\n        </div>\n    ";
+  var html = "\n        <div class=\"forum-posting\">\n            <div class=\"forum-posting-userinfo\">\n                <div class=\"forum-posting-userinfo-avatar\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                <div class=\"forum-posting-userinfo-name\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\">" + item.user.username + "</a></div>\n            </div>\n\n            <div class=\"forum-posting-message\">\n                <div class=\"forum-posting-message-content is-breakall\">\n                    <div id=\"forum-posting-message-" + item.id + "\">" + item.message + "</div> " + editedInfo + "\n                </div>\n\n                <div class=\"forum-posting-message-footer\">\n                    <span class=\"is-color-grey\" title=\"" + item.created_at + "\">" + item.diffForHumans + "</span> | <a href=\"javascript:void(0);\" onclick=\"window.reportForumPost(" + item.id + ")\">" + window.vue.translationTable.report + "</a>" + adminCode + " " + ownerCode + "\n                </div>\n            </div>\n        </div>\n    ";
   return html;
 };
 

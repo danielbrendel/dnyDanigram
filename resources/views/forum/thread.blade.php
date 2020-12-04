@@ -72,7 +72,8 @@
                     <div class="field">
                         <label class="label">{{ __('app.message') }}</label>
                         <div class="control">
-                            <textarea name="message" placeholder="{{ __('app.enter_message') }}"></textarea>
+                            <div id="input-reply-forum-thread"></div>
+                            <textarea class="is-hidden" id="reply-forum-thread-post" name="message" placeholder="{{ __('app.enter_message') }}"></textarea>
                         </div>
                     </div>
 
@@ -144,7 +145,8 @@
                     <div class="field">
                         <label class="label">{{ __('app.message') }}</label>
                         <div class="control">
-                            <textarea name="message" id="forum-post-message"></textarea>
+                            <div id="input-forum-edit-thread-post"></div>
+                            <textarea class="is-hidden" name="message" id="forum-edit-thread-post-post"></textarea>
                         </div>
                     </div>
 
@@ -199,6 +201,23 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             window.listPostings();
+        });
+
+        var quillEditorPostReply = new Quill('#input-reply-forum-thread', {
+            theme: 'snow',
+            placeholder: '{{ __('app.enter_message') }}',
+        });
+
+        quillEditorPostReply.on('editor-change', function(eventName, ...args) {
+            document.getElementById('reply-forum-thread-post').value = quillEditorPostReply.root.innerHTML;
+        });
+
+        window.quillEditorPostEdit = new Quill('#input-forum-edit-thread-post', {
+            theme: 'snow',
+        });
+
+        quillEditorPostEdit.on('editor-change', function(eventName, ...args) {
+            document.getElementById('forum-edit-thread-post-post').value = quillEditorPostEdit.root.innerHTML;
         });
     </script>
 @endsection
