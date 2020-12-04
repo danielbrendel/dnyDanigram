@@ -237,6 +237,12 @@ pre.is-post-background {
     height: 32px;
     border-radius: 50%;
 }
+.fa-thumbtack {
+    color: rgb(255, 117, 117);
+}
+.fa-lock {
+    color: rgb(249, 157, 75);
+}
 
 //Home styles
 .home-userarea {
@@ -1140,6 +1146,9 @@ pre.show-post-image-nsfw {
     padding: 20px;
     background-color: rgb(127, 138, 157);
 }
+.forum-thread-is-sticky {
+    background-color: rgb(128, 200, 128);
+}
 .forum-thread-info-title {
     display: inline-block;
     font-size: 1.0em;
@@ -1199,4 +1208,30 @@ pre.show-post-image-nsfw {
     padding: 20px;
     top: 36px;
     font-size: 0.7em;
+}
+.last-poster {
+    float: right;
+    top: -43px;
+}
+.last-poster-userdata {
+    position: relative;
+    display: inline-block;
+}
+.last-poster-name {
+    display: inline-block;
+    color: rgb(120, 120, 120);
+    font-size: 0.7em;
+}
+.last-poster-avatar {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    top: -10px;
+}
+.last-poster-avatar img {
+    border-radius: 50%;
+}
+.last-poster-date {
+    font-size: 0.7em;
+    color: rgb(150, 150, 150);
 }

@@ -19366,6 +19366,7 @@ var vue = new Vue({
     bShowEditProfileItem: false,
     bShowCreateThread: false,
     bShowReplyForumThread: false,
+    bShowEditForumThread: false,
     translationTable: {
       copiedToClipboard: 'Text has been copyied to clipboard!',
       toggleNsfw: 'Toggle NSFW',
@@ -19768,12 +19769,28 @@ window.renderProfileItem = function (item) {
 };
 
 window.renderForumItem = function (item) {
-  var html = "\n        <div class=\"forum-item is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/' + item.id + "/show';\">\n            <div class=\"forum-title\">" + item.name + "</div>\n            <div class=\"forum-description\">" + item.description + "</div>\n        </div>\n    ";
+  var lastPoster = '';
+
+  if (item.lastUser !== null) {
+    lastPoster = "\n            <div class=\"last-poster is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/thread/' + item.lastUser.threadId + "/show';\">\n                <div class=\"last-poster-avatar\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.lastUser.avatar + "\" alt=\"avatar\"></div>\n                <div class=\"last-poster-userdata\">\n                    <div class=\"last-poster-name \">" + item.lastUser.username + "</div>\n                    <div class=\"last-poster-date\">" + item.lastUser.diffForHumans + "</div>\n                </div>\n            </div>\n        ";
+  }
+
+  var html = "\n        <div class=\"forum-item\">\n            <div class=\"forum-title\">\n                <div class=\"is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/' + item.id + "/show';\">" + item.name + "</div>\n                " + lastPoster + "\n            </div>\n            <div class=\"forum-description is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/' + item.id + "/show';\">" + item.description + "</div>\n        </div>\n    ";
   return html;
 };
 
 window.renderForumThreadItem = function (item) {
-  var html = "\n        <div class=\"forum-thread\">\n            <div class=\"forum-thread-infos\">\n                <div class=\"forum-thread-info-id\">#" + item.id + "</div>\n                <div class=\"forum-thread-info-title is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/thread/' + item.id + "/show';\">" + item.title + "</div>\n                <div class=\"forum-thread-info-owner\">\n                    <div class=\"forum-thread-info-owner-avatar\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                    <div class=\"forum-thread-info-owner-username\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\">" + item.user.username + "</a></div>\n                </div>\n            </div>\n        </div>\n    ";
+  var flags = '';
+
+  if (item.sticky) {
+    flags += '<i class="fas fa-thumbtack"></i> ';
+  }
+
+  if (item.locked) {
+    flags += '<i class="fas fa-lock"></i> ';
+  }
+
+  var html = "\n        <div class=\"forum-thread\">\n            <div class=\"forum-thread-infos\">\n                <div class=\"forum-thread-info-id\">#" + item.id + "</div>\n                <div class=\"forum-thread-info-title is-pointer\" onclick=\"location.href = '" + window.location.origin + '/forum/thread/' + item.id + "/show';\">" + flags + ' ' + item.title + "</div>\n                <div class=\"forum-thread-info-owner\">\n                    <div class=\"forum-thread-info-owner-avatar\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + item.user.avatar + "\" alt=\"avatar\"/></a></div>\n                    <div class=\"forum-thread-info-owner-username\"><a href=\"" + window.location.origin + '/u/' + item.user.id + "\">" + item.user.username + "</a></div>\n                </div>\n            </div>\n        </div>\n    ";
   return html;
 };
 

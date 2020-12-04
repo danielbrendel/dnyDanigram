@@ -36,18 +36,46 @@ class ForumThreadModel extends Model
      * @return int
      * @throws Exception
      */
-    public static function add($ownerId, $forumId, $title, $initialMessage)
+    public static function add($ownerId, $forumId, $title, $initialMessage, $sticky = false)
     {
         try {
             $item = new ForumThreadModel;
             $item->ownerId = $ownerId;
             $item->forumId = $forumId;
             $item->title = $title;
+            $item->sticky = $sticky;
             $item->save();
 
             ForumPostModel::add($item->id, $ownerId, $initialMessage);
 
             return $item->id;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Edit forum thread
+     * 
+     * @param $threadId
+     * @param $title
+     * @param $sticky
+     * @param $locked
+     * @return void
+     * @throws Exception
+     */
+    public static function edit($threadId, $title, $sticky, $locked)
+    {
+        try {
+            $item = ForumThreadModel::where('id', '=', $threadId)->first();
+            if (!$item) {
+                throw new Exception('Item not found: ' . $threadId);
+            }
+
+            $item->title = $title;
+            $item->sticky = $sticky;
+            $item->locked = $locked;
+            $item->save();
         } catch (Exception $e) {
             throw $e;
         }
@@ -64,7 +92,7 @@ class ForumThreadModel extends Model
     public static function list($forumId, $paginate = null)
     {
         try {
-            $query = ForumThreadModel::where('locked', '=', false)->where('forumId', '=', $forumId);
+            $query = ForumThreadModel::where('sticky', '=', false)->where('forumId', '=', $forumId);
 
             if ($paginate !== null) {
                 $query->where('id', '<', $paginate);
@@ -77,6 +105,28 @@ class ForumThreadModel extends Model
             }
 
             return $collection->toArray();
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get sticky threads of a forum
+     * 
+     * @param $forumId
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getStickies($forumId)
+    {
+        try {
+            $stickies = ForumThreadModel::where('forumId', '=', $forumId)->where('sticky', '=', true)->get();
+            
+            foreach ($stickies as &$sticky) {
+                $sticky->user = User::where('id', '=', $sticky->ownerId)->first();
+            }
+
+            return $stickies;
         } catch (Exception $e) {
             throw $e;
         }

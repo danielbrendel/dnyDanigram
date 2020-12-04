@@ -37,6 +37,7 @@ let vue = new Vue({
         bShowEditProfileItem: false,
         bShowCreateThread: false,
         bShowReplyForumThread: false,
+        bShowEditForumThread: false,
         translationTable: {
             copiedToClipboard: 'Text has been copyied to clipboard!',
             toggleNsfw: 'Toggle NSFW',
@@ -615,10 +616,26 @@ window.renderProfileItem = function(item) {
 };
 
 window.renderForumItem = function(item) {
+    let lastPoster = '';
+    if (item.lastUser !== null) {
+        lastPoster = `
+            <div class="last-poster is-pointer" onclick="location.href = '` + window.location.origin + '/forum/thread/' + item.lastUser.threadId + `/show';">
+                <div class="last-poster-avatar"><img src="` + window.location.origin + '/gfx/avatars/' + item.lastUser.avatar + `" alt="avatar"></div>
+                <div class="last-poster-userdata">
+                    <div class="last-poster-name ">` + item.lastUser.username + `</div>
+                    <div class="last-poster-date">` + item.lastUser.diffForHumans + `</div>
+                </div>
+            </div>
+        `;
+    }
+    
     let html = `
-        <div class="forum-item is-pointer" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">
-            <div class="forum-title">` + item.name + `</div>
-            <div class="forum-description">` + item.description + `</div>
+        <div class="forum-item">
+            <div class="forum-title">
+                <div class="is-pointer" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">` + item.name + `</div>
+                ` + lastPoster + `
+            </div>
+            <div class="forum-description is-pointer" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">` + item.description + `</div>
         </div>
     `;
 
@@ -626,11 +643,19 @@ window.renderForumItem = function(item) {
 };
 
 window.renderForumThreadItem = function(item) {
+    let flags = '';
+    if (item.sticky) {
+        flags += '<i class="fas fa-thumbtack"></i> ';
+    }
+    if (item.locked) {
+        flags += '<i class="fas fa-lock"></i> ';
+    }
+
     let html = `
         <div class="forum-thread">
             <div class="forum-thread-infos">
                 <div class="forum-thread-info-id">#` + item.id + `</div>
-                <div class="forum-thread-info-title is-pointer" onclick="location.href = '` + window.location.origin + '/forum/thread/' + item.id + `/show';">` + item.title + `</div>
+                <div class="forum-thread-info-title is-pointer" onclick="location.href = '` + window.location.origin + '/forum/thread/' + item.id + `/show';">` + flags + ' ' + item.title + `</div>
                 <div class="forum-thread-info-owner">
                     <div class="forum-thread-info-owner-avatar"><a href="` + window.location.origin + '/u/' + item.user.id + `"><img src="` + window.location.origin + '/gfx/avatars/' + item.user.avatar + `" alt="avatar"/></a></div>
                     <div class="forum-thread-info-owner-username"><a href="` + window.location.origin + '/u/' + item.user.id + `">` + item.user.username + `</a></div>

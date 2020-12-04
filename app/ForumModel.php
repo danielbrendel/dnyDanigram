@@ -115,7 +115,25 @@ class ForumModel extends Model
                 $query->whereRaw('LOWER(name) LIKE ?', ['%' . trim(strtolower($name)) . '%']);
             }
 
-            return $query->limit(env('APP_FORUMPACKLIMIT'))->get()->toArray();
+            $collection = $query->limit(env('APP_FORUMPACKLIMIT'))->get();
+
+            foreach ($collection as &$item) {
+                $item->lastUser = null;
+                
+                $lastThread = ForumThreadModel::where('locked', '=', false)->where('forumId', '=', $item->id)->max('id');
+                if ($lastThread) {
+                    $lastPost = ForumPostModel::where('locked', '=', false)->where('threadId', '=', $lastThread)->max('id');
+                    if ($lastPost) {
+                        $lastPost = ForumPostModel::where('id', '=', $lastPost)->first();
+
+                        $item->lastUser = User::get($lastPost->userId);
+                        $item->lastUser->diffForHumans = $lastPost->created_at->diffForHumans();
+                        $item->lastUser->threadId = $lastThread;
+                    }
+                }
+            }
+
+            return $collection->toArray();
         } catch (Exception $e) {
             throw $e;
         }

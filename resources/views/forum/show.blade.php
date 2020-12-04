@@ -28,6 +28,21 @@
             </div>
         </div>
 
+        <div>
+            @foreach ($stickies as $sticky)
+            <div class="forum-thread">
+                <div class="forum-thread-infos">
+                    <div class="forum-thread-info-id forum-thread-is-sticky">#{{ $sticky->id }}</div>
+                    <div class="forum-thread-info-title is-pointer" onclick="location.href = '{{ url('/forum/thread/' . $sticky->id . '/show') }}';">@if ($sticky->sticky) <i class="fas fa-thumbtack"></i> @endif @if ($sticky->locked) <i class="fas fa-lock"></i> @endif {{ $sticky->title }}</div>
+                    <div class="forum-thread-info-owner">
+                        <div class="forum-thread-info-owner-avatar"><a href="{{ url('/u/' . $sticky->user->id) }}"><img src="{{ asset('gfx/avatars/' . $sticky->user->avatar) }}" alt="avatar"/></a></div>
+                        <div class="forum-thread-info-owner-username"><a href="{{ url('/u/' . $sticky->user->id) }}">{{ $sticky->user->username }}</a></div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
         <div id="threads"></div>
     </div>
 
@@ -71,6 +86,14 @@
                             <textarea name="message" placeholder="{{ __('app.enter_message') }}"></textarea>
                         </div>
                     </div>
+
+                    @if (($user->admin) || ($user->maintainer))
+                        <div class="field">
+                            <div class="control">
+                                <input type="checkbox" data-role="checkbox" data-style="2" data-caption="{{ __('app.set_thread_sticky') }}" value="1">
+                            </div>
+                        </div>
+                    @endif
 
                     <input type="button" id="createthreadsubmit" onclick="document.getElementById('formCreateThread').submit();" class="is-hidden">
                 </form>

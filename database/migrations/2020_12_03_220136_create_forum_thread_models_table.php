@@ -30,6 +30,7 @@ class CreateForumThreadModelsTable extends Migration
             $table->string('title');
             $table->integer('ownerId');
             $table->integer('forumId');
+            $table->boolean('sticky')->default(false);
             $table->boolean('locked')->default(false);
             $table->timestamps();
         });

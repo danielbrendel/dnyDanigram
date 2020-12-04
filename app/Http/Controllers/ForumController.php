@@ -115,9 +115,12 @@ class ForumController extends Controller
             return redirect('/forum')->with('flash.error', __('app.forum_not_found_or_locked'));
         }
 
+        $stickies = ForumThreadModel::getStickies($id);
+
         return view('forum.show', [
             'user' => $user,
             'forum' => $forum,
+            'stickies' => $stickies,
             'taglist' => TagsModel::getPopularTags(),
             'captcha' => CaptchaModel::createSum(session()->getId()),
             'cookie_consent' => AppModel::getCookieConsentText()
@@ -213,7 +216,14 @@ class ForumController extends Controller
                 'message' => 'required'
             ]);
 
-            $id = ForumThreadModel::add(auth()->id(), $attr['id'], $attr['title'], $attr['message']);
+            $sticky = false;
+            
+            $user = User::getByAuthId();
+            if (($user) && (($user->maintainer) || ($user->admin))) {
+                $sticky = (bool)request('sticky', false);
+            }
+
+            $id = ForumThreadModel::add(auth()->id(), $attr['id'], $attr['title'], $attr['message'], $sticky);
 
             return redirect('/forum/thread/' . $id . '/show')->with('flash.success', __('app.thread_created'));
         } catch (Exception $e) {
@@ -237,6 +247,42 @@ class ForumController extends Controller
             $id = ForumPostModel::add($attr['id'], auth()->id(), $attr['message']);
 
             return back()->with('flash.success', __('app.thread_replied'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Edit forum thread
+     * 
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function editThread()
+    {
+        try {
+            $attr = request()->validate([
+                'id' => 'required|numeric',
+                'title' => 'required',
+                'sticky' => 'nullable|numeric',
+                'locked' => 'nullable|numeric'
+            ]);
+
+            if (!isset($attr['sticky'])) {
+                $attr['sticky'] = false;
+            }
+
+            if (!isset($attr['locked'])) {
+                $attr['locked'] = false;
+            }
+
+            $user = User::getByAuthId();
+            if ((!$user) || ((!$user->maintainer) && (!$user->admin))) {
+                throw new Exception(__('app.insufficient_permissions'));
+            }
+
+            $id = ForumThreadModel::edit($attr['id'], $attr['title'], (bool)$attr['sticky'], (bool)$attr['locked']);
+
+            return back()->with('flash.success', __('app.thread_edited'));
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }

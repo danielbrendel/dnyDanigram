@@ -394,5 +394,11 @@ return [
     'enter_title' => 'Enter a title',
     'message' => 'Message',
     'enter_message' => 'Enter your message here',
-    'thread_replied' => 'Reply created'
+    'thread_replied' => 'Reply created',
+    'set_thread_sticky' => 'Set thread as sticky',
+    'thread_edited' => 'Thread has been edited',
+    'edit_thread' => 'Edit thread',
+    'set_thread_locked' => 'Set thread locked',
+    'thread_not_found_or_locked' => 'Thread could not be found or is locked',
+    'no_reply_to_locked_thread' => 'This thread has been locked'
 ];
