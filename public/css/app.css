@@ -1422,28 +1422,39 @@ pre.show-post-image-nsfw {
   display: inline-block;
   font-size: 1em;
   padding: 20px;
+  width: 55%;
 }
 
-.forum-thread-info-owner {
+.forum-thread-info-lastposter {
   display: inline-block;
-  padding: 20px;
-  float: right;
+  top: 20px;
 }
 
-.forum-thread-info-owner-avatar {
+.forum-thread-info-lastposter-avatar {
   display: inline-block;
+  top: -19px;
 }
 
-.forum-thread-info-owner-avatar img {
+.forum-thread-info-lastposter-avatar img {
   border-radius: 50%;
   width: 32px;
   height: 32px;
 }
 
-.forum-thread-info-owner-username {
+.forum-thread-info-lastposter-userinfo {
+  display: inline-block;
+  top: -8px;
+  font-size: 0.8em;
+}
+
+.forum-thread-info-lastposter-userinfo-username {
   display: inline-block;
   font-size: 1em;
   color: #969696;
+}
+
+.forum-thread-info-lastposter-userinfo-date {
+  color: #c8c8c8;
 }
 
 #postings {

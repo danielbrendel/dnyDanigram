@@ -656,9 +656,12 @@ window.renderForumThreadItem = function(item) {
             <div class="forum-thread-infos">
                 <div class="forum-thread-info-id">#` + item.id + `</div>
                 <div class="forum-thread-info-title is-pointer" onclick="location.href = '` + window.location.origin + '/forum/thread/' + item.id + `/show';">` + flags + ' ' + item.title + `</div>
-                <div class="forum-thread-info-owner">
-                    <div class="forum-thread-info-owner-avatar"><a href="` + window.location.origin + '/u/' + item.user.id + `"><img src="` + window.location.origin + '/gfx/avatars/' + item.user.avatar + `" alt="avatar"/></a></div>
-                    <div class="forum-thread-info-owner-username"><a href="` + window.location.origin + '/u/' + item.user.id + `">` + item.user.username + `</a></div>
+                <div class="forum-thread-info-lastposter">
+                    <div class="forum-thread-info-lastposter-avatar"><a href="` + window.location.origin + '/u/' + item.user.id + `"><img src="` + window.location.origin + '/gfx/avatars/' + item.user.avatar + `" alt="avatar"/></a></div>
+                    <div class="forum-thread-info-lastposter-userinfo">
+                        <div class="forum-thread-info-lastposter-userinfo-name"><a href="` + window.location.origin + '/u/' + item.user.id + `">` + item.user.username + `</a></div>
+                        <div class="forum-thread-info-lastposter-userinfo-date">` + item.user.diffForHumans + `</div>
+                    </div>
                 </div>
             </div>
         </div>

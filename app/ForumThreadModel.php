@@ -95,13 +95,16 @@ class ForumThreadModel extends Model
             $query = ForumThreadModel::where('sticky', '=', false)->where('forumId', '=', $forumId);
 
             if ($paginate !== null) {
-                $query->where('id', '<', $paginate);
+                $query->where('updated_at', '<', $paginate);
             }
 
-            $collection = $query->orderBy('id', 'desc')->limit(env('APP_FORUMPACKLIMIT'))->get();
+            $collection = $query->orderBy('updated_at', 'desc')->limit(env('APP_FORUMPACKLIMIT'))->get();
 
             foreach ($collection as &$item) {
-                $item->user = User::where('id', '=', $item->ownerId)->first()->toArray();
+                $postId = ForumPostModel::where('threadId', '=', $item->id)->max('id');
+                $postData = ForumPostModel::where('id', '=', $postId)->first();
+                $item->user = User::where('id', '=', $postData->userId)->first();
+                $item->user->diffForHumans = $postData->created_at->diffForHumans();
             }
 
             return $collection->toArray();
@@ -123,7 +126,10 @@ class ForumThreadModel extends Model
             $stickies = ForumThreadModel::where('forumId', '=', $forumId)->where('sticky', '=', true)->get();
             
             foreach ($stickies as &$sticky) {
-                $sticky->user = User::where('id', '=', $sticky->ownerId)->first();
+                $postId = ForumPostModel::where('threadId', '=', $sticky->id)->max('id');
+                $postData = ForumPostModel::where('id', '=', $postId)->first();
+                $sticky->user = User::where('id', '=', $postData->userId)->first();
+                $sticky->user->diffForHumans = $postData->created_at->diffForHumans();
             }
 
             return $stickies;

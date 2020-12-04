@@ -36,10 +36,12 @@ class ForumPostModel extends Model
     public static function add($threadId, $userId, $message)
     {
         try {
-            $thread = ForumThreadModel::where('id', '=', $threadId);
+            $thread = ForumThreadModel::where('id', '=', $threadId)->first();
             if ((!$thread) || ($thread->locked)) {
                 throw new Exception(__('app.thread_not_found_or_locked'));
             }
+
+            $thread->touch();
 
             $item = new ForumPostModel;
             $item->threadId = $threadId;

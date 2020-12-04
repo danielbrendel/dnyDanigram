@@ -34,9 +34,12 @@
                 <div class="forum-thread-infos">
                     <div class="forum-thread-info-id forum-thread-is-sticky">#{{ $sticky->id }}</div>
                     <div class="forum-thread-info-title is-pointer" onclick="location.href = '{{ url('/forum/thread/' . $sticky->id . '/show') }}';">@if ($sticky->sticky) <i class="fas fa-thumbtack"></i> @endif @if ($sticky->locked) <i class="fas fa-lock"></i> @endif {{ $sticky->title }}</div>
-                    <div class="forum-thread-info-owner">
-                        <div class="forum-thread-info-owner-avatar"><a href="{{ url('/u/' . $sticky->user->id) }}"><img src="{{ asset('gfx/avatars/' . $sticky->user->avatar) }}" alt="avatar"/></a></div>
-                        <div class="forum-thread-info-owner-username"><a href="{{ url('/u/' . $sticky->user->id) }}">{{ $sticky->user->username }}</a></div>
+                    <div class="forum-thread-info-lastposter">
+                    <div class="forum-thread-info-lastposter-avatar"><a href="{{ url('/u/' . $sticky->user->id) }}"><img src="{{ asset('gfx/avatars/' . $sticky->user->avatar) }}" alt="avatar"/></a></div>
+                        <div class="forum-thread-info-lastposter-userinfo">    
+                            <div class="forum-thread-info-owner-username"><a href="{{ url('/u/' . $sticky->user->id) }}">{{ $sticky->user->username }}</a></div>
+                            <div class="forum-thread-info-lastposter-userinfo-date">{{ $sticky->user->diffForHumans }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,7 +138,7 @@
                                 document.getElementById('threads').innerHTML += html;
                             });
 
-                            window.paginate = response.data[response.data.length - 1].id;
+                            window.paginate = response.data[response.data.length - 1].updated_at;
 
                             document.getElementById('threads').innerHTML += '<div id="loadmore"><center><a href="javascript:void(0);" onclick="window.listThreads();">{{ __('app.load_more') }}</a></center></div>';
                         } else {
