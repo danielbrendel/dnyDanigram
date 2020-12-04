@@ -19764,7 +19764,21 @@ window.renderUserItem = function (item) {
 };
 
 window.renderProfileItem = function (item) {
-  var html = "\n    <div class=\"geo-user\">\n        <div class=\"geo-user-avatar\">\n            <a href=\"" + window.location.origin + "/u/" + item.id + "\"><img src=\"" + window.location.origin + "/gfx/avatars/" + item.avatar + "\" alt=\"avatar\"/></a>\n        </div>\n\n        <div class=\"geo-user-info\">\n            <div class=\"geo-user-info-name\"><a href=\"" + window.location.origin + "/u/" + item.id + "\">" + item.username + "</a></div>\n            <div class=\"geo-user-info-distance\">" + item.genderStr + " &circle; " + item.age + " &circle; " + item.location + "</div>\n        </div>\n    </div>\n    ";
+  if (item.location === null || item.location === '') {
+    item.location = '-';
+  }
+
+  var genderIcon = '<i class="fas fa-genderless"></i>';
+
+  if (item.gender == 1) {
+    genderIcon = '<i class="fas fa-mars"></i>';
+  } else if (item.gender == 2) {
+    genderIcon = '<i class="fas fa-venus"></i>';
+  } else if (item.gender == 3) {
+    genderIcon = '<i class="fas fa-transgender-alt"></i>';
+  }
+
+  var html = "\n    <div class=\"profile-user\">\n        <div class=\"profile-user-avatar\">\n            <a href=\"" + window.location.origin + "/u/" + item.id + "\"><img src=\"" + window.location.origin + "/gfx/avatars/" + item.avatar + "\" alt=\"avatar\"/></a>\n        </div>\n\n        <div class=\"profile-user-info\">\n            <div class=\"profile-user-info-name\"><a href=\"" + window.location.origin + "/u/" + item.id + "\">" + item.username + "</a></div>\n            <div class=\"profile-user-info-baseinfo\">" + genderIcon + ' ' + item.genderStr + " | <i class=\"fas fa-star-of-life\"></i> " + item.age + " | <i class=\"fas fa-map-marker-alt\"></i> " + item.location + "</div>\n        </div>\n    </div>\n    ";
   return html;
 };
 

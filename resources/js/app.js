@@ -599,15 +599,28 @@ window.renderUserItem = function(item) {
 };
 
 window.renderProfileItem = function(item) {
+    if ((item.location === null) || (item.location === '')) {
+        item.location = '-';
+    }
+
+    let genderIcon = '<i class="fas fa-genderless"></i>';
+    if (item.gender == 1) {
+        genderIcon = '<i class="fas fa-mars"></i>';
+    } else if (item.gender == 2) {
+        genderIcon = '<i class="fas fa-venus"></i>';
+    } else if (item.gender == 3) {
+        genderIcon = '<i class="fas fa-transgender-alt"></i>';
+    }
+
     let html = `
-    <div class="geo-user">
-        <div class="geo-user-avatar">
+    <div class="profile-user">
+        <div class="profile-user-avatar">
             <a href="` + window.location.origin + `/u/` + item.id + `"><img src="` + window.location.origin + `/gfx/avatars/` + item.avatar + `" alt="avatar"/></a>
         </div>
 
-        <div class="geo-user-info">
-            <div class="geo-user-info-name"><a href="` + window.location.origin + `/u/` + item.id + `">` + item.username + `</a></div>
-            <div class="geo-user-info-distance">` + item.genderStr + ` &circle; ` + item.age + ` &circle; ` + item.location + `</div>
+        <div class="profile-user-info">
+            <div class="profile-user-info-name"><a href="` + window.location.origin + `/u/` + item.id + `">` + item.username + `</a></div>
+            <div class="profile-user-info-baseinfo">` + genderIcon + ' ' + item.genderStr + ` | <i class="fas fa-star-of-life"></i> ` + item.age + ` | <i class="fas fa-map-marker-alt"></i> ` + item.location + `</div>
         </div>
     </div>
     `;

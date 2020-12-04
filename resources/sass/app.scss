@@ -1139,6 +1139,36 @@ pre.show-post-image-nsfw {
     color: rgb(200, 200, 200);
 }
 
+//Profile search
+.profile-user {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+.profile-user-avatar {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+}
+.profile-user-avatar img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+.profile-user-info {
+    display: inline-block;
+    position: relative;
+    top: 15px;
+}
+.profile-user-info-name a {
+    color: rgb(150, 150, 150);
+}
+.profile-user-info-baseinfo {
+    font-size: 0.7em;
+    color: rgb(200, 200, 200);
+}
+
 //Forums
 .forum-item {
     position: relative;
