@@ -16,7 +16,7 @@
 
 @section('body')
     <div class="column is-5" id="feed-left">
-        <div>
+        <div class="is-default-padding-mobile is-mobile-fixed-top">
             <h1>{{ $thread->title }} @if ($thread->sticky) <i class="fas fa-thumbtack"></i> @endif @if ($thread->locked) <i class="fas fa-lock"></i> @endif</h1>
 
             <div>
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="is-default-padding-mobile">
             <br/>
             @if (($user->admin) || ($user->maintainer))
                 <a href="javascript:void(0);" onclick="window.vue.bShowEditForumThread = true;">{{ __('app.edit_thread') }}</a><br/>
@@ -33,7 +33,7 @@
             <br/>
         </div>
 
-        <div class="field">
+        <div class="is-default-padding-mobile field">
             <div class="control">
                 <button class="button is-link" onclick="document.getElementById('threadId').value = '{{ $thread->id }}'; window.vue.bShowReplyForumThread = true;" @if ($thread->locked) title="{{ __('app.no_reply_to_locked_thread') }}" disabled @endif>{{ __('app.reply') }}</button>&nbsp;<button class="button float-right" onclick="location.href = '{{ url('/forum/' . $thread->forumId . '/show') }}';">{{ __('app.go_back') }}</button>
             </div>
@@ -159,7 +159,7 @@
 
                             window.paginate = response.data[response.data.length - 1].id;
 
-                            document.getElementById('postings').innerHTML += '<div id="loadmore"><center><a href="javascript:void(0);" onclick="window.listPostings();">{{ __('app.load_more') }}</a></center></div>';
+                            document.getElementById('postings').innerHTML += '<div id="loadmore"><br/><center><a href="javascript:void(0);" onclick="window.listPostings();">{{ __('app.load_more') }}</a></center></div>';
                         } else {
                             document.getElementById('postings').innerHTML += '{{ __('app.forums_no_posts_found') }}';
                         }

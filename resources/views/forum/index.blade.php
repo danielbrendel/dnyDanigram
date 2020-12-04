@@ -16,13 +16,13 @@
 
 @section('body')
     <div class="column is-5" id="feed-left">
-        <div>
+        <div class="is-default-padding-mobile is-mobile-fixed-top">
             <h1>{{ __('app.forum_title') }}</h1>
 
             <h2>{{ __('app.forum_subtitle') }}</h2>
         </div>
 
-        <div class="field has-addons">
+        <div class="is-default-padding-mobile field has-addons">
             <div class="control">
                 <input type="text" id="forum-name" onchange="window.forumName = this.value;" placeholder="{{ __('app.search_for_name') }}">
             </div>

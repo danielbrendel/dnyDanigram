@@ -16,16 +16,31 @@
 
 @section('body')
     <div class="column is-5" id="feed-left">
-        <div>
+        <div class="is-default-padding-mobile is-mobile-fixed-top">
             <h1>{{ $forum->name }}</h1>
 
             <h2>{{ $forum->description }}</h2>
         </div>
 
-        <div class="field">
-            <div class="control">
-                <button class="button is-link" onclick="document.getElementById('forumId').value = '{{ $forum->id }}'; window.vue.bShowCreateThread = true;">{{ __('app.create') }}</button>&nbsp;<button class="button float-right" onclick="location.href = '{{ url('/forum') }}';">{{ __('app.go_back') }}</button>
+        <div class="is-default-padding-mobile is-top-15">
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input" type="text" id="forum-name" onchange="window.searchPhrase = this.value;" placeholder="{{ __('app.search_for_thread') }}">
+                </div>
+                <div class="control">
+                    <a class="button" href="javascript:void(0);" onclick="window.paginate = null; window.listThreads();">{{ __('app.search') }}</a>
+                </div>
             </div>
+
+            <div class="field">
+                <div class="control is-right-mobile-small is-top-47">
+                    <button class="button is-link" onclick="document.getElementById('forumId').value = '{{ $forum->id }}'; window.vue.bShowCreateThread = true;">{{ __('app.create') }}</button>&nbsp;<button class="button" onclick="location.href = '{{ url('/forum') }}';">{{ __('app.go_back') }}</button>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <br/><br/>
         </div>
 
         <div>
@@ -113,6 +128,7 @@
     <script>
         window.paginate = null;
         window.forumName = '';
+        window.searchPhrase = null;
 
         window.listThreads = function() {
                 if (window.paginate === null) {
@@ -125,7 +141,7 @@
                     document.getElementById('loadmore').remove();
                 }
 
-                window.vue.ajaxRequest('post', '{{ url('/forum/' . $forum->id . '/list') }}', { paginate: window.paginate }, function(response){
+                window.vue.ajaxRequest('post', '{{ url('/forum/' . $forum->id . '/list') }}', { paginate: window.paginate, searchPhrase: window.searchPhrase }, function(response){
                     if (response.code == 200) {
                         if (document.getElementById('spinner')) {
                             document.getElementById('spinner').remove();

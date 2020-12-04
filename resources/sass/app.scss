@@ -110,6 +110,11 @@ h2 {
 .is-default-padding {
     padding: 21px;
 }
+.is-default-padding-mobile {
+    @media screen and (max-width: 768px) {
+        padding: 21px; 
+    }
+}
 .is-default-padding-left {
     padding-left: 18px;
 }
@@ -242,6 +247,27 @@ pre.is-post-background {
 }
 .fa-lock {
     color: rgb(249, 157, 75);
+}
+.is-top-47 {
+    @media screen and (min-width: 515px) {
+        top: -47px;
+    }
+}
+.is-top-15 {
+    top: 15px;
+}
+.is-width-73-percent {
+    width: 73%;
+}
+.is-right-mobile-small {
+    @media screen and (min-width: 515px) {
+        float: right;
+    }
+}
+.is-mobile-fixed-top {
+    @media screen and (max-width: 768px) {
+        top: 50px;
+    }
 }
 
 //Home styles
@@ -1153,7 +1179,10 @@ pre.show-post-image-nsfw {
     display: inline-block;
     font-size: 1.0em;
     padding: 20px;
-    width: 55%;
+    min-width: 41%;
+    @media screen and (min-width: 482px) {
+        width: 55%;
+    }
 }
 .forum-thread-info-lastposter {
     display: inline-block;
@@ -1203,19 +1232,32 @@ pre.show-post-image-nsfw {
     width: 100%;
     height: 85%;
 }
+.forum-posting-userinfo-avatar img {
+    border-radius: 50%;
+}
 .forum-posting-userinfo-name {
     font-size: 1.0em;
+    @media screen and (max-width: 679px) {
+        font-size: 0.7em;
+    }
 }
 .forum-posting-message {
     display: inline-block;
     width: 76%;
+    @media screen and (max-width: 679px) {
+        width: 65%;
+    }
 }
 .forum-posting-message-content {
     padding: 20px;
+    min-height: 85px;
 }
 .forum-posting-message-footer {
     padding: 20px;
-    top: 36px;
+    top: 16px;
+    @media screen and (max-width: 1450px) {
+        top: 19px;
+    }
     font-size: 0.7em;
 }
 .last-poster {

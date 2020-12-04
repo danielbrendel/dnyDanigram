@@ -136,8 +136,13 @@ class ForumController extends Controller
     {
         try {
             $paginate = request('paginate', null);
+            $searchPhrase = request('searchPhrase', null);
 
-            $data = ForumThreadModel::list($id, $paginate);
+            if ($searchPhrase === '') {
+                $searchPhrase = null;
+            }
+
+            $data = ForumThreadModel::list($id, $paginate, $searchPhrase);
 
             return response()->json(array('code' => 200, 'data' => $data));
         } catch (Exception $e) {

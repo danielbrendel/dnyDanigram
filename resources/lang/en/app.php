@@ -400,5 +400,6 @@ return [
     'edit_thread' => 'Edit thread',
     'set_thread_locked' => 'Set thread locked',
     'thread_not_found_or_locked' => 'Thread could not be found or is locked',
-    'no_reply_to_locked_thread' => 'This thread has been locked'
+    'no_reply_to_locked_thread' => 'This thread has been locked',
+    'search_for_thread' => 'Search for thread'
 ];

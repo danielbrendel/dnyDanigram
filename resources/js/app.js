@@ -632,10 +632,10 @@ window.renderForumItem = function(item) {
     let html = `
         <div class="forum-item">
             <div class="forum-title">
-                <div class="is-pointer" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">` + item.name + `</div>
+                <div class="is-pointer is-breakall is-width-73-percent" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">` + item.name + `</div>
                 ` + lastPoster + `
             </div>
-            <div class="forum-description is-pointer" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">` + item.description + `</div>
+            <div class="forum-description is-pointer is-breakall" onclick="location.href = '` + window.location.origin + '/forum/' + item.id + `/show';">` + item.description + `</div>
         </div>
     `;
 
@@ -655,7 +655,7 @@ window.renderForumThreadItem = function(item) {
         <div class="forum-thread">
             <div class="forum-thread-infos">
                 <div class="forum-thread-info-id">#` + item.id + `</div>
-                <div class="forum-thread-info-title is-pointer" onclick="location.href = '` + window.location.origin + '/forum/thread/' + item.id + `/show';">` + flags + ' ' + item.title + `</div>
+                <div class="forum-thread-info-title is-breakall is-pointer" onclick="location.href = '` + window.location.origin + '/forum/thread/' + item.id + `/show';">` + flags + ' ' + item.title + `</div>
                 <div class="forum-thread-info-lastposter">
                     <div class="forum-thread-info-lastposter-avatar"><a href="` + window.location.origin + '/u/' + item.user.id + `"><img src="` + window.location.origin + '/gfx/avatars/' + item.user.avatar + `" alt="avatar"/></a></div>
                     <div class="forum-thread-info-lastposter-userinfo">

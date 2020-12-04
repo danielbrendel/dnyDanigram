@@ -86,16 +86,21 @@ class ForumThreadModel extends Model
      * 
      * @param $forumId
      * @param $paginate
+     * @param $searchPhrase
      * @return mixed
      * @throws Exception
      */
-    public static function list($forumId, $paginate = null)
+    public static function list($forumId, $paginate = null, $searchPhrase = null)
     {
         try {
             $query = ForumThreadModel::where('sticky', '=', false)->where('forumId', '=', $forumId);
 
             if ($paginate !== null) {
                 $query->where('updated_at', '<', $paginate);
+            }
+
+            if ($searchPhrase !== null) {
+                $query->where('title', 'LIKE', '%' . $searchPhrase . '%');
             }
 
             $collection = $query->orderBy('updated_at', 'desc')->limit(env('APP_FORUMPACKLIMIT'))->get();
