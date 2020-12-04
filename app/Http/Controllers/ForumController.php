@@ -201,6 +201,8 @@ class ForumController extends Controller
 
     /**
      * Create new forum thread
+     * 
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function createThread()
     {
@@ -214,6 +216,27 @@ class ForumController extends Controller
             $id = ForumThreadModel::add(auth()->id(), $attr['id'], $attr['title'], $attr['message']);
 
             return redirect('/forum/thread/' . $id . '/show')->with('flash.success', __('app.thread_created'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Reply to forum thread
+     * 
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function replyThread()
+    {
+        try {
+            $attr = request()->validate([
+                'id' => 'required|numeric',
+                'message' => 'required'
+            ]);
+
+            $id = ForumPostModel::add($attr['id'], auth()->id(), $attr['message']);
+
+            return back()->with('flash.success', __('app.thread_replied'));
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }

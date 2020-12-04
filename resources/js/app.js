@@ -36,6 +36,7 @@ let vue = new Vue({
         bShowCreateProfileItem: false,
         bShowEditProfileItem: false,
         bShowCreateThread: false,
+        bShowReplyForumThread: false,
         translationTable: {
             copiedToClipboard: 'Text has been copyied to clipboard!',
             toggleNsfw: 'Toggle NSFW',

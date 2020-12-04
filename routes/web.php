@@ -83,6 +83,7 @@ Route::post('/forum/{id}/list', 'ForumController@threadList');
 Route::get('/forum/thread/{id}/show', 'ForumController@showThread');
 Route::post('/forum/thread/{id}/posts', 'ForumController@threadPostings');
 Route::post('/forum/thread/create', 'ForumController@createThread');
+Route::post('/forum/thread/reply', 'ForumController@replyThread');
 
 Route::get('/p/{id}/lock', 'AdminController@lockPost');
 Route::get('/p/{id}/togglensfw', 'AdminController@toggleNsfw');

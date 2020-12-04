@@ -31,7 +31,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" onclick="window.vue.bShowReplyForumThread = true;">{{ __('app.reply') }}</button>&nbsp;<button class="button float-right" onclick="location.href = '{{ url('/forum/' . $thread->forumId . '/show') }}';">{{ __('app.go_back') }}</button>
+                <button class="button is-link" onclick="document.getElementById('threadId').value = '{{ $thread->id }}'; window.vue.bShowReplyForumThread = true;">{{ __('app.reply') }}</button>&nbsp;<button class="button float-right" onclick="location.href = '{{ url('/forum/' . $thread->forumId . '/show') }}';">{{ __('app.go_back') }}</button>
             </div>
         </div>
 
@@ -51,6 +51,36 @@
     </div>
 
     <div class="column is-5 is-sidespacing fa-3x"></div>
+
+    <div class="modal" :class="{'is-active': bShowReplyForumThread}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head is-stretched">
+                <p class="modal-card-title">{{ __('app.reply_thread') }}</p>
+                <button class="delete" aria-label="close" onclick="vue.bShowReplyForumThread = false;"></button>
+            </header>
+            <section class="modal-card-body is-stretched">
+                <form id="formReplyForumThread" method="POST" action="{{ url('/forum/thread/reply') }}">
+                    @csrf
+
+                    <input type="hidden" id="threadId" name="id">
+
+                    <div class="field">
+                        <label class="label">{{ __('app.message') }}</label>
+                        <div class="control">
+                            <textarea name="message" placeholder="{{ __('app.enter_message') }}"></textarea>
+                        </div>
+                    </div>
+
+                    <input type="button" id="replythreadsubmit" onclick="document.getElementById('formReplyForumThread').submit();" class="is-hidden">
+                </form>
+            </section>
+            <footer class="modal-card-foot is-stretched">
+                <button class="button is-success" onclick="document.getElementById('replythreadsubmit').click();">{{ __('app.reply') }}</button>
+                <button class="button" onclick="vue.bShowReplyForumThread = false;">{{ __('app.cancel') }}</button>
+            </footer>
+        </div>
+    </div>
 @endsection
 
 @section('javascript')

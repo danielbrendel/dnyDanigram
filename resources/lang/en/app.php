@@ -393,5 +393,6 @@ return [
     'title' => 'Title',
     'enter_title' => 'Enter a title',
     'message' => 'Message',
-    'enter_message' => 'Enter your message here'
+    'enter_message' => 'Enter your message here',
+    'thread_replied' => 'Reply created'
 ];
