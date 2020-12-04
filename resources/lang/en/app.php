@@ -379,7 +379,7 @@ return [
     'load_more' => 'Load more',
     'forum' => 'Forum',
     'forum_title' => 'Forum',
-    'forum_subtitle' => 'Take part in discussions. Every discussion if subject to a topic',
+    'forum_subtitle' => 'Take part in discussions. Every discussion is subject to a topic',
     'search_for_name' => 'Search for name',
     'search' => 'Search',
     'forums_no_forums_found' => 'No more forums found',
