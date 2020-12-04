@@ -198,4 +198,24 @@ class ForumController extends Controller
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
+
+    /**
+     * Create new forum thread
+     */
+    public function createThread()
+    {
+        try {
+            $attr = request()->validate([
+                'id' => 'required|numeric',
+                'title' => 'required',
+                'message' => 'required'
+            ]);
+
+            $id = ForumThreadModel::add(auth()->id(), $attr['id'], $attr['title'], $attr['message']);
+
+            return redirect('/forum/thread/' . $id . '/show')->with('flash.success', __('app.thread_created'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
 }

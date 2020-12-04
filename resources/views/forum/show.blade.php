@@ -24,7 +24,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" onclick="window.vue.bShowCreateThread = true;">{{ __('app.create') }}</button>&nbsp;<button class="button float-right">{{ __('app.go_back') }}</button>
+                <button class="button is-link" onclick="document.getElementById('forumId').value = '{{ $forum->id }}'; window.vue.bShowCreateThread = true;">{{ __('app.create') }}</button>&nbsp;<button class="button float-right">{{ __('app.go_back') }}</button>
             </div>
         </div>
 
@@ -44,6 +44,43 @@
     </div>
 
     <div class="column is-5 is-sidespacing fa-3x"></div>
+
+    <div class="modal" :class="{'is-active': bShowCreateThread}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head is-stretched">
+                <p class="modal-card-title">{{ __('app.create_thread') }}</p>
+                <button class="delete" aria-label="close" onclick="vue.bShowCreateThread = false;"></button>
+            </header>
+            <section class="modal-card-body is-stretched">
+                <form id="formCreateThread" method="POST" action="{{ url('/forum/thread/create') }}">
+                    @csrf
+
+                    <input type="hidden" id="forumId" name="id">
+
+                    <div class="field">
+                        <label class="label">{{ __('app.title') }}</label>
+                        <div class="control">
+                            <input type="text" name="title" placeholder="{{ __('app.enter_title') }}">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">{{ __('app.message') }}</label>
+                        <div class="control">
+                            <textarea name="message" placeholder="{{ __('app.enter_message') }}"></textarea>
+                        </div>
+                    </div>
+
+                    <input type="button" id="createthreadsubmit" onclick="document.getElementById('formCreateThread').submit();" class="is-hidden">
+                </form>
+            </section>
+            <footer class="modal-card-foot is-stretched">
+                <button class="button is-success" onclick="document.getElementById('createthreadsubmit').click();">{{ __('app.create') }}</button>
+                <button class="button" onclick="vue.bShowCreateThread = false;">{{ __('app.cancel') }}</button>
+            </footer>
+        </div>
+    </div>
 @endsection
 
 @section('javascript')

@@ -387,5 +387,11 @@ return [
     'forums_no_threads_found' => 'No more threads found',
     'thread_not_found_or_locked' => 'The specified thread could not be found or is locked',
     'thread' => 'Thread',
-    'forums_no_posts_found' => 'No more postings found'
+    'forums_no_posts_found' => 'No more postings found',
+    'thread_created' => 'Thread has been successfully created',
+    'create_thread' => 'Create thread',
+    'title' => 'Title',
+    'enter_title' => 'Enter a title',
+    'message' => 'Message',
+    'enter_message' => 'Enter your message here'
 ];

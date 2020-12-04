@@ -19364,6 +19364,7 @@ var vue = new Vue({
     bShowBuyProMode: false,
     bShowCreateProfileItem: false,
     bShowEditProfileItem: false,
+    bShowCreateThread: false,
     translationTable: {
       copiedToClipboard: 'Text has been copyied to clipboard!',
       toggleNsfw: 'Toggle NSFW',

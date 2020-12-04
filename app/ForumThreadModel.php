@@ -33,7 +33,7 @@ class ForumThreadModel extends Model
      * @param $forumId
      * @param $title
      * @param $initialMessage
-     * @return void
+     * @return int
      * @throws Exception
      */
     public static function add($ownerId, $forumId, $title, $initialMessage)
@@ -46,6 +46,8 @@ class ForumThreadModel extends Model
             $item->save();
 
             ForumPostModel::add($item->id, $ownerId, $initialMessage);
+
+            return $item->id;
         } catch (Exception $e) {
             throw $e;
         }
