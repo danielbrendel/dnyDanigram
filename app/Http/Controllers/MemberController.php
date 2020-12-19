@@ -88,7 +88,7 @@ class MemberController extends Controller
                 'captcha' => CaptchaModel::createSum(session()->getId()),
                 'cookie_consent' => AppModel::getCookieConsentText(),
                 'meta_description' => str_replace(PHP_EOL, ' ', $user->bio),
-                'profile_data' => ProfileDataModel::queryAll(auth()->id())
+                'profile_data' => ProfileDataModel::queryAll($user->id)
             ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -190,7 +190,7 @@ class MemberController extends Controller
 
                 list($width, $height) = getimagesize(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension());
 
-                $avimg = imagecreatetruecolor(64, 64);
+                $avimg = imagecreatetruecolor(128, 128);
                 if (!$avimg)
                     throw new \Exception('imagecreatetruecolor() failed');
 
@@ -199,12 +199,12 @@ class MemberController extends Controller
                 switch (AppModel::getImageType(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension())) {
                     case IMAGETYPE_PNG:
                         $srcimage = imagecreatefrompng(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension());
-                        imagecopyresampled($avimg, $srcimage, 0, 0, 0, 0, 64, 64, $width, $height);
+                        imagecopyresampled($avimg, $srcimage, 0, 0, 0, 0, 128, 128, $width, $height);
                         imagepng($avimg, base_path() . '/public/gfx/avatars/' . $newname);
                         break;
                     case IMAGETYPE_JPEG:
                         $srcimage = imagecreatefromjpeg(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension());
-                        imagecopyresampled($avimg, $srcimage, 0, 0, 0, 0, 64, 64, $width, $height);
+                        imagecopyresampled($avimg, $srcimage, 0, 0, 0, 0, 128, 128, $width, $height);
                         imagejpeg($avimg, base_path() . '/public/gfx/avatars/' . $newname);
                         break;
                     default:

@@ -195,7 +195,7 @@ return [
     'get_user_details' => 'Get user details',
     'users' => 'Users',
     'newsletter' => 'Newsletter',
-    'newsletter_sent' => 'Newsletter has been sent',
+    'newsletter_in_progress' => 'Newsletter sending progress started',
     'newsletter_setting' => 'Send me newsletters',
     'project_twitter_news' => 'Twitter news feed',
     'news' => 'News',
@@ -421,5 +421,9 @@ return [
     'forum_edited' => 'Forum has been edited',
     'forum_locked' => 'Forum has been locked',
     'forum_removed' => 'Forum has been removed',
-    'forum_edit' => 'Edit forum'
+    'forum_edit' => 'Edit forum',
+    'posts' => 'Posts',
+    'subscribers' => 'Followers',
+    'subscribed' => 'Followed',
+    'newest_users' => 'Latest users'
 ];

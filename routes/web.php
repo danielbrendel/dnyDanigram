@@ -134,3 +134,5 @@ Route::post('/stories/image/upload', 'PostsController@setStoryImage');
 Route::get('/stories/expire', 'PostsController@expireStories');
 
 Route::post('/payment/charge', 'PaymentController@charge');
+
+Route::any('/cronjob/newsletter/{password}', 'MainController@cronjob_newsletter');

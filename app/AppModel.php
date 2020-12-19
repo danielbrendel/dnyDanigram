@@ -517,6 +517,55 @@ class AppModel extends Model
     }
 
     /**
+     * Initialize newsletter sending
+     * 
+     * @param $subject
+     * @param $content
+     * @return void
+     * @throws \Exception
+     */
+    public static function initNewsletter($subject, $content)
+    {
+        try {
+            $token = md5($subject . $content . random_bytes(55));
+
+            DB::update('UPDATE app_settings SET newsletter_token = ?, newsletter_subject = ?, newsletter_content = ? WHERE id = 1', array($token, $subject, $content));
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Process newsletter job
+     * 
+     * @return array
+     * @throws \Exception
+     */
+    public static function newsletterJob()
+    {
+        try {
+            $result = array();
+
+            $settings = self::getSettings();
+            if ($settings->newsletter_token !== null) {
+                $users = User::where('deactivated', '=', false)->where('account_confirm', '=', '_confirmed')->where('newsletter', '=', true)->where('newsletter_token', '<>', $settings->newsletter_token)->limit(env('APP_NEWSLETTER_UCOUNT'))->get();
+                foreach ($users as $user) {
+                    $user->newsletter_token = $settings->newsletter_token;
+                    $user->save();
+
+                    MailerModel::sendMail($user->email, $settings->newsletter_subject, $settings->newsletter_content);
+
+                    $result[] = array('username' => $user->username, 'email' => $user->email, 'sent_date' => date('Y-m-d H:i:s'));
+                }
+            }
+
+            return $result;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Create a HelpRealm ticket
      *
      * @param $name

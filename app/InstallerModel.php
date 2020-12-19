@@ -65,6 +65,8 @@ class InstallerModel extends Model
             $envcontent .= 'APP_ENABLENSFWFILTER=true' . PHP_EOL;
             $envcontent .= 'APP_MAXUPLOADSIZE=30000000' . PHP_EOL;
             $envcontent .= 'APP_GEOMAX=150' . PHP_EOL;
+            $envcontent .= 'APP_CRONPW="' . substr(md5(random_bytes(55)), 0, 10) . '"' . PHP_EOL;
+            $envcontent .= 'APP_NEWSLETTER_UCOUNT=5' . PHP_EOL;
             $envcontent .= 'LOG_CHANNEL=stack' . PHP_EOL;
             $envcontent .= 'DB_CONNECTION=mysql' . PHP_EOL;
             $envcontent .= 'DB_HOST="' . $attr['dbhost'] . '"' . PHP_EOL;

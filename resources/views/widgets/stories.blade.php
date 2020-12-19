@@ -10,7 +10,7 @@
     Released under the MIT license
 --}}
 
-<div class="column is-9">
+<div class="column is-5">
     <div class="stories-frame" id="stories">
         <div class="stories-item is-pointer" onclick="window.vue.bShowAddStory = true; window.clearStoryInput();">
             <div class="stories-item-avatar">
@@ -23,4 +23,4 @@
     </div>
 </div>
 
-<div class="column is-1 is-sidespacing"></div>
+<div class="column is-5 is-sidespacing"></div>

@@ -10,8 +10,8 @@
     Released under the MIT license
 --}}
 
-<div class="userinfo-header">
-    <div class="userinfo-image is-inline-block">
+<div class="taginfo-header">
+    <div class="taginfo-image is-inline-block">
         @if ($tag->top_image !== null)
             <img src="{{ asset('gfx/posts/' . $tag->top_image) }}" width="24" height="24">
         @else
@@ -19,16 +19,16 @@
         @endif
     </div>
 
-    <div class="userinfo-name is-inline-block is-pointer">
+    <div class="taginfo-name is-inline-block is-pointer">
         #{{ $tag->tag }}
     </div>
 </div>
 
-<div class="userinfo-bio">
+<div class="taginfo-about">
     {{ __('app.tag_is_about', ['subject' => $tag->tag]) }}
 </div>
 
-<div class="userinfo-stats">
+<div class="taginfo-stats">
     <i class="far fa-calendar-alt" title="{{ $tag->created_at }}"></i>&nbsp;{{ __('app.created_at', ['date' => $tag->created_at->diffForHumans()]) }}<br/>
     <i class="far fa-file-image"></i>&nbsp;{{ __('app.stats_posts', ['count' => $tag->stats->posts]) }}<br/>
     <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_comments', ['count' => $tag->stats->comments]) }}<br/>
@@ -36,7 +36,7 @@
 </div>
 
 @auth
-    <div class="userinfo-favorite favorite-ent_hashtag">
+    <div class="taginfo-favorite favorite-ent_hashtag">
         @if ($favorited)
             <a href="javascript:void(0)" onclick="removeFavorite({{ $tag->id }}, 'ENT_HASHTAG', '{{ $tag->tag }}')">{{ __('app.favorite_remove') }}</a>
         @else
@@ -47,11 +47,11 @@
 
 @auth
     @if ($user->admin)
-        <div class="userinfo-lock float-right">
+        <div class="taginfo-lock float-right">
             <a href="javascript:void(0)" onclick="lockHashtag({{ $tag->id }})">{{ __('app.lock_hashtag') }}</a>
         </div>
     @else
-        <div class="userinfo-report float-right">
+        <div class="taginfo-report float-right">
             <a href="javascript:void(0)" onclick="reportTag({{ $tag->id }})">{{ __('app.report_tag') }}</a>
         </div>
     @endif

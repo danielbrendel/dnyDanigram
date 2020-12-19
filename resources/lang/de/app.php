@@ -195,7 +195,7 @@ return [
     'get_user_details' => 'Details anzeigen',
     'users' => 'Konten',
     'newsletter' => 'Newsletter',
-    'newsletter_sent' => 'Newsletter wurde gesendet',
+    'newsletter_in_progress' => 'Newsletter wird versendet',
     'newsletter_setting' => 'Ich möchte gerne über Neuigkeiten informiert werden',
     'project_twitter_news' => 'Twitter news feed',
     'news' => 'News',
@@ -421,5 +421,9 @@ return [
     'forum_edited' => 'Forum wurde aktualisiert',
     'forum_locked' => 'Forum wurde gesperrt',
     'forum_removed' => 'Forum wurde gelöscht',
-    'forum_edit' => 'Forum bearbeiten'
+    'forum_edit' => 'Forum bearbeiten',
+    'posts' => 'Posts',
+    'subscribers' => 'Gefolgt',
+    'subscribed' => 'Folgt',
+    'newest_users' => 'Neuste Anmeldungen'
 ];

@@ -41,6 +41,7 @@ class CreateUsersTable extends Migration
             $table->string('location')->default('');
             $table->boolean('email_on_message')->default(true);
             $table->boolean('newsletter')->default(false);
+            $table->string('newsletter_token')->default('');
             $table->boolean('deactivated')->default(false);
             $table->boolean('admin')->default(false);
             $table->boolean('maintainer')->default(false);

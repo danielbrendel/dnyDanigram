@@ -131,6 +131,42 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user base info
+     * 
+     * @param $userId
+     * @return mixed
+     */
+    public static function getUserBaseInfo($userId)
+    {
+        $user = User::where('id', '=', $userId)->first();
+
+        $user->stats = new stdClass();
+        $user->stats->posts = PostModel::where('userId', '=', $user->id)->where('locked', '=', false)->count();
+        $user->stats->subscribers = FavoritesModel::where('entityId', '=', $user->id)->where('type', '=', 'ENT_USER')->count();
+        $user->stats->subscribed = FavoritesModel::where('userId', '=', $user->id)->where('type', '=', 'ENT_USER')->count();
+
+        return $user;
+    }
+
+    /**
+     * Get newest users
+     * 
+     * @param $limit
+     * @param $paginate
+     * @return mixed
+     */
+    public static function getNewestUsers($limit = 9, $paginate = null)
+    {
+        $users = User::where('deactivated', '=', false);
+
+        if ($paginate !== null) {
+            $users->where('id', '<', $paginate);
+        }
+
+        return $users->orderBy('id', 'desc')->limit($limit)->get();
+    }
+
+    /**
      * Perform registration
      *
      * @param $attr

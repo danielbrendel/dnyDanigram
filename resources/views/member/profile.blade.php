@@ -45,6 +45,12 @@
         <div class="fixed-frame">
             <div class="member-form is-default-padding">
                 @auth
+                    @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo($profile->id)])
+                @endauth
+            </div>
+
+            <div class="member-form is-default-padding">
+                @auth
                     @include('widgets.userinfo', ['user' => $profile, 'profile' => $profile_data, 'admin' => $user->admin])
                 @elseguest
                     @include('widgets.userinfo', ['user' => $profile, 'profile' => $profile_data, 'admin' => false])

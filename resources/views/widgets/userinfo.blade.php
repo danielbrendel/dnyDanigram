@@ -20,9 +20,11 @@
     </div>
 </div>
 
-<div class="userinfo-bio">
-    {{ $user->bio }}
-</div>
+@if (strlen($user->bio) > 0)
+    <div class="userinfo-bio">
+        {{ $user->bio }}
+    </div>
+@endif
 
 <div class="userinfo-badges">
 
@@ -59,9 +61,11 @@
 
 <div class="userinfo-profile-data">
     @foreach ($profile as $key => $item)
-        <div class="userinfo-profile-data-item">
-            {{ $key }}: {{ $item['content'] }}
-        </div>
+        @if (strlen($item['content']) > 0)
+            <div class="userinfo-profile-data-item">
+                {{ $key }}: <i>{{ $item['content'] }}</i>
+            </div>
+        @endif
     @endforeach
 </div>
 

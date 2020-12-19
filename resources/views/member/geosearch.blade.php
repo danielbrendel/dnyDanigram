@@ -40,9 +40,15 @@
     </div>
 
     <div class="column is-3 fixed-frame-parent">
-        <div class="fixed-frame is-news-outter">
-            <div class="member-form is-default-padding is-news-inner">
-                @include('widgets.news')
+        <div class="fixed-frame">
+            <div class="member-form is-default-padding">
+                @auth
+                    @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo(auth()->id())])
+                @endauth
+            </div>
+
+            <div class="member-form is-default-padding">
+                @include('widgets.newusers', ['users' => \App\User::getNewestUsers()])
             </div>
 
             <div class="member-form is-default-padding is-margin-bottom-last-fixed-frame is-member-form-without-border-and-backgroundcolor">

@@ -262,7 +262,7 @@ h2 {
 }
 
 .is-margin-bottom-last-fixed-frame {
-  margin-bottom: 200px !important;
+  margin-bottom: 54px !important;
 }
 
 .is-member-form-without-border-and-backgroundcolor {
@@ -340,6 +340,10 @@ pre.is-post-background {
 
 .is-font-small {
   font-size: 0.8em;
+}
+
+.is-bold {
+  font-weight: bold;
 }
 
 .home-userarea {
@@ -594,12 +598,18 @@ pre.show-post-image-nsfw {
 }
 
 .feed-nav {
-  margin-bottom: 45px;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 789px) {
+  .feed-nav {
+    margin-bottom: 35px;
+  }
 }
 
 @media screen and (max-width: 380px) {
   .feed-nav {
-    top: 58px;
+    top: 36px;
   }
 }
 
@@ -619,46 +629,24 @@ pre.show-post-image-nsfw {
 .fixed-frame {
   position: fixed;
   z-index: 2;
-  top: 195px;
+  top: -2px;
   margin-left: 30px;
   margin-bottom: 50px;
   width: 291px;
-  height: 90%;
+  height: 100%;
   max-height: 901px;
   overflow-y: auto;
 }
 
-@media screen and (max-width: 1454px) {
+@media screen and (max-width: 1279px) {
   .fixed-frame {
     display: none;
   }
 }
 
-@media screen and (max-width: 1454px) {
+@media screen and (max-width: 1279px) {
   .fixed-frame-parent {
     display: none;
-  }
-}
-
-.is-news-outter {
-  height: 87%;
-  overflow-y: hidden;
-}
-
-@media screen and (max-height: 863px) {
-  .is-news-outter {
-    height: 100%;
-  }
-}
-
-.is-news-inner {
-  height: 64%;
-  overflow-y: auto;
-}
-
-@media screen and (max-height: 863px) {
-  .is-news-inner {
-    height: 27%;
   }
 }
 
@@ -695,7 +683,7 @@ pre.show-post-image-nsfw {
 
 .thread-input-submit {
   width: 100%;
-  margin-top: 40px;
+  margin-top: 64px;
   margin-bottom: 55px;
   margin-left: 46px;
 }
@@ -791,7 +779,7 @@ pre.show-post-image-nsfw {
   right: 22px;
   margin-left: 50px;
   margin-bottom: 50px;
-  width: 295px;
+  width: 253px;
   height: 90%;
   max-height: 901px;
   overflow-y: auto;
@@ -800,7 +788,7 @@ pre.show-post-image-nsfw {
   border-radius: 4px;
 }
 
-@media screen and (max-width: 1454px) {
+@media screen and (max-width: 1279px) {
   .favorites-nav {
     display: none;
   }
@@ -844,7 +832,7 @@ pre.show-post-image-nsfw {
   left: -25px;
   margin-left: 50px;
   margin-bottom: 50px;
-  width: 295px;
+  width: 253px;
   height: 90%;
   max-height: 901px;
   overflow-y: auto;
@@ -853,7 +841,7 @@ pre.show-post-image-nsfw {
   border-radius: 4px;
 }
 
-@media screen and (max-width: 1454px) {
+@media screen and (max-width: 1279px) {
   .populartags-nav {
     display: none;
   }
@@ -952,6 +940,47 @@ pre.show-post-image-nsfw {
 
 .is-color-pro {
   color: #cfb53b;
+}
+
+.taginfo-header {
+  margin-bottom: 15px;
+  display: inline-block;
+  color: #787878;
+}
+
+.taginfo-image {
+  margin-right: 15px;
+}
+
+.taginfo-image img {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+
+.taginfo-about {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-style: italic;
+}
+
+.taginfo-stats {
+  margin-top: 15px;
+}
+
+.taginfo-favorite {
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.taginfo-report {
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.taginfo-lock {
+  top: 14px;
+  display: inline-block;
 }
 
 .settings-avatar-image {
@@ -1310,8 +1339,8 @@ pre.show-post-image-nsfw {
   border-radius: 4px;
   overflow-x: auto;
   display: flex;
-  height: 97px;
-  width: 89%;
+  height: 98px;
+  width: 100%;
   z-index: 2;
   background-color: white;
 }
@@ -1629,6 +1658,81 @@ pre.show-post-image-nsfw {
 }
 
 .last-poster-date {
+  font-size: 0.7em;
+  color: #969696;
+}
+
+.ubi-center-item {
+  text-align: center;
+}
+
+.ubi-avatar img {
+  width: 90%;
+  height: 128px;
+  border-radius: 50%;
+}
+
+.ubi-username {
+  font-size: 1.2em;
+  color: #969696;
+}
+
+.ubi-username a {
+  color: #969696;
+}
+
+.ubi-stats {
+  margin-top: 15px;
+  background-color: #e1e1e1;
+  height: 69px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ubi-stats-item {
+  display: inline-block;
+  color: #646464;
+}
+
+.ubi-stats-item-middle {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.nu-header {
+  margin-bottom: 5px;
+  color: #787878;
+}
+
+.nu-frame {
+  margin-top: 10px;
+}
+
+.nu-item {
+  width: 65px;
+  height: 80px;
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+
+.nu-item-avatar img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.nu-item-centered {
+  text-align: center;
+}
+
+.nu-item-username {
   font-size: 0.7em;
   color: #969696;
 }
