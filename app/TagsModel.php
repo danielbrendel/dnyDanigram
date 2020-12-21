@@ -146,7 +146,7 @@ class TagsModel extends Model
     public static function getTopImage($hashtag)
     {
         return Cache::remember('tag_top_image_' . $hashtag, 24, function() use ($hashtag) {
-            $post = PostModel::where('hashtags', 'LIKE', '%' . $hashtag . ' %')->where('video', '=', false)->orderBy('hearts', 'desc')->first();
+            $post = PostModel::where('locked', '=', false)->where('hashtags', 'LIKE', '%' . $hashtag . ' %')->where('video', '=', false)->orderBy('hearts', 'desc')->first();
             if ($post) {
                 return $post->image_thumb;
             }

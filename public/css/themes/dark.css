@@ -1026,11 +1026,11 @@ pre.is-post-background {
 }
 
 .is-flash-error {
-  background-color: #ff7575;
+  background-color: rgba(255, 117, 117, 0.9);
 }
 
 .is-flash-success {
-  background-color: #80ff80;
+  background-color: rgba(50, 202, 50, 0.9);
 }
 
 .notifications {
