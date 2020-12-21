@@ -684,4 +684,21 @@ class PostsController extends Controller
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
+
+    /**
+     * Delete story
+     * 
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteStory($id)
+    {
+        try {
+            StoryModel::deleteStory($id);
+
+            return response()->json(array('code' => 200, 'msg' => __('app.story_deleted')));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
 }

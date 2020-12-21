@@ -104,7 +104,7 @@ let vue = new Vue({
             }
         },
 
-        handleCookieConsent: function () {
+        handleCookieConsent: function (publicFeed = false) {
             //Show cookie consent if not already for this client
 
             let cookies = document.cookie.split(';');
@@ -116,7 +116,7 @@ let vue = new Vue({
                 }
             }
 
-            if (foundCookie === false) {
+            if ((foundCookie === false) && (publicFeed)) {
                 document.getElementById('cookie-consent').style.display = 'inline-block';
                 document.getElementById('feed-left').classList.add('is-negative-top');
             }
@@ -1016,7 +1016,7 @@ window.fetchStorySelection = function() {
                 let html = `
                <div class="stories-item" id="story-item-` + elem.user.id + `">
                     <div class="stories-item-avatar" id="stories-item-` + elem.user.id + `">
-                        <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" onclick="window.viewStory(` + elem.user.id + `)"/>
+                        <img src="` + window.location.origin + '/gfx/avatars/' + elem.user.avatar + `" onclick="window.viewStory(` + elem.user.id + `, ` + ((elem.is_self) ? 'true' : 'false') + `)"/>
                     </div>
 
                     <div class="stories-item-username">
@@ -1033,11 +1033,17 @@ window.fetchStorySelection = function() {
     });
 };
 
-window.viewStory = function(userId){
+window.viewStory = function(userId, is_self = false){
     window.currentStoryData = null;
 
     let orig = document.getElementById('stories-item-' + userId).innerHTML;
     document.getElementById('stories-item-' + userId).innerHTML = '&nbsp;&nbsp;<i class="fas fa-spinner fa-spin"></i>';
+
+    if (!is_self) {
+        document.getElementById('story-delete-action').classList.add('is-hidden');
+    } else {
+        document.getElementById('story-delete-action').classList.remove('is-hidden');
+    }
 
     window.vue.ajaxRequest('get', window.location.origin + '/stories/view/' + userId, {}, function(response){
         document.getElementById('stories-item-' + userId).innerHTML = orig;
@@ -1052,7 +1058,9 @@ window.viewStory = function(userId){
 
             window.vue.bShowViewStory = true;
 
-            document.getElementById('story-item-' + userId).remove();
+            if (!is_self) {
+                document.getElementById('story-item-' + userId).remove();
+            }
         } else {
             alert(response.msg);
         }
@@ -1075,6 +1083,8 @@ window.showStoryPost = function(index) {
 
       document.getElementById('story-message').innerHTML = window.currentStoryData[index].message;
       document.getElementById('story-message').style.color = window.currentStoryData[index].text_color;
+
+      document.getElementById('story-delete-action').setAttribute('data-story-id', window.currentStoryData[index].id);
   }
 };
 
@@ -1139,6 +1149,12 @@ window.clearStoryInput = function() {
     document.getElementById('story-add-file-file').value = '';
     document.getElementById('story-add-file-text').value = '';
     document.getElementById('story-add-message-text').value = '';
+};
+
+window.deleteStory = function(id) {
+    window.vue.ajaxRequest('get', window.location.origin + '/stories/' + id + '/delete', {}, function(response) {
+        alert(response.msg);
+    });
 };
 
 //Make vue instance available globally

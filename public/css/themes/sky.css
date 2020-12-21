@@ -528,6 +528,11 @@ img.show-post-image-nsfw, video.show-post-image-nsfw {
   -webkit-filter: blur(1.5rem);
 }
 
+div.show-post-image-nsfw {
+  color: transparent;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
 .show-post-description {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -1415,6 +1420,10 @@ img.show-post-image-nsfw, video.show-post-image-nsfw {
 
 .stories-add-icon {
   padding: 9px;
+}
+
+.is-story-top {
+    top: -23px;
 }
 
 .geo-slider {

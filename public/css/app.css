@@ -529,7 +529,7 @@ video.show-post-image-nsfw {
   -webkit-filter: blur(1.5rem);
 }
 
-pre.show-post-image-nsfw {
+div.show-post-image-nsfw {
   color: transparent;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
@@ -1430,6 +1430,10 @@ pre.show-post-image-nsfw {
 
 .stories-add-icon {
   padding: 9px;
+}
+
+.is-story-top {
+  top: -23px;
 }
 
 .geo-slider {

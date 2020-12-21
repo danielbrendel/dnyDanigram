@@ -91,7 +91,11 @@ class StoryModel extends Model
             if ($stories) {
                 foreach ($stories as $story) {
                     if (!StoryViewerModel::hasViewed($story->id, $viewerId)) {
-                        StoryViewerModel::addViewer($story->id, $viewerId);
+
+                        if ($viewerId != $posterId) {
+                            StoryViewerModel::addViewer($story->id, $viewerId);
+                        }
+                        
                         $result[] = $story;
                     }
                 }
@@ -104,11 +108,12 @@ class StoryModel extends Model
     }
 
     /**
-     * Get a selection of unseen user stories
+     * Get a selection of unseen user stories including users own stories at first
      *
      * @param $userId
      * @param $limit
      * @return array
+     * @throws \Exception
      */
     public static function randomSelection($userId, $limit)
     {
@@ -128,15 +133,21 @@ class StoryModel extends Model
                         }
                         if (!$found) {
                             $story->user = User::get($fav->entityId);
+                            $story->is_self = false;
                             $result[] = $story;
                         }
                     }
                 }
             }
 
+            $ownStory = StoryModel::where('userId', '=', $userId)->where('expired', '=', false)->first();
+            $ownStory->user = User::get($userId);
+            $ownStory->is_self = true;
+            array_unshift($result, $ownStory);
+
             return $result;
         } catch (\Exception $e) {
-
+            throw $e;
         }
     }
 
@@ -157,6 +168,36 @@ class StoryModel extends Model
                     $story->expired = true;
                     $story->save();
                 }
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Delete a story item
+     * 
+     * @param $id
+     * @return void
+     * @throws \Exception
+     */
+    public static function deleteStory($id)
+    {
+        try {
+            $story = StoryModel::where('id', '=', $id)->where('expired', '=', false)->first();
+            if (!$story) {
+                throw new \Exception('Story not found: ' . $id);
+            }
+
+            if ((auth()->id() === $story->userId) || ((User::isAdmin(auth()->id())) || (User::isMaintainer(auth()->id())))) {
+                $viewers = StoryViewerModel::where('story', '=', $story->id)->get();
+                foreach ($viewers as $viewer) {
+                    $viewer->delete();
+                }
+
+                $story->delete();
+            } else {
+                throw new \Exception(__('app.insufficient_permissions'));
             }
         } catch (\Exception $e) {
             throw $e;

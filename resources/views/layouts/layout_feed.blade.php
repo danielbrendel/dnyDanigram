@@ -697,8 +697,12 @@
                             </div>
 
                             <div>
-                                <i class="fas fa-arrow-left is-pointer" onclick="if (window.currentStoryIndex > 0) window.currentStoryIndex--; showStoryPost(window.currentStoryIndex);"></i>&nbsp;&nbsp;
-                                <i class="fas fa-arrow-right is-pointer" onclick="if (window.currentStoryIndex < window.currentStoryData.length - 1) window.currentStoryIndex++; showStoryPost(window.currentStoryIndex);"></i>
+                                <div class="is-inline-block" onclick="if (window.currentStoryIndex > 0) window.currentStoryIndex--; showStoryPost(window.currentStoryIndex);"><i class="fas fa-arrow-left is-pointer"></i></div>&nbsp;&nbsp;
+                                <div class="is-inline-block" onclick="if (window.currentStoryIndex < window.currentStoryData.length - 1) window.currentStoryIndex++; showStoryPost(window.currentStoryIndex);"><i class="fas fa-arrow-right is-pointer"></i></div>
+                            </div>
+
+                            <div class="float-right is-story-top">
+                                <a href="javascript:void(0);" id="story-delete-action" onclick="window.deleteStory(this.getAttribute('data-story-id'));" data-story-id="">{{ __('app.delete_story') }}</a>
                             </div>
                         </section>
                         <footer></footer>
@@ -913,7 +917,7 @@
             window.vue.translationTable.confirmLockComment = '{{ __('app.confirmLockComment') }}';
             window.vue.translationTable.forumPostEdited = '{{ __('app.forum_post_edited_info') }}';
 
-            window.vue.handleCookieConsent();
+            window.vue.handleCookieConsent({{ (env('APP_PUBLICFEED') ? 'true' : 'false') }});
 
             @if (strlen(\App\AppModel::getWelcomeContent()) > 0)
                 window.vue.handleWelcomeOverlay();

@@ -427,5 +427,7 @@ return [
     'subscribed' => 'Followed',
     'newest_users' => 'Latest users',
     'forum_reply_short' => 'New forum thread reply',
-    'forum_reply_long' => 'User :name has replied to your thread: <a href=":url">:thread</a>'
+    'forum_reply_long' => 'User :name has replied to your thread: <a href=":url">:thread</a>',
+    'delete_story' => 'Delete story',
+    'story_deleted' => 'Story item has been deleted'
 ];

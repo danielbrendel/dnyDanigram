@@ -19430,6 +19430,7 @@ var vue = new Vue({
       }
     },
     handleCookieConsent: function handleCookieConsent() {
+      var publicFeed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       //Show cookie consent if not already for this client
       var cookies = document.cookie.split(';');
       var foundCookie = false;
@@ -19441,7 +19442,7 @@ var vue = new Vue({
         }
       }
 
-      if (foundCookie === false) {
+      if (foundCookie === false && publicFeed) {
         document.getElementById('cookie-consent').style.display = 'inline-block';
         document.getElementById('feed-left').classList.add('is-negative-top');
       }
@@ -20138,7 +20139,7 @@ window.fetchStorySelection = function () {
   window.vue.ajaxRequest('get', window.location.origin + '/stories/selection', {}, function (response) {
     if (response.code === 200) {
       response.data.forEach(function (elem, index) {
-        var html = "\n               <div class=\"stories-item\" id=\"story-item-" + elem.user.id + "\">\n                    <div class=\"stories-item-avatar\" id=\"stories-item-" + elem.user.id + "\">\n                        <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" onclick=\"window.viewStory(" + elem.user.id + ")\"/>\n                    </div>\n\n                    <div class=\"stories-item-username\">\n                        " + (elem.user.username.length > 8 ? elem.user.username.substr(0, 7) + '...' : elem.user.username) + "\n                    </div>\n                </div>\n               ";
+        var html = "\n               <div class=\"stories-item\" id=\"story-item-" + elem.user.id + "\">\n                    <div class=\"stories-item-avatar\" id=\"stories-item-" + elem.user.id + "\">\n                        <img src=\"" + window.location.origin + '/gfx/avatars/' + elem.user.avatar + "\" onclick=\"window.viewStory(" + elem.user.id + ", " + (elem.is_self ? 'true' : 'false') + ")\"/>\n                    </div>\n\n                    <div class=\"stories-item-username\">\n                        " + (elem.user.username.length > 8 ? elem.user.username.substr(0, 7) + '...' : elem.user.username) + "\n                    </div>\n                </div>\n               ";
         document.getElementById('stories').innerHTML += html;
       });
     } else {
@@ -20148,9 +20149,17 @@ window.fetchStorySelection = function () {
 };
 
 window.viewStory = function (userId) {
+  var is_self = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   window.currentStoryData = null;
   var orig = document.getElementById('stories-item-' + userId).innerHTML;
   document.getElementById('stories-item-' + userId).innerHTML = '&nbsp;&nbsp;<i class="fas fa-spinner fa-spin"></i>';
+
+  if (!is_self) {
+    document.getElementById('story-delete-action').classList.add('is-hidden');
+  } else {
+    document.getElementById('story-delete-action').classList.remove('is-hidden');
+  }
+
   window.vue.ajaxRequest('get', window.location.origin + '/stories/view/' + userId, {}, function (response) {
     document.getElementById('stories-item-' + userId).innerHTML = orig;
 
@@ -20160,7 +20169,10 @@ window.viewStory = function (userId) {
       window.showStoryPost(window.currentStoryIndex);
       document.getElementById('story-title').innerHTML = 'Story';
       window.vue.bShowViewStory = true;
-      document.getElementById('story-item-' + userId).remove();
+
+      if (!is_self) {
+        document.getElementById('story-item-' + userId).remove();
+      }
     } else {
       alert(response.msg);
     }
@@ -20183,6 +20195,7 @@ window.showStoryPost = function (index) {
 
     document.getElementById('story-message').innerHTML = window.currentStoryData[index].message;
     document.getElementById('story-message').style.color = window.currentStoryData[index].text_color;
+    document.getElementById('story-delete-action').setAttribute('data-story-id', window.currentStoryData[index].id);
   }
 };
 
@@ -20242,6 +20255,12 @@ window.clearStoryInput = function () {
   document.getElementById('story-add-file-file').value = '';
   document.getElementById('story-add-file-text').value = '';
   document.getElementById('story-add-message-text').value = '';
+};
+
+window.deleteStory = function (id) {
+  window.vue.ajaxRequest('get', window.location.origin + '/stories/' + id + '/delete', {}, function (response) {
+    alert(response.msg);
+  });
 }; //Make vue instance available globally
 
 

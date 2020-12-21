@@ -91,6 +91,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Return maintainer flag value
+     * @param $id
+     * @return bool
+     */
+    public static function isMaintainer($id)
+    {
+        $user = static::get($id);
+
+        if (($user) && ($user->maintainer)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get user object by email
      *
      * @param string $email The E-Mail address

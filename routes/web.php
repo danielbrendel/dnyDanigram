@@ -132,6 +132,7 @@ Route::post('/stories/add/image', 'PostsController@addStoryImage');
 Route::post('/stories/add/text', 'PostsController@addStoryText');
 Route::post('/stories/image/upload', 'PostsController@setStoryImage');
 Route::get('/stories/expire', 'PostsController@expireStories');
+Route::any('/stories/{id}/delete', 'PostsController@deleteStory');
 
 Route::post('/payment/charge', 'PaymentController@charge');
 
