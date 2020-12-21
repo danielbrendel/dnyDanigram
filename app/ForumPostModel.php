@@ -48,6 +48,11 @@ class ForumPostModel extends Model
             $item->userId = $userId;
             $item->message = \Purifier::clean($message);
             $item->save();
+
+            if ($thread->ownerId !== $userId) {
+                $user = User::get($userId);
+                PushModel::addNotification(__('app.forum_reply_short'), __('app.forum_reply_long', ['name' => $user->username, 'url' => url('/forum/thread/' . $threadId . '/show'), 'thread' => $thread->title]), 'PUSH_FORUMREPLY', $thread->ownerId);
+            }
         } catch (Exception $e) {
             throw $e;
         }

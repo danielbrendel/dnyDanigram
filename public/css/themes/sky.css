@@ -1015,7 +1015,7 @@ img.show-post-image-nsfw, video.show-post-image-nsfw {
   position: absolute;
   top: -9px;
   z-index: 4;
-  background-color: #f0f0e6;
+  background-color: #fafafa;
   display: none;
 }
 
@@ -1067,13 +1067,18 @@ img.show-post-image-nsfw, video.show-post-image-nsfw {
   position: relative;
   width: 100%;
   height: auto;
-  background-color: white;
-  padding: 21px;
-  border-radius: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .notification-item:hover {
   background-color: #fafafa;
+}
+
+.notification-item-inner {
+  background-color: inherit;
+  padding: 5px;
+  border-radius: 4px;
 }
 
 .notification-item-icon {
@@ -1103,6 +1108,30 @@ img.show-post-image-nsfw, video.show-post-image-nsfw {
   top: 17px;
   left: 30px;
   display: none;
+}
+
+.is-notifiction-color-red {
+  color: #d20000;
+}
+
+.is-notifiction-color-green {
+  color: #32ca32;
+}
+
+.is-notifiction-color-blue {
+  color: #3778b4;
+}
+
+.is-notifiction-color-orange {
+  color: #ff7575;
+}
+
+.is-notifiction-color-yellow {
+  color: gold;
+}
+
+.is-notifiction-color-black {
+  color: #323230;
 }
 
 .messages {

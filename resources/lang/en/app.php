@@ -425,5 +425,7 @@ return [
     'posts' => 'Posts',
     'subscribers' => 'Followers',
     'subscribed' => 'Followed',
-    'newest_users' => 'Latest users'
+    'newest_users' => 'Latest users',
+    'forum_reply_short' => 'New forum thread reply',
+    'forum_reply_long' => 'User :name has replied to your thread: <a href=":url">:thread</a>'
 ];

@@ -578,7 +578,7 @@ pre.is-post-background {
 }
 
 .navbar i {
-    color: rgb(200, 200, 200) !important;
+    color: rgb(200, 200, 200);
 }
 
 .is-app-title {
@@ -1037,13 +1037,8 @@ pre.is-post-background {
   position: absolute;
   top: -9px;
   z-index: 4;
-  background-color: #f0f0e6;
+  background-color: rgb(90, 90, 87);
   display: none;
-}
-
-.notification-close-icon {
-    margin-top: 22px;
-    margin-right: 32px;
 }
 
 @media screen and (min-width: 769px) {
@@ -1073,6 +1068,11 @@ pre.is-post-background {
   }
 }
 
+.notification-close-icon {
+  margin-top: 22px;
+  margin-right: 32px;
+}
+
 .notifications-content {
   margin: 25px;
   height: 78%;
@@ -1089,13 +1089,18 @@ pre.is-post-background {
   position: relative;
   width: 100%;
   height: auto;
-  background-color: white;
-  padding: 21px;
-  border-radius: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .notification-item:hover {
-  background-color: #fafafa;
+  background-color: rgb(100, 100, 98);
+}
+
+.notification-item-inner {
+  background-color: inherit;
+  padding: 5px;
+  border-radius: 4px;
 }
 
 .notification-item-icon {
@@ -1107,7 +1112,11 @@ pre.is-post-background {
 }
 
 .is-new-notification {
-  background-color: #80ff80;
+  background-color: rgb(120, 120, 120);
+}
+
+.is-new-notification:hover {
+  background-color: rgb(120, 120, 120);
 }
 
 #burger-notification {
@@ -1121,6 +1130,30 @@ pre.is-post-background {
   top: 17px;
   left: 30px;
   display: none;
+}
+
+.is-notifiction-color-red {
+  color: #d20000;
+}
+
+.is-notifiction-color-green {
+  color: #32ca32;
+}
+
+.is-notifiction-color-blue {
+  color: #3778b4;
+}
+
+.is-notifiction-color-orange {
+  color: #ff7575;
+}
+
+.is-notifiction-color-yellow {
+  color: gold;
+}
+
+.is-notifiction-color-black {
+  color: #323230;
 }
 
 .messages {

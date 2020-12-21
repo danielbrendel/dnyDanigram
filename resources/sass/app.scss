@@ -858,7 +858,7 @@ pre.show-post-image-nsfw {
         height: 520px;
     }
     z-index: 4;
-    background-color: rgb(240, 240, 230);
+    background-color: rgb(250, 250, 250);
     display: none;
 }
 .notification-close-icon {
@@ -877,12 +877,16 @@ pre.show-post-image-nsfw {
     position: relative;
     width: 100%;
     height: auto;
-    background-color: rgb(255, 255, 255);
-    padding: 21px;
-    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .notification-item:hover {
     background-color: rgb(250, 250, 250);
+}
+.notification-item-inner {
+    background-color: inherit;
+    padding: 5px;
+    border-radius: 4px;
 }
 .notification-item-icon {
     display: inline-block;
@@ -907,6 +911,24 @@ pre.show-post-image-nsfw {
     top: 17px;
     left: 30px;
     display: none;
+}
+.is-notifiction-color-red {
+    color: rgb(210, 0, 0);
+}
+.is-notifiction-color-green {
+    color: rgb(50, 202, 50);
+}
+.is-notifiction-color-blue {
+    color:rgb(55, 120, 180);
+}
+.is-notifiction-color-orange {
+    color: rgb(255, 117, 117);
+}
+.is-notifiction-color-yellow {
+    color: rgb(255, 215, 0);
+}
+.is-notifiction-color-black {
+    color: rgb(50, 50, 48);
 }
 
 //Messages

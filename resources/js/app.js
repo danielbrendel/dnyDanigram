@@ -541,21 +541,25 @@ window.replyThread = function(parentId, text){
 window.renderNotification = function(elem, newItem = false) {
     let icon = 'fas fa-info-circle';
     if (elem.type === 'PUSH_HEARTED') {
-        icon = 'far fa-heart';
+        icon = 'far fa-heart is-notifiction-color-red';
     } else if (elem.type === 'PUSH_COMMENTED') {
-        icon = 'far fa-comment';
+        icon = 'far fa-comment is-notifiction-color-green';
     } else if (elem.type === 'PUSH_MENTIONED') {
-        icon = 'fas fa-bolt';
+        icon = 'fas fa-bolt is-notifiction-color-blue';
     } else if (elem.type === 'PUSH_MESSAGED') {
-        icon = 'far fa-comments';
+        icon = 'far fa-comments is-notifiction-color-orange';
     } else if (elem.type === 'PUSH_FAVORITED') {
-        icon = 'far fa-star';
+        icon = 'far fa-star is-notifiction-color-yellow';
+    } else if (elem.type === 'PUSH_FORUMREPLY') {
+        icon = 'fas fa-landmark is-notifiction-color-black';
     }
 
     let html = `
         <div class="notification-item ` + ((newItem) ? 'is-new-notification' : '') + `">
-            <div class="notification-item-icon"><i class="` + icon + `"></i></div>
-            <div class="notification-item-message">` + elem.longMsg + `</div>
+            <div class="notification-item-inner">
+                <div class="notification-item-icon"><i class="` + icon + `"></i></div>
+                <div class="notification-item-message">` + elem.longMsg + `</div>
+            </div>
         </div>
     `;
 

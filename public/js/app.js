@@ -19743,18 +19743,20 @@ window.renderNotification = function (elem) {
   var icon = 'fas fa-info-circle';
 
   if (elem.type === 'PUSH_HEARTED') {
-    icon = 'far fa-heart';
+    icon = 'far fa-heart is-notifiction-color-red';
   } else if (elem.type === 'PUSH_COMMENTED') {
-    icon = 'far fa-comment';
+    icon = 'far fa-comment is-notifiction-color-green';
   } else if (elem.type === 'PUSH_MENTIONED') {
-    icon = 'fas fa-bolt';
+    icon = 'fas fa-bolt is-notifiction-color-blue';
   } else if (elem.type === 'PUSH_MESSAGED') {
-    icon = 'far fa-comments';
+    icon = 'far fa-comments is-notifiction-color-orange';
   } else if (elem.type === 'PUSH_FAVORITED') {
-    icon = 'far fa-star';
+    icon = 'far fa-star is-notifiction-color-yellow';
+  } else if (elem.type === 'PUSH_FORUMREPLY') {
+    icon = 'fas fa-landmark is-notifiction-color-black';
   }
 
-  var html = "\n        <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n            <div class=\"notification-item-icon\"><i class=\"" + icon + "\"></i></div>\n            <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n        </div>\n    ";
+  var html = "\n        <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n            <div class=\"notification-item-inner\">\n                <div class=\"notification-item-icon\"><i class=\"" + icon + "\"></i></div>\n                <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n            </div>\n        </div>\n    ";
   return html;
 };
 

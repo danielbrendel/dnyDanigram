@@ -425,5 +425,7 @@ return [
     'posts' => 'Posts',
     'subscribers' => 'Gefolgt',
     'subscribed' => 'Folgt',
-    'newest_users' => 'Neuste Anmeldungen'
+    'newest_users' => 'Neuste Anmeldungen',
+    'forum_reply_short' => 'Neue Antwort im Forum',
+    'forum_reply_long' => ':name hat auf einen Forenbeitrag geantwortet: <a href=":url">:thread</a>'
 ];
