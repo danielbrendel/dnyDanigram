@@ -44,9 +44,7 @@
     <div class="column is-3 fixed-frame-parent">
         <div class="fixed-frame">
             <div class="member-form is-default-padding">
-                @auth
-                    @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo($profile->id)])
-                @endauth
+				@include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo($profile->id)])
             </div>
 
             <div class="member-form is-default-padding">

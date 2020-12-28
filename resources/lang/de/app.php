@@ -429,5 +429,6 @@ return [
     'forum_reply_short' => 'Neue Antwort im Forum',
     'forum_reply_long' => ':name hat auf einen Forenbeitrag geantwortet: <a href=":url">:thread</a>',
     'delete_story' => 'Story löschen',
-    'story_deleted' => 'Die Story wurde gelöscht'
+    'story_deleted' => 'Die Story wurde gelöscht',
+	'no_account_yet' => 'Noch kein Konto? Jetzt anmelden'
 ];

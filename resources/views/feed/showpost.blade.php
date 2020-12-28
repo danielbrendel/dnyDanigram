@@ -19,14 +19,17 @@
         <div id="singlepost" class="is-fix-single-post-position"><center><i class="fas fa-spinner fa-spin"></i></center></div>
 
         <div class="member-form is-default-padding">
-            @auth
             <div class="thread-input">
-                <form method="POST" action="{{ url('/p/' . $post->id . '/thread/add') }}">
+                <form id="frmSubmitComment" method="POST" action="{{ url('/p/' . $post->id . '/thread/add') }}">
                     @csrf
 
                     <div class="thread-input-header">
                         <div class="thread-input-header-avatar is-inline-block">
-                            <img src="{{ asset('gfx/avatars/' . $user->avatar) }}" width="24" height="24">
+							@auth
+								<img src="{{ asset('gfx/avatars/' . $user->avatar) }}" width="24" height="24">
+							@elseguest
+								<img src="{{ asset('gfx/avatars/default.png') }}" width="24" height="24">
+							@endauth
                         </div>
 
                         <div class="thread-input-header-text is-inline-block">
@@ -36,11 +39,10 @@
                     </div>
 
                     <div class="thread-input-submit">
-                        <input type="submit" class="button is-success" value="{{ __('app.submit') }}">
+						<button class="button" type="button" onclick="@auth {{ 'document.getElementById(\'frmSubmitComment\').submit();' }} @elseguest {{ 'window.vue.bShowLogin = true;' }} @endauth">{{ __('app.submit') }}</button>
                     </div>
                 </form>
             </div>
-            @endauth
 
             <div class="thread">
                 <a name="thread"></a>
@@ -104,11 +106,11 @@
 
     <div class="column is-3 fixed-frame-parent">
         <div class="fixed-frame">
+			@auth
             <div class="member-form is-default-padding">
-                @auth
-                    @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo(auth()->id())])
-                @endauth
+                @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo(auth()->id())])
             </div>
+			@endauth
 
             <div class="member-form is-default-padding">
                 @include('widgets.newusers', ['users' => \App\User::getNewestUsers()])
@@ -128,14 +130,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             window.paginate = null;
 
-            var quillEditor = new Quill('#input-text', {
-                theme: 'snow',
-                placeholder: '{{ __('app.type_something') }}',
-            });
+			var quillEditor = new Quill('#input-text', {
+				theme: 'snow',
+				placeholder: '{{ __('app.type_something') }}',
+			});
 
-            quillEditor.on('editor-change', function(eventName, ...args) {
-                document.getElementById('post-text').value = quillEditor.root.innerHTML;
-            });
+			quillEditor.on('editor-change', function(eventName, ...args) {
+				document.getElementById('post-text').value = quillEditor.root.innerHTML;
+			});
 
             fetchSinglePost();
             fetchThread();

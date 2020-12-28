@@ -127,6 +127,12 @@
                         </span>
                     </div>
                 </div>
+				
+				<div class="field">
+					<div class="control">
+						<a href="javascript:void(0);" onclick="window.vue.bShowRegister = true; window.vue.bShowLogin = false;">{{ __('app.no_account_yet') }}</a>
+					</div>
+				</div>
 
                 <div class="home-userarea-login">
                     <div class="field is-inline-block">
