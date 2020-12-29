@@ -24,6 +24,14 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+	/**
+     * Constructor
+     */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
     /**
      * View message list
      *

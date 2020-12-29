@@ -23,6 +23,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+	/**
+     * Constructor
+     */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
     /**
      * Lock post
      *

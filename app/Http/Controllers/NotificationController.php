@@ -19,6 +19,14 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
+	/**
+     * Constructor
+     */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
     /**
      * Get notification list
      *

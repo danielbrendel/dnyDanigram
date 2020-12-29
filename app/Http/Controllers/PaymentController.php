@@ -30,6 +30,8 @@ class PaymentController extends Controller
      */
     public function __construct()
     {
+		parent::__construct();
+		
         $this->middleware(function ($request, $next) {
             if (Auth::guest()) {
                 abort(403);

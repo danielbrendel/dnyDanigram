@@ -24,6 +24,14 @@ use Illuminate\Support\Facades\Cache;
 
 class FavoritesController extends Controller
 {
+	/**
+     * Constructor
+     */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
     /**
      * Add favorite
      * @return \Illuminate\Http\JsonResponse

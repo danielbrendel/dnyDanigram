@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Auth;
 
 class InstallerController extends Controller
 {
+	/**
+     * Constructor
+     */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
     /**
      * View installer wizard
      *

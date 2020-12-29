@@ -44,6 +44,8 @@ class PostsController extends Controller
      */
     public function __construct()
     {
+		parent::__construct();
+		
         $this->middleware(function ($request, $next) {
            if ((!env('APP_PUBLICFEED')) && (Auth::guest())) {
                return redirect('/')->with('error', __('app.not_logged_in'));

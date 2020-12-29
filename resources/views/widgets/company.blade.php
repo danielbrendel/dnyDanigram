@@ -10,6 +10,6 @@
     Released under the MIT license
 --}}
 
-<div class="is-about-nav">
+<div class="is-about-nav is-breakall">
     <center>&copy; {{ date('Y') }} {{ env('APP_PROJECTNAME') }} </center> <center> @if (env('TWITTER_NEWS', null) !== null) <a href="{{ url('/news') }}" target="_blank">{{ __('app.news') }}</a>&nbsp;&nbsp;@endif<a href="{{ url('/about') }}" target="_blank">{{ __('app.about') }}</a>&nbsp;&nbsp;<a href="{{ url('/faq') }}" target="_blank">{{ __('app.faq') }}</a>&nbsp;&nbsp;<a href="{{ url('/tos') }}" target="_blank">{{ __('app.tos') }}</a>&nbsp;&nbsp;<a href="{{ url('/imprint') }}" target="_blank">{{ __('app.imprint') }}</a>&nbsp;&nbsp;@if (env('HELPREALM_WORKSPACE') !== null) <a href="{{ url('/contact') }}" target="_blank">{{ __('app.contact') }}</a>@endif</center>
 </div>
