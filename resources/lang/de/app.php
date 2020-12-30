@@ -28,7 +28,7 @@ return [
     'stats_posts' => ':count Beiträge',
     'stats_comments' => ':count Kommentare',
     'stats_hearts' => ':count Likes',
-    'member_upload' => 'Post',
+    'member_upload' => 'Hochladen',
     'type_something' => 'Gib etwas ein',
     'comment_count' => ':count Kommentare',
     'hashtag_not_yet_used' => 'Dieser Hashtag wurde noch nicht benutzt. Du kannst ihn zuerst benutzen!',
