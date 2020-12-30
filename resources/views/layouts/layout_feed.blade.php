@@ -321,7 +321,12 @@
 
                 @auth
                     @include('widgets.stories')
+                @endauth
+
+                @auth
                     @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
+                @elseguest
+                    @include('widgets.favorites', ['favorites' => null])
                 @endauth
 
                 @yield('body')

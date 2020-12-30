@@ -430,5 +430,6 @@ return [
     'forum_reply_long' => ':name hat auf einen Forenbeitrag geantwortet: <a href=":url">:thread</a>',
     'delete_story' => 'Story löschen',
     'story_deleted' => 'Die Story wurde gelöscht',
-	'no_account_yet' => 'Noch kein Konto? Jetzt anmelden'
+    'no_account_yet' => 'Noch kein Konto? Jetzt anmelden',
+    'login_for_favs' => '<a href="javascript:void(0);" onclick="window.vue.bShowLogin = true;">Melde dich an</a>, um deine Favoriten zu verwalten.'
 ];

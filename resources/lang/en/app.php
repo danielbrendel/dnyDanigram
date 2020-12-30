@@ -430,5 +430,6 @@ return [
     'forum_reply_long' => 'User :name has replied to your thread: <a href=":url">:thread</a>',
     'delete_story' => 'Delete story',
     'story_deleted' => 'Story item has been deleted',
-	'no_account_yet' => 'No account yet? Sign up'
+    'no_account_yet' => 'No account yet? Sign up',
+    'login_for_favs' => '<a href="javascript:void(0);" onclick="window.vue.bShowLogin = true;">Login</a> to manage your favorites.'
 ];
