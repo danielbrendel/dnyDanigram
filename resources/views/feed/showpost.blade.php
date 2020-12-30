@@ -107,7 +107,7 @@
     <div class="column is-3 fixed-frame-parent">
         <div class="fixed-frame">
             <div class="member-form is-default-padding">
-                @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo(auth()->id())])
+                @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo($post->userId)])
             </div>
 
             <div class="member-form is-default-padding">

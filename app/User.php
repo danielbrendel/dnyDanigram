@@ -169,7 +169,6 @@ class User extends Authenticatable
             $user->stats->posts = 0;
             $user->stats->subscribers = 0;
             $user->stats->subscribed = 0;
-            $user->guest = true;
         }
 
         return $user;

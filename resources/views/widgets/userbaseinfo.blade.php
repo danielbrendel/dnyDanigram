@@ -13,13 +13,13 @@
 <div class="ubi-frame">
     <div class="ubi-center-item">
         <div class="ubi-avatar">
-            <a href="@auth {{ url('/u/' . $user->id) }} @elseguest {{ 'javascript:void(0);' }} @endauth" @guest {!! 'onclick="window.vue.bShowLogin = true;"' !!} @endguest><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></a>
+            <a href="@if (isset($user->id)) {{ url('/u/' . $user->id) }} @else{{ 'javascript:void(0);' }} @endif" @if (!isset($user->id)) {!! 'onclick="window.vue.bShowLogin = true;"' !!} @endif><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></a>
         </div>
     </div>
 
     <div class="ubi-center-item">
         <div class="ubi-username">
-            <a href="@auth {{ url('/u/' . $user->id) }} @elseguest {{ 'javascript:void(0);' }} @endauth" @guest {!! 'onclick="window.vue.bShowLogin = true;"' !!} @endguest>{{ $user->username }}</a>
+            <a href="@if (isset($user->id)) {{ url('/u/' . $user->id) }} @else{{ 'javascript:void(0);' }} @endif" @if (!isset($user->id)) {!! 'onclick="window.vue.bShowLogin = true;"' !!} @endif>{{ $user->username }}</a>
         </div>
     </div>
 
