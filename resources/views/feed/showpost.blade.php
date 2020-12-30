@@ -106,11 +106,9 @@
 
     <div class="column is-3 fixed-frame-parent">
         <div class="fixed-frame">
-			@auth
             <div class="member-form is-default-padding">
                 @include('widgets.userbaseinfo', ['user' => \App\User::getUserBaseInfo(auth()->id())])
             </div>
-			@endauth
 
             <div class="member-form is-default-padding">
                 @include('widgets.newusers', ['users' => \App\User::getNewestUsers()])

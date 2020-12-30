@@ -13,13 +13,13 @@
 <div class="ubi-frame">
     <div class="ubi-center-item">
         <div class="ubi-avatar">
-            <a href="{{ url('/u/' . $user->id) }}"><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></a>
+            <a href="@auth {{ url('/u/' . $user->id) }} @elseguest {{ 'javascript:void(0);' }} @endauth" @guest {!! 'onclick="window.vue.bShowLogin = true;"' !!} @endguest><img src="{{ asset('gfx/avatars/' . $user->avatar) }}" alt="avatar"></a>
         </div>
     </div>
 
     <div class="ubi-center-item">
         <div class="ubi-username">
-            <a href="{{ url('/u/' . $user->id) }}">{{ $user->username }}</a>
+            <a href="@auth {{ url('/u/' . $user->id) }} @elseguest {{ 'javascript:void(0);' }} @endauth" @guest {!! 'onclick="window.vue.bShowLogin = true;"' !!} @endguest>{{ $user->username }}</a>
         </div>
     </div>
 

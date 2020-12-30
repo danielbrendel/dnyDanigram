@@ -156,10 +156,21 @@ class User extends Authenticatable
     {
         $user = User::where('id', '=', $userId)->first();
 
-        $user->stats = new stdClass();
-        $user->stats->posts = PostModel::where('userId', '=', $user->id)->where('locked', '=', false)->count();
-        $user->stats->subscribers = FavoritesModel::where('entityId', '=', $user->id)->where('type', '=', 'ENT_USER')->count();
-        $user->stats->subscribed = FavoritesModel::where('userId', '=', $user->id)->where('type', '=', 'ENT_USER')->count();
+        if ($user) {
+            $user->stats = new stdClass();
+            $user->stats->posts = PostModel::where('userId', '=', $user->id)->where('locked', '=', false)->count();
+            $user->stats->subscribers = FavoritesModel::where('entityId', '=', $user->id)->where('type', '=', 'ENT_USER')->count();
+            $user->stats->subscribed = FavoritesModel::where('userId', '=', $user->id)->where('type', '=', 'ENT_USER')->count();
+        } else {
+            $user = new stdClass();
+            $user->username = __('app.guest');
+            $user->avatar = 'default.png';
+            $user->stats = new stdClass();
+            $user->stats->posts = 0;
+            $user->stats->subscribers = 0;
+            $user->stats->subscribed = 0;
+            $user->guest = true;
+        }
 
         return $user;
     }
