@@ -3,7 +3,7 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -57,6 +57,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_PUSHPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_MESSAGEPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_PROFILEPACKLIMIT=20' . PHP_EOL;
+            $envcontent .= 'APP_FAVPACKLIMIT=35' . PHP_EOL;
             $envcontent .= 'APP_FORUMPACKLIMIT=20' . PHP_EOL;
             $envcontent .= 'APP_TOPNTAGS=25' . PHP_EOL;
             $envcontent .= 'APP_STORYPACK=32' . PHP_EOL;

@@ -3,7 +3,7 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -123,7 +123,7 @@ class TagsModel extends Model
                 });
 
                 $tag->top_image = Cache::remember('tag_top_image_' . $tag->tag, 24, function() use ($tag) {
-                    $post = PostModel::where('locked', '=', false)->where('nsfw', '=', false)->where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->where('video', '=', false)->orderBy('hearts', 'desc')->first();
+                    $post = PostModel::where('locked', '=', false)->where('nsfw', '=', false)->where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->where('video', '=', false)->where('image_thumb', '<>', '_none')->orderBy('hearts', 'desc')->first();
                     if ($post) {
                         return $post->image_thumb;
                     }

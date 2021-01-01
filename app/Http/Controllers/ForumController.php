@@ -3,7 +3,7 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -82,7 +82,15 @@ class ForumController extends Controller
 
             $data = ForumModel::queryList($paginate, $name);
 
-            return response()->json(array('code' => 200, 'data' => $data));
+            $last = false;
+            if (count($data) === 0) {
+                $last = true;
+            } else {
+                $lastId = ForumModel::max('id');
+                $last = $lastId === $data[count($data)-1]['id'];
+            }
+
+            return response()->json(array('code' => 200, 'data' => $data, 'last' => $last));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

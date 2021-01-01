@@ -1,7 +1,7 @@
 {{--
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -90,7 +90,9 @@
 
                             window.paginate = response.data[response.data.length - 1].id;
 
-                            document.getElementById('forums').innerHTML += '<div id="loadmore"><center><a href="javascript:void(0);" onclick="window.listForums();">{{ __('app.load_more') }}</a></center></div>';
+                            if (!response.last) {
+                                document.getElementById('forums').innerHTML += '<div id="loadmore"><center><a href="javascript:void(0);" onclick="window.listForums();">{{ __('app.load_more') }}</a></center></div>';
+                            }
                         } else {
                             document.getElementById('forums').innerHTML += '{{ __('app.forums_no_forums_found') }}';
                         }

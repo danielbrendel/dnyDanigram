@@ -3,7 +3,7 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -261,7 +261,7 @@ class PostModel extends Model
                     throw new \Exception(__('app.post_upload_size_exceeded'));
                 }
 
-                $fname = $att->getClientOriginalName() . '_' . uniqid('', true) . '_' . md5($att->getClientOriginalName());
+                $fname = uniqid('', true) . md5(random_bytes(55));
                 $fext = $att->getClientOriginalExtension();
                 
                 $att->move(public_path() . '/gfx/posts/', $fname . '.' . $fext);

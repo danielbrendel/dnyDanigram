@@ -1796,7 +1796,7 @@ module.exports = {
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-        (C) 2019 - 2020 by Daniel Brendel
+        (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -1861,7 +1861,9 @@ var vue = new Vue({
       confirmDeleteOwnAccount: 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
       confirmLockComment: 'Do you want to lock this comment?',
       pro: 'Pro',
-      forumPostEdited: 'Edited'
+      forumPostEdited: 'Edited',
+      statsPosts: 'Total posts',
+      remove: 'Remove'
     }
   },
   methods: {
@@ -2234,6 +2236,31 @@ window.renderUserItem = function (item) {
   return html;
 };
 
+window.renderFavoriteItem = function (item) {
+  var avatar = '';
+
+  if (item.type === 'ENT_HASHTAG') {
+    if (item.avatar !== null) {
+      avatar = '<img src="' + window.location.origin + '/gfx/posts/' + item.avatar + '" width="32" height="32"/>';
+    } else {
+      avatar = '&nbsp;<i class="fas fa-hashtag fa-lg"></i>&nbsp;&nbsp';
+    }
+  } else if (item.type === 'ENT_USER') {
+    avatar = '<img src="' + window.location.origin + '/gfx/avatars/' + item.avatar + '" width="32" height="32"/>';
+  }
+
+  var userinfo = '';
+
+  if (item.type === 'ENT_HASHTAG') {
+    userinfo = '<a href="' + window.location.origin + '/t/' + item.name + '">#' + item.short_name + '</a>';
+  } else if (item.type === 'ENT_USER') {
+    userinfo = '<a href="' + window.location.origin + '/u/' + item.name + '">@' + item.short_name + '</a>';
+  }
+
+  var html = "\n        <div class=\"favorites-item is-block favorite-item-" + item.type.toLowerCase() + "-" + item.entityId + "\">\n            <div class=\"favorites-item-left is-inline-block\">\n                <div class=\"favorites-item-left-avatar\">\n                    " + avatar + "\n                </div>\n\n                <div class=\"favorites-item-left-info\">\n                    <div>\n                        " + userinfo + "\n                    </div>\n\n                    <div class=\"is-color-grey\">\n                        " + window.vue.translationTable.statsPosts + ": " + item.total_posts + "\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"favorites-item-right is-inline-block\" onclick=\"deleteFavorite(" + item.id + ", " + item.entityId + ", '" + item.type + "')\"><i class=\"fas fa-times is-pointer\" title=\"" + window.vue.translationTable.remove + "\"></i></div>\n        </div>\n    ";
+  return html;
+};
+
 window.renderProfileItem = function (item) {
   if (item.location === null || item.location === '') {
     item.location = '-';
@@ -2481,7 +2508,7 @@ window.deleteFavorite = function (id, eid, type) {
         elems = document.getElementsByClassName('favorites-list');
 
         for (var i = 0; i < elems.length; i++) {
-          elems[i].innerHTML += '<i class="has-no-favorites-yet">You don\'t have set any favorites yet</i>';
+          elems[i].innerHTML += '<i class="has-no-favorites-yet">' + window.vue.translationTable.noFavsYet + '</i>';
         }
       }
     }

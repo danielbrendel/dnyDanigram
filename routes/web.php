@@ -59,6 +59,7 @@ Route::get('/geosearch', 'MemberController@viewGeosearch');
 Route::post('/geosearch', 'MemberController@geosearch');
 Route::get('/profilesearch', 'MemberController@viewProfileSearch');
 Route::post('/profilesearch', 'MemberController@profilesearch');
+Route::get('/member/favorites', 'MemberController@queryFavorites');
 
 Route::post('/f/add', 'FavoritesController@add');
 Route::post('/f/remove', 'FavoritesController@remove');

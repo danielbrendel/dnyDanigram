@@ -1,7 +1,7 @@
 {{--
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -228,7 +228,16 @@
 
             <div class="overlay-list" id="overlay-favorites">
                 <div class="overlay-list-content">
-                    @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id()), 'inoverlay' => true])
+                    <div class="column is-2">
+                        <div class="is-default-padding">
+                            <div>
+                                <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.favorites') }}</h2></div>
+                                <div class="is-inline-block float-right is-margin-top-15"><a class="is-color-grey is-size-7" href="javascript:void(0);" onclick="window.toggleOverlay('favorites');">{{ __('app.close') }}</a></div>
+                            </div>
+
+                            <div class="favorites-list">{!! __('app.login_for_favs') !!}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -323,11 +332,23 @@
                     @include('widgets.stories')
                 @endauth
 
-                @auth
-                    @include('widgets.favorites', ['favorites' => \App\FavoritesModel::getDetailedForUser(auth()->id())])
-                @elseguest
-                    @include('widgets.favorites', ['favorites' => null])
-                @endauth
+                @guest
+                    <div class="column is-5"></div>
+                    <div class="column is-5 is-sidespacing"></div>
+                @endguest
+
+                <div class="column is-2">
+                    <div class="@if ((!isset($inoverlay)) || (!$inoverlay)) favorites-nav @endif is-default-padding">
+                        <div>
+                            <div class="is-inline-block"><h2 class="is-default-headline-color">{{ __('app.favorites') }}</h2></div>
+                            @if ((isset($inoverlay)) && ($inoverlay))
+                                <div class="is-inline-block float-right is-margin-top-15"><a class="is-color-grey is-size-7" href="javascript:void(0);" onclick="window.toggleOverlay('favorites');">{{ __('app.close') }}</a></div>
+                            @endif
+                        </div>
+
+                        <div class="favorites-list" id="favorites-list">{!! __('app.login_for_favs') !!}</div>
+                    </div>
+                </div>
 
                 @yield('body')
             </div>
@@ -771,6 +792,48 @@
             }
         };
 
+        window.putToFavoritesContent = function(content, append = true) {
+            let favContents = document.getElementsByClassName('favorites-list');
+            for (let i = 0; i < favContents.length; i++) {
+                if (append) {
+                    favContents[i].innerHTML += content;
+                } else {
+                    favContents[i].innerHTML = content;
+                }
+            }
+        };
+        window.favoritesPagination = null;
+        window.fetchFavorites = function() {
+            window.putToFavoritesContent('<div class="fav-spinner"><br/><i class="fas fa-spinner fa-spin"></i></div>', (window.favoritesPagination === null) ? false : true);
+
+            window.vue.ajaxRequest('get', '{{ url('/member/favorites') }}' + ((window.favoritesPagination !== null) ? '?paginate=' + window.favoritesPagination : ''), {}, function(response) {
+                if (response.code == 200) {
+                    if (response.data.length > 0) {
+                        response.data.forEach(function(elem, index){
+                            let html = window.renderFavoriteItem(elem);
+
+                            window.putToFavoritesContent(html);
+                        });
+
+                        window.favoritesPagination = response.data[response.data.length - 1].id;
+
+                        if (!response.last) {
+                            window.putToFavoritesContent('<div class="fav-load-more"><br/><a href="javascript:void(0);" onclick="window.fetchFavorites(); let favLoadMore = document.getElementsByClassName(\'fav-load-more\'); for (let i = favLoadMore.length - 1; i >= 0; i--) { favLoadMore[i].remove(); }">{{ __('app.load_more') }}</a></div>');
+                        }
+                    } else {
+                        if (window.favoritesPagination === null) {
+                            window.putToFavoritesContent('<i class="has-no-favorites-yet">{{ __('app.no_favorites_yet') }}</i>', false);
+                        }
+                    }
+
+                    let favSpinners = document.getElementsByClassName('fav-spinner');
+                    for (let i = favSpinners.length - 1; i >= 0; i--) {
+                        favSpinners[i].remove();
+                    }
+                }
+            });
+        };
+
         window.fetchNotifications = function() {
             window.vue.ajaxRequest('get', '{{ url('/notifications/list') }}', {}, function(response){
                 if (response.code === 200) {
@@ -889,9 +952,10 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             @auth
-            setTimeout('fetchNotifications()', 5000);
-            setTimeout('fetchNotificationList()', 100);
-            setTimeout('indicateMessageCount()', 1000);
+                setTimeout('fetchNotifications()', 5000);
+                setTimeout('fetchNotificationList()', 100);
+                setTimeout('indicateMessageCount()', 1000);
+                setTimeout('fetchFavorites()', 320);
             @endauth
 
             window.vue.translationTable.copiedToClipboard = '{{ __('app.copiedToClipboard') }}';
@@ -921,6 +985,8 @@
             window.vue.translationTable.confirmDeleteOwnAccount = '{{ __('app.confirmDeleteOwnAccount') }}';
             window.vue.translationTable.confirmLockComment = '{{ __('app.confirmLockComment') }}';
             window.vue.translationTable.forumPostEdited = '{{ __('app.forum_post_edited_info') }}';
+            window.vue.translationTable.statsPosts = '{{ __('app.stats_posts') }}';
+            window.vue.translationTable.remove = '{{ __('app.remove') }}';
 
             window.vue.handleCookieConsent({{ (env('APP_PUBLICFEED') ? 'true' : 'false') }});
 

@@ -3,7 +3,7 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -421,6 +421,24 @@ class MemberController extends Controller
             $data = User::findProfiles($username, $bio, $age_from, $age_till, $gender, $location, $paginate);
 
             return response()->json(array('code' => 200, 'data' => $data));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Query favorites of user
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function queryFavorites()
+    {
+        try {
+            $paginate = request('paginate', null);
+
+            $data = FavoritesModel::getDetailedForUser(auth()->id(), $paginate)->toArray();
+
+            return response()->json(array('code' => 200, 'data' => $data, 'last' => count($data) === 0));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

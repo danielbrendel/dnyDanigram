@@ -25,7 +25,7 @@ return [
     'tag_is_about' => 'Dieser Hashtag ist über :subject',
     'created_at' => 'Erstellt: :date',
     'registered_since' => 'Mitglied seit: :date',
-    'stats_posts' => ':count Beiträge',
+    'stats_posts' => 'Beiträge',
     'stats_comments' => ':count Kommentare',
     'stats_hearts' => ':count Likes',
     'member_upload' => 'Hochladen',

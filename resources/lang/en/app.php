@@ -25,7 +25,7 @@ return [
     'tag_is_about' => 'This hashtag is about :subject',
     'created_at' => 'Created: :date',
     'registered_since' => 'Member since: :date',
-    'stats_posts' => ':count total posts',
+    'stats_posts' => 'Total posts',
     'stats_comments' => ':count total comments',
     'stats_hearts' => ':count total hearts',
     'member_upload' => 'Upload',

@@ -3,7 +3,7 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2020 by Daniel Brendel
+    (C) 2019 - 2021 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -129,13 +129,20 @@ class FavoritesModel extends Model
      * Get favorites of user
      *
      * @param $id
+     * @param $paginate
      * @return mixed
      * @throws \Exception
      */
-    public static function getForUser($id)
+    public static function getForUser($id, $paginate = null)
     {
         try {
-            return FavoritesModel::where('userId', '=', $id)->get();
+            $query = FavoritesModel::where('userId', '=', $id);
+
+            if ($paginate !== null) {
+                $query->where('id', '>', $paginate);
+            }
+
+            return $query->limit(env('APP_FAVPACKLIMIT'))->get();
         } catch (\Exception $e) {
             throw $e;
         }
@@ -145,13 +152,14 @@ class FavoritesModel extends Model
      * Get favorites with details
      *
      * @param $id
+     * @param $paginate
      * @return mixed
      * @throws \Exception
      */
-    public static function getDetailedForUser($id)
+    public static function getDetailedForUser($id, $paginate = null)
     {
         try {
-            $favorites = FavoritesModel::getForUser($id);
+            $favorites = FavoritesModel::getForUser($id, $paginate);
             foreach ($favorites as &$favorite) {
                 if ($favorite->type === 'ENT_HASHTAG') {
                     $hashtag = TagsModel::where('id', '=', $favorite->entityId)->first();
