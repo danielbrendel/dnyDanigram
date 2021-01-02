@@ -456,9 +456,16 @@ div.show-post-image-nsfw {
 .show-post-credits a {
     color: rgb(110, 110, 108);
 }
-
 .show-post-credits i {
     color: rgb(50, 50, 48);
+}
+.post-hashtag {
+    display: inline-block;
+    position: relative;
+    background-color: rgb(230, 230, 230);
+    border-radius: 26px;
+    margin: 5px;
+    padding: 10px;
 }
 
 //Feed

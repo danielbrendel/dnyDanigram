@@ -30,6 +30,7 @@ class CreatePostModelsTable extends Migration
             $table->string('image_full');
             $table->string('image_thumb');
             $table->boolean('video'); // true = a video, false = an image
+            $table->string('title')->nullable();
             $table->text('description');
             $table->string('hashtags', 512);
             $table->integer('userId');

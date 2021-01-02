@@ -257,7 +257,7 @@ return [
     'project_helprealm_tickettypeid' => 'Ticket type ID',
     'selected' => 'selected',
     'added_to_favorites_short' => 'You have been added to someones favorites',
-    'added_to_favorites' => ':name has added you to their favorites',
+    'added_to_favorites' => '<a href=":url">@:name</a> has added you to their favorites',
     'continue_without_account' => 'Continue without account',
     'invalid_password' => 'Invalid password specified',
     'account_deleted' => 'Account has been deleted',
@@ -432,5 +432,6 @@ return [
     'story_deleted' => 'Story item has been deleted',
     'no_account_yet' => 'No account yet? Sign up',
     'login_for_favs' => '<a href="javascript:void(0);" onclick="window.vue.bShowLogin = true;"><b>Login</b></a> to manage your favorites.',
-    'guest' => 'Guest'
+    'guest' => 'Guest',
+	'upload_hashtag_invalid' => 'Invalid hashtag: :hashtag'
 ];

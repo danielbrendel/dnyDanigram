@@ -12,8 +12,6 @@
 
 require('./bootstrap.js');
 
-const MAX_SHARE_TEXT_LENGTH = 15;
-
 //Make Vue instance
 let vue = new Vue({
     el: '#main',
@@ -268,7 +266,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
     let hashArr = elem.hashtags.trim().split(' ');
     hashArr.forEach(function (elem, index) {
         if (elem.length > 0) {
-            hashTags += '<a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a>&nbsp;';
+            hashTags += '<div class="post-hashtag"><a href="' + window.location.origin + '/t/' + elem + '">#' + elem + '</a></div>';
         }
     });
 
@@ -306,6 +304,11 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                 ` + window.vue.translationTable.lock + `
             </a>
             ` + ((nsfwFunctionalityEnabled) ? nsfwOption : '');
+    }
+
+    let postTitle = '';
+    if (elem.title !== null) {
+        postTitle = '<div class="is-size-5 is-default-padding is-breakall">' + elem.title + '</div>';
     }
 
     let gfx_resource = '';
@@ -363,22 +366,22 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                                         </div>
                                         <div class="dropdown-menu" role="menu">
                                             <div class="dropdown-content">
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="whatsapp://send?text=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="whatsapp://send?text=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.title !== null) ? elem.title : '') + `" class="dropdown-item">
                                                     <i class="far fa-copy"></i>&nbsp;` + window.vue.translationTable.shareWhatsApp + `
                                                 </a>
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="https://twitter.com/share?url=` + encodeURIComponent(window.location.origin + '/p/' + elem.id) + `&text=` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="https://twitter.com/share?url=` + encodeURIComponent(window.location.origin + '/p/' + elem.id) + `&text=` + ((elem.title !== null) ? elem.title : '') + `" class="dropdown-item">
                                                     <i class="fab fa-twitter"></i>&nbsp;` + window.vue.translationTable.shareTwitter + `
                                                 </a>
                                                 <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="https://www.facebook.com/sharer/sharer.php?u=` + window.location.origin + `/p/` + elem.id + `" class="dropdown-item">
                                                     <i class="fab fa-facebook"></i>&nbsp;` + window.vue.translationTable.shareFacebook + `
                                                 </a>
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="mailto:name@domain.com?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="mailto:name@domain.com?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.title !== null) ? elem.title : '') + `" class="dropdown-item">
                                                     <i class="far fa-envelope"></i>&nbsp;` + window.vue.translationTable.shareEMail + `
                                                 </a>
-                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="sms:000000000?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `" class="dropdown-item">
+                                                <a onclick="window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" href="sms:000000000?body=` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.title !== null) ? elem.title : '') + `" class="dropdown-item">
                                                     <i class="fas fa-sms"></i>&nbsp;` + window.vue.translationTable.shareSms + `
                                                 </a>
-                                                <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.description.length > MAX_SHARE_TEXT_LENGTH) ? elem.description.substr(0, MAX_SHARE_TEXT_LENGTH) + '...' : elem.description) + `'); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
+                                                <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + `/p/` + elem.id + ` ` + ((elem.title !== null) ? elem.title : '') + `'); window.vue.togglePostOptions(document.getElementById('post-options-` + elem.id + `'));" class="dropdown-item">
                                                     <i class="far fa-copy"></i>&nbsp;` + window.vue.translationTable.copyLink + `
                                                 </a>
                                                 <hr class="dropdown-divider">
@@ -391,6 +394,8 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                                     </div>
                                 </div>
                             </div>
+
+                            ` + postTitle + `
 
                             <div class="show-post-image">
                                 ` + gfx_resource + `

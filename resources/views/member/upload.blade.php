@@ -24,6 +24,14 @@
             <div>
                 <form method="POST" action="{{ url('/upload') }}" enctype="multipart/form-data">
                     @csrf
+
+                    <div class="field">
+                        <label class="label">{{ __('app.title') }}</label>
+                        <div class="control">
+                            <input type="text" name="title" placeholder="{{ __('app.enter_title') }}">
+                        </div>
+                    </div>
+
                     <div class="field">
                         <label class="label">{{ __('app.text') }}</label>
                         <div class="control">

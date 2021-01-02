@@ -212,6 +212,7 @@ class PostModel extends Model
         try {
             $attr = request()->validate([
                 'image' => 'file|nullable',
+                'title' => 'nullable|max:120',
                 'description' => 'nullable|max:4096',
                 'hashtags' => 'nullable',
                 'nsfw' => 'nullable',
@@ -219,6 +220,10 @@ class PostModel extends Model
                 'twitter_name' => 'nullable',
                 'homepage_url' => 'nullable'
             ]);
+
+            if (!isset($attr['title'])) {
+                $attr['title'] = null;
+            }
 
             if (!isset($attr['description'])) {
                 $attr['description'] = '';
@@ -255,6 +260,8 @@ class PostModel extends Model
 
             $attr['description'] = \Purifier::clean($attr['description']);
 
+			$resultId = null;
+
             $att = request()->file('image');
             if ($att != null) {
                 if ($att->getSize() > env('APP_MAXUPLOADSIZE')) {
@@ -285,6 +292,7 @@ class PostModel extends Model
                 $post->image_full = $fname . '.' . $fext;
                 $post->image_thumb = $fname . '_thumb.' . $fext;
                 $post->video = $video;
+                $post->title = $attr['title'];
                 $post->description = $attr['description'];
                 $post->hashtags = str_replace('#', '', trim($attr['hashtags']));
                 if (strlen($post->hashtags) > 0) {
@@ -299,24 +307,13 @@ class PostModel extends Model
                 $post->attribution_homepage = $attr['homepage_url'];
                 $post->save();
 
-                foreach ($hashtagList as $ht) {
-                    TagsModel::addTag($ht);
-                }
-
-                $mentionNames = AppModel::getMentionList($attr['description']);
-                foreach ($mentionNames as $name) {
-                    $curUser = User::getByUsername($name);
-                    if ($curUser) {
-                        PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id)]), 'PUSH_MENTIONED', $curUser->id);
-                    }
-                }
-
-                return $post->id;
+                $resultId = $post->id;
             } else {
                 $post = new PostModel();
                 $post->image_full = '_none';
                 $post->image_thumb = '_none';
                 $post->video = false;
+                $post->title = $attr['title'];
                 $post->description = $attr['description'];
                 $post->hashtags = str_replace('#', '', trim($attr['hashtags']));
                 if (strlen($post->hashtags) > 0) {
@@ -331,8 +328,22 @@ class PostModel extends Model
                 $post->attribution_homepage = $attr['homepage_url'];
                 $post->save();
 
-                return $post->id;
+                $resultId = $post->id;
             }
+			
+			foreach ($hashtagList as $ht) {
+				TagsModel::addTag($ht);
+			}
+
+			$mentionNames = AppModel::getMentionList($attr['description']);
+			foreach ($mentionNames as $name) {
+				$curUser = User::getByUsername($name);
+				if ($curUser) {
+					PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id)]), 'PUSH_MENTIONED', $curUser->id);
+				}
+			}
+			
+			return $resultId;
         } catch (\Exception $e) {
             throw $e;
         }

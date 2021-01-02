@@ -148,10 +148,10 @@
 
             window.vue.ajaxRequest('get', '{{ url('/fetch/post') }}?post={{ $post->id }}', {}, function(response){
                 if (response.code == 200) {
-                    adminOrOwner = false;
+                    let adminOrOwner = false;
 
                     @auth
-                        adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                        adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === response.elem.userId);
                     @endauth
 
                     let nsfwFlag = 0;

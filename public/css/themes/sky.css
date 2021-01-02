@@ -567,6 +567,15 @@ div.show-post-image-nsfw {
   font-weight: bold;
 }
 
+.post-hashtag {
+  display: inline-block;
+  position: relative;
+  background-color: #e6e6e6;
+  border-radius: 26px;
+  margin: 5px;
+  padding: 10px;
+}
+
 @media screen and (max-width: 380px) {
   #feed {
     top: unset;

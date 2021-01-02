@@ -257,7 +257,7 @@ return [
     'project_helprealm_tickettypeid' => 'Ticket type ID',
     'selected' => 'selektiert',
     'added_to_favorites_short' => 'Du wurdest zu jemandes Favoriten hinzugefügt',
-    'added_to_favorites' => ':name scheint sich für deinen Inhalt zu interessieren',
+    'added_to_favorites' => '<a href=":url">@:name</a> scheint sich für deinen Inhalt zu interessieren',
     'continue_without_account' => 'Weiter ohne Konto',
     'invalid_password' => 'Ungültiges Passwort angegeben',
     'account_deleted' => 'Konto wurde gelöscht',
@@ -432,5 +432,6 @@ return [
     'story_deleted' => 'Die Story wurde gelöscht',
     'no_account_yet' => 'Noch kein Konto? Jetzt anmelden',
     'login_for_favs' => '<a href="javascript:void(0);" onclick="window.vue.bShowLogin = true;"><b>Melde dich an</b></a>, um deine Favoriten zu verwalten.',
-    'guest' => 'Gast'
+    'guest' => 'Gast',
+	'upload_hashtag_invalid' => 'Der Hashtag :hashtag ist ungültig'
 ];

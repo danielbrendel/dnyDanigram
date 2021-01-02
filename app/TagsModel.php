@@ -122,7 +122,7 @@ class TagsModel extends Model
                     return PostModel::where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->count();
                 });
 
-                $tag->top_image = Cache::remember('tag_top_image_' . $tag->tag, 24, function() use ($tag) {
+                $tag->top_image = Cache::remember('tag_top_image_' . $tag->tag, 30, function() use ($tag) {
                     $post = PostModel::where('locked', '=', false)->where('nsfw', '=', false)->where('hashtags', 'LIKE', '%' . $tag->tag . ' %')->where('video', '=', false)->where('image_thumb', '<>', '_none')->orderBy('hearts', 'desc')->first();
                     if ($post) {
                         return $post->image_thumb;
@@ -145,7 +145,7 @@ class TagsModel extends Model
      */
     public static function getTopImage($hashtag)
     {
-        return Cache::remember('tag_top_image_' . $hashtag, 24, function() use ($hashtag) {
+        return Cache::remember('tag_top_image_' . $hashtag, 30, function() use ($hashtag) {
             $post = PostModel::where('locked', '=', false)->where('nsfw', '=', false)->where('hashtags', 'LIKE', '%' . $hashtag . ' %')->where('video', '=', false)->orderBy('hearts', 'desc')->first();
             if ($post) {
                 return $post->image_thumb;

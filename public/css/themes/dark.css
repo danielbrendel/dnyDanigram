@@ -31,11 +31,11 @@ body, .tabs-list, .caption {
 }
 
 a {
-    color: rgb(120, 120, 120);
+    color: rgb(190, 190, 190);
 }
 
 a:hover {
-    color: rgb(150, 150, 150);
+    color: rgb(200, 200, 200);
 }
 
 .container {
@@ -78,6 +78,10 @@ h2 {
 
 .ql-editing {
     z-index: 3;
+}
+
+.ql-editor.ql-blank::before {
+	color: rgb(150, 150, 150) !important;
 }
 
 strong {
@@ -587,6 +591,15 @@ pre.is-post-background {
 
 .is-app-title {
     color: rgb(200, 200, 200) !important;
+}
+
+.post-hashtag {
+  display: inline-block;
+  position: relative;
+  background-color: #252525;
+  border-radius: 26px;
+  margin: 5px;
+  padding: 10px;
 }
 
 @media screen and (max-width: 380px) {
