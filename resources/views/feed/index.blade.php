@@ -135,6 +135,8 @@
 
                             document.getElementById('feed').innerHTML += insertHtml;
 
+                            //window.renderPosterImage();
+
                             if (window.vue.getPostFetchType() == 1) {
                                 if (response.data[response.data.length - 1]._type === 'ad') {
                                     window.paginate = response.data[response.data.length - 2].hearts;

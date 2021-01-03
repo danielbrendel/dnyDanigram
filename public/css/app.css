@@ -1011,8 +1011,8 @@ div.show-post-image-nsfw {
 }
 
 .notifications {
-  position: absolute;
-  top: -9px;
+  position: fixed;
+  top: 23px;
   z-index: 4;
   background-color: #fafafa;
   display: none;

@@ -1030,7 +1030,7 @@ div.show-post-image-nsfw {
 }
 
 .notifications {
-  position: absolute;
+  position: fixed;
   top: -9px;
   z-index: 4;
   background-color: #fafafa;

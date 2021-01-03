@@ -162,6 +162,7 @@
 
                     let insertHtml = renderPost(response.elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }});
                     document.getElementById('singlepost').innerHTML = insertHtml;
+                    //window.renderPosterImage();
                 }
             });
         }

@@ -313,7 +313,8 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
 
     let gfx_resource = '';
     if (elem.video) {
-        gfx_resource = `<video id="post-image-` + elem.id + `" class="is-stretched ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" controls><source src="` + window.location.origin + '/gfx/posts/' + elem.image_full + `"/></video>`;
+        videoType = 'video/' + elem.image_full.substr(elem.image_full.lastIndexOf('.') + 1);
+        gfx_resource = `<video id="post-image-` + elem.id + `" class="is-stretched ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" controls><source src="` + window.location.origin + '/gfx/posts/' + elem.image_full + `" type="` + videoType + `"/></video>`;
     } else {
         gfx_resource = `<img id="post-image-` + elem.id + `" class="is-pointer is-stretched ` + (((elem.nsfw) && (showNsfw === 0)) ? 'show-post-image-nsfw' : '') + `" src="` + window.location.origin + `/gfx/posts/` + elem.image_thumb + `" onclick="location.href='` + window.location.origin + '/p/' + elem.id + `'">`;
     }
@@ -417,6 +418,35 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                                    </div>
                         `;
     return html;
+};
+
+window.renderPosterImage = function() {
+    var elems = document.getElementsByTagName('video');
+
+    for (let i = 0; i < elems.length; i++) {
+        if (elems[i].getAttribute('data-preview') === true) {
+            continue;
+        }
+
+        var url = elems[i].querySelector('source').src;
+    
+        var video = document.createElement('video');
+        video.src = url;
+        video.setAttribute('data-id', i);
+    
+        var snapshot = function(){
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+    
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            elems[video.getAttribute('data-id')].setAttribute('poster', canvas.toDataURL('image/png'));
+            elems[video.getAttribute('data-id')].setAttribute('data-preview', true);
+    
+            video.removeEventListener('canplay', snapshot);
+        };
+    
+        video.addEventListener('canplay', snapshot);
+    }
 };
 
 window.renderThread = function(elem, adminOrOwner = false, isSubComment = false, parentId = 0) {

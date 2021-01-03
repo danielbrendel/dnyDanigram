@@ -151,6 +151,8 @@
 
                             document.getElementById('feed').innerHTML += insertHtml;
 
+                            //window.renderPosterImage();
+
                             if (window.vue.getPostFetchType() == 1) {
                                 window.paginate = response.data[response.data.length - 1].hearts;
                             } else if ((window.vue.getPostFetchType() == 2) || (window.vue.getPostFetchType() == 3)) {
