@@ -59,7 +59,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_PROFILEPACKLIMIT=20' . PHP_EOL;
             $envcontent .= 'APP_FAVPACKLIMIT=55' . PHP_EOL;
             $envcontent .= 'APP_FORUMPACKLIMIT=55' . PHP_EOL;
-            $envcontent .= 'APP_TOPNTAGS=25' . PHP_EOL;
+            $envcontent .= 'APP_TOPNTAGS=50' . PHP_EOL;
             $envcontent .= 'APP_STORYPACK=32' . PHP_EOL;
             $envcontent .= 'APP_STORYDURATION=24' . PHP_EOL;
 			$envcontent .= 'APP_PUBLICFEED=false' . PHP_EOL;
