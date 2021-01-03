@@ -351,7 +351,7 @@ class User extends Authenticatable
             });
 
             $stats->comments = Cache::remember('user_stats_comments_' . $userId, 3600 * 24, function () use ($userId) {
-                ThreadModel::where('userId', '=', $userId)->count();
+                return ThreadModel::where('userId', '=', $userId)->count();
             });
 
             return $stats;
