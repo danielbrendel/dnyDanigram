@@ -347,11 +347,11 @@ class User extends Authenticatable
             $stats = new stdClass();
 
             $stats->posts = Cache::remember('user_stats_posts_' . $userId, 3600 * 24, function () use ($userId) {
-                return PostModel::where('userId', '=', $userId)->count();
+                return PostModel::where('locked', '=', false)->where('userId', '=', $userId)->count();
             });
 
             $stats->comments = Cache::remember('user_stats_comments_' . $userId, 3600 * 24, function () use ($userId) {
-                return ThreadModel::where('userId', '=', $userId)->count();
+                return ThreadModel::where('locked', '=', false)->where('userId', '=', $userId)->count();
             });
 
             return $stats;
