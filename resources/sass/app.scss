@@ -419,6 +419,10 @@ pre.is-post-background {
 }
 .show-post-image {
     margin-top: 14px;
+	@media screen and (max-width: 480px) {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
 }
 .show-post-attributes {
 	margin-top: 10px;

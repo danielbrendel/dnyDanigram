@@ -2094,7 +2094,7 @@ window.renderPost = function (elem) {
 
   if (elem.video) {
     videoType = 'video/' + elem.image_full.substr(elem.image_full.lastIndexOf('.') + 1);
-    gfx_resource = "<video id=\"post-image-" + elem.id + "\" class=\"is-stretched " + (elem.nsfw && showNsfw === 0 ? 'show-post-image-nsfw' : '') + "\" controls><source src=\"" + window.location.origin + '/gfx/posts/' + elem.image_full + "\" type=\"" + videoType + "\"/></video>";
+    gfx_resource = "<video id=\"post-image-" + elem.id + "\" class=\"is-stretched " + (elem.nsfw && showNsfw === 0 ? 'show-post-image-nsfw' : '') + "\" preload=\"metadata\" controls><source src=\"" + window.location.origin + '/gfx/posts/' + elem.image_full + "#t=0.1\" type=\"" + videoType + "\"/></video>";
   } else {
     gfx_resource = "<img id=\"post-image-" + elem.id + "\" class=\"is-pointer is-stretched " + (elem.nsfw && showNsfw === 0 ? 'show-post-image-nsfw' : '') + "\" src=\"" + window.location.origin + "/gfx/posts/" + elem.image_thumb + "\" onclick=\"location.href='" + window.location.origin + '/p/' + elem.id + "'\">";
   }
