@@ -52,7 +52,7 @@
 
 <div class="userinfo-stats">
     <i class="far fa-calendar-alt" title="{{ $user->created_at }}"></i>&nbsp;{{ __('app.registered_since', ['date' => $user->created_at->diffForHumans()]) }}<br/>
-    <i class="far fa-file-image"></i>&nbsp;{{ __('app.stats_posts', ['count' => $user->stats->posts]) }}<br/>
+    <i class="far fa-file-image"></i>&nbsp;{{ __('app.stats_posts') }}: {{ $user->stats->posts }}<br/>
     <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_comments', ['count' => $user->stats->comments]) }}<br/>
     <i class="@if ($user->gender == 1) {{ 'fas fa-mars' }} @elseif ($user->gender == 2) {{ 'fas fa-venus' }} @elseif ($user->gender == 3) {{ 'fas fa-transgender-alt' }} @else {{ 'fas fa-genderless' }} @endif"></i>&nbsp;{{ $user->genderStr }}<br/>
     <i class="fas fa-star-of-life"></i>&nbsp;{{ __('app.age_info', ['value' => $user->age]) }}<br/>
