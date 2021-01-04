@@ -33,7 +33,7 @@
 
                         <div class="is-inline-block">
                             <div><a href="{{ url('/t/' . $tag->tag) }}">#{{ \App\AppModel::getShortExpression($tag->tag) }}</a></div>
-                            <div>{{ __('app.stats_posts', ['count' => $tag->total_posts]) }}</div>
+                            <div>{{ __('app.stats_posts') }}: {{ $tag->total_posts }}</div>
                         </div>
                     </div>
 
