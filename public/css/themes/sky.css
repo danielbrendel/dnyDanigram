@@ -1037,7 +1037,7 @@ div.show-post-image-nsfw {
 
 .notifications {
   position: fixed;
-  top: -9px;
+  top: 50px;
   z-index: 4;
   background-color: #fafafa;
   display: none;
@@ -1045,7 +1045,7 @@ div.show-post-image-nsfw {
 
 @media screen and (min-width: 769px) {
   .notifications {
-    right: -151px;
+    right: -17px;
     width: 550px;
     height: 90%;
   }
@@ -1070,7 +1070,7 @@ div.show-post-image-nsfw {
   }
 }
 
-.notification-close-icon {
+.notification-close-button {
   margin-top: 22px;
   margin-right: 32px;
 }

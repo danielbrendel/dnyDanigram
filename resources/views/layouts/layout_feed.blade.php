@@ -220,7 +220,7 @@
             <div class="notifications" id="notifications">
                 <div>
                     <div class="is-inline-block"></div>
-                    <div class="is-inline-block float-right notification-close-icon" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }"><i class="fas fa-times is-pointer"></i></div>
+                    <div class="is-inline-block float-right notification-close-button is-size-7 is-color-grey is-pointer" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.close') }}</div>
                 </div>
 
                 <div class="notifications-content" id="notification-content"></div>

@@ -852,9 +852,9 @@ div.show-post-image-nsfw {
 //Notification area
 .notifications {
     position: fixed;
-    top: 23px;
+    top: 50px;
     @media screen and (min-width: 769px) {
-        right: -151px;
+        right: -17px;
         width: 550px;
         height: 90%;
     }
@@ -872,7 +872,7 @@ div.show-post-image-nsfw {
     background-color: rgb(250, 250, 250);
     display: none;
 }
-.notification-close-icon {
+.notification-close-button {
     margin-top: 22px;
     margin-right: 32px;
 }
