@@ -120,7 +120,9 @@
                                 nsfwFlag = {{ (int)$user->nsfw }};
                             @endauth
 
-                            let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }});
+                            let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
+
+                            let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
 
                             document.getElementById('feed').innerHTML += insertHtml;
 

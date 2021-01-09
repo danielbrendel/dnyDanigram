@@ -210,6 +210,8 @@ let vue = new Vue({
                    obj.setAttribute('data-value', ((response.value) ? '1' : '0'));
 
                    document.getElementById('count-' + type.toLowerCase() + '-' + elemId).innerHTML = response.count;
+               } else {
+                   console.log(response.msg);
                }
             });
         },
@@ -254,7 +256,7 @@ let vue = new Vue({
     }
 });
 
-window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunctionalityEnabled = false)
+window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunctionalityEnabled = false, isGuest = true)
 {
     if (elem._type === 'ad') {
         let html = '<div class="show-post member-form is-advertisement">' + elem.code + '</div>';
@@ -348,6 +350,13 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
         post_credits = '';
     }
 
+    let heartOption = '';
+    if (isGuest) {
+        heartOption = `window.vue.bShowLogin = true;`;
+    } else {
+        heartOption = `window.vue.toggleHeart(` + elem.id + `, 'ENT_POST');`;
+    }
+
     let html = `
                             <div class="show-post member-form">
                             <div class="show-post-header is-default-padding">
@@ -403,7 +412,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                             </div>
 
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">
-                                <div class="is-inline-block"><span onclick="window.vue.toggleHeart(` + elem.id + `, 'ENT_POST')"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i></span> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
+                                <div class="is-inline-block"><span onclick="` + heartOption + `"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i></span> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span></div>
                                 <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="let oPostImage = document.getElementById('post-image-` + elem.id + `'); if (oPostImage.classList.contains('show-post-image-nsfw')) { oPostImage.classList.remove('show-post-image-nsfw'); } else { oPostImage.classList.add('show-post-image-nsfw'); }" class="is-color-grey">` + window.vue.translationTable.toggleNsfw2 + `</a></center></div>
                                 <div class="is-inline-block is-right float-right"><a class="is-color-grey" href="` + window.location.origin + `/p/` + elem.id + `#thread">` + elem.comment_count + ` comments</a></div>
                             </div>

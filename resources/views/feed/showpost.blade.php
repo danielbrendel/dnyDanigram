@@ -160,7 +160,9 @@
                         nsfwFlag = {{ (int)$user->nsfw }};
                     @endauth
 
-                    let insertHtml = renderPost(response.elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }});
+                    let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
+
+                    let insertHtml = renderPost(response.elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
                     document.getElementById('singlepost').innerHTML = insertHtml;
                     //window.renderPosterImage();
                 }
