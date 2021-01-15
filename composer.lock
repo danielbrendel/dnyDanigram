@@ -803,16 +803,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.30.1",
+            "version": "v7.30.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "e73855b18dcfc645c36d2474f437e4e73dd3c11d"
+                "reference": "28481951106e75cf8c5a8b24100059fa327df1ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/e73855b18dcfc645c36d2474f437e4e73dd3c11d",
-                "reference": "e73855b18dcfc645c36d2474f437e4e73dd3c11d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/28481951106e75cf8c5a8b24100059fa327df1ef",
+                "reference": "28481951106e75cf8c5a8b24100059fa327df1ef",
                 "shasum": ""
             },
             "require": {
@@ -957,7 +957,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-12-22T17:00:45+00:00"
+            "time": "2021-01-15T15:38:30+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -2278,16 +2278,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v7.67.0",
+            "version": "v7.68.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "935d2c67912007f6d17b6c08a62050252c509129"
+                "reference": "36b10e1f0e9d973f00f802bbd098bce85d0438e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/935d2c67912007f6d17b6c08a62050252c509129",
-                "reference": "935d2c67912007f6d17b6c08a62050252c509129",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/36b10e1f0e9d973f00f802bbd098bce85d0438e4",
+                "reference": "36b10e1f0e9d973f00f802bbd098bce85d0438e4",
                 "shasum": ""
             },
             "require": {
@@ -2331,20 +2331,20 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2020-12-09T19:00:34+00:00"
+            "time": "2021-01-15T00:38:28+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.2.4",
+            "version": "v6.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e"
+                "reference": "698a6a9f54d7eb321274de3ad19863802c879fb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e",
-                "reference": "56f0ab23f54c4ccbb0d5dcc67ff8552e0c98d59e",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/698a6a9f54d7eb321274de3ad19863802c879fb7",
+                "reference": "698a6a9f54d7eb321274de3ad19863802c879fb7",
                 "shasum": ""
             },
             "require": {
@@ -2402,7 +2402,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-08T18:02:06+00:00"
+            "time": "2021-01-12T09:35:59+00:00"
         },
         {
             "name": "symfony/console",
