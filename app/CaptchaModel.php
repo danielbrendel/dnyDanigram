@@ -53,7 +53,7 @@ class CaptchaModel extends Model
 
         $entry = CaptchaModel::where('hash', '=', $hash)->first();
         if (!$entry) {
-            $entry = new \App\CaptchaModel;
+            $entry = new CaptchaModel;
         }
 
         $entry->hash = $hash;
