@@ -145,10 +145,17 @@ class PostsController extends Controller
                 $user->stats = User::getStats($user->id);
             }
 
+            $skipCaptchaRefresh = (int)request('scr', 0);
+            if ($skipCaptchaRefresh) {
+                $captcha = array(-1, -1);
+            } else {
+                $captcha = CaptchaModel::createSum(session()->getId());
+            }
+
             return view('feed.index', [
                 'user' => $user,
                 'taglist' => TagsModel::getPopularTags(),
-                'captcha' => CaptchaModel::createSum(session()->getId()),
+                'captcha' => $captcha,
                 'cookie_consent' => AppModel::getCookieConsentText()
             ]);
         } catch (Exception $e) {
