@@ -319,7 +319,7 @@ return [
     'confirmLockUser' => 'Möchtest Du dieses Konto sperren?',
     'confirmDeleteOwnAccount' => 'Möchtest Du dein Konto wirklich löschen? Falls ja, dann musst du dein Passwort angeben, um die Aktion durchzuführen.',
     'confirmLockComment' => 'Möchtest Du diesen Kommentar sperren?',
-    'register_username_invalid_chars ' => 'Ungültige Zeichen im Namen. Dein Name muss mindestens ein Buchstabe enthalten (a-z, klein geschrieben) und darf sonst nur Nummern und die Zeichen \'-\' und \'_\' enthalten.',
+    'register_username_invalid_chars' => 'Ungültige Zeichen im Namen. Dein Name muss mindestens ein Buchstabe enthalten (a-z, klein geschrieben) und darf sonst nur Nummern und die Zeichen \'-\' und \'_\' enthalten.',
     'payment_failed' => 'Zahlung fehlgeschlagen. Bitte probiere es später erneut. Kontaktiere die Administration, falls das Problem bestehen bleibt.',
     'payment_succeeded' => 'Zahlung erfolgreich durchgeführt. Für dein Konto ist nun der Pro-Modus aktiviert',
     'purchase_pro_mode' => 'Pro-Modus kaufen!',
