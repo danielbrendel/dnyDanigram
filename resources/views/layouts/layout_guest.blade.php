@@ -64,6 +64,7 @@
         <footer class="modal-card-foot is-stretched">
             <span>
                 <button class="button is-success" onclick="document.getElementById('regform').submit();">{{ __('app.register') }}</button>
+                <button class="button" onclick="vue.bShowRegister = false;">{{ __('app.cancel') }}</button>
             </span>
         </footer>
     </div>
