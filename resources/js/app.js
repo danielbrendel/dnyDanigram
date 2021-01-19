@@ -72,7 +72,9 @@ let vue = new Vue({
             remove: 'Remove',
             invalidUsername: 'The given username is invalid',
             nonavailableUsername: 'The given username is not available',
-            usernameOk: 'The given username is valid and available'
+            usernameOk: 'The given username is valid and available',
+            passwordMismatching: 'The passwords do not match',
+            passwordMatching: 'The passwords do match'
         }
     },
 
@@ -1270,6 +1272,20 @@ window.showUsernameValidity = function(username, hint, currentName = '') {
             }
         }
     });
+};
+
+window.showPasswordMatching = function(pw1, pw2, hint) {
+    if ((pw1.length > 0) || (pw2.length > 0)) {
+        if (pw1 !== pw2) {
+            hint.classList.remove('is-success');
+            hint.classList.add('is-danger');
+            hint.innerHTML = window.vue.translationTable.passwordMismatching;
+        } else {
+            hint.classList.add('is-success');
+            hint.classList.remove('is-danger');
+            hint.innerHTML = window.vue.translationTable.passwordMatching;
+        }
+    }
 };
 
 //Make vue instance available globally

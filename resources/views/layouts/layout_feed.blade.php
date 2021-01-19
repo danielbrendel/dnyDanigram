@@ -438,15 +438,16 @@
                             <div class="field">
                                 <label class="label">{{ __('app.password') }}</label>
                                 <div class="control">
-                                    <input type="password" name="password">
+                                    <input type="password" name="password" id="settings-password" onchange="window.showPasswordMatching(document.getElementById('settings-password-confirm').value, this.value, document.getElementById('settings-password-matching'));" onkeyup="window.showPasswordMatching(document.getElementById('settings-password-confirm').value, this.value, document.getElementById('settings-password-matching'));">
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label">{{ __('app.password_confirm') }}</label>
                                 <div class="control">
-                                    <input type="password" name="password_confirm">
+                                    <input type="password" name="password_confirm" id="settings-password-confirm" onchange="window.showPasswordMatching(document.getElementById('settings-password').value, this.value, document.getElementById('settings-password-matching'));" onkeyup="window.showPasswordMatching(document.getElementById('settings-password').value, this.value, document.getElementById('settings-password-matching'));">
                                 </div>
+                                <p id="settings-password-matching" class="help"></p>
                             </div>
 
                             <hr/>
