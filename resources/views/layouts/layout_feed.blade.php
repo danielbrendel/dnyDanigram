@@ -386,8 +386,9 @@
                             <div class="field">
                                 <label class="label">{{ __('app.username') }}</label>
                                 <div class="control">
-                                    <input type="text" name="username" value="{{ $user->username }}">
+                                    <input type="text" name="username" value="{{ $user->username }}" onchange="window.showUsernameValidity(this.value, document.getElementById('settings-username-valid'), '{{ $user->username }}');" onkeyup="window.showUsernameValidity(this.value, document.getElementById('settings-username-valid'), '{{ $user->username }}');">
                                 </div>
+                                <p id="settings-username-valid" class="help"></p>
                             </div>
 
                             <div class="field">
@@ -987,6 +988,9 @@
             window.vue.translationTable.forumPostEdited = '{{ __('app.forum_post_edited_info') }}';
             window.vue.translationTable.statsPosts = '{{ __('app.stats_posts') }}';
             window.vue.translationTable.remove = '{{ __('app.remove') }}';
+            window.vue.translationTable.invalidUsername = '{{ __('app.register_username_invalid_chars') }}';
+            window.vue.translationTable.nonavailableUsername = '{{ __('app.username_not_available') }}';
+            window.vue.translationTable.usernameOk = '{{ __('app.username_valid_and_available') }}';
 
             window.vue.handleCookieConsent({{ (env('APP_PUBLICFEED') ? 'true' : 'false') }});
 

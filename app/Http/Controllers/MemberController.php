@@ -443,4 +443,26 @@ class MemberController extends Controller
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
+
+    /**
+     * Check for username availability and identifier validity
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function usernameValidity()
+    {
+        try {
+            $username = request('ident', '');
+
+            $data = array(
+                'username' => $username,
+                'available' => User::getByUsername($username) == null,
+                'valid' => AppModel::isValidNameIdent($username)
+            );
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
 }

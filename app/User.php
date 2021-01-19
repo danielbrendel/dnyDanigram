@@ -206,7 +206,7 @@ class User extends Authenticatable
                 throw new Exception(__('app.register_already_signed_in'));
             }
 
-            $attr['username'] = strtolower($attr['username']);
+            $attr['username'] = trim(strtolower($attr['username']));
 
             if ($attr['password'] !== $attr['password_confirmation']) {
                 throw new Exception(__('app.register_password_mismatch'));
@@ -370,6 +370,8 @@ class User extends Authenticatable
     public static function changeUsername($id, $name)
     {
         try {
+            $name = trim(strtolower($name));
+
             $user = User::get($id);
             if (($user) && (!$user->deactivated) && ($user->username !== $name)) {
                 $inuse = User::where('username', '=', $name)->count();

@@ -170,7 +170,7 @@ class AppModel extends Model
      */
     public static function isValidNameIdent($ident)
     {
-        if (is_numeric($ident)) {
+        if (is_numeric($ident) || (strlen($ident) == 0)) {
             return false;
         }
 

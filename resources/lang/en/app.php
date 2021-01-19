@@ -319,7 +319,7 @@ return [
     'confirmLockUser' => 'Do you want to deactivate this profile?',
     'confirmDeleteOwnAccount' => 'Do you really want to delete your profile? If yes then please enter your password in order to proceed.',
     'confirmLockComment' => 'Do you want to lock this comment?',
-    'register_username_invalid_chars ' => 'Invalid characters. Your name must contain at least one character (a-z, lowercase) and may contain numbers and the characters \'-\' and \'_\'.',
+    'register_username_invalid_chars' => 'Invalid characters. Your name must contain at least one character (a-z, lowercase) and may contain numbers and the characters \'-\' and \'_\'.',
     'payment_failed' => 'Payment has failed. Please try again later or contact us',
     'payment_succeeded' => 'Payment succeeded. You now have pro mode enabled',
     'purchase_pro_mode' => 'Purchase pro mode!',
@@ -433,5 +433,8 @@ return [
     'no_account_yet' => 'No account yet? Sign up',
     'login_for_favs' => '<a href="javascript:void(0);" onclick="window.vue.bShowLogin = true;"><b>Login</b></a> to manage your favorites.',
     'guest' => 'Guest',
-	'upload_hashtag_invalid' => 'Invalid hashtag: :hashtag'
+    'upload_hashtag_invalid' => 'Invalid hashtag: :hashtag',
+    'username_not_available' => 'The given username is already in use',
+    'username_valid_and_available' => 'The username is valid and available',
+    'register_password_mismatch' => 'The passwords do not match'
 ];

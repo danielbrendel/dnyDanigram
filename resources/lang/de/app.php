@@ -433,5 +433,8 @@ return [
     'no_account_yet' => 'Noch kein Konto? Jetzt anmelden',
     'login_for_favs' => '<a href="javascript:void(0);" onclick="window.vue.bShowLogin = true;"><b>Melde dich an</b></a>, um deine Favoriten zu verwalten.',
     'guest' => 'Gast',
-	'upload_hashtag_invalid' => 'Der Hashtag :hashtag ist ungültig'
+    'upload_hashtag_invalid' => 'Der Hashtag :hashtag ist ungültig',
+    'username_not_available' => 'Der Benutzername ist schon vergeben',
+    'username_valid_and_available' => 'Der Benutzername ist gültig und noch frei',
+    'register_password_mismatch' => 'Die Passwörter stimmen nicht überein'
 ];

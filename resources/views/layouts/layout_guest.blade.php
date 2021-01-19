@@ -24,14 +24,15 @@
                 <div class="field">
                     <label class="label">{{ __('app.register_username') }}</label>
                     <div class="control">
-                        <input class="input" type="text" name="username" required>
+                        <input class="input" type="text" name="username" onchange="window.showUsernameValidity(this.value, document.getElementById('reg-username-validity'));" onkeyup="window.showUsernameValidity(this.value, document.getElementById('reg-username-validity'));" value="{{ old('username') }}" required>
                     </div>
+                    <p id="reg-username-validity" class="help"></p>
                 </div>
 
                 <div class="field">
                     <label class="label">{{ __('app.register_email') }}</label>
                     <div class="control">
-                        <input class="input" type="email" name="email" required>
+                        <input class="input" type="email" name="email" value="{{ old('email') }}" required>
                     </div>
                 </div>
 
@@ -47,6 +48,7 @@
                     <div class="control">
                         <input class="input" type="password" name="password_confirmation" required>
                     </div>
+                    <p id="reg-password-matching" class="help"></p>
                 </div>
 
                 <div class="field">

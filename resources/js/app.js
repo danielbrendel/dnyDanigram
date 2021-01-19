@@ -69,7 +69,10 @@ let vue = new Vue({
             pro: 'Pro',
             forumPostEdited: 'Edited',
             statsPosts: 'Total posts',
-            remove: 'Remove'
+            remove: 'Remove',
+            invalidUsername: 'The given username is invalid',
+            nonavailableUsername: 'The given username is not available',
+            usernameOk: 'The given username is valid and available'
         }
     },
 
@@ -1244,6 +1247,28 @@ window.clearStoryInput = function() {
 window.deleteStory = function(id) {
     window.vue.ajaxRequest('get', window.location.origin + '/stories/' + id + '/delete', {}, function(response) {
         alert(response.msg);
+    });
+};
+
+window.showUsernameValidity = function(username, hint, currentName = '') {
+    window.vue.ajaxRequest('get', window.location.origin + '/member/username/valid?ident=' + username, {}, function(response) {
+        if (response.code == 200) {
+            if ((currentName !== '') && (username === currentName)) {
+                hint.innerHTML = '';
+            } else if (!response.data.valid) {
+                hint.classList.add('is-danger');
+                hint.classList.remove('is-success');
+                hint.innerHTML = window.vue.translationTable.invalidUsername;
+            } else if (!response.data.available) {
+                hint.classList.add('is-danger');
+                hint.classList.remove('is-success');
+                hint.innerHTML = window.vue.translationTable.nonavailableUsername;
+            } else if ((response.data.valid) && (response.data.available)) {
+                hint.classList.remove('is-danger');
+                hint.classList.add('is-success');
+                hint.innerHTML = window.vue.translationTable.usernameOk;
+            }
+        }
     });
 };
 
