@@ -436,5 +436,6 @@ return [
     'upload_hashtag_invalid' => 'Invalid hashtag: :hashtag',
     'username_not_available' => 'The given username is already in use',
     'username_valid_and_available' => 'The username is valid and available',
-    'register_password_mismatch' => 'The passwords do not match'
+    'passwords_mismatch' => 'The passwords do not match',
+    'passwords_match' => 'The passwords do match'
 ];

@@ -126,11 +126,13 @@
                         </div>
                     </div>
 
+                    @if (env('APP_GEOSEARCH'))
                     <div class="navbar-item">
                         <div>
                             <i class="fas fa-globe fa-lg is-pointer" title="{{ __('app.geosearch') }}" onclick="location.href='{{ url('/geosearch') }}';"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="location.href='{{ url('/geosearch') }}';">{{ __('app.geosearch') }}</a></span>
                         </div>
                     </div>
+                    @endif
 
                     <div class="navbar-item">
                         <div>
@@ -479,11 +481,13 @@
                                 </div>
                             @endif
 
+							@if (env('APP_GEOSEARCH'))
                             <div class="field">
                                 <div class="control">
                                     <input type="checkbox" name="geo_exclude" value="1" data-role="checkbox" data-style="2" data-caption="{{ __('app.geo_exclude') }}" @if ($user->geo_exclude) {{ 'checked' }} @endif>
                                 </div>
                             </div>
+							@endif
 
                             <input type="submit" id="editprofilesubmit" class="is-hidden">
                         </form>
@@ -789,9 +793,11 @@
         };
 
         window.queryGeoLocation = function() {
+            @if (env('APP_GEOSEARCH'))
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(window.transferGeolocation);
             }
+            @endif
         };
 
         window.putToFavoritesContent = function(content, append = true) {
@@ -992,6 +998,8 @@
             window.vue.translationTable.invalidUsername = '{{ __('app.register_username_invalid_chars') }}';
             window.vue.translationTable.nonavailableUsername = '{{ __('app.username_not_available') }}';
             window.vue.translationTable.usernameOk = '{{ __('app.username_valid_and_available') }}';
+            window.vue.translationTable.passwordMismatching = '{{ __('app.passwords_mismatch') }}';
+            window.vue.translationTable.passwordMatching = '{{ __('app.passwords_match') }}';
 
             window.vue.handleCookieConsent({{ (env('APP_PUBLICFEED') ? 'true' : 'false') }});
 
@@ -1004,14 +1012,16 @@
             @endauth
 
             @auth
-                window.geoLoopTransmission = function() {
-                    window.queryGeoLocation();
+                @if (env('APP_GEOSEARCH'))
+                    window.geoLoopTransmission = function() {
+                        window.queryGeoLocation();
 
-                    setTimeout('window.geoLoopTransmission()', 1000 * 150)
-                }
+                        setTimeout('window.geoLoopTransmission()', 1000 * 150)
+                    }
 
-                @if ((!isset($_GET['clep_geo'])) || ($_GET['clep_geo'] == 0))
-                    setTimeout('window.geoLoopTransmission()', 2500);
+                    @if ((!isset($_GET['clep_geo'])) || ($_GET['clep_geo'] == 0))
+                        setTimeout('window.geoLoopTransmission()', 2500);
+                    @endif
                 @endif
             @endauth
 

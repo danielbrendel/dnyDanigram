@@ -436,5 +436,7 @@ return [
     'upload_hashtag_invalid' => 'Der Hashtag :hashtag ist ungültig',
     'username_not_available' => 'Der Benutzername ist schon vergeben',
     'username_valid_and_available' => 'Der Benutzername ist gültig und noch frei',
-    'register_password_mismatch' => 'Die Passwörter stimmen nicht überein'
+    'register_password_mismatch' => 'Die Passwörter stimmen nicht überein',
+    'passwords_mismatch' => 'Die Passwörter stimmen nicht überein',
+    'passwords_match' => 'Die Passwörter sind identisch'
 ];

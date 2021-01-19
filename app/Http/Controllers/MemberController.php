@@ -145,7 +145,7 @@ class MemberController extends Controller
 
             if (isset($attr['password'])) {
                 if ($attr['password'] !== $attr['password_confirm']) {
-                    return back()->with('error', __('app.password_mismatch'));
+                    return back()->with('error', __('app.passwords_mismatch'));
                 }
 
                 User::changePassword(auth()->id(), $attr['password']);
@@ -335,6 +335,10 @@ class MemberController extends Controller
     public function viewGeosearch()
     {
         if (Auth::guest()) {
+            return redirect('/');
+        }
+
+        if (!env('APP_GEOSEARCH')) {
             return redirect('/');
         }
 

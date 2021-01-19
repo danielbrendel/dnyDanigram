@@ -209,7 +209,7 @@ class User extends Authenticatable
             $attr['username'] = trim(strtolower($attr['username']));
 
             if ($attr['password'] !== $attr['password_confirmation']) {
-                throw new Exception(__('app.register_password_mismatch'));
+                throw new Exception(__('app.passwords_mismatch'));
             }
 
             $sum = CaptchaModel::querySum(session()->getId());
