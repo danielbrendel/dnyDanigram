@@ -16,6 +16,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class ThreadModel
+ *
+ * Represents the interface to post comment threads
+ */
 class ThreadModel extends Model
 {
     const MAX_PREVIEW_MSG = 25;

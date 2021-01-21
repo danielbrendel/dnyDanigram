@@ -15,6 +15,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\UniquePostViewsModel;
 
 /**
  * Class PostModel
@@ -371,6 +372,8 @@ class PostModel extends Model
                 throw new \Exception(__('app.post_is_locked'));
             }
 
+            $post->views = UniquePostViewsModel::viewCountAsString(UniquePostViewsModel::viewForPost($post->id));
+
             return $post;
         } catch (\Exception $e) {
             throw $e;
@@ -434,7 +437,13 @@ class PostModel extends Model
                 $posts->where('userId', '=', $user);
             }
 
-            return $posts->limit($limit)->get()->toArray();
+            $pack = $posts->limit($limit)->get();
+
+            foreach ($pack as &$singlePost) {
+                $singlePost->views = UniquePostViewsModel::viewCountAsString(UniquePostViewsModel::viewForPost($singlePost->id));
+            }
+
+            return $pack->toArray();
         } catch (\Exception $e) {
             throw $e;
         }
