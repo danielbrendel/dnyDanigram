@@ -62,7 +62,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_TOPNTAGS=50' . PHP_EOL;
             $envcontent .= 'APP_STORYPACK=32' . PHP_EOL;
             $envcontent .= 'APP_STORYDURATION=24' . PHP_EOL;
-            $envcontent .= 'APP_PUBLICFEED=false' . PHP_EOL;
+            $envcontent .= 'APP_PUBLICFEED=true' . PHP_EOL;
             $envcontent .= 'APP_GEOSEARCH=true' . PHP_EOL;
             $envcontent .= 'APP_ENABLENSFWFILTER=true' . PHP_EOL;
             $envcontent .= 'APP_MAXUPLOADSIZE=30000000' . PHP_EOL;
