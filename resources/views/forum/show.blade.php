@@ -114,7 +114,7 @@
                     @if (($user->admin) || ($user->maintainer))
                         <div class="field">
                             <div class="control">
-                                <input type="checkbox" data-role="checkbox" data-style="2" data-caption="{{ __('app.set_thread_sticky') }}" value="1">
+                                <input type="checkbox" name="sticky" data-role="checkbox" data-style="2" data-caption="{{ __('app.set_thread_sticky') }}" value="1">
                             </div>
                         </div>
                     @endif
