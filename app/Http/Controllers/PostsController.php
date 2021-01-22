@@ -24,6 +24,7 @@ use App\ReportModel;
 use App\StoryModel;
 use App\TagsModel;
 use App\ThreadModel;
+use App\UniquePostViewsModel;
 use Exception;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -101,6 +102,8 @@ class PostsController extends Controller
             if (!$post) {
                 return redirect('/')->with('flash.error', __('app.post_not_found_or_locked'));
             }
+
+            $post->views = UniquePostViewsModel::viewCountAsString(UniquePostViewsModel::viewForPost($post->id));
 
             $cmdId = request('c', null);
             if (is_numeric($cmdId)) {
@@ -422,6 +425,7 @@ class PostsController extends Controller
             $post->userHearted = HeartModel::hasUserHearted(auth()->id(), $post->id, 'ENT_POST');
             $post->diffForHumans = $post->created_at->diffForHumans();
             $post->comment_count = ThreadModel::where('postId', '=', $post->id)->where('locked', '=', false)->count();
+            $post->views = UniquePostViewsModel::viewCountAsString(UniquePostViewsModel::viewForPost($post->id));
 
             return response()->json(array('code' => 200, 'elem' => $post));
         } catch (Exception $e) {

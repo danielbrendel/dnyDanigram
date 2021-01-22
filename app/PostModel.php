@@ -372,8 +372,6 @@ class PostModel extends Model
                 throw new \Exception(__('app.post_is_locked'));
             }
 
-            $post->views = UniquePostViewsModel::viewCountAsString(UniquePostViewsModel::viewForPost($post->id));
-
             return $post;
         } catch (\Exception $e) {
             throw $e;
