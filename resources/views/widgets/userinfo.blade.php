@@ -27,14 +27,11 @@
 @endif
 
 <div class="userinfo-badges">
-
     @if ($user->maintainer)
         <div class="is-inline-block">
             <div class="member-badge member-badge-maintainer"><p>{{ __('app.maintainer') }}</p></div>
         </div>
     @endif
-
-
 
     @if ($user->admin)
         <div class="is-inline-block">
@@ -47,7 +44,6 @@
             <div class="member-badge member-badge-pro"><p>{{ __('app.pro') }}</p></div>
         </div>
     @endif
-
 </div>
 
 <div class="userinfo-stats">
@@ -56,7 +52,7 @@
     <i class="far fa-comment"></i>&nbsp;{{ __('app.stats_comments', ['count' => $user->stats->comments]) }}<br/>
     <i class="@if ($user->gender == 1) {{ 'fas fa-mars' }} @elseif ($user->gender == 2) {{ 'fas fa-venus' }} @elseif ($user->gender == 3) {{ 'fas fa-transgender-alt' }} @else {{ 'fas fa-genderless' }} @endif"></i>&nbsp;{{ $user->genderStr }}<br/>
     <i class="fas fa-star-of-life"></i>&nbsp;{{ __('app.age_info', ['value' => $user->age]) }}<br/>
-    <i class="fas fa-map-marker-alt"></i>&nbsp;{{ ucfirst($user->location) }}<br/>
+    <i class="fas fa-map-marker-alt"></i>&nbsp;{{ ((strlen($user->location) > 0) ? ucfirst($user->location) : __('app.no_location_specified')) }}<br/>
 </div>
 
 <div class="userinfo-profile-data">

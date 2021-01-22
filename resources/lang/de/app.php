@@ -438,5 +438,6 @@ return [
     'username_valid_and_available' => 'Der Benutzername ist gültig und noch frei',
     'register_password_mismatch' => 'Die Passwörter stimmen nicht überein',
     'passwords_mismatch' => 'Die Passwörter stimmen nicht überein',
-    'passwords_match' => 'Die Passwörter sind identisch'
+    'passwords_match' => 'Die Passwörter sind identisch',
+    'no_location_specified' => 'Kein Ort angegeben'
 ];

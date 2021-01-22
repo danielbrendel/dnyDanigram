@@ -109,14 +109,14 @@ class MemberController extends Controller
     {
         try {
             $attr = request()->validate([
-               'username' => 'nullable',
-               'bio' => 'nullable',
-               'gender' => 'required|numeric|min:0|max:3',
-               'birthday' => 'nullable|date',
-               'location' => 'nullable',
-               'password' => 'nullable',
-               'password_confirm' => 'nullable',
-               'email' => 'nullable|email',
+                'username' => 'nullable',
+                'bio' => 'nullable',
+                'gender' => 'required|numeric|min:0|max:3',
+                'birthday' => 'nullable|date',
+                'location' => 'nullable',
+                'password' => 'nullable',
+                'password_confirm' => 'nullable',
+                'email' => 'nullable|email',
                 'email_on_message' => 'nullable|numeric',
                 'newsletter' => 'nullable|numeric',
                 'nsfw' => 'nullable',
@@ -129,6 +129,8 @@ class MemberController extends Controller
 
             if (isset($attr['bio'])) {
                 User::changeBio(auth()->id(), $attr['bio']);
+            } else {
+                User::changeBio(auth()->id(), '');
             }
 
             if (isset($attr['gender'])) {
@@ -141,6 +143,8 @@ class MemberController extends Controller
 
             if (isset($attr['location'])) {
                 User::saveLocation(auth()->id(), $attr['location']);
+            } else {
+                User::saveLocation(auth()->id(), '');
             }
 
             if (isset($attr['password'])) {

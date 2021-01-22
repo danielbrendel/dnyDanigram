@@ -437,5 +437,6 @@ return [
     'username_not_available' => 'The given username is already in use',
     'username_valid_and_available' => 'The username is valid and available',
     'passwords_mismatch' => 'The passwords do not match',
-    'passwords_match' => 'The passwords do match'
+    'passwords_match' => 'The passwords do match',
+    'no_location_specified' => 'No location specified'
 ];
