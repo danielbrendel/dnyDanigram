@@ -376,6 +376,12 @@ pre.is-post-background {
   }
 }
 
+.is-avatar-icon img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
 .is-font-small {
   font-size: 0.8em;
 }
