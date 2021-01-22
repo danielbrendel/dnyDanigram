@@ -33,6 +33,7 @@ class ForumThreadModel extends Model
      * @param $forumId
      * @param $title
      * @param $initialMessage
+	 * @param $sticky
      * @return int
      * @throws Exception
      */
