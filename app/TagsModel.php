@@ -25,10 +25,13 @@ use App\HeartModel;
  */
 class TagsModel extends Model
 {
+    const HASHTAG_DEFAULT_PREVIEW = '_hashtag_preview.png';
+
     /**
      * Add tag to list
      *
      * @param $name
+     * @return void
      * @throws \Exception
      */
     public static function addTag($name)
@@ -128,7 +131,7 @@ class TagsModel extends Model
                         return $post->image_thumb;
                     }
 
-                    return '_hashtag_preview.png';
+                    return self::HASHTAG_DEFAULT_PREVIEW;
                 });
             }
             return $tagList;
@@ -151,7 +154,7 @@ class TagsModel extends Model
                 return $post->image_thumb;
             }
 
-            return '_hashtag_preview.png';
+            return self::HASHTAG_DEFAULT_PREVIEW;
         });
     }
 }
