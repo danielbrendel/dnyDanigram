@@ -265,6 +265,7 @@ class AppModel extends Model
      *
      * @param $key
      * @param $value
+     * @return void
      * @throws \Exception
      */
     public static function saveSetting($key, $value)
