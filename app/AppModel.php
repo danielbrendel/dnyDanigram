@@ -372,6 +372,7 @@ class AppModel extends Model
      * Lock entity
      * @param $id
      * @param $type
+     * @return void
      * @throws \Exception
      */
     public static function lockEntity($id, $type)
