@@ -249,15 +249,19 @@ class PostModel extends Model
             $user = User::where('id', '=', auth()->id())->first();
 
             $hashtagList = explode(' ', trim($attr['hashtags']));
-            foreach ($hashtagList as $ht) {
-                if ((strlen($ht) > 1) && ($ht[0] === '#')) {
-                    $ht = substr($ht, 1);
-                }
+			foreach ($hashtagList as $ht) {
+				if (strlen($ht) === 0) {
+					continue;
+				}
+				
+				if ((strlen($ht) > 1) && ($ht[0] === '#')) {
+					$ht = substr($ht, 1);
+				}
 
-                if (!AppModel::isValidNameIdent($ht)) {
-                    throw new \Exception(__('app.upload_hashtag_invalid', ['hashtag' => $ht]));
-                }
-            }
+				if (!AppModel::isValidNameIdent($ht)) {
+					throw new \Exception(__('app.upload_hashtag_invalid', ['hashtag' => $ht]));
+				}
+			}
 
             $attr['description'] = \Purifier::clean($attr['description']);
 
@@ -333,7 +337,9 @@ class PostModel extends Model
             }
 			
 			foreach ($hashtagList as $ht) {
-				TagsModel::addTag($ht);
+				if (strlen($ht) > 0) {
+					TagsModel::addTag($ht);
+				}
 			}
 
 			$mentionNames = AppModel::getMentionList($attr['description']);
