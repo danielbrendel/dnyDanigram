@@ -65,6 +65,10 @@ class PostsController extends Controller
      */
     public function viewUpload()
     {
+        if (Auth::guest()) {
+            return redirect('/');
+        }
+
         return view('member.upload', [
             'user' => User::getByAuthId(),
             'cookie_consent' => AppModel::getCookieConsentText(),
