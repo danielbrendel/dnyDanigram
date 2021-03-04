@@ -15,6 +15,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class UniquePostViewsModel
@@ -49,7 +50,9 @@ class UniquePostViewsModel extends Model
                 $item->save();
             }
 
-            $count = UniquePostViewsModel::where('postId', '=', $postId)->count();
+            $count = Cache::remember('view_for_post_' . $postId, 60 * 15, function() use ($postId) {
+                return UniquePostViewsModel::where('postId', '=', $postId)->count();
+            });
 
             return $count;
         } catch (\Exception $e) {
