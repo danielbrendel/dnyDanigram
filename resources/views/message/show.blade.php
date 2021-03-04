@@ -27,7 +27,7 @@
                 <div class="field">
                     <label class="label">{{ __('app.subject') }}</label>
                     <div class="control">
-                        <input type="text" name="subject" value="{{ $thread['msg']->subject }}">
+                        <input type="text" name="subject" value="{{ $thread['msg']->subject }}" required>
                     </div>
                 </div>
 

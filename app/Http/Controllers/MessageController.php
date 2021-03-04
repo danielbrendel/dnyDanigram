@@ -67,7 +67,7 @@ class MessageController extends Controller
                 $item->diffForHumans = $item->created_at->diffForHumans();
             }
 
-            return response()->json(array('code' => 200, 'data' => $data, 'min' => MessageModel::where('userId', '=', auth()->id())->min('id'), 'max' => MessageModel::where('userId', '=', auth()->id())->max('id')));
+            return response()->json(array('code' => 200, 'data' => $data, 'min' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->min('id'), 'max' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->max('id')));
         } catch (\Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
@@ -137,7 +137,7 @@ class MessageController extends Controller
         try {
             $attr = request()->validate([
                'username' => 'required',
-               'subject' => 'nullable',
+               'subject' => 'required',
                'text' => 'required'
             ]);
 

@@ -57,12 +57,12 @@
             window.vue.ajaxRequest('get', '{{ url('/messages/list') }}' + ((window.paginateList !== null) ? '?paginate=' + window.paginateList : ''), {}, function(response) {
               if (response.code === 200) {
                  document.getElementById('messages-list').innerHTML = '';
-
+                 
                  if (response.max === null) {
                      document.getElementById('messages-list').innerHTML = '{{ __('app.no_messages') }}';
                      return;
                  }
-
+                 
                  response.data.forEach(function(elem, index){
                     let html = window.renderMessageListItem(elem);
 
