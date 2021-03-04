@@ -1190,6 +1190,10 @@ pre.is-post-background {
   background-color: rgb(150, 150, 150) !important;
 }
 
+.messages-list {
+  color: rgb(50, 50, 50);
+}
+
 .messages-item {
   position: relative;
   width: 100%;
