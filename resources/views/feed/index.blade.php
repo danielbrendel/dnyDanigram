@@ -76,7 +76,8 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-           window.paginate = null;
+            window.paginate = null;
+            window.mayFetchPosts = true;
 
             fetchPosts();
         });
@@ -115,75 +116,80 @@
                 @endauth
             }
 
-            window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
-                if (response.code == 200) {
-                    if (!response.last) {
-                        response.data.forEach(function (elem, index) {
-                            let adminOrOwner = false;
+            if (window.mayFetchPosts) {
+                window.mayFetchPosts = false;
+                window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
+                    if (response.code == 200) {
+                        if (!response.last) {
+                            response.data.forEach(function (elem, index) {
+                                let adminOrOwner = false;
 
-                            @auth
-                                adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
-                            @endauth
+                                @auth
+                                    adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                                @endauth
 
-                            let nsfwFlag = 0;
+                                let nsfwFlag = 0;
 
-                            @auth
-                                nsfwFlag = {{ (int)$user->nsfw }};
-                            @endauth
+                                @auth
+                                    nsfwFlag = {{ (int)$user->nsfw }};
+                                @endauth
 
-                            let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
+                                let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
 
-                            let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
+                                let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
 
-                            document.getElementById('feed').innerHTML += insertHtml;
+                                document.getElementById('feed').innerHTML += insertHtml;
 
-                            //window.renderPosterImage();
+                                //window.renderPosterImage();
 
-                            if (window.vue.getPostFetchType() == 1) {
-                                if (response.data[response.data.length - 1]._type === 'ad') {
-                                    window.paginate = response.data[response.data.length - 2].hearts;
-                                } else {
-                                    window.paginate = response.data[response.data.length - 1].hearts;
+                                if (window.vue.getPostFetchType() == 1) {
+                                    if (response.data[response.data.length - 1]._type === 'ad') {
+                                        window.paginate = response.data[response.data.length - 2].hearts;
+                                    } else {
+                                        window.paginate = response.data[response.data.length - 1].hearts;
+                                    }
+                                } else if ((window.vue.getPostFetchType() == 2) || (window.vue.getPostFetchType() == 3)) {
+                                    if (response.data[response.data.length - 1]._type === 'ad') {
+                                        window.paginate = response.data[response.data.length - 2].id;
+                                    } else {
+                                        window.paginate = response.data[response.data.length - 1].id;
+                                    }
                                 }
-                            } else if ((window.vue.getPostFetchType() == 2) || (window.vue.getPostFetchType() == 3)) {
-                                if (response.data[response.data.length - 1]._type === 'ad') {
-                                    window.paginate = response.data[response.data.length - 2].id;
-                                } else {
-                                    window.paginate = response.data[response.data.length - 1].id;
+
+                                document.getElementById('loading').style.display = 'none';
+                            });
+
+                            let tagElems = [];
+                            let adsNodes = document.getElementsByClassName('is-advertisement');
+                            if (adsNodes.length > 0) {
+                                let childNodes = adsNodes[adsNodes.length - 1].childNodes;
+                                for (let i = 0; i < childNodes.length; i++) {
+                                    if (typeof childNodes[i].tagName !== 'undefined') {
+                                        let childTag = document.createElement(childNodes[i].tagName);
+                                        let tagCode = document.createTextNode(childNodes[i].innerHTML);
+                                        childTag.appendChild(tagCode);
+                                        tagElems.push(childTag);
+                                    }
                                 }
+
+                                adsNodes[adsNodes.length - 1].innerHTML = '';
+
+                                for (let i = 0; i < tagElems.length; i++) {
+                                    adsNodes[adsNodes.length - 1].appendChild(tagElems[i]);
+                                }
+                            }
+                        } else {
+                            if (document.getElementById('no-more-posts') == null) {
+                                document.getElementById('feed').innerHTML += '<div id="no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
                             }
 
                             document.getElementById('loading').style.display = 'none';
-                        });
-
-                        let tagElems = [];
-                        let adsNodes = document.getElementsByClassName('is-advertisement');
-                        if (adsNodes.length > 0) {
-                            let childNodes = adsNodes[adsNodes.length - 1].childNodes;
-                            for (let i = 0; i < childNodes.length; i++) {
-                                if (typeof childNodes[i].tagName !== 'undefined') {
-                                    let childTag = document.createElement(childNodes[i].tagName);
-                                    let tagCode = document.createTextNode(childNodes[i].innerHTML);
-                                    childTag.appendChild(tagCode);
-                                    tagElems.push(childTag);
-                                }
-                            }
-
-                            adsNodes[adsNodes.length - 1].innerHTML = '';
-
-                            for (let i = 0; i < tagElems.length; i++) {
-                                adsNodes[adsNodes.length - 1].appendChild(tagElems[i]);
-                            }
                         }
-                    } else {
-                        if (document.getElementById('no-more-posts') == null) {
-                            document.getElementById('feed').innerHTML += '<div id="no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
-                        }
-
-                        document.getElementById('loading').style.display = 'none';
                     }
-                }
-            });
+
+                    window.mayFetchPosts = true;
+                });
+            }
         }
     </script>
 @endsection

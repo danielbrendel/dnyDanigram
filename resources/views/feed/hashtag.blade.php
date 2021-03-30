@@ -93,6 +93,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             window.paginate = null;
+            window.mayFetchPosts = true;
 
             fetchPosts();
         });
@@ -131,47 +132,52 @@
                 @endauth
             }
 
-            window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + '&hashtag=' + window.hashtag + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
-                if (response.code == 200) {
-                    if (!response.last) {
-                        response.data.forEach(function (elem, index) {
-                            let adminOrOwner = false;
+            if (window.mayFetchPosts) {
+                window.mayFetchPosts = false;
+                window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + '&hashtag=' + window.hashtag + ((window.paginate !== null) ? '&paginate=' + window.paginate : ''), {}, function(response){
+                    if (response.code == 200) {
+                        if (!response.last) {
+                            response.data.forEach(function (elem, index) {
+                                let adminOrOwner = false;
 
-                            @auth
-                                adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
-                            @endauth
+                                @auth
+                                    adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                                @endauth
 
-                            let nsfwFlag = 0;
+                                let nsfwFlag = 0;
 
-                            @auth
-                                nsfwFlag = {{ (int)$user->nsfw }};
-                            @endauth
+                                @auth
+                                    nsfwFlag = {{ (int)$user->nsfw }};
+                                @endauth
 
-                            let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
+                                let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
 
-                            let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
+                                let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
 
-                            document.getElementById('feed').innerHTML += insertHtml;
+                                document.getElementById('feed').innerHTML += insertHtml;
 
-                            //window.renderPosterImage();
+                                //window.renderPosterImage();
 
-                            if (window.vue.getPostFetchType() == 1) {
-                                window.paginate = response.data[response.data.length - 1].hearts;
-                            } else if ((window.vue.getPostFetchType() == 2) || (window.vue.getPostFetchType() == 3)) {
-                                window.paginate = response.data[response.data.length - 1].id;
+                                if (window.vue.getPostFetchType() == 1) {
+                                    window.paginate = response.data[response.data.length - 1].hearts;
+                                } else if ((window.vue.getPostFetchType() == 2) || (window.vue.getPostFetchType() == 3)) {
+                                    window.paginate = response.data[response.data.length - 1].id;
+                                }
+
+                                document.getElementById('loading').style.display = 'none';
+                            });
+                        } else {
+                            if (document.getElementById('no-more-posts') == null) {
+                                document.getElementById('feed').innerHTML += '<div id="no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
                             }
 
                             document.getElementById('loading').style.display = 'none';
-                        });
-                    } else {
-                        if (document.getElementById('no-more-posts') == null) {
-                            document.getElementById('feed').innerHTML += '<div id="no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
                         }
-
-                        document.getElementById('loading').style.display = 'none';
                     }
-                }
-            });
+
+                    window.mayFetchPosts = true;
+                });
+            }
         }
     </script>
 @endsection

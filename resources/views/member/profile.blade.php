@@ -84,6 +84,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             window.paginate = null;
+            window.mayFetchPosts = true;
 
             fetchPosts();
         });
@@ -104,44 +105,49 @@
                 document.getElementById('linkFetchLatest').classList.add('is-active');
             }
 
-            window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : '') + '&user=' + {{ $profile->id }}, {}, function(response){
-                if (response.code == 200) {
-                    if (!response.last) {
-                        response.data.forEach(function (elem, index) {
-                            adminOrOwner = false;
+            if (window.mayFetchPosts) {
+                window.mayFetchPosts = false;
+                window.vue.ajaxRequest('GET', '{{ url('/fetch/posts') }}?type=' + window.vue.getPostFetchType() + ((window.paginate !== null) ? '&paginate=' + window.paginate : '') + '&user=' + {{ $profile->id }}, {}, function(response){
+                    if (response.code == 200) {
+                        if (!response.last) {
+                            response.data.forEach(function (elem, index) {
+                                adminOrOwner = false;
 
-                            @auth
-                                adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
-                            @endauth
+                                @auth
+                                    adminOrOwner = ({{ $user->admin }}) || ({{ $user->id }} === elem.userId);
+                                @endauth
 
-                            let nsfwFlag = 0;
+                                let nsfwFlag = 0;
 
-                            @auth
-                                nsfwFlag = {{ (int)$user->nsfw }};
-                            @endauth
+                                @auth
+                                    nsfwFlag = {{ (int)$user->nsfw }};
+                                @endauth
 
-                            let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
+                                let isGuest = @auth {{ 'false' }} @elseguest {{ 'true' }} @endauth ;
 
-                            let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
+                                let insertHtml = renderPost(elem, adminOrOwner, nsfwFlag, {{ env('APP_ENABLENSFWFILTER') }}, isGuest);
 
-                            document.getElementById('feed').innerHTML += insertHtml;
+                                document.getElementById('feed').innerHTML += insertHtml;
 
-                            //window.renderPosterImage();
+                                //window.renderPosterImage();
 
-                            if (window.vue.getPostFetchType() == 1) {
-                                window.paginate = response.data[response.data.length - 1].hearts;
-                            } else if (window.vue.getPostFetchType() == 2) {
-                                window.paginate = response.data[response.data.length - 1].id;
-                            }
+                                if (window.vue.getPostFetchType() == 1) {
+                                    window.paginate = response.data[response.data.length - 1].hearts;
+                                } else if (window.vue.getPostFetchType() == 2) {
+                                    window.paginate = response.data[response.data.length - 1].id;
+                                }
 
+                                document.getElementById('loading').style.display = 'none';
+                            });
+                        } else {
+                            document.getElementById('feed').innerHTML += '<div id="user-no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
                             document.getElementById('loading').style.display = 'none';
-                        });
-                    } else {
-                        document.getElementById('feed').innerHTML += '<div id="user-no-more-posts"><br/><br/><center><i>{{ __('app.no_more_posts') }}</i></center><br/></div>';
-                        document.getElementById('loading').style.display = 'none';
+                        }
                     }
-                }
-            });
+
+                    window.mayFetchPosts = true;
+                });
+            }
         }
     </script>
 @endsection
