@@ -55,8 +55,8 @@
         @endif
     </head>
 
-    <body class="clep-outer">
-        <div id="clep">
+    <body class="clep-outer" @if (file_exists(public_path() . '/clep.png')) style="background-image: url('{{ asset('clep.png') }}');" @endif>
+        <div id="clep" @if (file_exists(public_path() . '/clep.png')) class="is-black-bg" @endif>
         <div class="clep-content">
             @if ($errors->any())
                 <div id="error-message-1">

@@ -14,12 +14,12 @@
 
 @section('content')
     <div>
-        <h1 class="clep-headline">
+        <h1 class="clep-headline @if (file_exists(public_path() . '/clep.png')) {{ 'is-colored-white' }} @endif">
             <center>
                 @if (strlen(\App\AppModel::getFormattedProjectName()) > 0)
                     {!! \App\AppModel::getFormattedProjectName() !!}
                 @else
-                    <h1><strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}</h1>
+                    <strong>{{ \App\AppModel::getNameParts()[0] }}</strong>{{ \App\AppModel::getNameParts()[1] }}
                 @endif
             </center>
         </h1>
@@ -34,7 +34,7 @@
             @csrf
 
             <div class="field">
-                <label class="label">{{ __('app.email') }}</label>
+                <label class="label @if (file_exists(public_path() . '/clep.png')) {{ 'is-colored-white' }} @endif">{{ __('app.email') }}</label>
                 <p class="control has-icons-left has-icons-right">
                     <input class="input" onkeyup="javascript:vue.invalidLoginEmail()" onchange="javascript:vue.invalidLoginEmail()" onkeydown="if (event.keyCode === 13) { document.getElementById('loginform').submit(); }" type="email" name="email" id="loginemail" placeholder="{{ __('app.email') }}" required>
                     <span class="icon is-small is-left">
@@ -44,7 +44,7 @@
             </div>
 
             <div class="field">
-                <label class="label">{{ __('app.password') }}</label>
+                <label class="label @if (file_exists(public_path() . '/clep.png')) {{ 'is-colored-white' }} @endif">{{ __('app.password') }}</label>
                 <p class="control has-icons-left">
                     <input class="input" onkeyup="javascript:vue.invalidLoginPassword()" onchange="javascript:vue.invalidLoginPassword()" onkeydown="if (event.keyCode === 13) { document.getElementById('loginform').submit(); }" type="password" name="password" id="loginpw" placeholder="{{ __('app.password') }}" required>
                     <span class="icon is-small is-left">
@@ -59,17 +59,17 @@
                 </div>
 
                 <div class="is-inline-block float-right clep-recover-top recover-pw">
-                    <a href="javascript:void(0)" onclick="vue.bShowRecover = true;">{{ __('app.recover_password') }}</a>
+                    <a @if (file_exists(public_path() . '/clep.png')) class="is-colored-blue" }} @endif href="javascript:void(0)" onclick="vue.bShowRecover = true;">{{ __('app.recover_password') }}</a>
                 </div>
             </div>
 
             <div class="clep-border clep-signup">
-                <center><a href="javascript:void(0)" onclick="vue.bShowRegister = true;">{{ __('app.register') }}</a></center>
+                <center><a @if (file_exists(public_path() . '/clep.png')) class="is-colored-blue" }} @endif href="javascript:void(0)" onclick="vue.bShowRegister = true;">{{ __('app.register') }}</a></center>
             </div>
 
             @if (env('APP_PUBLICFEED'))
             <div class="clep-continue-without-account">
-                <center><a href="{{ url('/feed') }}" onclick="vue.setclepFlag();">{{ __('app.continue_without_account') }}</a></center>
+                <center><a @if (file_exists(public_path() . '/clep.png')) class="is-colored-blue" @endif href="{{ url('/feed') }}" onclick="vue.setclepFlag();">{{ __('app.continue_without_account') }}</a></center>
             </div>
             @endif
         </form>
