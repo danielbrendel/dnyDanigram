@@ -51,18 +51,20 @@
                         </div>
                     </div>
 
-                    <div class="field">
-                        <label class="label">{{ __('app.category') }}</label>
-                        <div class="control">
-                            <select class="input" name="category">
-                                <option value="0">{{ __('app.select_category') }}</option>
+                    @if (env('APP_ENABLECATEGORIES'))
+                        <div class="field">
+                            <label class="label">{{ __('app.category') }}</label>
+                            <div class="control">
+                                <select class="input" name="category">
+                                    <option value="0">{{ __('app.select_category') }}</option>
 
-                                @foreach (\App\CategoryModel::queryAll() as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
+                                    @foreach (\App\CategoryModel::queryAll() as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     @if (env('APP_ENABLENSFWFILTER'))
                         <div class="field">

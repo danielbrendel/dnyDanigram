@@ -443,5 +443,6 @@ return [
     'categories' => 'Kategorien',
     'category_not_found' => 'Kategorie :id wurde nicht gefunden',
     'category' => 'Kategorie',
-    'select_category' => '-- Optionales Auswählen --'
+    'select_category' => '-- Optionales Auswählen --',
+    'project_categories' => 'Kategorien-Feature aktivieren'
 ];

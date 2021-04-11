@@ -442,5 +442,6 @@ return [
     'categories' => 'Categories',
     'category_not_found' => 'Category :id not found',
     'category' => 'Category',
-    'select_category' => '-- Optionally select category --'
+    'select_category' => '-- Optionally select category --',
+    'project_categories' => 'Enable post categories'
 ];
