@@ -89,7 +89,14 @@
 
                             <div class="navbar-dropdown is-hidden" id="category-dropdown">
                                 @foreach (\App\CategoryModel::queryAll() as $item)
-                                    <a class="navbar-item" href="{{ url('/category/' . $item->id) }}">{{ $item->name }}</a>
+                                    <a class="navbar-item" href="{{ url('/category/' . $item->id) }}">
+                                        @if (($item->icon !== null) && (file_exists(public_path() . '/gfx/categories/' . $item->icon)))
+                                            <img src="{{ asset('gfx/categories/' . $item->icon) }}" width="16" height="16" alt="{{ $item->name }}"/>
+                                            &nbsp;
+                                        @endif
+
+                                        {{ $item->name }}
+                                    </a>
                                 @endforeach
                             </div>
                         </div>

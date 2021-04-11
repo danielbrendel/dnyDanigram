@@ -52,6 +52,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_TITLE="${APP_PROJECTNAME} - ${APP_DESCRIPTION}"' . PHP_EOL;
             $envcontent .= 'APP_DIVISION=' . (strlen($attr['project']) / 2) . PHP_EOL;
 			$envcontent .= 'APP_LANG=en' . PHP_EOL;
+            $envcontent .= 'APP_ENABLECATEGORIES=true' . PHP_EOL;
             $envcontent .= 'APP_POSTPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_THREADPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_PUSHPACKLIMIT=15' . PHP_EOL;
