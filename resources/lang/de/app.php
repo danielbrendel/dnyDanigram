@@ -444,5 +444,16 @@ return [
     'category_not_found' => 'Kategorie :id wurde nicht gefunden',
     'category' => 'Kategorie',
     'select_category' => '-- Optionales Auswählen --',
-    'project_categories' => 'Kategorien-Feature aktivieren'
+    'project_categories' => 'Kategorien-Feature aktivieren',
+    'category_id' => 'ID',
+    'category_name' => 'Name',
+    'category_icon' => 'Icon',
+    'category_last_updated' => 'Zuletzt aktualisiert',
+    'cat_remove_confirm' => 'Soll dieser Kategorie Eintrag wirklich gelöscht werden?',
+    'cat_remove' => 'Löschen',
+    'category_create' => 'Kategorie Eintrag erstellen',
+    'category_edit' => 'Kategorie Eintrag bearbeiten',
+    'category_created' => 'Kategorie Eintrag wurde erstellt',
+    'category_edited' => 'Kategorie Eintrag wurde bearbeitet',
+    'category_deleted' => 'Kategorie Eintrag wurde gelöscht'
 ];

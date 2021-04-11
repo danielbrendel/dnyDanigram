@@ -50,6 +50,7 @@
                 <li><a href="#tab-page-17">{{ __('app.adcode') }}</a></li>
                 <li><a href="#tab-page-18">{{ __('app.profile_items') }}</a></li>
                 <li><a href="#tab-page-19">{{ __('app.forums') }}</a></li>
+                <li><a href="#tab-page-20">{{ __('app.categories') }}</a></li>
             </ul>
             <div class="border bd-default no-border-top p-2">
                 <div id="tab-page-1">
@@ -1000,6 +1001,54 @@
                     <center><a class="button" href="javascript:void(0)" onclick="location.reload();">{{ __('app.refresh') }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a class="button is-success" onclick="vue.bShowCreateForum = true;">{{ __('app.create') }}</a></center><br/>
                 </div>
+
+                <div id="tab-page-20">
+                    <table class="table striped table-border mt-4" data-role="table" data-pagination="true"
+                           data-table-rows-count-title="{{ __('app.table_show_entries') }}"
+                           data-table-search-title="{{ __('app.table_search') }}"
+                           data-table-info-title="{{ __('app.table_row_info') }}"
+                           data-pagination-prev-title="{{ __('app.table_pagination_prev') }}"
+                           data-pagination-next-title="{{ __('app.table_pagination_next') }}">
+                        <thead>
+                        <tr>
+                            <th class="text-left">{{ __('app.category_id') }}</th>
+                            <th class="text-left">{{ __('app.category_name') }}</th>
+                            <th class="text-left">{{ __('app.category_icon') }}</th>
+                            <th class="text-left">{{ __('app.category_last_updated') }}</th>
+                            <th class="text-right">{{ __('app.remove') }}</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($categories as $cat)
+                            <tr>
+                                <td>
+                                    #{{ $cat->id }}
+                                </td>
+
+                                <td class="right">
+                                    <a href="javascript:void(0)" onclick="document.getElementById('cat-id').value = {{ $cat->id }}; document.getElementById('cat-name').value = '{{ $cat->name }}'; document.getElementById('cat-icon').value = '{{ $cat->icon }}'; vue.bShowEditCat = true;" title="{{ __('app.cat_edit') }}">{{ $cat->name }}</a>
+                                </td>
+
+                                <td>
+                                    {{ $cat->icon }}
+                                </td>
+
+                                <td><div title="{{ $cat->updated_at }}">{{ $cat->updated_at->diffForHumans() }}</div></td>
+
+                                <td>
+                                    <a href="javascript:void(0)" onclick="if (confirm('{{ __('app.cat_remove_confirm') }}')) location.href = '{{ url('/maintainer/category/' . $cat->id . '/remove') }}';">{{ __('app.cat_remove') }}</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <br/>
+
+                    <center><a class="button" href="javascript:void(0)" onclick="location.reload();">{{ __('app.refresh') }}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="button is-success" onclick="vue.bShowCreateCat = true;">{{ __('app.create') }}</a></center><br/>
+                </div>
             </div>
 
             <div class="modal" :class="{'is-active': bShowCreateFaq}">
@@ -1066,6 +1115,74 @@
                     <footer class="modal-card-foot is-stretched">
                         <button class="button is-success" onclick="document.getElementById('formEditFaq').submit();">{{ __('app.save') }}</button>
                         <button class="button" onclick="vue.bShowEditFaq = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowCreateCat}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.category_create') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowCreateCat = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/category/create') }}" id="formCreateCat">
+                            @csrf
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.category_name') }}</label>
+                                <div class="control">
+                                    <input type="text" name="name">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.category_icon') }}</label>
+                                <div class="control">
+                                    <input type="text" name="icon">
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formCreateCat').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowCreateCat = false;">{{ __('app.cancel') }}</button>
+                    </footer>
+                </div>
+            </div>
+
+            <div class="modal" :class="{'is-active': bShowEditCat}">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head is-stretched">
+                        <p class="modal-card-title">{{ __('app.category_edit') }}</p>
+                        <button class="delete" aria-label="close" onclick="vue.bShowEditCat = false;"></button>
+                    </header>
+                    <section class="modal-card-body is-stretched">
+                        <form method="POST" action="{{ url('/maintainer/category/edit') }}" id="formEditCat">
+                            @csrf
+
+                            <input type="hidden" name="id" id="cat-id">
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.category_name') }}</label>
+                                <div class="control">
+                                    <input type="text" name="name" id="cat-name">
+                                </div>
+                            </div>
+
+                            <div class="field is-stretched">
+                                <label class="label">{{ __('app.category_icon') }}</label>
+                                <div class="control">
+                                    <input type="text" name="icon" id="cat-icon">
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot is-stretched">
+                        <button class="button is-success" onclick="document.getElementById('formEditCat').submit();">{{ __('app.save') }}</button>
+                        <button class="button" onclick="vue.bShowEditCat = false;">{{ __('app.cancel') }}</button>
                     </footer>
                 </div>
             </div>

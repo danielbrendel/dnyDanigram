@@ -128,6 +128,9 @@ Route::post('/maintainer/forum/create', 'MaintainerController@createForum');
 Route::post('/maintainer/forum/edit', 'MaintainerController@editForum');
 Route::any('/maintainer/forum/{id}/lock', 'MaintainerController@lockForum');
 Route::any('/maintainer/forum/{id}/remove', 'MaintainerController@removeForum');
+Route::post('/maintainer/category/create', 'MaintainerController@createCategory');
+Route::post('/maintainer/category/edit', 'MaintainerController@editCategory');
+Route::any('/maintainer/category/{id}/remove', 'MaintainerController@deleteCategory');
 
 Route::get('/stories/selection', 'PostsController@selection');
 Route::get('/stories/view/{userId}', 'PostsController@story');

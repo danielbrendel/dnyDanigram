@@ -21,6 +21,8 @@ let vue = new Vue({
         bShowRegister: false,
         bShowEditProfile: false,
         bShowEditComment: false,
+        bShowCreateCat: false,
+        bShowEditCat: false,
         bShowCreateFaq: false,
         bShowEditFaq: false,
         bShowLogin: false,

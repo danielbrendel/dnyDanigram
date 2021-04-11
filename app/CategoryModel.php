@@ -38,4 +38,69 @@ class CategoryModel extends Model
             throw $e;
         }
     }
+
+    /**
+     * Add new category item
+     * 
+     * @param $attr
+     * @return void
+     * @throws \Exception
+     */
+    public static function add($attr)
+    {
+        try {
+            $item = new CategoryModel();
+            $item->name = $attr['name'];
+            $item->icon = $attr['icon'];
+            $item->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Edit existing category item
+     * 
+     * @param $id
+     * @param $name
+     * @param $icon
+     * @return void
+     * @throws \Exception
+     */
+    public static function edit($id, $name, $icon = null)
+    {
+        try {
+            $item = CategoryModel::where('id', '=', $id)->first();
+            if (!$item) {
+                throw new Exception('Category not found: ' . $id);
+            }
+
+            $item->name = $name;
+            $item->icon = $icon;
+            $item->save();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Remove an existing category item
+     * 
+     * @param $id
+     * @return void
+     * @throws \Exception
+     */
+    public static function remove($id)
+    {
+        try {
+            $item = CategoryModel::where('id', '=', $id)->first();
+            if (!$item) {
+                throw new Exception('Category not found: ' . $id);
+            }
+
+            $item->delete();
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
 }

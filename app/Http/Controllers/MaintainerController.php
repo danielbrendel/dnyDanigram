@@ -24,6 +24,7 @@ use App\ThemeModel;
 use App\ThreadModel;
 use App\ProfileModel;
 use App\ForumModel;
+use App\CategoryModel;
 use App\User;
 use Dotenv\Dotenv;
 use Illuminate\Http\Request;
@@ -81,6 +82,7 @@ class MaintainerController extends Controller
             'user' => User::get(auth()->id()),
             'settings' => AppModel::getSettings(),
             'faqs' => FaqModel::getAll(),
+            'categories' => CategoryModel::queryAll(),
             'forums' => ForumModel::all(),
             'themes' => $themes,
             'langs' => AppModel::getLanguageList(),
@@ -681,6 +683,74 @@ class MaintainerController extends Controller
             ForumModel::remove($id);
 
             return back()->with('flash.success', __('app.forum_removed'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Create new category item
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createCategory()
+    {
+        try {
+            $attr = request()->validate([
+                'name' => 'required',
+                'icon' => 'nullable'
+            ]);
+
+            if (!isset($attr['icon'])) {
+                $attr['icon'] = null;
+            }
+
+            CategoryModel::add($attr);
+
+            return back()->with('success', __('app.category_created'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Edit category item
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editCategory()
+    {
+        try {
+            $attr = request()->validate([
+                'id' => 'required|numeric',
+                'name' => 'required',
+                'icon' => 'nullable'
+            ]);
+
+            if (!isset($attr['icon'])) {
+                $attr['icon'] = null;
+            }
+
+            CategoryModel::edit($attr['id'], $attr['name'], $attr['icon']);
+
+            return back()->with('success', __('app.category_edited'));
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete a category item
+     * 
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteCategory($id)
+    {
+        try {
+            CategoryModel::remove($id);
+
+            return back()->with('success', __('app.category_deleted'));
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }

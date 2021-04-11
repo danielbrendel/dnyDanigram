@@ -443,5 +443,16 @@ return [
     'category_not_found' => 'Category :id not found',
     'category' => 'Category',
     'select_category' => '-- Optionally select category --',
-    'project_categories' => 'Enable post categories'
+    'project_categories' => 'Enable post categories',
+    'category_id' => 'ID',
+    'category_name' => 'Name',
+    'category_icon' => 'Icon',
+    'category_last_updated' => 'Last updated',
+    'cat_remove_confirm' => 'Do you really want to delete this category item?',
+    'cat_remove' => 'Remove',
+    'category_create' => 'Create category item',
+    'category_edit' => 'Edit category item',
+    'category_created' => 'Category item has been created',
+    'category_edited' => 'Category item has been edited',
+    'category_deleted' => 'Category item has been deleted'
 ];
