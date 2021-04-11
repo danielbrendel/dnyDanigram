@@ -216,6 +216,7 @@ class PostModel extends Model
                 'title' => 'nullable|max:120',
                 'description' => 'nullable|max:4096',
                 'hashtags' => 'nullable',
+                'category' => 'nullable',
                 'nsfw' => 'nullable',
                 'ig_name' => 'nullable',
                 'twitter_name' => 'nullable',
@@ -228,6 +229,10 @@ class PostModel extends Model
 
             if (!isset($attr['description'])) {
                 $attr['description'] = '';
+            }
+
+            if (!isset($attr['category'])) {
+                $attr['category'] = 0;
             }
 
             if (!isset($attr['ig_name'])) {
@@ -305,6 +310,7 @@ class PostModel extends Model
                         $post->hashtags .= ' ';
                     }
                 }
+                $post->category = $attr['category'];
                 $post->userId = auth()->id();
                 $post->nsfw = (bool)$attr['nsfw'];
                 $post->attribution_instagram = $attr['ig_name'];
@@ -326,6 +332,7 @@ class PostModel extends Model
                         $post->hashtags .= ' ';
                     }
                 }
+                $post->category = $attr['category'];
                 $post->userId = auth()->id();
                 $post->nsfw = (bool)$attr['nsfw'];
                 $post->attribution_instagram = $attr['ig_name'];
@@ -390,12 +397,13 @@ class PostModel extends Model
      * @param $type
      * @param $limit
      * @param $hashtag
+     * @param $category
      * @param $user
      * @param null $paginateFrom
      * @return mixed
      * @throws \Exception
      */
-    public static function getPostPack($type, $limit, $hashtag, $user, $paginateFrom = null)
+    public static function getPostPack($type, $limit, $hashtag, $category, $user, $paginateFrom = null)
     {
         try {
             $posts = null;
@@ -435,6 +443,10 @@ class PostModel extends Model
 
             if ($hashtag !== null) {
                 $posts->where('hashtags', 'like', '%' . $hashtag . ' %');
+            }
+
+            if ($category !== null) {
+                $posts->where('category', '=', $category);
             }
 
             if ($user !== null) {

@@ -25,6 +25,7 @@ comes with a friendly installer. For a full feature list see below.
 + See latest and top posts and comments
 + NSFW safety
 + Hashtag system
++ Category system
 + Dynamic profile system
 + Favorites system
 + Notification system

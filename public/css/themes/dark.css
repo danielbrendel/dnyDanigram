@@ -76,6 +76,24 @@ h2 {
     color: rgb(240, 240, 240) !important;
 }
 
+.navbar-link, .navbar-item, .navbar-dropdown {
+  color: rgb(240, 240, 240);
+  background-color: rgb(59, 71, 85);
+}
+
+a.navbar-link:hover {
+  color: rgb(240, 240, 240);
+}
+
+.navbar-dropdown a.navbar-item:hover {
+  background-color: rgb(59, 71, 85);
+  color: rgb(255, 255, 255);
+}
+
+.navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link {
+  background-color: rgb(59, 71, 84);
+}
+
 .ql-editing {
     z-index: 3;
 }
@@ -227,10 +245,18 @@ input[type="submit"], button[class="button"], input[type="button"] {
   top: 53px;
 }
 
+.is-top-4 {
+    top: 4px;
+}
+
 @media screen and (min-width: 1455px) {
   .is-negative-top {
     top: -68px;
   }
+}
+
+.is-negative-top-2 {
+    top: -2px;
 }
 
 .is-color-grey {

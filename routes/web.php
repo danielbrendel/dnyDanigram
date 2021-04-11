@@ -36,6 +36,7 @@ Route::get('/t/{hashtag}', 'PostsController@hashtag');
 Route::get('/fetch/posts', 'PostsController@fetchPosts');
 Route::get('/fetch/thread', 'PostsController@fetchThread');
 Route::get('/fetch/post', 'PostsController@fetchSinglePost');
+Route::get('/category/{id}', 'PostsController@fetchCategory');
 Route::get('/upload', 'PostsController@viewUpload');
 Route::post('/upload', 'PostsController@upload');
 Route::get('/p/{id}', 'PostsController@showPost');

@@ -438,5 +438,9 @@ return [
     'username_valid_and_available' => 'The username is valid and available',
     'passwords_mismatch' => 'The passwords do not match',
     'passwords_match' => 'The passwords do match',
-    'no_location_specified' => 'No location specified'
+    'no_location_specified' => 'No location specified',
+    'categories' => 'Categories',
+    'category_not_found' => 'Category :id not found',
+    'category' => 'Category',
+    'select_category' => '-- Optionally select category --'
 ];

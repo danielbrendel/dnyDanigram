@@ -81,8 +81,20 @@
                 <div class="navbar-start"></div>
 
                 <center>
-                    <div class="field navbar-search is-margin-bottom-small-screen-size">
-                        <p class="control has-icons-right">
+                    <div class="navbar-item has-dropdown is-hoverable is-inline-block">
+                        <a class="navbar-link is-top-4" href="javascript:void(0);" onclick="window.toggleDropdown(document.getElementById('category-dropdown'));">
+                            {{ __('app.categories') }}
+                        </a>
+
+                        <div class="navbar-dropdown is-hidden" id="category-dropdown">
+                            @foreach (\App\CategoryModel::queryAll() as $item)
+                                <a class="navbar-item" href="{{ url('/category/' . $item->id) }}">{{ $item->name }}</a>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="field navbar-search is-margin-bottom-small-screen-size is-inline-block">
+                        <p class="control has-icons-right is-negative-top-2">
                             <input type="text" name="hashtag" placeholder="{{ __('app.search_jump_to_hashtag') }}" onkeypress="if (event.which === 13) location.href='{{ url('/t') }}/' + this.value.replace('#', '');">
                             <span class="icon is-small is-right is-top-navbar">
                                 <i class="fas fa-search"></i>

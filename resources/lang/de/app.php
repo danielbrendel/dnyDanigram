@@ -439,5 +439,9 @@ return [
     'register_password_mismatch' => 'Die Passwörter stimmen nicht überein',
     'passwords_mismatch' => 'Die Passwörter stimmen nicht überein',
     'passwords_match' => 'Die Passwörter sind identisch',
-    'no_location_specified' => 'Kein Ort angegeben'
+    'no_location_specified' => 'Kein Ort angegeben',
+    'categories' => 'Kategorien',
+    'category_not_found' => 'Kategorie :id wurde nicht gefunden',
+    'category' => 'Kategorie',
+    'select_category' => '-- Optionales Auswählen --'
 ];

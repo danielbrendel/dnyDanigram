@@ -143,10 +143,16 @@ h2 {
 .is-top-53 {
     top: 53px;
 }
+.is-top-4 {
+    top: 4px;
+}
 .is-negative-top {
     @media screen and (min-width: 1455px) {
         top: -68px;
     }
+}
+.is-negative-top-2 {
+    top: -2px;
 }
 .is-color-grey {
     color: rgb(120, 120, 120);

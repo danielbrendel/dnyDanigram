@@ -24,6 +24,7 @@ use App\ReportModel;
 use App\StoryModel;
 use App\TagsModel;
 use App\ThreadModel;
+use App\CategoryModel;
 use App\UniquePostViewsModel;
 use Exception;
 use http\Env\Response;
@@ -109,6 +110,13 @@ class PostsController extends Controller
 
             $post->views = UniquePostViewsModel::viewCountAsString(UniquePostViewsModel::viewForPost($post->id));
 
+            $category = CategoryModel::where('id', '=', $post->category)->first();
+            if ($category) {
+                $post->category = $category->name;
+            } else {
+                $post->category = '';
+            }
+
             $cmdId = request('c', null);
             if (is_numeric($cmdId)) {
                 $cmt = ThreadModel::where('id', '=', $cmdId)->where('postId', '=', $id)->first();
@@ -166,7 +174,7 @@ class PostsController extends Controller
                 'cookie_consent' => AppModel::getCookieConsentText()
             ]);
         } catch (Exception $e) {
-            abort(500);
+            throw $e;
         }
     }
 
@@ -248,9 +256,10 @@ class PostsController extends Controller
             $type = request('type', PostModel::FETCH_TOP);
             $paginate = request('paginate', null);
             $hashtag = request('hashtag', null);
+            $category = request('category', null);
             $user = request('user', null);
 
-            $posts = PostModel::getPostPack($type, $this->postPackLimit, $hashtag, $user, $paginate);
+            $posts = PostModel::getPostPack($type, $this->postPackLimit, $hashtag, $category, $user, $paginate);
             foreach ($posts as $key => &$post) {
                 $post['_type'] = 'post';
 
@@ -264,6 +273,13 @@ class PostsController extends Controller
                 $post['comment_count'] = ThreadModel::where('postId', '=', $post['id'])->where('locked', '=', false)->count();
                 $post['userHearted'] = HeartModel::hasUserHearted(auth()->id(), $post['id'], 'ENT_POST');
                 $post['hearts'] = HeartModel::where('entityId', '=', $post['id'])->where('type', '=', 'ENT_POST')->count();
+
+                $category = CategoryModel::where('id', '=', $post['category'])->first();
+                if ($category) {
+                    $post['category'] = $category->name;
+                } else {
+                    $post['category'] = '';
+                }
             }
 
             if ((Auth::guest()) || (!User::get(auth()->id())->pro)) {
@@ -280,6 +296,35 @@ class PostsController extends Controller
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
+    }
+
+    /**
+     * Fetch category posts
+     * 
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchCategory($id)
+    {
+        $category = CategoryModel::where('id', '=', $id)->first();
+        if (!$category) {
+            return redirect('/')->with('error', __('app.category_not_found', ['id' => $id]));
+        }
+
+        $user = User::getByAuthId();
+        if ($user) {
+            $user->stats = new stdClass();
+            $user->stats->posts = PostModel::where('userId', '=', $user->id)->count();
+            $user->stats->comments = ThreadModel::where('userId', '=', $user->id)->count();
+        }
+
+        return view('feed.category', [
+            'user' => $user,
+            'captcha' => CaptchaModel::createSum(session()->getId()),
+            'taglist' => TagsModel::getPopularTags(),
+            'category' => $category,
+            'cookie_consent' => AppModel::getCookieConsentText()
+        ]);
     }
 
     /**
@@ -430,6 +475,13 @@ class PostsController extends Controller
             $post->diffForHumans = $post->created_at->diffForHumans();
             $post->comment_count = ThreadModel::where('postId', '=', $post->id)->where('locked', '=', false)->count();
             $post->views = UniquePostViewsModel::viewCountAsString(UniquePostViewsModel::viewForPost($post->id));
+
+            $category = CategoryModel::where('id', '=', $post->category)->first();
+            if ($category) {
+                $post->category = $category->name;
+            } else {
+                $post->category = '';
+            }
 
             return response()->json(array('code' => 200, 'elem' => $post));
         } catch (Exception $e) {
