@@ -66,6 +66,36 @@ class AppModelTest extends TestCase
         $this->assertIsString($result);
     }
 
+    public function testGetWelcomeContent()
+    {
+        $result = AppModel::getWelcomeContent();
+        $this->assertIsString($result);
+    }
+
+    public function testGetFormattedProjectName()
+    {
+        $result = AppModel::getFormattedProjectName();
+        $this->assertTrue(is_null($result) || is_string($result));
+    }
+
+    public function testGetDefaultTheme()
+    {
+        $result = AppModel::getDefaultTheme();
+        $this->assertIsString($result);
+    }
+
+    public function testGetHeadCode()
+    {
+        $result = AppModel::getHeadCode();
+        $this->assertIsString($result);
+    }
+
+    public function testGetAdCode()
+    {
+        $result = AppModel::getAdCode();
+        $this->assertIsString($result);
+    }
+
     public function testIsValidNameIdent()
     {
         $valid = AppModel::isValidNameIdent('username');
@@ -98,5 +128,51 @@ class AppModelTest extends TestCase
         $this->assertEquals('test', $list[0]);
         $this->assertEquals('username', $list[1]);
         $this->assertEquals('another', $list[2]);
+    }
+
+    public function testGetSettings()
+    {
+        $result = AppModel::getSettings();
+        $this->assertIsObject($result);
+    }
+
+    public function testSaveSetting()
+    {
+        $orig = AppModel::getAdCode();
+        $new = md5(random_bytes(55));
+        AppModel::saveSetting('adcode', $new);
+        \Artisan::call('cache:clear');
+        $saved = AppModel::getAdCode();
+        $this->assertEquals($saved, $new);
+        AppModel::saveSetting('adcode', $orig);
+    }
+
+    public function testGetRandomPassword()
+    {
+        $result = AppModel::getRandomPassword(10);
+        $this->assertIsString($result);
+        $this->assertTrue(strlen($result) === 10);
+    }
+
+    public function testGetLanguageList()
+    {
+        $langs = [
+            'en',
+            'de'
+        ];
+
+        $result = AppModel::getLanguageList();
+        $this->assertIsArray($result);
+
+        foreach ($langs as $lang) {
+            $this->assertTrue(in_array($lang, $result));
+        }
+    }
+
+    public function testGetShortExpression()
+    {
+        $result = AppModel::getShortExpression('abcdefghijklmnopqrstuvwxyz');
+        $this->assertIsString($result);
+        $this->assertTrue(strlen($result) === AppModel::MAX_EXPRESSION_LENGTH + 3);
     }
 }
