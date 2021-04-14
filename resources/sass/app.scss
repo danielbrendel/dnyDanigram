@@ -112,7 +112,7 @@ h2 {
 }
 .is-default-padding-mobile {
     @media screen and (max-width: 768px) {
-        padding: 21px; 
+        padding: 21px;
     }
 }
 .is-default-padding-left {
@@ -237,6 +237,12 @@ h2 {
 }
 .is-colored-blue {
     color: rgb(135,206,250) !important;
+}
+.is-dropdown-aligned {
+    @media screen and (max-width: 1088px) {
+        text-align: left;
+        left: 20px;
+    }
 }
 .avatar {
     border-radius: 50%;

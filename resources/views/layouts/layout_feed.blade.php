@@ -87,7 +87,7 @@
                                 {{ __('app.categories') }}
                             </a>
 
-                            <div class="navbar-dropdown is-hidden" id="category-dropdown">
+                            <div class="navbar-dropdown is-dropdown-aligned is-hidden" id="category-dropdown">
                                 @foreach (\App\CategoryModel::queryAll() as $item)
                                     <a class="navbar-item" href="{{ url('/category/' . $item->id) }}">
                                         @if (($item->icon !== null) && (file_exists(public_path() . '/gfx/categories/' . $item->icon)))
@@ -806,7 +806,7 @@
             let latitude = geodata.coords.latitude;
             let longitude = geodata.coords.longitude;
 
-            window.vue.ajaxRequest('post', '{{ url('/profile/geo') }}', { latitude: latitude, longitude: longitude }, function(response) { 
+            window.vue.ajaxRequest('post', '{{ url('/profile/geo') }}', { latitude: latitude, longitude: longitude }, function(response) {
                 if (response.code == 500) {
                     console.log(response.msg);
                 }

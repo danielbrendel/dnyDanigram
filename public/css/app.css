@@ -292,6 +292,13 @@ h2 {
   color: lightskyblue !important;
 }
 
+@media screen and (max-width: 1088px) {
+  .is-dropdown-aligned {
+    text-align: left;
+    left: 20px;
+  }
+}
+
 .avatar {
   border-radius: 50%;
 }

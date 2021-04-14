@@ -339,6 +339,42 @@ input[type="submit"], button[class="button"], input[type="button"] {
     margin-left: 50px;
 }
 
+.is-margin-bottom-last-fixed-frame {
+    margin-bottom: 123px !important;
+}
+
+.is-member-form-without-border-and-backgroundcolor {
+    border: unset !important;
+    background-color: unset !important;
+}
+
+.is-black-bg {
+    background-color: rgba(50, 50, 50, 0.5);
+}
+
+.is-colored-white {
+    color: #fafafa !important;
+}
+
+.is-colored-white strong {
+    color: #c8c8c8 !important;
+}
+
+.is-colored-white label {
+    color: #c8c8c8 !important;
+}
+
+.is-colored-blue {
+    color: lightskyblue !important;
+}
+
+@media screen and (max-width: 1088px) {
+    .is-dropdown-aligned {
+        text-align: left;
+        left: 20px;
+    }
+}
+
 .avatar {
   border-radius: 50%;
 }
