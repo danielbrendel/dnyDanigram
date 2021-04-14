@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use App\HeartModel;
@@ -32,7 +33,7 @@ class TagsModel extends Model
      *
      * @param $name
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function addTag($name)
     {
@@ -45,7 +46,7 @@ class TagsModel extends Model
                 $tag->tag = $name;
                 $tag->save();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -56,7 +57,7 @@ class TagsModel extends Model
      * @param $name
      * @param $userId
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function heartTag($name, $userId)
     {
@@ -74,7 +75,7 @@ class TagsModel extends Model
             }
 
             return false;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -85,7 +86,7 @@ class TagsModel extends Model
      * @param $name
      * @param $userId
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function unheartTag($name, $userId)
     {
@@ -103,7 +104,7 @@ class TagsModel extends Model
             }
 
             return false;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -112,7 +113,7 @@ class TagsModel extends Model
      * Get list of popular tags
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getPopularTags()
     {
@@ -135,7 +136,7 @@ class TagsModel extends Model
                 });
             }
             return $tagList;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

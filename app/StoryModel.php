@@ -15,6 +15,7 @@
 namespace App;
 
 use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -32,7 +33,8 @@ class StoryModel extends Model
      * @param $background
      * @param $text_color
      * @param $type
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function add($userId, $text, $background, $text_color, $type)
     {
@@ -45,7 +47,7 @@ class StoryModel extends Model
             $item->userId = $userId;
             $item->expired = false;
             $item->save();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -56,7 +58,7 @@ class StoryModel extends Model
      * @param $viewer
      * @param $poster
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function shallIndicate($viewer, $poster)
     {
@@ -69,7 +71,7 @@ class StoryModel extends Model
             }
 
             return false;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -79,8 +81,8 @@ class StoryModel extends Model
      *
      * @param $viewerId
      * @param $posterId
-     * @return mixed
-     * @throws \Exception
+     * @return array
+     * @throws Exception
      */
     public static function view($viewerId, $posterId)
     {
@@ -95,14 +97,14 @@ class StoryModel extends Model
                         if ($viewerId != $posterId) {
                             StoryViewerModel::addViewer($story->id, $viewerId);
                         }
-                        
+
                         $result[] = $story;
                     }
                 }
             }
 
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -113,7 +115,7 @@ class StoryModel extends Model
      * @param $userId
      * @param $limit
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public static function randomSelection($userId, $limit)
     {
@@ -146,7 +148,7 @@ class StoryModel extends Model
             array_unshift($result, $ownStory);
 
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -154,7 +156,8 @@ class StoryModel extends Model
     /**
      * Check stories if expired and flag them accordingly
      *
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function expireStory()
     {
@@ -169,24 +172,24 @@ class StoryModel extends Model
                     $story->save();
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Delete a story item
-     * 
+     *
      * @param $id
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function deleteStory($id)
     {
         try {
             $story = StoryModel::where('id', '=', $id)->where('expired', '=', false)->first();
             if (!$story) {
-                throw new \Exception('Story not found: ' . $id);
+                throw new Exception('Story not found: ' . $id);
             }
 
             if ((auth()->id() === $story->userId) || ((User::isAdmin(auth()->id())) || (User::isMaintainer(auth()->id())))) {
@@ -197,9 +200,9 @@ class StoryModel extends Model
 
                 $story->delete();
             } else {
-                throw new \Exception(__('app.insufficient_permissions'));
+                throw new Exception(__('app.insufficient_permissions'));
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

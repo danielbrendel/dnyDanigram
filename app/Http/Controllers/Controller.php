@@ -26,6 +26,8 @@ class Controller extends BaseController
 
     /**
      * Add language middleware here
+     *
+     * @return void
      */
     public function __construct()
     {

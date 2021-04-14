@@ -26,14 +26,17 @@ class FavoritesController extends Controller
 {
 	/**
      * Constructor
+     *
+     * @return void
      */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-	
+
     /**
      * Add favorite
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function add()
@@ -66,6 +69,7 @@ class FavoritesController extends Controller
 
     /**
      * Remove favorite
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function remove()

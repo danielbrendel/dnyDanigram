@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use App\PostsModel;
 
@@ -26,25 +27,25 @@ class CategoryModel extends Model
 {
     /**
      * Get all categories
-     * 
+     *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function queryAll()
     {
         try {
             return CategoryModel::get();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Add new category item
-     * 
+     *
      * @param $attr
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function add($attr)
     {
@@ -53,19 +54,19 @@ class CategoryModel extends Model
             $item->name = $attr['name'];
             $item->icon = $attr['icon'];
             $item->save();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Edit existing category item
-     * 
+     *
      * @param $id
      * @param $name
      * @param $icon
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function edit($id, $name, $icon = null)
     {
@@ -78,17 +79,17 @@ class CategoryModel extends Model
             $item->name = $name;
             $item->icon = $icon;
             $item->save();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Remove an existing category item
-     * 
+     *
      * @param $id
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function remove($id)
     {
@@ -99,7 +100,7 @@ class CategoryModel extends Model
             }
 
             $item->delete();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

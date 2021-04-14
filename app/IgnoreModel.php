@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -28,7 +29,7 @@ class IgnoreModel extends Model
      *
      * @param $userId
      * @param $targetId
-     * @throws \Exception
+     * @throws Exception
      */
     public static function add($userId, $targetId)
     {
@@ -44,7 +45,7 @@ class IgnoreModel extends Model
                 $item->targetId = $targetId;
                 $item->save();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -54,7 +55,7 @@ class IgnoreModel extends Model
      *
      * @param $userId
      * @param $targetId
-     * @throws \Exception
+     * @throws Exception
      */
     public static function remove($userId, $targetId)
     {
@@ -63,7 +64,7 @@ class IgnoreModel extends Model
             if ($exists) {
                 $exists->delete();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -74,13 +75,13 @@ class IgnoreModel extends Model
      * @param $userId
      * @param $targetId
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function hasIgnored($userId, $targetId)
     {
         try {
             return $exists = IgnoreModel::where('userId', '=', $userId)->where('targetId', '=', $targetId)->count() > 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

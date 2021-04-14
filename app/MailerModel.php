@@ -31,8 +31,10 @@ class MailerModel extends Model
 
     /**
      * MailerModel constructor.
+     *
      * @param $fromAddress
      * @param $fromName
+     * @return void
      */
     public function __construct($fromAddress, $fromName)
     {

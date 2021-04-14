@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -30,7 +31,7 @@ class FavoritesModel extends Model
      * Validate entity type
      *
      * @param $entType
-     * @throws \Exception
+     * @throws Exception
      */
     public static function validateEntityType($entType)
     {
@@ -38,9 +39,9 @@ class FavoritesModel extends Model
             $types = array('ENT_HASHTAG', 'ENT_USER');
 
             if (!in_array($entType, $types)) {
-                throw new \Exception('Invalid entity type: ' . $entType);
+                throw new Exception('Invalid entity type: ' . $entType);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -52,7 +53,7 @@ class FavoritesModel extends Model
      * @param $entityId
      * @param $entType
      * @return FavoritesModel
-     * @throws \Exception
+     * @throws Exception
      */
     public static function add($userId, $entityId, $entType)
     {
@@ -78,7 +79,7 @@ class FavoritesModel extends Model
             }
 
             return $exists;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -89,7 +90,7 @@ class FavoritesModel extends Model
      * @param $userId
      * @param $entityId
      * @param $entType
-     * @throws \Exception
+     * @throws Exception
      */
     public static function remove($userId, $entityId, $entType)
     {
@@ -100,7 +101,7 @@ class FavoritesModel extends Model
             if ($exists) {
                 $exists->delete();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -112,7 +113,7 @@ class FavoritesModel extends Model
      * @param $entityId
      * @param $entType
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function hasUserFavorited($userId, $entityId, $entType)
     {
@@ -120,7 +121,7 @@ class FavoritesModel extends Model
             $exists = FavoritesModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->count();
 
             return $exists > 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -131,7 +132,7 @@ class FavoritesModel extends Model
      * @param $id
      * @param $paginate
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getForUser($id, $paginate = null)
     {
@@ -143,7 +144,7 @@ class FavoritesModel extends Model
             }
 
             return $query->limit(env('APP_FAVPACKLIMIT'))->get();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -154,7 +155,7 @@ class FavoritesModel extends Model
      * @param $id
      * @param $paginate
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getDetailedForUser($id, $paginate = null)
     {
@@ -179,7 +180,7 @@ class FavoritesModel extends Model
             }
 
             return $favorites;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

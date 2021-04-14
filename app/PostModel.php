@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use App\UniquePostViewsModel;
 
@@ -35,7 +36,7 @@ class PostModel extends Model
      * Check if file is a valid image
      *
      * @param string $imgFile
-     * @return boolean
+     * @return bool
      */
     public static function isValidImage($imgFile)
     {
@@ -60,7 +61,7 @@ class PostModel extends Model
 
     /**
      * Check if file is of valid video type
-     * 
+     *
      * @param string $ext
      * @return boolean
      */
@@ -104,7 +105,8 @@ class PostModel extends Model
      * Correct image rotation of uploaded image
      *
      * @param $filename
-     * @param $image
+     * @param &$image
+     * @return void
      */
     private static function correctImageRotation($filename, &$image)
     {
@@ -205,7 +207,7 @@ class PostModel extends Model
     /**
      * Process image upload
      *
-     * @throws \Exception
+     * @throws Exception
      * @return int
      */
     public static function upload()
@@ -258,13 +260,13 @@ class PostModel extends Model
 				if (strlen($ht) === 0) {
 					continue;
 				}
-				
+
 				if ((strlen($ht) > 1) && ($ht[0] === '#')) {
 					$ht = substr($ht, 1);
 				}
 
 				if (!AppModel::isValidNameIdent($ht)) {
-					throw new \Exception(__('app.upload_hashtag_invalid', ['hashtag' => $ht]));
+					throw new Exception(__('app.upload_hashtag_invalid', ['hashtag' => $ht]));
 				}
 			}
 
@@ -275,27 +277,27 @@ class PostModel extends Model
             $att = request()->file('image');
             if ($att != null) {
                 if ($att->getSize() > env('APP_MAXUPLOADSIZE')) {
-                    throw new \Exception(__('app.post_upload_size_exceeded'));
+                    throw new Exception(__('app.post_upload_size_exceeded'));
                 }
 
                 $fname = uniqid('', true) . md5(random_bytes(55));
                 $fext = $att->getClientOriginalExtension();
-                
+
                 $att->move(public_path() . '/gfx/posts/', $fname . '.' . $fext);
-                
+
                 $baseFile = public_path() . '/gfx/posts/' . $fname;
                 $fullFile = $baseFile . '.' . $fext;
-                
+
                 if (PostModel::isValidImage(public_path() . '/gfx/posts/' . $fname . '.' . $fext)) {
                     if (!static::createThumbFile($fullFile, static::getImageType($fext, $baseFile), $baseFile, $fext)) {
-                        throw new \Exception('createThumbFile failed', 500);
+                        throw new Exception('createThumbFile failed', 500);
                     }
                     $video = false;
                 } else if (PostModel::isValidVideoType($att->getClientOriginalExtension())) {
                     $video = true;
                 } else {
                     unlink(public_path() . '/gfx/posts/' . $fname . '.' . $fext);
-                    throw new \Exception(__('app.post_invalid_file_type'));
+                    throw new Exception(__('app.post_invalid_file_type'));
                 }
 
                 $post = new PostModel();
@@ -342,7 +344,7 @@ class PostModel extends Model
 
                 $resultId = $post->id;
             }
-			
+
 			foreach ($hashtagList as $ht) {
 				if (strlen($ht) > 0) {
 					TagsModel::addTag($ht);
@@ -356,9 +358,9 @@ class PostModel extends Model
 					PushModel::addNotification(__('app.user_mentioned_short', ['name' => $user->username]), __('app.user_mentioned', ['name' => $user->username, 'item' => url('/p/' . $post->id)]), 'PUSH_MENTIONED', $curUser->id);
 				}
 			}
-			
+
 			return $resultId;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -371,22 +373,22 @@ class PostModel extends Model
      * @param $id
      * @param bool $fetchLocked
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getPost($id, $fetchLocked = false)
     {
         try {
             $post = PostModel::where('id', '=', $id)->first();
             if (!$post) {
-                throw new \Exception(__('app.post_not_found'));
+                throw new Exception(__('app.post_not_found'));
             }
 
             if (($post->locked) && ($fetchLocked === false)) {
-                throw new \Exception(__('app.post_is_locked'));
+                throw new Exception(__('app.post_is_locked'));
             }
 
             return $post;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -401,7 +403,7 @@ class PostModel extends Model
      * @param $user
      * @param null $paginateFrom
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getPostPack($type, $limit, $hashtag, $category, $user, $paginateFrom = null)
     {
@@ -431,14 +433,14 @@ class PostModel extends Model
                             ->where('type', '=', 'ENT_USER');
                     }
                 );
-                
+
                 if ($paginateFrom !== null) {
                     $posts->where('id', '<', $paginateFrom);
                 }
 
                 $posts->orderBy('id', 'desc');
             } else {
-                throw new \Exception('Invalid type: ' . $type);
+                throw new Exception('Invalid type: ' . $type);
             }
 
             if ($hashtag !== null) {
@@ -460,7 +462,7 @@ class PostModel extends Model
             }
 
             return $pack->toArray();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

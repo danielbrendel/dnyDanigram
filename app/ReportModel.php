@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -30,7 +31,8 @@ class ReportModel extends Model
      * Throw if type is unknown
      *
      * @param $type
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     private static function validateEntityType($type)
     {
@@ -38,9 +40,9 @@ class ReportModel extends Model
             $types = array('ENT_POST', 'ENT_HASHTAG', 'ENT_COMMENT', 'ENT_USER', 'ENT_FORUMPOST');
 
             if (!in_array($type, $types)) {
-                throw new \Exception('Unknown type: ' . $type, 404);
+                throw new Exception('Unknown type: ' . $type, 404);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -51,7 +53,8 @@ class ReportModel extends Model
      * @param $userId
      * @param $entityId
      * @param $entType
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function addReport($userId, $entityId, $entType)
     {
@@ -69,7 +72,7 @@ class ReportModel extends Model
             $report->entityId = $entityId;
             $report->type = $entType;
             $report->save();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -78,8 +81,8 @@ class ReportModel extends Model
      * Get report pack of entity
      *
      * @param $entType
-     * @return mixed
-     * @throws \Exception
+     * @return array
+     * @throws Exception
      */
     public static function getReportPack($entType)
     {
@@ -96,7 +99,7 @@ class ReportModel extends Model
             }
 
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

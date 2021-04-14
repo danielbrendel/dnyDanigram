@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use stdClass;
 use Illuminate\Support\Carbon;
+use Throwable;
 
 /**
  * Class User
@@ -69,13 +70,12 @@ class User extends Authenticatable
      */
     public static function get($id)
     {
-        $user = User::where('id', '=', $id)->first();
-
-        return $user;
+        return User::where('id', '=', $id)->first();
     }
 
     /**
      * Return admin flag value
+     *
      * @param $id
      * @return bool
      */
@@ -92,6 +92,7 @@ class User extends Authenticatable
 
     /**
      * Return maintainer flag value
+     *
      * @param $id
      * @return bool
      */
@@ -127,9 +128,7 @@ class User extends Authenticatable
      */
     public static function getByUsername($username)
     {
-        $user = User::where('username', '=', $username)->first();
-
-        return $user;
+        return User::where('username', '=', $username)->first();
     }
 
     /**
@@ -148,7 +147,7 @@ class User extends Authenticatable
 
     /**
      * Get user base info
-     * 
+     *
      * @param $userId
      * @return mixed
      */
@@ -176,7 +175,7 @@ class User extends Authenticatable
 
     /**
      * Get newest users
-     * 
+     *
      * @param $limit
      * @param $paginate
      * @return mixed
@@ -197,7 +196,7 @@ class User extends Authenticatable
      *
      * @param $attr
      * @return int
-     * @throws Exception
+     * @throws Exception|Throwable
      */
     public static function register($attr)
     {
@@ -246,6 +245,12 @@ class User extends Authenticatable
         }
     }
 
+    /**
+     * Resend account confirmation link
+     *
+     * @param $id
+     * @throws Exception|Throwable
+     */
     public static function resend($id)
     {
         try {
@@ -286,7 +291,7 @@ class User extends Authenticatable
      * Initialize password recovery
      *
      * @param $email
-     * @throws Exception
+     * @throws Exception|Throwable
      */
     public static function recover($email)
     {
@@ -476,7 +481,7 @@ class User extends Authenticatable
      *
      * @param $id
      * @param $password
-     * @throws Exception
+     * @throws Exception|Throwable
      */
     public static function changePassword($id, $password)
     {
@@ -499,7 +504,7 @@ class User extends Authenticatable
      *
      * @param $id
      * @param $email
-     * @throws Exception
+     * @throws Exception|Throwable
      */
     public static function changeEMail($id, $email)
     {
@@ -624,7 +629,7 @@ class User extends Authenticatable
 
     /**
      * Save geo position of user
-     * 
+     *
      * @param $latitude
      * @param $longitude
      * @return void
@@ -648,7 +653,7 @@ class User extends Authenticatable
 
     /**
      * Find members within geo range
-     * 
+     *
      * @param $max_distance
      * @param $paginate
      * @return mixed
@@ -701,7 +706,7 @@ class User extends Authenticatable
 
     /**
      * Find profiles by given criteria
-     * 
+     *
      * @param $username
      * @param $bio
      * @param $age_from

@@ -14,7 +14,9 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Throwable;
 
 /**
  * Class MessageModel
@@ -27,22 +29,23 @@ class MessageModel extends Model
      * Add message
      *
      * @param $userId
+     * @param $senderId
      * @param $subject
      * @param $message
-     * @return int|mixed
-     * @throws \Exception
+     * @return mixed
+     * @throws Exception|Throwable
      */
     public static function add($userId, $senderId, $subject, $message)
     {
         try {
             $user = User::get($userId);
             if (!$user) {
-                throw new \Exception('User not found: ' . $userId);
+                throw new Exception('User not found: ' . $userId);
             }
 
             $sender = User::get($senderId);
             if (!$sender) {
-                throw new \Exception('Sender not found: ' . $senderId);
+                throw new Exception('Sender not found: ' . $senderId);
             }
 
             $channel = MessageModel::select('channel')->where('userId', '=', $userId)->where('senderId', '=', $senderId)->first();
@@ -73,7 +76,7 @@ class MessageModel extends Model
             }
 
             return $msg->id;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
 
@@ -87,7 +90,7 @@ class MessageModel extends Model
      * @param $limit
      * @param null $paginate
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function fetch($userId, $limit, $paginate = null)
     {
@@ -99,7 +102,7 @@ class MessageModel extends Model
             }
 
             return $rowset->orderBy('id', 'desc')->limit($limit)->get();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -109,7 +112,7 @@ class MessageModel extends Model
      *
      * @param $msgId
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getMessageThread($msgId)
     {
@@ -141,14 +144,14 @@ class MessageModel extends Model
               'msg' => $msg,
               'previous' => $previous
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Get amount of unread messages
-     * 
+     *
      * @param $userId
      * @return int
      * @throws Exception
@@ -157,7 +160,7 @@ class MessageModel extends Model
     {
         try {
             return MessageModel::where('userId', '=', $userId)->where('seen', '=', false)->count();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

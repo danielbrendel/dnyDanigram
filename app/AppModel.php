@@ -166,7 +166,7 @@ class AppModel extends Model
     /**
      * Return if string is a valid identifier for usernames and tags
      * @param $ident
-     * @return false|int
+     * @return mixed
      */
     public static function isValidNameIdent($ident)
     {
@@ -181,7 +181,7 @@ class AppModel extends Model
      * Get image type of file
      *
      * @param $file
-     * @return mixed|null
+     * @return mixed
      */
     public static function getImageType($file)
     {
@@ -249,13 +249,13 @@ class AppModel extends Model
      * Get settings
      *
      * @return Model|\Illuminate\Database\Query\Builder|object|null
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getSettings()
     {
         try {
             return DB::table('app_settings')->first();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -266,13 +266,13 @@ class AppModel extends Model
      * @param $key
      * @param $value
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function saveSetting($key, $value)
     {
         try {
             DB::table('app_settings')->where('id', '=', 1)->update(array($key => $value));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -303,7 +303,7 @@ class AppModel extends Model
             $entire = file_get_contents(base_path() . '/.env') . PHP_EOL . $content;
 
             file_put_contents(base_path() . '/.env', $entire);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -313,7 +313,7 @@ class AppModel extends Model
      *
      * @param $length
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getRandomPassword($length)
     {
@@ -327,7 +327,7 @@ class AppModel extends Model
             }
 
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -336,7 +336,7 @@ class AppModel extends Model
      * Get list of available languages
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getLanguageList()
     {
@@ -350,7 +350,7 @@ class AppModel extends Model
             }
 
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -373,7 +373,7 @@ class AppModel extends Model
      * @param $id
      * @param $type
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function lockEntity($id, $type)
     {
@@ -416,7 +416,7 @@ class AppModel extends Model
             foreach ($rows as $row) {
                 $row->delete();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -425,7 +425,7 @@ class AppModel extends Model
      * Delete entity
      * @param $id
      * @param $type
-     * @throws \Exception
+     * @throws Exception
      */
     public static function deleteEntity($id, $type)
     {
@@ -479,7 +479,7 @@ class AppModel extends Model
             foreach ($rows as $row) {
                 $row->delete();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -489,7 +489,8 @@ class AppModel extends Model
      *
      * @param $id
      * @param $type
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function setEntitySafe($id, $type)
     {
@@ -498,7 +499,7 @@ class AppModel extends Model
             foreach ($rows as $row) {
                 $row->delete();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -507,24 +508,25 @@ class AppModel extends Model
      * Save formatted project name
      *
      * @param $code
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function saveFormattedProjectName($code)
     {
         try {
             DB::update('UPDATE app_settings SET formatted_project_name = ? WHERE id = 1', array($code));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Initialize newsletter sending
-     * 
+     *
      * @param $subject
      * @param $content
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function initNewsletter($subject, $content)
     {
@@ -532,16 +534,16 @@ class AppModel extends Model
             $token = md5($subject . $content . random_bytes(55));
 
             DB::update('UPDATE app_settings SET newsletter_token = ?, newsletter_subject = ?, newsletter_content = ? WHERE id = 1', array($token, $subject, $content));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Process newsletter job
-     * 
+     *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public static function newsletterJob()
     {
@@ -562,7 +564,7 @@ class AppModel extends Model
             }
 
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -574,7 +576,8 @@ class AppModel extends Model
      * @param $email
      * @param $subject
      * @param $body
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function createTicket($name, $email, $subject, $body)
     {
@@ -607,7 +610,7 @@ class AppModel extends Model
             if ($json->code !== 201) {
                 throw new Exception('Backend returned error ' . ((isset($json->data->invalid_fields)) ? print_r($json->data->invalid_fields, true) : ''), $json->code);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

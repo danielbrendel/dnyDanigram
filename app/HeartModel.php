@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -27,7 +28,7 @@ class HeartModel extends Model
      * Throw if type is unknown
      *
      * @param $type
-     * @throws \Exception
+     * @throws Exception
      */
     private static function validateEntityType($type)
     {
@@ -35,9 +36,9 @@ class HeartModel extends Model
             $types = array('ENT_POST', 'ENT_HASHTAG', 'ENT_COMMENT');
 
             if (!in_array($type, $types)) {
-                throw new \Exception('Unknown type: ' . $type, 404);
+                throw new Exception('Unknown type: ' . $type, 404);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -48,7 +49,7 @@ class HeartModel extends Model
      * @param $userId
      * @param $entityId
      * @param $entType
-     * @throws \Exception
+     * @throws Exception
      */
     public static function addHeart($userId, $entityId, $entType)
     {
@@ -57,7 +58,7 @@ class HeartModel extends Model
 
             $heart = HeartModel::where('userId', '=', $userId)->where('entityId', '=', $entityId)->where('type', '=', $entType)->first();
             if ($heart) {
-                throw new \Exception(__('app.already_hearted'));
+                throw new Exception(__('app.already_hearted'));
             }
 
             $heart = new HeartModel;
@@ -95,7 +96,7 @@ class HeartModel extends Model
                     }
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -105,7 +106,7 @@ class HeartModel extends Model
      * @param $userId
      * @param $entityId
      * @param $entType
-     * @throws \Exception
+     * @throws Exception
      */
     public static function removeHeart($userId, $entityId, $entType)
     {
@@ -138,7 +139,7 @@ class HeartModel extends Model
                     $comment->save();
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -150,6 +151,7 @@ class HeartModel extends Model
      * @param $entityId
      * @param $entType
      * @return bool
+     * @throws Exception
      */
     public static function hasUserHearted($userId, $entityId, $entType)
     {
@@ -169,7 +171,7 @@ class HeartModel extends Model
      * @param $entityId
      * @param $entType
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getFromEntity($entityId, $entType)
     {
@@ -179,7 +181,7 @@ class HeartModel extends Model
             $rowset = HeartModel::where('entityId', '=', $entityId)->where('type', '=', $entType)->get();
 
             return $rowset;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

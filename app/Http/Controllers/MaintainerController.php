@@ -27,6 +27,7 @@ use App\ForumModel;
 use App\CategoryModel;
 use App\User;
 use Dotenv\Dotenv;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
@@ -40,7 +41,7 @@ class MaintainerController extends Controller
     public function __construct()
     {
 		parent::__construct();
-		
+
         $this->middleware(function ($request, $next) {
             $user = User::get(auth()->id());
             if ((!$user) || (!$user->maintainer)) {
@@ -55,6 +56,7 @@ class MaintainerController extends Controller
      * Show index page
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws Exception
      */
     public function index()
     {
@@ -114,7 +116,7 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.settings_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -140,7 +142,7 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.faq_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -167,7 +169,7 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.faq_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -187,7 +189,7 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.faq_removed'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -221,7 +223,7 @@ class MaintainerController extends Controller
             AppModel::saveEnvironmentConfig();
 
             return back()->with('flash.success', __('app.env_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -242,7 +244,7 @@ class MaintainerController extends Controller
             }
 
             return response()->json(array('code' => 200, 'data' => $user));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
@@ -280,7 +282,7 @@ class MaintainerController extends Controller
             $user->save();
 
             return back()->with('flash.success', __('app.saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -301,7 +303,7 @@ class MaintainerController extends Controller
             AppModel::initNewsletter($attr['subject'], $attr['content']);
 
             return back()->with('flash.success', __('app.newsletter_in_progress'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -326,7 +328,7 @@ class MaintainerController extends Controller
             ThemeModel::addTheme($attr['name'], $attr['code']);
 
             return back()->with('flash.success', __('app.theme_created'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -346,7 +348,7 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.theme_default_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -371,11 +373,16 @@ class MaintainerController extends Controller
             ThemeModel::editTheme($attr['name'], $attr['code']);
 
             return back()->with('flash.success', __('app.theme_edited'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
 
+    /**
+     * Delete a theme
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteTheme()
     {
         try {
@@ -388,7 +395,7 @@ class MaintainerController extends Controller
             ThemeModel::deleteTheme($name);
 
             return back()->with('flash.success', __('app.theme_deleted'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -419,7 +426,7 @@ class MaintainerController extends Controller
 
                 $avimg = imagecreatetruecolor(64, 64);
                 if (!$avimg)
-                    throw new \Exception('imagecreatetruecolor() failed');
+                    throw new Exception('imagecreatetruecolor() failed');
 
                 $srcimage = null;
                 $newname =  'logo.' . $av->getClientOriginalExtension();
@@ -438,7 +445,7 @@ class MaintainerController extends Controller
 
                 return back()->with('success', __('app.saved'));
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -457,7 +464,7 @@ class MaintainerController extends Controller
             AppModel::lockEntity($id, $type);
 
             return back()->with('flash.success', __('app.entity_locked'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -476,7 +483,7 @@ class MaintainerController extends Controller
             AppModel::deleteEntity($id, $type);
 
             return back()->with('flash.success', __('app.entity_deleted'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -495,11 +502,16 @@ class MaintainerController extends Controller
             AppModel::setEntitySafe($id, $type);
 
             return back()->with('flash.success', __('app.entity_set_safe'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
 
+    /**
+     * Set welcome content
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function welcomeContent()
     {
         try {
@@ -516,7 +528,7 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.welcome_content_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -542,7 +554,7 @@ class MaintainerController extends Controller
             Artisan::call('cache:clear');
 
             return back()->with('flash.success', __('app.formatted_project_name_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -564,7 +576,7 @@ class MaintainerController extends Controller
             ProfileModel::add($attr['name'], $attr['translation'], $attr['locale']);
 
             return back()->with('flash.success', __('app.profile_item_created'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -592,7 +604,7 @@ class MaintainerController extends Controller
             ProfileModel::edit($attr['id'], $attr['name'], $attr['translation'], $attr['locale'], (bool)$attr['active']);
 
             return back()->with('flash.success', __('app.profile_item_edited'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -608,14 +620,14 @@ class MaintainerController extends Controller
             ProfileModel::remove($id);
 
             return back()->with('flash.success', __('app.profile_item_removed'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
 
     /**
      * Create forum
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function createForum()
@@ -636,7 +648,7 @@ class MaintainerController extends Controller
 
     /**
      * Edit forum
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function editForum()
@@ -658,7 +670,7 @@ class MaintainerController extends Controller
 
     /**
      * Lock forum
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function lockForum($id)
@@ -674,7 +686,7 @@ class MaintainerController extends Controller
 
     /**
      * Remove forum
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function removeForum($id)
@@ -690,7 +702,7 @@ class MaintainerController extends Controller
 
     /**
      * Create new category item
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function createCategory()
@@ -715,7 +727,7 @@ class MaintainerController extends Controller
 
     /**
      * Edit category item
-     * 
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function editCategory()
@@ -741,7 +753,7 @@ class MaintainerController extends Controller
 
     /**
      * Delete a category item
-     * 
+     *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */

@@ -26,7 +26,7 @@ class ForumModel extends Model
 {
     /**
      * Create new forum
-     * 
+     *
      * @param $name
      * @param $description
      * @return int
@@ -49,7 +49,7 @@ class ForumModel extends Model
 
     /**
      * Edit existing forum
-     * 
+     *
      * @param $id
      * @param $name
      * @param $description
@@ -74,10 +74,11 @@ class ForumModel extends Model
 
     /**
      * Lock/Unlock forum
-     * 
+     *
      * @param $id
+     * @param $locked
      * @return void
-     * @throws Exception 
+     * @throws Exception
      */
     public static function lock($id, $locked = true)
     {
@@ -96,7 +97,7 @@ class ForumModel extends Model
 
     /**
      * Remove forum and its content
-     * 
+     *
      * @param $id
      * @return void
      * @throws Exception
@@ -125,7 +126,7 @@ class ForumModel extends Model
 
     /**
      * Query forum list
-     * 
+     *
      * @param $paginate
      * @param $name
      * @return mixed
@@ -148,7 +149,7 @@ class ForumModel extends Model
 
             foreach ($collection as &$item) {
                 $item->lastUser = null;
-                
+
                 $lastThread = ForumThreadModel::where('locked', '=', false)->where('forumId', '=', $item->id)->max('id');
                 if ($lastThread) {
                     $lastPost = ForumPostModel::where('locked', '=', false)->where('threadId', '=', $lastThread)->max('id');

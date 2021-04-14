@@ -24,6 +24,7 @@ use App\TagsModel;
 use App\User;
 use App\ProfileModel;
 use App\ProfileDataModel;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -33,7 +34,7 @@ class MemberController extends Controller
 {
     /**
      * Validate permissions
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -90,7 +91,7 @@ class MemberController extends Controller
                 'meta_description' => str_replace(PHP_EOL, ' ', $user->bio),
                 'profile_data' => ProfileDataModel::queryAll($user->id)
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
@@ -105,6 +106,12 @@ class MemberController extends Controller
         return redirect('/u/' . auth()->id());
     }
 
+    /**
+     * Save user profile data
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
+     */
     public function save()
     {
         try {
@@ -196,7 +203,7 @@ class MemberController extends Controller
 
                 $avimg = imagecreatetruecolor(128, 128);
                 if (!$avimg)
-                    throw new \Exception('imagecreatetruecolor() failed');
+                    throw new Exception('imagecreatetruecolor() failed');
 
                 $srcimage = null;
                 $newname =  md5_file(base_path() . '/public/gfx/avatars/' . $tmpName . '.' . $av->getClientOriginalExtension()) . '.' . $av->getClientOriginalExtension();
@@ -224,7 +231,7 @@ class MemberController extends Controller
             }
 
             return back()->with('flash.success', __('app.profile_saved'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('flash.error', $e->getMessage());
         }
     }
@@ -246,7 +253,7 @@ class MemberController extends Controller
             ReportModel::addReport(auth()->id(), $user->id, 'ENT_USER');
 
             return response()->json(array('code' => 200, 'msg' => __('app.user_reported')));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
@@ -272,7 +279,7 @@ class MemberController extends Controller
             request()->session()->invalidate();
 
             return response()->json(array('code' => 200, 'msg' => __('app.account_deleted')));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
@@ -290,7 +297,7 @@ class MemberController extends Controller
             FavoritesModel::remove(auth()->id(), $id, 'ENT_USER');
 
             return back()->with('flash.success', __('app.added_to_ignore'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
@@ -307,15 +314,16 @@ class MemberController extends Controller
             IgnoreModel::remove(auth()->id(), $id);
 
             return back()->with('flash.success', __('app.removed_from_ignore'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
 
     /**
      * Store member geo position
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
+     * @throws Exception
      */
     public function saveGeoLocation()
     {
@@ -333,8 +341,9 @@ class MemberController extends Controller
 
     /**
      * View geosearch page
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws Exception
      */
     public function viewGeosearch()
     {
@@ -361,7 +370,7 @@ class MemberController extends Controller
 
     /**
      * Perform geosearch and return user list if found any
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function geosearch()
@@ -380,8 +389,9 @@ class MemberController extends Controller
 
     /**
      * View profile search page
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws Exception
      */
     public function viewProfileSearch()
     {
@@ -404,7 +414,7 @@ class MemberController extends Controller
 
      /**
      * Perform profile search and return user list if found any
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function profilesearch()
@@ -436,7 +446,7 @@ class MemberController extends Controller
 
     /**
      * Query favorites of user
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function queryFavorites()
@@ -454,7 +464,7 @@ class MemberController extends Controller
 
     /**
      * Check for username availability and identifier validity
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function usernameValidity()

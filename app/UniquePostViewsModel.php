@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
@@ -31,10 +32,10 @@ class UniquePostViewsModel extends Model
 
     /**
      * Add IP address as viewer for given post and return view count
-     * 
+     *
      * @param $postId
      * @return int
-     * @throws \Exception
+     * @throws Exception
      */
     public static function viewForPost($postId)
     {
@@ -55,17 +56,17 @@ class UniquePostViewsModel extends Model
             });
 
             return $count;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Generate a string representation for the view count
-     * 
+     *
      * @param $count
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     public static function viewCountAsString($count)
     {
@@ -81,7 +82,7 @@ class UniquePostViewsModel extends Model
             } else {
                 return strval($count);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

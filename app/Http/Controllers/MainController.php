@@ -16,6 +16,7 @@ namespace App\Http\Controllers;
 
 use App\AppModel;
 use App\TagsModel;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -24,6 +25,7 @@ use App\CaptchaModel;
 use App\FaqModel;
 use App\PushModel;
 use App\MailerModel;
+use Throwable;
 
 /**
  * Class MainController
@@ -36,6 +38,8 @@ class MainController extends Controller
 
     /**
      * MainController constructor.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -48,6 +52,7 @@ class MainController extends Controller
      * Default index page
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws Exception
      */
     public function index()
     {
@@ -167,7 +172,7 @@ class MainController extends Controller
             AppModel::createTicket($attr['name'], $attr['email'], $attr['subject'], $attr['body']);
 
             return back()->with('success', __('app.contact_success'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage())->withInput();
         }
     }
@@ -230,6 +235,7 @@ class MainController extends Controller
      * Send email with password recovery link to user
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws Throwable
      */
     public function recover()
     {
@@ -241,7 +247,7 @@ class MainController extends Controller
             User::recover($attr['email']);
 
             return back()->with('success', __('app.pw_recovery_ok'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
@@ -264,7 +270,7 @@ class MainController extends Controller
             User::reset($attr['password'], $attr['password_confirm'], $hash);
 
             return redirect('/')->with('success', __('app.password_reset_ok'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect('/')->with('error', $e->getMessage());
         }
     }
@@ -287,6 +293,7 @@ class MainController extends Controller
      * Process registration
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws Throwable
      */
     public function register()
     {
@@ -302,7 +309,7 @@ class MainController extends Controller
             $id = User::register($attr);
 
             return back()->with('success', __('app.register_confirm_email', ['id' => $id]));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
@@ -312,6 +319,7 @@ class MainController extends Controller
      *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
+     * @throws Throwable
      */
     public function resend($id)
     {
@@ -337,14 +345,14 @@ class MainController extends Controller
             User::confirm($hash);
 
             return redirect('/')->with('success', __('app.register_confirmed_ok'));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect('/')->with('error', $e->getMessage());
         }
     }
 
     /**
      * Perform newsletter cronjob
-     * 
+     *
      * @param $password
      * @return \Illuminate\Http\JsonResponse
      */
@@ -358,7 +366,7 @@ class MainController extends Controller
             $data = AppModel::newsletterJob();
 
             return response()->json(array('code' => 200, 'data' => $data));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }

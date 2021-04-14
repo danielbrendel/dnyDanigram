@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use PDO;
@@ -30,8 +31,8 @@ class InstallerModel extends Model
      * Perform installation process
      *
      * @param $attr
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function install($attr)
     {
@@ -147,7 +148,7 @@ class InstallerModel extends Model
             $user->save();
 
             unlink(base_path() . '/do_install');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

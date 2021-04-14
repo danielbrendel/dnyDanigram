@@ -47,7 +47,7 @@ class PostsController extends Controller
     public function __construct()
     {
 		parent::__construct();
-		
+
         $this->middleware(function ($request, $next) {
            if ((!env('APP_PUBLICFEED')) && (Auth::guest())) {
                return redirect('/')->with('error', __('app.not_logged_in'));
@@ -63,6 +63,7 @@ class PostsController extends Controller
      * Show upload form
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws Exception
      */
     public function viewUpload()
     {
@@ -151,6 +152,7 @@ class PostsController extends Controller
      * Show feed
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws Exception
      */
     public function feed()
     {
@@ -182,7 +184,8 @@ class PostsController extends Controller
      * Show hashtag feed
      *
      * @param $hashtag
-     * @return mixed
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @throws Exception
      */
     public function hashtag($hashtag)
     {
@@ -241,7 +244,7 @@ class PostsController extends Controller
                 'meta_description' => __('app.tag_is_about', ['subject' => $tag->tag])
             ]);
         } catch (Exception $e) {
-            abort(500);
+            throw $e;
         }
     }
 
@@ -300,9 +303,10 @@ class PostsController extends Controller
 
     /**
      * Fetch category posts
-     * 
+     *
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @throws Exception
      */
     public function fetchCategory($id)
     {
@@ -756,7 +760,7 @@ class PostsController extends Controller
 
     /**
      * Delete story
-     * 
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */

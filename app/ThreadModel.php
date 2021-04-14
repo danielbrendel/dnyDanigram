@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -32,14 +33,14 @@ class ThreadModel extends Model
      * @param $postId
      * @param $text
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function add($userId, $postId, $text)
     {
         try {
             $post = PostModel::getPost($postId);
             if (!$post) {
-                throw new \Exception('Post not found: ' . $postId);
+                throw new Exception('Post not found: ' . $postId);
             }
 
             $thread = new ThreadModel();
@@ -66,7 +67,7 @@ class ThreadModel extends Model
             }
 
             return $thread->id;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -75,7 +76,9 @@ class ThreadModel extends Model
      * Remove thread entry
      *
      * @param $threadId
-     * @throws \Exception
+     * @param $userId
+     * @return void
+     * @throws Exception
      */
     public static function remove($threadId, $userId = null)
     {
@@ -88,7 +91,7 @@ class ThreadModel extends Model
             if ($thread) {
                 $thread->delete();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -99,7 +102,8 @@ class ThreadModel extends Model
      * @param $threadId
      * @param $newText
      * @param null $userId
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function edit($threadId, $newText, $userId = null)
     {
@@ -113,7 +117,7 @@ class ThreadModel extends Model
                 $thread->text = $newText;
                 $thread->save();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -123,7 +127,7 @@ class ThreadModel extends Model
      * @param $id
      * @param null $paginate
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getFromPost($id, $paginate = null)
     {
@@ -134,7 +138,7 @@ class ThreadModel extends Model
             }
 
             return $threads->orderBy('id', 'desc')->limit(env('APP_THREADPACKLIMIT'))->get()->toArray();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -143,13 +147,13 @@ class ThreadModel extends Model
      * Get sub thread count
      * @param $id
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getSubCount($id)
     {
         try {
             return ThreadModel::where('parentId', '=', $id)->where('locked', '=', false)->count();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -160,7 +164,7 @@ class ThreadModel extends Model
      * @param $id
      * @param null $paginate
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getSubPosts($id, $paginate = null)
     {
@@ -171,7 +175,7 @@ class ThreadModel extends Model
             }
 
             return $threads->orderBy('id', 'asc')->limit(env('APP_THREADPACKLIMIT'))->get()->toArray();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -182,15 +186,15 @@ class ThreadModel extends Model
      * @param $userId
      * @param $parentId
      * @param $text
-     * @return mixed
-     * @throws \Exception
+     * @return ThreadModel
+     * @throws Exception
      */
     public static function reply($userId, $parentId, $text)
     {
         try {
             $parent = ThreadModel::where('id', '=', $parentId)->where('locked', '=', false)->where('parentId', '=', 0)->first();
             if (!$parent) {
-                throw new \Exception('Parent item not found for ' . $parentId);
+                throw new Exception('Parent item not found for ' . $parentId);
             }
 
             $thread = new ThreadModel();
@@ -218,7 +222,7 @@ class ThreadModel extends Model
             }
 
             return $thread;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -28,7 +29,8 @@ class StoryViewerModel extends Model
      *
      * @param $storyId
      * @param $userId
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function addViewer($storyId, $userId)
     {
@@ -40,7 +42,7 @@ class StoryViewerModel extends Model
                 $item->story = $storyId;
                 $item->save();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -51,7 +53,7 @@ class StoryViewerModel extends Model
      * @param $storyId
      * @param $userId
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function hasViewed($storyId, $userId)
     {
@@ -59,7 +61,7 @@ class StoryViewerModel extends Model
             $exists = StoryViewerModel::where('viewer', '=', $userId)->where('story', '=', $storyId)->count();
 
             return $exists > 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

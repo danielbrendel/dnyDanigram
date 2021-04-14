@@ -26,7 +26,7 @@ class ProfileModel extends Model
 {
     /**
      * Add new profile item
-     * 
+     *
      * @param $name
      * @param $translation
      * @param $locale
@@ -49,7 +49,7 @@ class ProfileModel extends Model
 
     /**
      * Edit a profile item
-     * 
+     *
      * @param $id
      * @param $name
      * @param $translation
@@ -78,7 +78,7 @@ class ProfileModel extends Model
 
     /**
      * Remove an item
-     * 
+     *
      * @param $id
      * @return void
      * @throws Exception
@@ -98,7 +98,7 @@ class ProfileModel extends Model
 
     /**
      * Get item translation
-     * 
+     *
      * @param $name
      * @return string
      * @throws Exception
@@ -119,15 +119,14 @@ class ProfileModel extends Model
 
     /**
      * Get list of items
-     * 
+     *
      * @return mixed
      * @throws Exception
      */
     public static function getList()
     {
         try {
-            $data = ProfileModel::where('locale', '=', \App::getLocale())->where('active', '=', true)->get();
-            return $data;
+            return ProfileModel::where('locale', '=', \App::getLocale())->where('active', '=', true)->get();
         } catch (Exception $e) {
             throw $e;
         }

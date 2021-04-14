@@ -14,6 +14,7 @@
 
 namespace App;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 
@@ -28,16 +29,16 @@ class PushModel extends Model
      * Validate notification type
      *
      * @param $type
-     * @throws \Exception
+     * @throws Exception
      */
     private static function validatePushType($type)
     {
         try {
             $types = array('PUSH_HEARTED', 'PUSH_COMMENTED', 'PUSH_MENTIONED', 'PUSH_MESSAGED', 'PUSH_FAVORITED', 'PUSH_FORUMREPLY');
             if (!in_array($type, $types)) {
-                throw new \Exception('Invalid notification type: ' . $type);
+                throw new Exception('Invalid notification type: ' . $type);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -48,9 +49,9 @@ class PushModel extends Model
      * @param $shortMsg
      * @param $longMsg
      * @param $type
-     * @param int $userId The user ID
+     * @param int $userId
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function addNotification($shortMsg, $longMsg, $type, $userId)
     {
@@ -64,7 +65,7 @@ class PushModel extends Model
             $entry->seen = false;
             $entry->userId = $userId;
             $entry->save();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -74,7 +75,7 @@ class PushModel extends Model
      *
      * @param int $userId The ID of the user
      * @return mixed Items or null if non exist
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getUnseenNotifications($userId)
     {
@@ -86,17 +87,17 @@ class PushModel extends Model
             }
 
             return $items;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     /**
      * Indicate if there are unseen notifications
-     * 
+     *
      * @param $userId
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public static function hasUnseenNotifications($userId)
     {
@@ -104,7 +105,7 @@ class PushModel extends Model
             $count = PushModel::where('userId', '=', $userId)->where('seen', '=', false)->count();
 
             return $count > 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -116,7 +117,7 @@ class PushModel extends Model
      * @param $limit
      * @param null $paginate
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getNotifications($userId, $limit, $paginate = null)
     {
@@ -128,7 +129,7 @@ class PushModel extends Model
             }
 
             return $rowset->orderBy('id', 'desc')->limit($limit)->get();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }

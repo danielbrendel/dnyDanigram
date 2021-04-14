@@ -14,6 +14,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -29,7 +30,7 @@ class ForumController extends Controller
 {
     /**
      * Validate permissions
-     * 
+     *
      * @return void
      */
     public function __construct()
@@ -47,8 +48,9 @@ class ForumController extends Controller
 
     /**
      * View forum index
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws Exception
      */
     public function index()
     {
@@ -71,7 +73,7 @@ class ForumController extends Controller
 
     /**
      * Get forum list
-     * 
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function list()
@@ -98,8 +100,9 @@ class ForumController extends Controller
 
     /**
      * View specific forum
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws Exception
      */
     public function show($id)
     {
@@ -113,7 +116,7 @@ class ForumController extends Controller
         }
 
         $forum = ForumModel::where('id', '=', $id);
-        
+
         if ((!$user->maintainer) && (!$user->admin)) {
             $forum->where('locked', '=', false);
         }
@@ -138,7 +141,8 @@ class ForumController extends Controller
 
     /**
      * Get thread list
-     * 
+     *
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function threadList($id)
@@ -161,8 +165,10 @@ class ForumController extends Controller
 
     /**
      * View specific forum thread
-     * 
+     *
+     * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws Exception
      */
     public function showThread($id)
     {
@@ -176,7 +182,7 @@ class ForumController extends Controller
         }
 
         $thread = ForumThreadModel::where('id', '=', $id);
-        
+
         if ((!$user->maintainer) && (!$user->admin)) {
             $thread->where('locked', '=', false);
         }
@@ -200,7 +206,8 @@ class ForumController extends Controller
 
     /**
      * Get thread postings
-     * 
+     *
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function threadPostings($id)
@@ -218,7 +225,7 @@ class ForumController extends Controller
 
     /**
      * Create new forum thread
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function createThread()
@@ -231,7 +238,7 @@ class ForumController extends Controller
             ]);
 
             $sticky = false;
-            
+
             $user = User::getByAuthId();
             if (($user) && (($user->maintainer) || ($user->admin))) {
                 $sticky = (bool)request('sticky', false);
@@ -247,7 +254,7 @@ class ForumController extends Controller
 
     /**
      * Reply to forum thread
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function replyThread()
@@ -268,7 +275,7 @@ class ForumController extends Controller
 
     /**
      * Edit forum thread
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function editThread()
@@ -304,7 +311,7 @@ class ForumController extends Controller
 
     /**
      * Show single forum post
-     * 
+     *
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
@@ -314,12 +321,12 @@ class ForumController extends Controller
             if (Auth::guest()) {
                 return redirect('/');
             }
-    
+
             $user = User::getByAuthId();
             if ($user) {
                 $user->stats = User::getStats($user->id);
             }
-    
+
             $post = ForumPostModel::where('id', '=', $id);
 
             if ((!$user->maintainer) && (!$user->admin)) {
@@ -327,14 +334,14 @@ class ForumController extends Controller
             }
 
             $post = $post->first();
-    
+
             if (!$post) {
                 return redirect('/forum')->with('flash.error', __('app.forum_post_not_found_or_locked'));
             }
-    
+
             $post->user = User::get($post->userId);
             $post->thread = ForumThreadModel::where('id', '=', $post->threadId)->first();
-    
+
             return view('forum.single', [
                 'user' => $user,
                 'post' => $post,
@@ -349,7 +356,7 @@ class ForumController extends Controller
 
     /**
      * Report a forum post
-     * 
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -366,7 +373,7 @@ class ForumController extends Controller
 
     /**
      * Lock a forum post
-     * 
+     *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
@@ -383,7 +390,7 @@ class ForumController extends Controller
 
     /**
      * Edit forum post
-     * 
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function editPost()

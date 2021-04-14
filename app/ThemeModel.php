@@ -29,7 +29,8 @@ class ThemeModel extends Model
      *
      * @param $name
      * @param $code
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function addTheme($name, $code)
     {
@@ -39,11 +40,11 @@ class ThemeModel extends Model
             }
 
             if (file_exists(public_path() . '/css/themes/' . $name)) {
-                throw new \Exception('Theme with the given name does already exist');
+                throw new Exception('Theme with the given name does already exist');
             }
 
             file_put_contents(public_path() . '/css/themes/' . $name, $code);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -53,13 +54,14 @@ class ThemeModel extends Model
      *
      * @param $name
      * @param $code
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function editTheme($name, $code)
     {
         try {
             file_put_contents(public_path() . '/css/themes/' . $name, $code);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
@@ -68,13 +70,14 @@ class ThemeModel extends Model
      * Delete a theme
      *
      * @param $name
-     * @throws \Exception
+     * @return void
+     * @throws Exception
      */
     public static function deleteTheme($name)
     {
         try {
             unlink(public_path() . '/css/themes/' . $name);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
