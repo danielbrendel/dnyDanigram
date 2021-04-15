@@ -143,9 +143,11 @@ class StoryModel extends Model
             }
 
             $ownStory = StoryModel::where('userId', '=', $userId)->where('expired', '=', false)->first();
-            $ownStory->user = User::get($userId);
-            $ownStory->is_self = true;
-            array_unshift($result, $ownStory);
+			if ($ownStory) {
+				$ownStory->user = User::get($userId);
+				$ownStory->is_self = true;
+				array_unshift($result, $ownStory);
+			}
 
             return $result;
         } catch (Exception $e) {
