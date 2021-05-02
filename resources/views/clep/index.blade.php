@@ -59,12 +59,12 @@
                 </div>
 
                 <div class="is-inline-block float-right clep-recover-top recover-pw">
-                    <a @if (file_exists(public_path() . '/clep.png')) class="is-colored-blue" }} @endif href="javascript:void(0)" onclick="vue.bShowRecover = true;">{{ __('app.recover_password') }}</a>
+                    <a @if (file_exists(public_path() . '/clep.png')) class="is-colored-blue" @endif href="javascript:void(0)" onclick="vue.bShowRecover = true;">{{ __('app.recover_password') }}</a>
                 </div>
             </div>
 
             <div class="clep-border clep-signup">
-                <center><a @if (file_exists(public_path() . '/clep.png')) class="is-colored-blue" }} @endif href="javascript:void(0)" onclick="vue.bShowRegister = true;">{{ __('app.register') }}</a></center>
+                <center><a @if (file_exists(public_path() . '/clep.png')) class="is-colored-blue" @endif href="javascript:void(0)" onclick="vue.bShowRegister = true;">{{ __('app.register') }}</a></center>
             </div>
 
             @if (env('APP_PUBLICFEED'))

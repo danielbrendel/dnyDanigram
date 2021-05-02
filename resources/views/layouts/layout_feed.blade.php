@@ -981,7 +981,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             @auth
-                setTimeout('fetchNotifications()', 5000);
+                setTimeout('fetchNotifications()', 2000);
                 setTimeout('fetchNotificationList()', 100);
                 setTimeout('indicateMessageCount()', 1000);
                 setTimeout('fetchFavorites()', 320);

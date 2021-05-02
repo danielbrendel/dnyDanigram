@@ -16,6 +16,7 @@ namespace App;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Throwable;
 
 /**
@@ -108,6 +109,46 @@ class MessageModel extends Model
     }
 
     /**
+     * Get thread pack
+     * 
+     * @param $ident
+     * @param $limit
+     * @param $paginate
+     * @return array
+     * @throws Exception
+     */
+    public static function queryThreadPack($ident, $limit, $paginate = null)
+    {
+        try {
+            $query = static::where('channel', '=', $ident)->where(function($query){
+                $query->where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id());
+            });
+
+            if ($paginate !== null) {
+                $query->where('id', '<', $paginate);
+            }
+
+            $items = $query->orderBy('id', 'desc')->limit($limit)->get();
+            foreach ($items as &$item) {
+                $item->seen = true;
+                $item->save();
+            }
+
+            $items = $items->toArray();
+
+            foreach ($items as &$item) {
+                $item['sender'] = User::get($item['senderId'])->toArray();
+                $item['receiver'] = User::get($item['userId'])->toArray();
+                $item['diffForHumans'] = Carbon::parse($item['created_at'])->diffForHumans();
+            }
+
+            return $items;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Get message thread
      *
      * @param $msgId
@@ -125,7 +166,7 @@ class MessageModel extends Model
             $msg->seen = true;
             $msg->save();
 
-            $previous = MessageModel::where(function($query) use ($msg) {
+            /*$previous = MessageModel::where(function($query) use ($msg) {
                 $query->where('userId', '=', $msg->userId)
                     ->where('senderId', '=', $msg->senderId)
                     ->where('id', '<>', $msg->id);
@@ -143,7 +184,9 @@ class MessageModel extends Model
             return array(
               'msg' => $msg,
               'previous' => $previous
-            );
+            );*/
+
+            return $msg;
         } catch (Exception $e) {
             throw $e;
         }

@@ -704,6 +704,36 @@ window.renderFavoriteItem = function(item) {
     return html;
 };
 
+window.renderMessageItem = function(elem, self) {
+    let align = '';
+    if (elem.senderId === self) {
+        align = 'message-align-right';
+    } else {
+        align = 'message-align-left';
+    }
+
+    let html = `
+        <div class="message-thread ` + align + `">
+            <div class="message-thread-header">
+                <div class="message-thread-header-avatar">
+                    <a href="` + window.location.origin + '/user/' + elem.sender.username + `"><img src="` + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + `"></a>
+                </div>
+
+                <div class="message-thread-header-userinfo">
+                    <div><a href="` + window.location.origin + '/user/' + elem.sender.username + `">` + elem.sender.username + `</a></div>
+                    <div class="is-message-label-small" title="` + elem.created_at + `">` + elem.diffForHumans + `</div>
+                </div>
+
+                <div class="message-thread-header-subject">` + elem.subject + `</div>
+            </div>
+
+            <div class="message-thread-text">` + elem.message + `</div>
+        </div>
+    `;
+
+    return html;
+};
+
 window.renderProfileItem = function(item) {
     if ((item.location === null) || (item.location === '')) {
         item.location = '-';

@@ -58,6 +58,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_THREADPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_PUSHPACKLIMIT=15' . PHP_EOL;
             $envcontent .= 'APP_MESSAGEPACKLIMIT=15' . PHP_EOL;
+            $envcontent .= 'APP_MESSAGETHREADPACK=20' . PHP_EOL;
             $envcontent .= 'APP_PROFILEPACKLIMIT=20' . PHP_EOL;
             $envcontent .= 'APP_FAVPACKLIMIT=55' . PHP_EOL;
             $envcontent .= 'APP_FORUMPACKLIMIT=55' . PHP_EOL;

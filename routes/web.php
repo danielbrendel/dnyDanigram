@@ -76,6 +76,7 @@ Route::get('/messages', 'MessageController@list');
 Route::get('/messages/list', 'MessageController@fetchList');
 Route::get('/messages/show/{id}', 'MessageController@show');
 Route::get('/messages/create', 'MessageController@create');
+Route::post('/messages/query', 'MessageController@query');
 Route::post('/messages/send', 'MessageController@send');
 Route::any('/messages/unread/count', 'MessageController@unreadCount');
 

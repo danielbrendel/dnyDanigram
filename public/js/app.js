@@ -2358,6 +2358,19 @@ window.renderFavoriteItem = function (item) {
   return html;
 };
 
+window.renderMessageItem = function (elem, self) {
+  var align = '';
+
+  if (elem.senderId === self) {
+    align = 'message-align-right';
+  } else {
+    align = 'message-align-left';
+  }
+
+  var html = "\n        <div class=\"message-thread " + align + "\">\n            <div class=\"message-thread-header\">\n                <div class=\"message-thread-header-avatar\">\n                    <a href=\"" + window.location.origin + '/user/' + elem.sender.username + "\"><img src=\"" + window.location.origin + '/gfx/avatars/' + elem.sender.avatar + "\"></a>\n                </div>\n\n                <div class=\"message-thread-header-userinfo\">\n                    <div><a href=\"" + window.location.origin + '/user/' + elem.sender.username + "\">" + elem.sender.username + "</a></div>\n                    <div class=\"is-message-label-small\" title=\"" + elem.created_at + "\">" + elem.diffForHumans + "</div>\n                </div>\n\n                <div class=\"message-thread-header-subject\">" + elem.subject + "</div>\n            </div>\n\n            <div class=\"message-thread-text\">" + elem.message + "</div>\n        </div>\n    ";
+  return html;
+};
+
 window.renderProfileItem = function (item) {
   if (item.location === null || item.location === '') {
     item.location = '-';

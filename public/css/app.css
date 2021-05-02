@@ -1213,6 +1213,13 @@ div.show-post-image-nsfw {
   color: #323232;
 }
 
+.message-item-lastmsg {
+  margin-left: 15px;
+  font-style: italic;
+  display: inline-block;
+  color: #969696;
+}
+
 .messages-item-date {
   display: inline-block;
   color: #969696;
@@ -1246,9 +1253,12 @@ div.show-post-image-nsfw {
 }
 
 .message-thread {
+  position: relative;
   background-color: #f0f0f0;
   padding: 21px;
   margin-bottom: 25px;
+  width: 90%;
+  border-radius: 32px;
 }
 
 .message-thread-header {
@@ -1261,14 +1271,15 @@ div.show-post-image-nsfw {
 }
 
 .message-thread-header-avatar img {
-  width: 24px;
-  height: 24px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
 }
 
 .message-thread-header-userinfo {
   color: #c8c8c8;
   display: inline-block;
-  font-size: 0.8em;
+  font-size: 1.2em;
   top: 9px;
 }
 
@@ -1279,8 +1290,21 @@ div.show-post-image-nsfw {
 }
 
 .message-thread-text {
-  color: #969696;
+  color: #e6e6e6;
   margin-left: 25px;
+}
+
+.message-align-left {
+  background-color: rgba(90, 90, 90, 0.5);
+}
+
+.message-align-right {
+  margin-left: auto;
+  background-color: rgba(50, 120, 0, 0.5);
+}
+
+.is-message-label-small {
+  font-size: 0.7em;
 }
 
 .overlay-list {

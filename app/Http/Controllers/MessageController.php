@@ -87,33 +87,47 @@ class MessageController extends Controller
     public function show($id)
     {
         try {
-            $thread = MessageModel::getMessageThread($id);
-            if (!$thread) {
+            $msg = MessageModel::getMessageThread($id);
+            if (!$msg) {
                 return back()->with('error', __('app.message_not_found'));
             }
 
-            $thread['msg']->user = User::get($thread['msg']->userId);
-            $thread['msg']->sender = User::get($thread['msg']->senderId);
+            $msg->user = User::get($msg->userId);
+            $msg->sender = User::get($msg->senderId);
 
-            foreach($thread['previous'] as &$item) {
-                $item->user = User::get($item->userId);
-                $item->sender = User::get($item->senderId);
-            }
-
-            if ($thread['msg']->senderId == auth()->id()) {
-                $thread['message_partner'] = $thread['msg']->user->username;
+            if ($msg->senderId == auth()->id()) {
+                $msg->message_partner = $msg->user->username;
             } else {
-                $thread['message_partner'] = $thread['msg']->sender->username;
+                $msg->message_partner = $msg->sender->username;
             }
 
             return view('message.show', [
                 'user' => User::getByAuthId(),
-                'thread' => $thread,
+                'msg' => $msg,
 				'cookie_consent' => AppModel::getCookieConsentText(),
                 'taglist' => TagsModel::getPopularTags(),
             ]);
         } catch (Exception $e) {
             return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Query message pack
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function query()
+    {
+        try {
+            $ident = request('id');
+            $paginate = request('paginate');
+
+            $data = MessageModel::queryThreadPack($ident, env('APP_MESSAGETHREADPACK'), $paginate);
+
+            return response()->json(array('code' => 200, 'data' => $data));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
 

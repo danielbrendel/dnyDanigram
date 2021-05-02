@@ -16,18 +16,18 @@
 
 @section('body')
     <div class="column is-8">
-        <h1>{{ __('app.message_thread', ['name' => $thread['message_partner']]) }}</h1>
+        <h1>{{ __('app.message_thread', ['name' => $msg->message_partner]) }}</h1>
 
         <div class="member-form is-default-padding member-form-fixed-top">
             <form method="POST" action="{{ url('/messages/send') }}">
                 @csrf
 
-                <input type="hidden" name="username" value="{{ $thread['message_partner'] }}">
+                <input type="hidden" name="username" value="{{ $msg->message_partner }}">
 
                 <div class="field">
                     <label class="label">{{ __('app.subject') }}</label>
                     <div class="control">
-                        <input type="text" name="subject" value="{{ $thread['msg']->subject }}" required>
+                        <input type="text" name="subject" value="{{ $msg->subject }}" required>
                     </div>
                 </div>
 
@@ -45,46 +45,11 @@
             </form>
         </div>
 
-        <div class="member-form is-default-padding">
-            <div class="message-thread">
-                <div class="message-thread-header">
-                    <div class="message-thread-header-avatar">
-                        <img src="{{ asset('gfx/avatars/' . $thread['msg']->sender->avatar) }}">
-                    </div>
-
-                    <div class="message-thread-header-userinfo">
-                        <div>{{ $thread['msg']->sender->username }}</div>
-                        <div title="{{ $thread['msg']->created_at }}">{{ $thread['msg']->created_at->diffForHumans() }}</div>
-                    </div>
-
-                    <div class="message-thread-header-subject">{{ $thread['msg']->subject }}</div>
-                </div>
-
-                <div class="message-thread-text">{!! $thread['msg']->message !!}</div>
-            </div>
-
-            @foreach ($thread['previous'] as $msg)
-                <div class="message-thread">
-                    <div class="message-thread-header">
-                        <div class="message-thread-header-avatar">
-                            <img src="{{ asset('gfx/avatars/' . $msg->sender->avatar) }}">
-                        </div>
-
-                        <div class="message-thread-header-userinfo">
-                            <div>{{ $msg->sender->username }}</div>
-                            <div title="{{ $msg->created_at }}">{{ $msg->created_at->diffForHumans() }}</div>
-                        </div>
-
-                        <div class="message-thread-header-subject">{{ $msg->subject }}</div>
-                    </div>
-
-                    <div class="message-thread-text">{!! $msg->message !!}</div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+        <div id="message-thread-content"></div>
 
     <div class="column is-2 is-sidespacing"></div>
+
+    </div>
 @endsection
 
 @section('javascript')
@@ -96,6 +61,52 @@
 
         quillEditor.on('editor-change', function(eventName, ...args) {
             document.getElementById('post-text').value = quillEditor.root.innerHTML;
+        });
+
+        window.paginate = null;
+
+        window.queryMessages = function() {
+            let content = document.getElementById('message-thread-content');
+
+            content.innerHTML += '<div id="spinner"><center><i class="fa fa-spinner fa-spin"></i></center></div>';
+
+            let loadmore = document.getElementById('loadmore');
+            if (loadmore) {
+                loadmore.remove();
+            }
+
+            window.vue.ajaxRequest('post', '{{ url('/messages/query') }}', {
+                id: '{{ $msg->channel }}',
+                paginate: window.paginate
+            },
+            function(response) {
+                if (response.code == 200) {
+                    response.data.forEach(function(elem, index) {
+                        let html = window.renderMessageItem(elem, {{ auth()->id() }});
+
+                        content.innerHTML += html;
+                    });
+
+                    if (response.data.length > 0) {
+                        window.paginate = response.data[response.data.length - 1].id;
+                    }
+
+                    let spinner = document.getElementById('spinner');
+                    if (spinner) {
+                        spinner.remove();
+                    }
+
+                    if (response.data.length > 0) {
+                        content.innerHTML += '<div id="loadmore"><center><br/><i class="fas fa-arrow-down is-pointer" onclick="window.queryMessages();"></i></center></div>';
+                    }
+                } else {
+                    console.error(response.msg);
+                }
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            window.queryMessages();
         });
     </script>
 @endsection
