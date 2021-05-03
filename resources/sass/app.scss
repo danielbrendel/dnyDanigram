@@ -1012,6 +1012,16 @@ div.show-post-image-nsfw {
     display: inline-block;
     color: rgb(150, 150, 150);
 }
+.message-item-lastmsg a {
+    color: rgb(150, 150, 150);
+}
+.message-item-lastmsg a:hover {
+    color: rgb(150, 150, 150);
+    text-decoration: underline;
+}
+.message-item-lastmsg p {
+    display: inline-block;
+}
 .messages-item-date {
     display: inline-block;
     color: rgb(150, 150, 150);

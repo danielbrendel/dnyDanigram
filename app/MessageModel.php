@@ -152,13 +152,17 @@ class MessageModel extends Model
      * Get message thread
      *
      * @param $msgId
+     * @param $userId
      * @return array
      * @throws Exception
      */
-    public static function getMessageThread($msgId)
+    public static function getMessageThread($msgId, $userId)
     {
         try {
-            $msg = MessageModel::where('id', '=', $msgId)->first();
+            $msg = MessageModel::where('id', '=', $msgId)->where(function($query) use ($userId) {
+                $query->where('userId', '=', $userId)->orWhere('senderId', '=', $userId);
+            })->first();
+            
             if (!$msg) {
                 throw new Exception('Message not found: ' . $msgId);
             }

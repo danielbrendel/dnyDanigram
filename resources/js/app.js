@@ -620,6 +620,11 @@ window.renderNotification = function(elem, newItem = false) {
 };
 
 window.renderMessageListItem = function(item) {
+    let message = item.message;
+    if (message.length > 20) {
+        message = message.substr(0, 20) + '...';
+    }
+
     let html = `
         <div class="messages-item ` + ((!item.seen) ? 'is-new-message' : '') + `">
             <div class="messages-item-avatar">
@@ -632,6 +637,10 @@ window.renderMessageListItem = function(item) {
 
             <div class="messages-item-subject">
                 <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.subject + `</a>
+            </div>
+
+            <div class="message-item-lastmsg">
+                <a href="` + window.location.origin + `/messages/show/` + item.id + `">` + item.sender.username + `: ` + message + `</a>
             </div>
 
             <div class="messages-item-date" title="` + item.created_at + `">

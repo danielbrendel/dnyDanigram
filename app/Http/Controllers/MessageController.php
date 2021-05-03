@@ -69,6 +69,8 @@ class MessageController extends Controller
                     $item->user = User::get($item->senderId);
                 }
 
+                $item->sender = User::get($item->senderId);
+
                 $item->diffForHumans = $item->created_at->diffForHumans();
             }
 
@@ -87,7 +89,7 @@ class MessageController extends Controller
     public function show($id)
     {
         try {
-            $msg = MessageModel::getMessageThread($id);
+            $msg = MessageModel::getMessageThread($id, auth()->id());
             if (!$msg) {
                 return back()->with('error', __('app.message_not_found'));
             }

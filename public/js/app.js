@@ -2324,7 +2324,13 @@ window.renderNotification = function (elem) {
 };
 
 window.renderMessageListItem = function (item) {
-  var html = "\n        <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n            <div class=\"messages-item-avatar\">\n                <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n            </div>\n\n            <div class=\"messages-item-name\">\n                <a href=\"" + window.location.origin + "/u/" + item.user.username + "\">" + item.user.username + "</a>\n            </div>\n\n            <div class=\"messages-item-subject\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n            </div>\n\n            <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                " + item.diffForHumans + "\n            </div>\n        </div>\n    ";
+  var message = item.message;
+
+  if (message.length > 20) {
+    message = message.substr(0, 20) + '...';
+  }
+
+  var html = "\n        <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n            <div class=\"messages-item-avatar\">\n                <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n            </div>\n\n            <div class=\"messages-item-name\">\n                <a href=\"" + window.location.origin + "/u/" + item.user.username + "\">" + item.user.username + "</a>\n            </div>\n\n            <div class=\"messages-item-subject\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n            </div>\n\n            <div class=\"message-item-lastmsg\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.sender.username + ": " + message + "</a>\n            </div>\n\n            <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                " + item.diffForHumans + "\n            </div>\n        </div>\n    ";
   return html;
 };
 
@@ -20497,7 +20503,7 @@ process.umask = function() { return 0; };
 /******/ 					__webpack_require__.m[moduleId] = moreModules[moduleId];
 /******/ 				}
 /******/ 			}
-/******/ 			if(runtime) runtime(__webpack_require__);
+/******/ 			if(runtime) var result = runtime(__webpack_require__);
 /******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
 /******/ 			for(;i < chunkIds.length; i++) {
 /******/ 				chunkId = chunkIds[i];
@@ -20506,7 +20512,7 @@ process.umask = function() { return 0; };
 /******/ 				}
 /******/ 				installedChunks[chunkIds[i]] = 0;
 /******/ 			}
-/******/ 			__webpack_require__.O();
+/******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];

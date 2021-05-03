@@ -1220,6 +1220,19 @@ div.show-post-image-nsfw {
   color: #969696;
 }
 
+.message-item-lastmsg a {
+  color: #969696;
+}
+
+.message-item-lastmsg a:hover {
+  color: #969696;
+  text-decoration: underline;
+}
+
+.message-item-lastmsg p {
+  display: inline-block;
+}
+
 .messages-item-date {
   display: inline-block;
   color: #969696;
