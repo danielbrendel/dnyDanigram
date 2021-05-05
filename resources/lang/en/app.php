@@ -454,5 +454,6 @@ return [
     'category_edit' => 'Edit category item',
     'category_created' => 'Category item has been created',
     'category_edited' => 'Category item has been edited',
-    'category_deleted' => 'Category item has been deleted'
+    'category_deleted' => 'Category item has been deleted',
+    'mail_message_received_info' => 'New message received'
 ];

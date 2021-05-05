@@ -455,5 +455,6 @@ return [
     'category_edit' => 'Kategorie Eintrag bearbeiten',
     'category_created' => 'Kategorie Eintrag wurde erstellt',
     'category_edited' => 'Kategorie Eintrag wurde bearbeitet',
-    'category_deleted' => 'Kategorie Eintrag wurde gelöscht'
+    'category_deleted' => 'Kategorie Eintrag wurde gelöscht',
+    'mail_message_received_info' => 'Neue Nachricht erhalten'
 ];
