@@ -71,6 +71,7 @@ Route::post('/c/reply', 'PostsController@replyThread');
 
 Route::get('/notifications/list', 'NotificationController@list');
 Route::get('/notifications/fetch', 'NotificationController@fetch');
+Route::get('/notifications/mark', 'NotificationController@mark');
 
 Route::get('/messages', 'MessageController@list');
 Route::get('/messages/list', 'MessageController@fetchList');

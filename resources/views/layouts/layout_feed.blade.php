@@ -175,7 +175,7 @@
 
                     <div class="navbar-item">
                         <div>
-                            <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.notifications') }}</a></span>
+                            <i id="notification-indicator" class="far fa-heart fa-lg is-pointer" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); window.markSeen(); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }" title="{{ __('app.notifications') }}"></i>&nbsp;<span class="is-mobile-like-screen-width"><a class="is-color-grey" href="javascript:void(0);" onclick="clearPushIndicator(this, document.getElementById('burger-notification')); toggleNotifications('notifications'); if (window.menuVisible) {document.getElementById('navbarMenu').classList.remove('is-active'); document.getElementById('navbarBurger').classList.remove('is-active'); }">{{ __('app.notifications') }}</a></span>
                         </div>
                     </div>
 
@@ -864,7 +864,7 @@
         };
 
         window.fetchNotifications = function() {
-            window.vue.ajaxRequest('get', '{{ url('/notifications/list') }}', {}, function(response){
+            window.vue.ajaxRequest('get', '{{ url('/notifications/list?mark=0') }}', {}, function(response){
                 if (response.code === 200) {
                     if (response.data.length > 0) {
                         let noyet = document.getElementById('no-notifications-yet');
@@ -981,7 +981,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             @auth
-                setTimeout('fetchNotifications()', 2000);
+                setTimeout('fetchNotifications()', 500);
                 setTimeout('fetchNotificationList()', 100);
                 setTimeout('indicateMessageCount()', 1000);
                 setTimeout('fetchFavorites()', 320);

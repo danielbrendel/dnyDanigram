@@ -35,7 +35,9 @@ class NotificationController extends Controller
     public function list()
     {
         try {
-            $notifications = PushModel::getUnseenNotifications(auth()->id());
+            $mark = (bool)request('mark', true);
+
+            $notifications = PushModel::getUnseenNotifications(auth()->id(), $mark);
 
             return response()->json(array('code' => 200, 'data' => $notifications));
         } catch (\Exception $e) {
@@ -56,6 +58,22 @@ class NotificationController extends Controller
             $notifications = PushModel::getNotifications(auth()->id(), env('APP_PUSHPACKLIMIT'), $paginate);
 
             return response()->json(array('code' => 200, 'data' => $notifications));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
+
+    /**
+     * Mark notifications as seen
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function mark()
+    {
+        try {
+            PushModel::markSeen(auth()->id());
+
+            return response()->json(array('code' => 200));
         } catch (\Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

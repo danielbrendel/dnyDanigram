@@ -1067,7 +1067,15 @@ window.toggleNotifications = function(ident) {
             obj.style.display = 'block';
         }
     }
-}
+};
+
+window.markSeen = function() {
+    window.vue.ajaxRequest('get', window.location.origin + '/notifications/mark', {}, function(response){
+        if (response.code != 200) {
+            console.error(response);
+        }
+    });
+};
 
 window.lockPost = function (id) {
     if (confirm(window.vue.translationTable.confirmLockPost)) {
