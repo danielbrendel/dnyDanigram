@@ -114,8 +114,10 @@ class PostsController extends Controller
             $category = CategoryModel::where('id', '=', $post->category)->first();
             if ($category) {
                 $post->category = $category->name;
+                $post->category_icon = $category->icon;
             } else {
                 $post->category = '';
+                $post->category_icon = '';
             }
 
             $cmdId = request('c', null);
@@ -280,8 +282,10 @@ class PostsController extends Controller
                 $category = CategoryModel::where('id', '=', $post['category'])->first();
                 if ($category) {
                     $post['category'] = $category->name;
+                    $post['category_icon'] = $category->icon;
                 } else {
                     $post['category'] = '';
+                    $post['category_icon'] = '';
                 }
             }
 
@@ -483,8 +487,10 @@ class PostsController extends Controller
             $category = CategoryModel::where('id', '=', $post->category)->first();
             if ($category) {
                 $post->category = $category->name;
+                $post->category_icon = $category->icon;
             } else {
                 $post->category = '';
+                $post->category_icon = '';
             }
 
             return response()->json(array('code' => 200, 'elem' => $post));

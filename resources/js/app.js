@@ -364,6 +364,13 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
         heartOption = `window.vue.toggleHeart(` + elem.id + `, 'ENT_POST');`;
     }
 
+    let category = '';
+    if ((elem.category_icon !== null) && (elem.category_icon.length > 0)) {
+        category = '<img src="' + window.location.origin + '/gfx/categories/' + elem.category_icon + '" width="16" height="16" alt="category">&nbsp;' + elem.category;
+    } else {
+        category =  elem.category;
+    }
+
     let html = `
                             <div class="show-post member-form">
                             <div class="show-post-header is-default-padding">
@@ -421,7 +428,7 @@ window.renderPost = function(elem, adminOrOwner = false, showNsfw = 0, nsfwFunct
                             <div class="show-post-attributes is-default-padding-left is-default-padding-right">
                                 <div class="is-inline-block"><span onclick="` + heartOption + `"><i id="heart-ent_post-` + elem.id + `" class="` + ((elem.userHearted) ? 'fas fa-heart is-hearted': 'far fa-heart') + ` is-pointer" data-value="` + ((elem.userHearted) ? '1' : '0') + `"></i></span> <span id="count-ent_post-` + elem.id + `">` + elem.hearts + `</span><span>&nbsp;<i class="far fa-eye"></i>&nbsp;` + elem.views + `</span> <span class="is-pointer" onclick="location.href = '` + window.location.origin + `/p/` + elem.id + `#thread';">&nbsp;<i class="far fa-comments"></i>&nbsp;` + elem.comment_count + `</span></div>
                                 <div class="is-inline-block is-center-width ` + (((elem.nsfw) && (showNsfw === 0)) ? '' : 'is-hidden') + `"><center><a href="javascript:void(0)" onclick="let oPostImage = document.getElementById('post-image-` + elem.id + `'); if (oPostImage.classList.contains('show-post-image-nsfw')) { oPostImage.classList.remove('show-post-image-nsfw'); } else { oPostImage.classList.add('show-post-image-nsfw'); }" class="is-color-grey">` + window.vue.translationTable.toggleNsfw2 + `</a></center></div>
-                                <div class="is-inline-block is-right float-right">` + elem.category + `</div>
+                                <div class="is-inline-block is-right float-right">` + category + `</div>
                             </div>
 
                             <div class="show-post-description is-default-padding is-color-grey is-post-background is-breakall">
