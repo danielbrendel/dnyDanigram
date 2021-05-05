@@ -36,7 +36,7 @@
             <div class="field">
                 <label class="label @if (file_exists(public_path() . '/clep.png')) {{ 'is-colored-white' }} @endif">{{ __('app.email') }}</label>
                 <p class="control has-icons-left has-icons-right">
-                    <input class="input" onkeyup="javascript:vue.invalidLoginEmail()" onchange="javascript:vue.invalidLoginEmail()" onkeydown="if (event.keyCode === 13) { document.getElementById('loginform').submit(); }" type="email" name="email" id="loginemail" placeholder="{{ __('app.email') }}" required>
+                    <input class="input @if (file_exists(public_path() . '/clep.png')) {{ 'is-background-white-transparent' }} @endif" onkeyup="javascript:vue.invalidLoginEmail()" onchange="javascript:vue.invalidLoginEmail()" onkeydown="if (event.keyCode === 13) { document.getElementById('loginform').submit(); }" type="email" name="email" id="loginemail" placeholder="{{ __('app.email') }}" required>
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
                     </span>
@@ -46,7 +46,7 @@
             <div class="field">
                 <label class="label @if (file_exists(public_path() . '/clep.png')) {{ 'is-colored-white' }} @endif">{{ __('app.password') }}</label>
                 <p class="control has-icons-left">
-                    <input class="input" onkeyup="javascript:vue.invalidLoginPassword()" onchange="javascript:vue.invalidLoginPassword()" onkeydown="if (event.keyCode === 13) { document.getElementById('loginform').submit(); }" type="password" name="password" id="loginpw" placeholder="{{ __('app.password') }}" required>
+                    <input class="input @if (file_exists(public_path() . '/clep.png')) {{ 'is-background-white-transparent' }} @endif" onkeyup="javascript:vue.invalidLoginPassword()" onchange="javascript:vue.invalidLoginPassword()" onkeydown="if (event.keyCode === 13) { document.getElementById('loginform').submit(); }" type="password" name="password" id="loginpw" placeholder="{{ __('app.password') }}" required>
                     <span class="icon is-small is-left">
                         <i class="fas fa-lock"></i>
                     </span>
