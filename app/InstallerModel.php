@@ -44,7 +44,7 @@ class InstallerModel extends Model
             $envcontent .= 'APP_CONTACT="dbrendel1988@gmail.com"' . PHP_EOL;
             $envcontent .= 'APP_VERSION="1.0"' . PHP_EOL;
             $envcontent .= 'APP_ENV=local' . PHP_EOL;
-            $envcontent .= 'APP_KEY=base64:fBr7/RVVAQlyln5NEVSGyrKmqV9AWEvhnvAcSUtSQzo=' . PHP_EOL;
+            $envcontent .= 'APP_KEY=' . PHP_EOL;
             $envcontent .= 'APP_DEBUG=false' . PHP_EOL;
             $envcontent .= 'APP_URL="' . url('/') . '"' . PHP_EOL;
             $envcontent .= 'APP_PROJECTNAME="' . $attr['project'] . '"' . PHP_EOL;
@@ -104,6 +104,7 @@ class InstallerModel extends Model
             file_put_contents(base_path() . '/.env', $envcontent);
 
             \Artisan::call('config:clear');
+            \Artisan::call('key:generate');
 
             $dbobj = new PDO('mysql:host=' . $attr['dbhost'], $attr['dbuser'], $attr['dbpassword']);
             $dbobj->exec('CREATE DATABASE IF NOT EXISTS `' . $attr['database'] . '`;');
