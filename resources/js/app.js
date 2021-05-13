@@ -615,7 +615,7 @@ window.renderNotification = function(elem, newItem = false) {
     }
 
     let html = `
-        <div class="notification-item ` + ((newItem) ? 'is-new-notification' : '') + `">
+        <div class="notification-item ` + ((newItem) ? 'is-new-notification' : '') + `" id="notification-item-` + elem.id + `">
             <div class="notification-item-inner">
                 <div class="notification-item-icon"><i class="` + icon + `"></i></div>
                 <div class="notification-item-message">` + elem.longMsg + `</div>

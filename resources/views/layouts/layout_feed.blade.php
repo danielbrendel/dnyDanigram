@@ -885,14 +885,16 @@
                         }
 
                         response.data.forEach(function(elem, index) {
-                            @if (isset($_GET['clep_push_handler']))
-                                window['{{ $_GET['clep_push_handler'] }}'](elem.shortMsg, elem.longMsg);
-                            @else
-                                window.pushClientNotification(elem.shortMsg);
-                            @endif
+                            if (document.getElementById('notification-item-' + elem.id) === null) {
+                                @if (isset($_GET['clep_push_handler']))
+                                    window['{{ $_GET['clep_push_handler'] }}'](elem.shortMsg, elem.longMsg);
+                                @else
+                                    window.pushClientNotification(elem.shortMsg);
+                                @endif
 
-                            let html = renderNotification(elem, true);
-                            document.getElementById('notification-content').innerHTML = html + document.getElementById('notification-content').innerHTML;
+                                let html = renderNotification(elem, true);
+                                document.getElementById('notification-content').innerHTML = html + document.getElementById('notification-content').innerHTML;
+                            }
                         });
                     }
                 }

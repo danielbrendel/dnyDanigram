@@ -2327,7 +2327,7 @@ window.renderNotification = function (elem) {
     icon = 'fas fa-landmark is-notifiction-color-black';
   }
 
-  var html = "\n        <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\">\n            <div class=\"notification-item-inner\">\n                <div class=\"notification-item-icon\"><i class=\"" + icon + "\"></i></div>\n                <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n            </div>\n        </div>\n    ";
+  var html = "\n        <div class=\"notification-item " + (newItem ? 'is-new-notification' : '') + "\" id=\"notification-item-" + elem.id + "\">\n            <div class=\"notification-item-inner\">\n                <div class=\"notification-item-icon\"><i class=\"" + icon + "\"></i></div>\n                <div class=\"notification-item-message\">" + elem.longMsg + "</div>\n            </div>\n        </div>\n    ";
   return html;
 };
 
