@@ -61,6 +61,17 @@ class MessageModel extends Model
                 $channel = $channel->channel;
             }
 
+            $list = MessageListModel::where('channel', '=', $channel)->first();
+            if (!$list) {
+                $list = new MessageListModel();
+                $list->channel = $channel;
+                $list->user1 = $userId;
+                $list->user2 = $senderId;
+                $list->save();
+            } else {
+                $list->touch();
+            }
+
             $msg = new MessageModel();
             $msg->userId = $userId;
             $msg->senderId = $senderId;
@@ -96,13 +107,27 @@ class MessageModel extends Model
     public static function fetch($userId, $limit, $paginate = null)
     {
         try {
-            $rowset = MessageModel::where('userId', '=', $userId)->orWhere('senderId', '=', $userId);
-
+            $channels = MessageListModel::where(function($channels) use ($userId) {
+                $channels->where('user1', '=', $userId)
+                    ->orWhere('user2', '=', $userId);
+            });
+            
             if ($paginate !== null) {
-                $rowset->where('id', '<', $paginate);
+                $channels->where('updated_at', '<', $paginate);
             }
 
-            return $rowset->orderBy('id', 'desc')->limit($limit)->get();
+            $channels = $channels->orderBy('updated_at', 'desc')->limit($limit)->get();
+
+            foreach ($channels as &$item) {
+                $item->lm = MessageModel::where('channel', '=', $item->channel)->orderBy('id', 'desc')->first();
+                if ($item->lm->senderId === auth()->id()) {
+                    if (!$item->lm->seen) {
+                        $item->lm->seen = true;
+                    }
+                }
+            }
+
+            return $channels;
         } catch (Exception $e) {
             throw $e;
         }
@@ -120,7 +145,7 @@ class MessageModel extends Model
     public static function queryThreadPack($ident, $limit, $paginate = null)
     {
         try {
-            $query = static::where('channel', '=', $ident)->where(function($query){
+            $query = MessageModel::where('channel', '=', $ident)->where(function($query){
                 $query->where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id());
             });
 
@@ -130,8 +155,10 @@ class MessageModel extends Model
 
             $items = $query->orderBy('id', 'desc')->limit($limit)->get();
             foreach ($items as &$item) {
-                $item->seen = true;
-                $item->save();
+                if ($item->senderId !== auth()->id()) {
+                    $item->seen = true;
+                    $item->save();
+                }
             }
 
             $items = $items->toArray();
@@ -167,31 +194,33 @@ class MessageModel extends Model
                 throw new Exception('Message not found: ' . $msgId);
             }
 
-            $msg->seen = true;
-            $msg->save();
-
-            /*$previous = MessageModel::where(function($query) use ($msg) {
-                $query->where('userId', '=', $msg->userId)
-                    ->where('senderId', '=', $msg->senderId)
-                    ->where('id', '<>', $msg->id);
-            })->orWhere(function($query) use ($msg) {
-                $query->where('userId', '=', $msg->senderId)
-                    ->where('senderId', '=', $msg->userId);
-            })->orderBy('created_at', 'desc')->get();
-            foreach ($previous as $item) {
-                if (!$item->seen) {
-                    $item->seen = true;
-                    $item->save();
-                }
-            }
-
-            return array(
-              'msg' => $msg,
-              'previous' => $previous
-            );*/
-
             return $msg;
         } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Get chat with partner
+     * 
+     * @param $self
+     * @param $partner
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function getChatWithUser($self, $partner)
+    {
+        try {
+            $query = MessageModel::where(function($query) use($self, $partner) {
+                $query->where('userId', '=', $self)
+                    ->where('senderId', '=', $partner);
+            })->orWhere(function($query) use ($self, $partner) {
+                $query->where('userId', '=', $partner)
+                    ->where('senderId', '=', $self);
+            });
+
+            return $query->orderBy('id', 'desc')->first();
+        } catch (\Exception $e) {
             throw $e;
         }
     }

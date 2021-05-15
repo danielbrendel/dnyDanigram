@@ -2332,13 +2332,13 @@ window.renderNotification = function (elem) {
 };
 
 window.renderMessageListItem = function (item) {
-  var message = item.message;
+  var message = item.lm.message;
 
   if (message.length > 20) {
     message = message.substr(0, 20) + '...';
   }
 
-  var html = "\n        <div class=\"messages-item " + (!item.seen ? 'is-new-message' : '') + "\">\n            <div class=\"messages-item-avatar\">\n                <img src=\"" + window.location.origin + "/gfx/avatars/" + item.user.avatar + "\">\n            </div>\n\n            <div class=\"messages-item-name\">\n                <a href=\"" + window.location.origin + "/u/" + item.user.username + "\">" + item.user.username + "</a>\n            </div>\n\n            <div class=\"messages-item-subject\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.subject + "</a>\n            </div>\n\n            <div class=\"message-item-lastmsg\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.id + "\">" + item.sender.username + ": " + message + "</a>\n            </div>\n\n            <div class=\"messages-item-date\" title=\"" + item.created_at + "\">\n                " + item.diffForHumans + "\n            </div>\n        </div>\n    ";
+  var html = "\n        <div class=\"messages-item " + (!item.lm.seen ? 'is-new-message' : '') + "\">\n            <div class=\"messages-item-avatar\">\n                <img src=\"" + window.location.origin + "/gfx/avatars/" + item.lm.user.avatar + "\">\n            </div>\n\n            <div class=\"messages-item-name\">\n                <a href=\"" + window.location.origin + "/user/" + item.lm.user.username + "\">" + item.lm.user.username + "</a>\n            </div>\n\n            <div class=\"messages-item-subject\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.lm.id + "\">" + item.lm.subject + "</a>\n            </div>\n\n            <div class=\"message-item-lastmsg\">\n                <a href=\"" + window.location.origin + "/messages/show/" + item.lm.id + "\">" + item.lm.sender.username + ": " + message + "</a>\n            </div>\n\n            <div class=\"messages-item-date\" title=\"" + item.lm.created_at + "\">\n                " + item.lm.diffForHumans + "\n            </div>\n        </div>\n    ";
   return html;
 };
 

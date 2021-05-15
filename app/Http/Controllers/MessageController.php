@@ -61,20 +61,20 @@ class MessageController extends Controller
         try {
             $paginate = request('paginate', null);
 
-            $data = MessageModel::fetch(auth()->id(), env('APP_MESSAGEPACKLIMIT'), $paginate)->unique('channel')->values()->all();
+            $data = MessageModel::fetch(auth()->id(), env('APP_MESSAGEPACKLIMIT'), $paginate);
             foreach ($data as &$item) {
-                if ($item->senderId === auth()->id()) {
-                    $item->user = User::get($item->userId);
+                if ($item->lm->senderId === auth()->id()) {
+                    $item->lm->user = User::get($item->lm->userId);
                 } else {
-                    $item->user = User::get($item->senderId);
+                    $item->lm->user = User::get($item->lm->senderId);
                 }
 
-                $item->sender = User::get($item->senderId);
+                $item->lm->sender = User::get($item->lm->senderId);
 
-                $item->diffForHumans = $item->created_at->diffForHumans();
+                $item->lm->diffForHumans = $item->lm->created_at->diffForHumans();
             }
 
-            return response()->json(array('code' => 200, 'data' => $data, 'min' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->min('id'), 'max' => MessageModel::where('userId', '=', auth()->id())->orWhere('senderId', '=', auth()->id())->max('id')));
+            return response()->json(array('code' => 200, 'data' => $data));
         } catch (Exception $e) {
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }

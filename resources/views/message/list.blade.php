@@ -26,18 +26,7 @@
 			</div>
 
             <div class="messages">
-                <div class="messages-list" id="messages-list">
-                    <i class="fas fa-spinner fa-spin"></i>
-                </div>
-            </div>
-
-            <div class="messages-footer">
-                <div class="messages-footer-count" id="msg-count"></div>
-
-                <div class="messages-footer-nav">
-                    <span><i id="browse-left" class="fas fa-arrow-left is-pointer" onclick="if (window.paginateList < window.maxMsgId) window.paginateList = window.previousMsgId+1; window.msgListCounter -= {{ env('APP_MESSAGEPACKLIMIT') }}; fetchMessageList()"></i></span>
-                    <span><i id="browse-right" class="fas fa-arrow-right is-pointer" onclick="if (window.paginateList > window.minMsgId) fetchMessageList(); window.msgListCounter += {{ env('APP_MESSAGEPACKLIMIT') }};"></i></span>
-                </div>
+                <div class="messages-list" id="messages-list"></div>
             </div>
         </div>
     </div>
@@ -48,46 +37,34 @@
 @section('javascript')
     <script>
         window.paginateList = null;
-        window.previousMsgId = null;
-        window.msgListCounter = 1;
 
         window.fetchMessageList = function() {
-            document.getElementById('messages-list').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            document.getElementById('messages-list').innerHTML += '<div id="spinner"><i class="fas fa-spinner fa-spin"></i></div>';
 
+            if (document.getElementById('loadmore') !== null) {
+                document.getElementById('loadmore').remove();
+            }
+            
             window.vue.ajaxRequest('get', '{{ url('/messages/list') }}' + ((window.paginateList !== null) ? '?paginate=' + window.paginateList : ''), {}, function(response) {
-              if (response.code === 200) {
-                 document.getElementById('messages-list').innerHTML = '';
-                 
-                 if (response.max === null) {
-                     document.getElementById('messages-list').innerHTML = '{{ __('app.no_messages') }}';
-                     return;
-                 }
-                 
-                 response.data.forEach(function(elem, index){
-                    let html = window.renderMessageListItem(elem);
+                if (response.code === 200) {  
+                    if (document.getElementById('spinner') !== null) {
+                        document.getElementById('spinner').remove();
+                    }
 
-                    document.getElementById('messages-list').innerHTML += html;
-                 });
+                    response.data.forEach(function(elem, index){
+                        let html = window.renderMessageListItem(elem);
 
-                 window.minMsgId = response.min;
-                 window.maxMsgId = response.max;
+                        document.getElementById('messages-list').innerHTML += html;
+                    });
 
-                 window.previousMsgId = window.paginateList;
-                 if (response.data.length > 0) {
-                     window.paginateList = response.data[response.data.length - 1].id;
-                 }
+                    if (response.data.length > 0) {
+                        window.paginateList = response.data[response.data.length - 1].updated_at;
 
-                  document.getElementById('browse-left').classList.remove('is-color-grey');
-                  document.getElementById('browse-right').classList.remove('is-color-grey');
-
-                 if (window.paginateList <= response.min) {
-                     document.getElementById('browse-right').classList.add('is-color-grey');
-                 } else if (window.paginateList >= response.max) {
-                     document.getElementById('browse-left').classList.add('is-color-grey');
-                 }
-
-                 document.getElementById('msg-count').innerHTML = window.msgListCounter + ' to ' + (window.msgListCounter + {{ env('APP_MESSAGEPACKLIMIT') }}) + ' of total ' + response.max;
-             }
+                        document.getElementById('messages-list').innerHTML += '<div id="loadmore" class="is-pointer" onclick="window.fetchMessageList();"><br/><center><i class="fas fa-arrow-down"></i></center></div>';
+                    } else {
+                        document.getElementById('messages-list').innerHTML += "<div><br/>{{ __('app.no_more_messages') }}</div>"
+                    }
+                }
           });
         };
 
