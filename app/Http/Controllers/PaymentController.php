@@ -20,6 +20,7 @@ use App\WorkSpaceModel;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class PaymentController extends Controller
 {
@@ -60,7 +61,7 @@ class PaymentController extends Controller
             ]);
 
             $user = User::get(auth()->id());
-            if ((!$user) || ($user->locked) || ($user->pro)) {
+            if ((!$user) || ($user->locked) || (User::isUserPro($user))) {
                 throw new Exception(__('app.user_not_found_or_locked_or_already_pro'));
             }
 
@@ -76,7 +77,7 @@ class PaymentController extends Controller
                 throw new Exception(__('app.payment_failed'));
             }
 
-            $user->pro = true;
+            $user->pro_date = Carbon::now()->format('y-m-d h:i:s');
             $user->save();
 
             return back()->with('success', __('app.payment_succeeded'));

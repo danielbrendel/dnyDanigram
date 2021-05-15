@@ -289,7 +289,7 @@ class PostsController extends Controller
                 }
             }
 
-            if ((Auth::guest()) || (!User::get(auth()->id())->pro)) {
+            if ((Auth::guest()) || (!User::isUserPro(User::get(auth()->id())))) {
                 $adCode = AppModel::getAdCode();
                 if ((strlen($adCode) > 0) && (count($posts) > 0)) {
                     $ad = array();

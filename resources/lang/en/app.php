@@ -324,7 +324,7 @@ return [
     'payment_succeeded' => 'Payment succeeded. You now have pro mode enabled',
     'purchase_pro_mode' => 'Purchase pro mode!',
     'buy_pro_mode_title' => 'Buy pro mode',
-    'buy_pro_mode_info' => 'Here you can buy pro mode. This will result in the following actions:<br/><ul><li>Ads won\'t be shown to you</li><li>You get a badge</li><li>You support our service</li></ul><br/>It will cost you only <strong>:costs</strong> and pro mode will be enabled permanently for your account.',
+    'buy_pro_mode_info' => 'Here you can buy pro mode. This will result in the following actions:<br/><ul><li>Ads won\'t be shown to you</li><li>You get a badge</li><li>You support our service</li></ul><br/>It will cost you only <strong>:costs</strong> and pro mode will be enabled for :days days.',
     'credit_or_debit_card' => 'Credit card or debit card',
     'submit_payment' => 'Submit payment',
     'close' => 'Close',

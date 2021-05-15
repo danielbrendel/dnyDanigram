@@ -46,7 +46,7 @@ class CreateUsersTable extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('maintainer')->default(false);
             $table->boolean('nsfw')->default(false);
-            $table->boolean('pro')->default(false);
+            $table->dateTime('pro_date')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('geo_exclude')->default(false);

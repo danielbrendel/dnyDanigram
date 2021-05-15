@@ -324,7 +324,7 @@ return [
     'payment_succeeded' => 'Zahlung erfolgreich durchgeführt. Für dein Konto ist nun der Pro-Modus aktiviert',
     'purchase_pro_mode' => 'Pro-Modus kaufen!',
     'buy_pro_mode_title' => 'Pro-Modus kaufen',
-    'buy_pro_mode_info' => 'Hier kannst Du den Pro-Modus kaufen. Dies wird zu folgenden Begebenheiten führen:<br/><ul><li>Es wird dir keine Werbung mehr angezeigt</li><li>Du erhälst einen extra Badge</li><li>Du unterstützt unseren Service</li></ul><br/>Es kostet dich nur einmalig <strong>:costs</strong> und der Pro-Modus ist dann permanent für dein Konto aktiviert.',
+    'buy_pro_mode_info' => 'Hier kannst Du den Pro-Modus kaufen. Dies wird zu folgenden Begebenheiten führen:<br/><ul><li>Es wird dir keine Werbung mehr angezeigt</li><li>Du erhälst einen extra Badge</li><li>Du unterstützt unseren Service</li></ul><br/>Es kostet dich nur einmalig <strong>:costs</strong> und der Pro-Modus ist dann für :days Tage aktiviert.',
     'credit_or_debit_card' => 'Kredit- oder Debitkarte',
     'submit_payment' => 'Zahlung durchführen',
     'close' => 'Schließen',

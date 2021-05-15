@@ -146,6 +146,26 @@ class User extends Authenticatable
     }
 
     /**
+     * Indicate if user has pro mode
+     * 
+     * @param $user
+     * @return bool
+     * @throws \Exception
+     */
+    public static function isUserPro($user)
+    {
+        try {
+            if ((!$user) || (is_null($user->pro_date))) {
+                return false;
+            }
+
+            return Carbon::parse($user->pro_date)->diffInDays(Carbon::now()) <= env('APP_PROMODEDAYCOUNT', 90);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Get user base info
      *
      * @param $userId

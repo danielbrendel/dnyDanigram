@@ -39,7 +39,7 @@
         </div>
     @endif
 
-    @if ($user->pro)
+    @if (\App\User::isUserPro($user))
         <div class="is-inline-block">
             <div class="member-badge member-badge-pro"><p>{{ __('app.pro') }}</p></div>
         </div>

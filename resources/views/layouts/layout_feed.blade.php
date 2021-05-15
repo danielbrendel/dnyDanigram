@@ -389,7 +389,7 @@
                             @csrf
 
                             @if (env('STRIPE_ENABLE') === true)
-                                @if ((!Auth::guest()) && (!\App\User::get(auth()->id())->pro))
+                                @if ((!Auth::guest()) && (!\App\User::isUserPro(\App\User::get(auth()->id()))))
                                     <div class="field">
                                         <div class="control">
                                             <a href="javascript:void(0)" onclick="window.vue.bShowBuyProMode = true; window.vue.bShowEditProfile = false;" class="button is-success">{{ __('app.purchase_pro_mode') }}</a>
@@ -596,7 +596,7 @@
                     </header>
                     <section class="modal-card-body is-stretched">
                         <div class="field">
-                            {!! __('app.buy_pro_mode_info', ['costs' => env('STRIPE_COSTS_LABEL')]) !!}
+                            {!! __('app.buy_pro_mode_info', ['costs' => env('STRIPE_COSTS_LABEL'), 'days' => env('APP_PROMODEDAYCOUNT')]) !!}
                         </div>
 
                         <form action="{{ url('/payment/charge') }}" method="post" id="payment-form" class="stripe">
