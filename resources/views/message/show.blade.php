@@ -16,9 +16,11 @@
 
 @section('body')
     <div class="column is-8">
-        <h1>{{ __('app.message_thread', ['name' => $msg->message_partner]) }}</h1>
-
         <div class="member-form is-default-padding member-form-fixed-top">
+            <div>
+                <h1>{{ __('app.message_thread', ['name' => $msg->message_partner]) }}</h1>
+            </div>
+
             <form method="POST" action="{{ url('/messages/send') }}">
                 @csrf
 
