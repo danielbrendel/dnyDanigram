@@ -3,7 +3,7 @@
 /*
     Danigram (dnyDanigram) developed by Daniel Brendel
 
-    (C) 2019 - 2021 by Daniel Brendel
+    (C) 2019 - 2022 by Daniel Brendel
 
     Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
@@ -34,7 +34,7 @@ class CreateAppSettingsTable extends Migration
             $table->text('tos');
             $table->string('reg_info');
             $table->text('welcome_content');
-            $table->text('project_name_formatted');
+            $table->text('formatted_project_name');
             $table->string('default_theme')->default('_default');
             $table->text('head_code');
             $table->text('adcode');
