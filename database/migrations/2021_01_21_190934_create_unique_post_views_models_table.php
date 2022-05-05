@@ -28,7 +28,7 @@ class CreateUniquePostViewsModelsTable extends Migration
         Schema::create('unique_post_views_models', function (Blueprint $table) {
             $table->id();
             $table->integer('postId');
-            $table->string('address');
+            $table->string('token');
             $table->timestamps();
         });
     }

@@ -31,7 +31,7 @@ class UniquePostViewsModel extends Model
     const COUNT_THOUSAND = 1000;
 
     /**
-     * Add IP address as viewer for given post and return view count
+     * Add hashed IP address as viewer for given post and return view count
      *
      * @param $postId
      * @return int
@@ -41,13 +41,13 @@ class UniquePostViewsModel extends Model
     {
         try {
             $count = 0;
-            $ipAddress = request()->ip();
+            $token = md5(request()->ip());
 
-            $item = UniquePostViewsModel::where('postId', '=', $postId)->where('address', '=', $ipAddress)->first();
+            $item = UniquePostViewsModel::where('postId', '=', $postId)->where('token', '=', $token)->first();
             if (!$item) {
                 $item = new UniquePostViewsModel();
                 $item->postId = $postId;
-                $item->address = $ipAddress;
+                $item->token = $token;
                 $item->save();
             }
 
