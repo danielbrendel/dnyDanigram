@@ -17,7 +17,7 @@
 
         <meta charset="utf-8">
         <meta name="description" content="{{ env('APP_DESCRIPTION') }}">
-        <meta name="tags" content="{{ env('APP_TAGS') }}">
+        <meta name="keywords" content="{{ env('APP_TAGS') }}">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 

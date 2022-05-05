@@ -24,9 +24,9 @@
         @endif
 
         @if (isset($meta_tags))
-            <meta name="tags" content="{{ $meta_tags }}">
+            <meta name="keywords" content="{{ $meta_tags }}">
         @else
-            <meta name="tags" content="{{ env('APP_TAGS') }}">
+            <meta name="keywords" content="{{ env('APP_TAGS') }}">
         @endif
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
