@@ -483,4 +483,28 @@ class MemberController extends Controller
             return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
         }
     }
+
+    /**
+     * Set user mobile device token
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setDeviceToken()
+    {
+        try {
+            $token = request('token', '');
+
+            $user = User::getByAuthId();
+            if (!$user) {
+                throw new \Exception('Login required');
+            }
+
+            $user->device_token = $token;
+            $user->save();
+
+            return response()->json(array('code' => 200));
+        } catch (\Exception $e) {
+            return response()->json(array('code' => 500, 'msg' => $e->getMessage()));
+        }
+    }
 }

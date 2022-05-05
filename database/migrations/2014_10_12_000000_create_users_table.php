@@ -50,6 +50,7 @@ class CreateUsersTable extends Migration
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->boolean('geo_exclude')->default(false);
+            $table->string('device_token', 1024)->default('');
             $table->timestamps();
         });
     }
